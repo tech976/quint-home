@@ -1,26 +1,307 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* ============================================================
+   QUINT HOME — Design Tokens
+   60% Stardust Veil · 30% Aerial Mist · 10% Solar Clay
+   ============================================================ */
+
+@theme {
+  /* — Palette ----------------------------------------------- */
+  --color-white: #ffffff;           /* dominant — main surface */
+  --color-stardust: #eee4d8;        /* accent — warm beige (Brand: was 60%) */
+  --color-stardust-soft: #f5efe6;   /* lighter stardust for hover wash */
+  --color-ivory: #faf8f3;           /* near-white, used for soft alternate sections */
+  --color-aerial: #77918d;          /* structural — sage teal */
+  --color-aerial-soft: #aebcb9;     /* lighter aerial */
+  --color-aerial-deep: #5a7370;     /* deeper aerial for hover */
+  --color-verdant: #293329;         /* deepest sage — inverted bg / shadow */
+  --color-clay: #c15a27;            /* terracotta — primary CTA */
+  --color-clay-deep: #6a2e0c;       /* rammed earth — CTA hover */
+  --color-charcoal: #3a3532;        /* body text + logo */
+  --color-charcoal-soft: #6a625e;   /* secondary text */
+  --color-rule: #e6dfd2;            /* hairline dividers on white */
+  --color-rule-soft: #efe9dd;       /* subtle dividers on white */
+
+  /* Semantic aliases */
+  --color-background: var(--color-white);
+  --color-foreground: var(--color-charcoal);
+  --color-muted: var(--color-charcoal-soft);
+  --color-accent: var(--color-clay);
+  --color-accent-foreground: var(--color-ivory);
+
+  /* — Fonts (wired to next/font css vars) ------------------- */
+  --font-serif: var(--font-literata), ui-serif, Georgia, serif;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-quirk: var(--font-quirk), ui-serif, Georgia, serif;
+
+  /* — Fluid type scale (clamp: min · preferred · max) -------
+     Refined editorial — closer to Aesop / Cereal magazine register.
+     Headlines are restrained on purpose. The brand is calm. */
+  --text-eyebrow: 0.7rem;                                                /* 11.2px */
+  --text-xs: clamp(0.72rem, 0.70rem + 0.10vw, 0.78rem);
+  --text-sm: clamp(0.84rem, 0.82rem + 0.10vw, 0.90rem);
+  --text-base: clamp(0.94rem, 0.92rem + 0.12vw, 1.02rem);
+  --text-lg: clamp(1.05rem, 1.00rem + 0.25vw, 1.18rem);
+  --text-xl: clamp(1.20rem, 1.10rem + 0.45vw, 1.40rem);
+  --text-2xl: clamp(1.45rem, 1.30rem + 0.65vw, 1.75rem);
+  --text-3xl: clamp(1.70rem, 1.50rem + 0.90vw, 2.10rem);
+  --text-4xl: clamp(2.10rem, 1.75rem + 1.50vw, 2.80rem);
+  --text-5xl: clamp(2.60rem, 2.00rem + 2.50vw, 3.75rem);
+  --text-display: clamp(3.00rem, 2.10rem + 4.00vw, 5.25rem);
+
+  /* — Tracking & leading ------------------------------------ */
+  --tracking-display: -0.02em;
+  --tracking-heading: -0.01em;
+  --tracking-eyebrow: 0.18em;
+  --leading-display: 0.95;
+  --leading-heading: 1.08;
+  --leading-body: 1.65;
+
+  /* — Spacing additions ------------------------------------- */
+  --spacing-section: clamp(4rem, 6vw, 9rem);
+  --spacing-section-sm: clamp(2.5rem, 4vw, 5rem);
+
+  /* — Container widths -------------------------------------- */
+  --container-narrow: 56rem;
+  --container-content: 72rem;
+  --container-wide: 88rem;
+  --container-full: 100rem;
+
+  /* — Radius — soft, restrained ----------------------------- */
+  --radius-xs: 2px;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 14px;
+  --radius-pill: 999px;
+
+  /* — Motion — single calm curve everywhere ----------------- */
+  --ease-quint: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --ease-soft: cubic-bezier(0.32, 0.72, 0, 1);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+/* ============================================================
+   Base layer
+   ============================================================ */
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  *,
+  *::before,
+  *::after {
+    @apply border-[color:var(--color-rule)];
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-feature-settings: "kern", "liga", "calt", "ss01";
+    background: var(--color-background);
+    color: var(--color-foreground);
+  }
+
+  body {
+    font-family: var(--font-sans);
+    font-size: var(--text-base);
+    line-height: var(--leading-body);
+    color: var(--color-foreground);
+    background: var(--color-background);
+  }
+
+  ::selection {
+    background: var(--color-clay);
+    color: var(--color-ivory);
+  }
+
+  /* Calm focus ring — sage outline, never blue */
+  :focus-visible {
+    outline: 2px solid var(--color-aerial);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  /* Editorial defaults */
+  h1, h2, h3, h4, h5 {
+    font-family: var(--font-serif);
+    color: var(--color-foreground);
+    font-weight: 400;
+    letter-spacing: var(--tracking-heading);
+    line-height: var(--leading-heading);
+  }
+
+  p {
+    max-width: 60ch;
+  }
+
+  hr {
+    border: none;
+    border-top: 1px solid var(--color-rule);
+  }
+
+  img, video {
+    display: block;
+    max-width: 100%;
+    height: auto;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* ============================================================
+   Reusable typographic primitives
+   ============================================================ */
+
+@utility font-display {
+  font-family: var(--font-serif);
+  font-size: var(--text-display);
+  line-height: var(--leading-display);
+  letter-spacing: var(--tracking-display);
+  font-weight: 400;
+}
+
+@utility font-h1 {
+  font-family: var(--font-serif);
+  font-size: var(--text-5xl);
+  line-height: var(--leading-heading);
+  letter-spacing: var(--tracking-display);
+  font-weight: 400;
+}
+
+@utility font-h2 {
+  font-family: var(--font-serif);
+  font-size: var(--text-4xl);
+  line-height: var(--leading-heading);
+  letter-spacing: var(--tracking-heading);
+  font-weight: 400;
+}
+
+@utility font-h3 {
+  font-family: var(--font-serif);
+  font-size: var(--text-3xl);
+  line-height: var(--leading-heading);
+  letter-spacing: var(--tracking-heading);
+  font-weight: 400;
+}
+
+@utility font-eyebrow {
+  font-family: var(--font-sans);
+  font-size: var(--text-eyebrow);
+  letter-spacing: var(--tracking-eyebrow);
+  text-transform: uppercase;
+  font-weight: 500;
+  color: var(--color-charcoal-soft);
+}
+
+@utility hairline {
+  border-top: 1px solid var(--color-rule);
+}
+
+/* ============================================================
+   Entrance animations — CSS keyframes, work even in screenshot tools
+   ============================================================ */
+
+@keyframes reveal-line {
+  from {
+    transform: translateY(115%);
+  }
+  to {
+    transform: translateY(0%);
+  }
+}
+
+@keyframes fade-up-soft {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in-slow {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes hero-zoom {
+  from {
+    transform: scale(1.06);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+.animate-reveal-line {
+  animation: reveal-line 0.95s var(--ease-quint) both;
+}
+
+.animate-fade-up {
+  animation: fade-up-soft 0.9s var(--ease-quint) both;
+}
+
+.animate-fade-in {
+  animation: fade-in-slow 1.2s var(--ease-quint) both;
+}
+
+.animate-hero-zoom {
+  animation: hero-zoom 2.4s var(--ease-quint) both;
+}
+
+@keyframes scroll-tick {
+  0% { transform: translateY(-100%); }
+  50% { transform: translateY(100%); }
+  100% { transform: translateY(100%); }
+}
+
+.animate-scroll-tick {
+  animation: scroll-tick 2.4s var(--ease-quint) infinite;
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  animation: marquee 60s linear infinite;
+}
+
+@keyframes float-mark {
+  0%, 100% { transform: translateY(0px); }
+  50%      { transform: translateY(-6px); }
+}
+
+.animate-float-mark {
+  animation: float-mark 4s ease-in-out infinite;
+}
+
+/* Lenis smooth-scroll housekeeping (only when Lenis is active) */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+/* Honor reduced motion — kill all transitions/animations */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
 }
