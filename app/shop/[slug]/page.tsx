@@ -6,9 +6,9 @@ import { diffusers, getDiffuser } from "@/lib/data/diffusers";
 import { oils, getOil } from "@/lib/data/oils";
 import { formatINR } from "@/lib/utils";
 import { FadeUp } from "@/components/motion/fade-up";
-import { ProductGallery } from "@/components/product/product-gallery";
-import { AddToBag } from "@/components/product/add-to-bag";
-import { EditorialCarousel, type Slide } from "@/components/ui/editorial-carousel";
+import { DiffuserHero } from "@/components/product/diffuser-hero";
+import { OilHero } from "@/components/product/oil-hero";
+import type { FragranceOil } from "@/lib/types";
 
 type Params = { slug: string };
 
@@ -41,548 +41,308 @@ export default async function ProductPage({
   const { slug } = await params;
   const product = getDiffuser(slug);
 
-  // For now, oils fall through to the existing stub — diffuser-specific PDP below.
   if (!product) {
     const oil = getOil(slug);
     if (!oil) notFound();
-    return <OilStub slug={slug} />;
+    return <OilProductPage oil={oil} />;
   }
 
-  // The related companion scents — first 4 oils, with two hotel-credentialled ones surfaced.
+  // Companion scents — surface the two hotel-credential oils first.
   const relatedOils = oils
     .slice()
     .sort((a, b) => (a.tier === "hotel-credential" ? -1 : 1))
     .slice(0, 4);
 
+  const descriptionParagraphs = product.description.split("\n\n");
+
+  // How-to-use steps differ for the app models vs the plug-in timer model.
+  const steps = product.bluetooth
+    ? [
+        { no: "01", title: "Fill", body: "Add your chosen oil to the reservoir. No water, no carrier liquid." },
+        { no: "02", title: "Pair", body: "Connect once over Bluetooth in the Quint Home companion app." },
+        { no: "03", title: "Schedule", body: "Set your times, intensity, and duration from your phone." },
+        { no: "04", title: "Leave it", body: "The diffuser runs the schedule on its own, day after day." },
+      ]
+    : [
+        { no: "01", title: "Plug in", body: "Insert the rotatable plug into any wall socket. No assembly." },
+        { no: "02", title: "Add oil", body: "Add a few drops of your chosen oil to the glass bottle." },
+        { no: "03", title: "Set the timer", body: "The 24-hour cyclic timer handles the on and off cycles." },
+        { no: "04", title: "Leave it", body: "Steady fragrance through the day, with no app to manage." },
+      ];
+
+  // Lifestyle still for models WITHOUT a video — a distinct indoor interior per
+  // product (video models show their video instead and use none of these).
+  const LIFESTYLE_BY_SLUG: Record<string, string> = {
+    "tabletop-a326": "/images/indoor/indoor-01.png",
+    "tabletop-fabric-a974": "/images/indoor/indoor-02.png",
+  };
+  const lifestyleImage =
+    LIFESTYLE_BY_SLUG[product.slug] ?? "/images/indoor/indoor-03.png";
+
   return (
-    <article className="bg-[color:var(--color-white)]">
-      {/* ====================================================
-          §  HERO  —  split editorial composition
-          ==================================================== */}
-      <section className="border-b border-[color:var(--color-rule)] pt-10 md:pt-14">
-        <div className="mx-auto grid max-w-[var(--container-full)] gap-12 px-6 md:px-10 lg:grid-cols-12 lg:gap-16">
-          {/* Left — gallery */}
-          <div className="lg:col-span-7">
-            <FadeUp>
-              <div className="mb-6 flex items-center gap-4 text-[0.6rem] uppercase tracking-[0.42em] text-[color:var(--color-charcoal-soft)]">
-                <Link href="/shop" className="hover:text-[color:var(--color-clay)]">
-                  Shop
-                </Link>
-                <span className="h-px w-6 bg-[color:var(--color-rule)]" />
-                <span>Diffusers</span>
-                <span className="h-px w-6 bg-[color:var(--color-rule)]" />
-                <span>№ {String(diffusers.findIndex((d) => d.slug === slug) + 1).padStart(2, "0")} · {product.name}</span>
-              </div>
-            </FadeUp>
-
-            <FadeUp delay={0.05}>
-              <ProductGallery images={product.gallery} alt={`${product.name} — Quint Home`} />
-            </FadeUp>
-          </div>
-
-          {/* Right — sticky info column */}
-          <aside className="lg:col-span-5">
-            <div className="lg:sticky lg:top-32">
-              <FadeUp>
-                <p className="text-[0.62rem] uppercase tracking-[0.42em] text-[color:var(--color-charcoal-soft)]">
-                  Object № 01 · Diffuser
-                </p>
-              </FadeUp>
-
-              <FadeUp delay={0.06}>
-                <h1
-                  className="mt-7 text-balance"
-                  style={{
-                    fontFamily: "var(--font-serif)",
-                    fontSize: "var(--text-5xl)",
-                    lineHeight: 0.98,
-                    letterSpacing: "-0.024em",
-                    fontWeight: 400,
-                  }}
-                >
-                  {product.name}
-                </h1>
-              </FadeUp>
-
-              <FadeUp delay={0.12}>
-                <p className="mt-6 max-w-[44ch] text-[var(--text-lg)] leading-[1.55] text-[color:var(--color-charcoal-soft)]">
-                  {product.tagline}
-                </p>
-              </FadeUp>
-
-              {/* Hairline + key facts row */}
-              <FadeUp delay={0.18}>
-                <dl className="mt-10 grid grid-cols-2 gap-y-5 border-y border-[color:var(--color-rule)] py-6 text-[0.75rem]">
-                  <div>
-                    <dt className="text-[0.6rem] uppercase tracking-[0.32em] text-[color:var(--color-charcoal-soft)]">
-                      Coverage
-                    </dt>
-                    <dd className="mt-2">
-                      {product.coverageSqFt[0]}–{product.coverageSqFt[1]} sq ft
-                    </dd>
-                  </div>
-                  <div>
-                    <dt className="text-[0.6rem] uppercase tracking-[0.32em] text-[color:var(--color-charcoal-soft)]">
-                      Finish
-                    </dt>
-                    <dd className="mt-2">{product.finish}</dd>
-                  </div>
-                  <div>
-                    <dt className="text-[0.6rem] uppercase tracking-[0.32em] text-[color:var(--color-charcoal-soft)]">
-                      Dimensions
-                    </dt>
-                    <dd className="mt-2">{product.height}</dd>
-                  </div>
-                  <div>
-                    <dt className="text-[0.6rem] uppercase tracking-[0.32em] text-[color:var(--color-charcoal-soft)]">
-                      Smart Home
-                    </dt>
-                    <dd className="mt-2">Apple · Alexa · Google</dd>
-                  </div>
-                </dl>
-              </FadeUp>
-
-              <FadeUp delay={0.24}>
-                <div className="mt-10">
-                  <AddToBag priceINR={product.priceINR} />
-                </div>
-              </FadeUp>
-
-              {/* Trust strip */}
-              <FadeUp delay={0.3}>
-                <ul className="mt-12 grid gap-3 text-[0.78rem] leading-[1.5] text-[color:var(--color-charcoal-soft)]">
-                  <li className="flex items-baseline gap-3">
-                    <span className="text-[color:var(--color-clay)]">—</span>
-                    Includes diffuser, ceramic base, USB-C adapter, and a
-                    100 ml oil of your choice (selected at checkout).
-                  </li>
-                  <li className="flex items-baseline gap-3">
-                    <span className="text-[color:var(--color-clay)]">—</span>
-                    Two-year limited warranty on the device.
-                  </li>
-                  <li className="flex items-baseline gap-3">
-                    <span className="text-[color:var(--color-clay)]">—</span>
-                    Refills shipped on a schedule you set. Pause whenever.
-                  </li>
-                </ul>
-              </FadeUp>
-            </div>
-          </aside>
-        </div>
-      </section>
+    <article id="top" className="bg-[color:var(--color-white)]">
+      {/* §  PRODUCT  —  gallery + buy box (colour selector for multi-finish models) */}
+      <DiffuserHero product={product} />
 
       {/* ====================================================
-          §  THE OBJECT  —  intro long-form description
+          §  OVERVIEW  —  the catalogue description, given room
           ==================================================== */}
       <section className="py-[var(--spacing-section)]">
         <div className="mx-auto max-w-[var(--container-full)] px-6 md:px-10">
-          <div className="grid gap-12 md:grid-cols-12 md:gap-16">
-            <FadeUp className="md:col-span-4">
-              <div className="text-[0.62rem] uppercase tracking-[0.42em] text-[color:var(--color-charcoal-soft)]">
-                <p>§ One</p>
-                <p className="mt-1">The Object</p>
+          <FadeUp>
+            <div className="mb-12 border-b border-[color:var(--color-rule)] pb-6">
+              <p className="text-[0.62rem] uppercase tracking-[0.42em] text-[color:var(--color-charcoal-soft)]">
+                Overview
+              </p>
+            </div>
+          </FadeUp>
+          <div className="grid gap-12 md:grid-cols-12 md:items-start md:gap-16">
+            <FadeUp delay={0.06} className="md:col-span-7">
+              <div className="max-w-[62ch] space-y-6">
+                {descriptionParagraphs.map((para, i) => (
+                  <p
+                    key={i}
+                    className={
+                      i === 0
+                        ? "text-[var(--text-xl)] leading-[1.6] text-[color:var(--color-charcoal)]"
+                        : "text-[var(--text-base)] leading-[1.85] text-[color:var(--color-charcoal-soft)]"
+                    }
+                  >
+                    {para}
+                  </p>
+                ))}
+              </div>
+
+              {/* Best for — quiet inline line, no Shopify chips */}
+              <div className="mt-10 flex flex-wrap items-baseline gap-x-3 gap-y-1 border-t border-[color:var(--color-rule)] pt-6">
+                <span className="text-[0.58rem] uppercase tracking-[0.32em] text-[color:var(--color-charcoal-soft)]">
+                  Best for
+                </span>
+                <span className="text-[0.92rem] text-[color:var(--color-charcoal)]">
+                  {product.bestFor.join("  ·  ")}
+                </span>
               </div>
             </FadeUp>
-            <FadeUp delay={0.08} className="md:col-span-8">
-              <p
-                className="text-balance"
-                style={{
-                  fontFamily: "var(--font-serif)",
-                  fontSize: "var(--text-3xl)",
-                  lineHeight: 1.16,
-                  letterSpacing: "-0.014em",
-                  fontWeight: 400,
-                }}
-              >
-                A single seamless cylinder. Brushed by hand. Sized to disappear
-                into a sideboard — or to be displayed,{" "}
-                <em className="text-[color:var(--color-aerial-deep)]">
-                  the way a small sculpture is.
-                </em>
-              </p>
-              <p className="mt-8 max-w-[60ch] text-[var(--text-base)] leading-[1.85] text-[color:var(--color-charcoal-soft)]">
-                {product.description}
-              </p>
+
+            {/* Image — kept at its native 4:5, never cropped, sized down and set to the right */}
+            <FadeUp delay={0.12} className="md:col-span-5">
+              <figure className="relative mx-auto aspect-[4/5] w-full max-w-[24rem] overflow-hidden bg-[color:var(--color-stardust-soft)] md:mr-0">
+                <Image
+                  src={product.gallery[2] ?? product.image}
+                  alt={`${product.name} — in a room`}
+                  fill
+                  sizes="(min-width: 768px) 24rem, 100vw"
+                  className="object-cover"
+                />
+              </figure>
             </FadeUp>
           </div>
         </div>
       </section>
 
       {/* ====================================================
-          §  THE FORM  —  2x2 grid mixing diffuser plates +
-              companion oil photography. Native portrait aspects
-              so nothing is cropped.
+          §  IN MOTION (video) — or one calm lifestyle image
           ==================================================== */}
-      <section className="bg-[color:var(--color-stardust-soft)] py-[var(--spacing-section)]">
-        <div className="mx-auto max-w-[var(--container-full)] px-6 md:px-10">
-          <div className="grid items-stretch gap-12 md:grid-cols-12 md:gap-16">
-            <FadeUp className="md:col-span-7">
-              {/* 2x2 balanced grid — diffuser top-left & bottom-right, oils top-right & bottom-left */}
-              <div className="grid grid-cols-2 gap-4 md:gap-5">
-                <figure>
-                  <div className="relative aspect-[4/5] overflow-hidden bg-[color:var(--color-aerial-soft)]">
-                    <Image
-                      src={product.gallery[1] ?? product.gallery[0]}
-                      alt={`${product.name} — detail`}
-                      fill
-                      sizes="(min-width: 768px) 27vw, 50vw"
-                      className="object-cover"
-                    />
-                  </div>
-                  <figcaption className="mt-3 text-[0.58rem] uppercase tracking-[0.36em] text-[color:var(--color-charcoal-soft)]">
-                    The object — in detail
-                  </figcaption>
-                </figure>
-                <figure>
-                  <div className="relative aspect-[4/5] overflow-hidden bg-[color:var(--color-aerial-soft)]">
-                    <Image
-                      src={oils[0].image}
-                      alt={`${oils[0].name} — bottle study`}
-                      fill
-                      sizes="(min-width: 768px) 27vw, 50vw"
-                      className="object-cover"
-                    />
-                  </div>
-                  <figcaption className="mt-3 text-[0.58rem] uppercase tracking-[0.36em] text-[color:var(--color-charcoal-soft)]">
-                    Companion · {oils[0].name}
-                  </figcaption>
-                </figure>
-                <figure>
-                  <div className="relative aspect-[4/5] overflow-hidden bg-[color:var(--color-aerial-soft)]">
-                    <Image
-                      src={oils[4].image}
-                      alt={`${oils[4].name} — bottle study`}
-                      fill
-                      sizes="(min-width: 768px) 27vw, 50vw"
-                      className="object-cover"
-                    />
-                  </div>
-                  <figcaption className="mt-3 text-[0.58rem] uppercase tracking-[0.36em] text-[color:var(--color-charcoal-soft)]">
-                    Companion · {oils[4].name}
-                  </figcaption>
-                </figure>
-                <figure>
-                  <div className="relative aspect-[4/5] overflow-hidden bg-[color:var(--color-aerial-soft)]">
-                    <Image
-                      src={product.gallery[2] ?? product.gallery[0]}
-                      alt={`${product.name} — in context`}
-                      fill
-                      sizes="(min-width: 768px) 27vw, 50vw"
-                      className="object-cover"
-                    />
-                  </div>
-                  <figcaption className="mt-3 text-[0.58rem] uppercase tracking-[0.36em] text-[color:var(--color-charcoal-soft)]">
-                    The object — in context
-                  </figcaption>
-                </figure>
+      {product.video ? (
+        <section className="bg-[color:var(--color-verdant)] py-[var(--spacing-section)] text-[color:var(--color-stardust)]">
+          <div className="mx-auto max-w-[var(--container-full)] px-6 md:px-10">
+            <div className="mb-12 grid gap-8 md:grid-cols-12 md:items-end md:gap-16">
+              <FadeUp className="md:col-span-7">
+                <div className="mb-7 flex items-center gap-4 text-[0.6rem] uppercase tracking-[0.42em] text-[color:var(--color-stardust)]/65">
+                  <span className="h-px w-12 bg-[color:var(--color-stardust)]/25" />
+                  <span>§ In Motion</span>
+                </div>
+                <h2
+                  className="max-w-[18ch] text-balance text-[color:var(--color-stardust)]"
+                  style={{
+                    fontFamily: "var(--font-serif)",
+                    fontSize: "var(--text-4xl)",
+                    lineHeight: 1.06,
+                    letterSpacing: "-0.022em",
+                    fontWeight: 400,
+                  }}
+                >
+                  See the {product.name}{" "}
+                  <em className="not-italic text-[color:var(--color-aerial-soft)]">
+                    in motion.
+                  </em>
+                </h2>
+              </FadeUp>
+              <FadeUp delay={0.08} className="md:col-span-5">
+                <p
+                  className="max-w-[42ch] text-[var(--text-base)] leading-[1.8]"
+                  style={{ color: "rgba(238, 228, 216, 0.82)" }}
+                >
+                  A closer look at how it runs in a room. Waterless cold-air
+                  diffusion, near-silent, a decor object you keep on the shelf.
+                </p>
+              </FadeUp>
+            </div>
+
+            {/* Full-width 16:9 video — landscape, shown in full (never cropped) */}
+            <FadeUp delay={0.12}>
+              <div className="relative aspect-video w-full overflow-hidden bg-black">
+                <video
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  className="absolute inset-0 h-full w-full object-contain"
+                >
+                  <source src={product.video} type="video/mp4" />
+                </video>
               </div>
             </FadeUp>
+          </div>
+        </section>
+      ) : (
+        <section className="px-6 pb-[var(--spacing-section)] md:px-10">
+          <div className="mx-auto max-w-[var(--container-full)]">
+            <FadeUp>
+              <figure className="relative aspect-[16/9] overflow-hidden bg-[color:var(--color-aerial-soft)] md:aspect-[2.4/1]">
+                <Image
+                  src={lifestyleImage}
+                  alt={`${product.name}, at home`}
+                  fill
+                  sizes="(min-width: 1600px) 1520px, 100vw"
+                  className="object-cover"
+                />
+                <figcaption className="absolute bottom-5 left-5 text-[0.58rem] uppercase tracking-[0.36em] text-[color:var(--color-stardust)] md:bottom-7 md:left-7">
+                  A decor object, kept on the shelf
+                </figcaption>
+              </figure>
+            </FadeUp>
+          </div>
+        </section>
+      )}
 
-            <FadeUp delay={0.1} className="md:col-span-5 md:pl-2">
-              <p className="text-[0.62rem] uppercase tracking-[0.42em] text-[color:var(--color-charcoal-soft)]">
-                On the form
+      {/* ====================================================
+          §  KEY FEATURES  —  given proper space
+          ==================================================== */}
+      <section className="border-y border-[color:var(--color-rule)] bg-[color:var(--color-stardust-soft)] py-[var(--spacing-section)]">
+        <div className="mx-auto max-w-[var(--container-full)] px-6 md:px-10">
+          <FadeUp>
+            <div className="mb-12 flex flex-wrap items-end justify-between gap-4 border-b border-[color:var(--color-rule)] pb-6">
+              <h2
+                style={{
+                  fontFamily: "var(--font-serif)",
+                  fontSize: "var(--text-4xl)",
+                  lineHeight: 1.04,
+                  letterSpacing: "-0.02em",
+                  fontWeight: 400,
+                }}
+              >
+                Key{" "}
+                <em className="text-[color:var(--color-aerial-deep)]">features.</em>
+              </h2>
+              <p className="text-[0.62rem] uppercase tracking-[0.32em] text-[color:var(--color-charcoal-soft)]">
+                {product.keyFeatures.length} reasons it&rsquo;s built well
               </p>
-              <p
-                className="mt-6 max-w-[20ch]"
+            </div>
+          </FadeUp>
+
+          {/* Each feature split into a serif lead + plain description, in its own
+              bordered cell — scannable and easy to understand. */}
+          <FadeUp delay={0.06}>
+            <ul className="grid grid-cols-1 border-l border-t border-[color:var(--color-rule)] md:grid-cols-2">
+              {product.keyFeatures.map((feature, i) => {
+                const dash = feature.indexOf(" — ");
+                const lead = dash > -1 ? feature.slice(0, dash) : feature;
+                const desc = dash > -1 ? feature.slice(dash + 3) : "";
+                return (
+                  <li
+                    key={i}
+                    className="group flex min-w-0 gap-5 border-b border-r border-[color:var(--color-rule)] bg-[color:var(--color-white)] p-7 transition-colors duration-500 hover:bg-[color:var(--color-ivory)] md:p-8"
+                  >
+                    <span
+                      className="shrink-0 tabular-nums text-[color:var(--color-clay)]"
+                      style={{
+                        fontFamily: "var(--font-serif)",
+                        fontSize: "var(--text-2xl)",
+                        lineHeight: 1,
+                        letterSpacing: "-0.02em",
+                      }}
+                    >
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                    <div className="min-w-0">
+                      <p
+                        className="text-[color:var(--color-charcoal)]"
+                        style={{
+                          fontFamily: "var(--font-serif)",
+                          fontSize: "var(--text-xl)",
+                          lineHeight: 1.2,
+                          letterSpacing: "-0.012em",
+                        }}
+                      >
+                        {lead}
+                      </p>
+                      {desc && (
+                        <p className="mt-2.5 text-[0.9rem] leading-[1.6] text-[color:var(--color-charcoal-soft)]">
+                          {desc}
+                        </p>
+                      )}
+                    </div>
+                  </li>
+                );
+              })}
+            </ul>
+          </FadeUp>
+        </div>
+      </section>
+
+      {/* ====================================================
+          §  HOW IT WORKS  —  waterless + simple steps
+          ==================================================== */}
+      <section className="py-[var(--spacing-section)]">
+        <div className="mx-auto max-w-[var(--container-full)] px-6 md:px-10">
+          <FadeUp>
+            <div className="mb-14 grid gap-8 border-b border-[color:var(--color-rule)] pb-8 md:grid-cols-12 md:items-end md:gap-16">
+              <h2
+                className="md:col-span-7"
                 style={{
                   fontFamily: "var(--font-serif)",
                   fontSize: "var(--text-3xl)",
                   lineHeight: 1.1,
                   letterSpacing: "-0.016em",
                   fontWeight: 400,
-                  color: "var(--color-charcoal)",
                 }}
               >
-                Sculptural.
-                <br />
-                Hand-finished.
-                <br />
+                Waterless oil diffusion.{" "}
                 <em className="text-[color:var(--color-aerial-deep)]">
-                  Built to live with you.
+                  Set it once.
                 </em>
-              </p>
-              <div className="mt-8 space-y-5 max-w-[44ch] text-[var(--text-base)] leading-[1.85] text-[color:var(--color-charcoal-soft)]">
-                <p>
-                  A single object, machined and finished by hand. The base
-                  decouples vibration so the body never trembles. The companion
-                  oils are blended like fine perfumery — top, heart, and base —
-                  at 70–90% concentration.
-                </p>
-                <p>
-                  Built to sit unannounced on a shelf and be discovered. It
-                  tells you nothing about itself until the room it occupies
-                  tells you everything.
-                </p>
-              </div>
-
-              {/* Anchor — three small material chips */}
-              <dl className="mt-10 grid grid-cols-3 gap-3 border-t border-[color:var(--color-rule)] pt-6">
-                <div>
-                  <dt className="text-[0.58rem] uppercase tracking-[0.32em] text-[color:var(--color-charcoal-soft)]">
-                    Object
-                  </dt>
-                  <dd className="mt-1.5 text-[0.86rem]">{product.finish.split(" on ")[0]}</dd>
-                </div>
-                <div>
-                  <dt className="text-[0.58rem] uppercase tracking-[0.32em] text-[color:var(--color-charcoal-soft)]">
-                    Oil
-                  </dt>
-                  <dd className="mt-1.5 text-[0.86rem]">100 ml, 70–90%</dd>
-                </div>
-                <div>
-                  <dt className="text-[0.58rem] uppercase tracking-[0.32em] text-[color:var(--color-charcoal-soft)]">
-                    Together
-                  </dt>
-                  <dd className="mt-1.5 text-[0.86rem]">~90 days</dd>
-                </div>
-              </dl>
-            </FadeUp>
-          </div>
-        </div>
-      </section>
-
-      {/* ====================================================
-          §  THE ENGINEERING  —  cold-air nebulisation
-          ==================================================== */}
-      <section className="bg-[color:var(--color-verdant)] py-[var(--spacing-section)] text-[color:var(--color-stardust)]">
-        {/* Atmospheric mesh */}
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-x-0"
-          style={{
-            background:
-              "radial-gradient(ellipse at 70% 0%, rgba(119,145,141,0.20) 0%, rgba(41,51,41,0) 50%)",
-          }}
-        />
-        <div className="mx-auto max-w-[var(--container-full)] px-6 md:px-10">
-          <FadeUp>
-            <div className="mb-12 flex items-center gap-4 text-[0.6rem] uppercase tracking-[0.42em] text-[color:var(--color-stardust)]/65">
-              <span className="h-px w-12 bg-[color:var(--color-stardust)]/25" />
-              <span>§ Two · The Engineering</span>
-              <span className="h-px flex-1 bg-[color:var(--color-stardust)]/15" />
-            </div>
-          </FadeUp>
-
-          <div className="grid gap-12 md:grid-cols-12 md:gap-16">
-            <FadeUp className="md:col-span-7">
-              <h2
-                className="text-balance text-[color:var(--color-stardust)]"
-                style={{
-                  fontFamily: "var(--font-serif)",
-                  fontSize: "var(--text-4xl)",
-                  lineHeight: 1.04,
-                  letterSpacing: "-0.022em",
-                  fontWeight: 400,
-                }}
-              >
-                No water.
-                <br />
-                <em className="not-italic text-[color:var(--color-aerial-soft)]">
-                  No heat.
-                </em>
-                <br />
-                No daily attention.
               </h2>
-              <p
-                className="mt-8 max-w-[58ch] text-[var(--text-base)] leading-[1.85]"
-                style={{ color: "rgba(238, 228, 216, 0.78)" }}
-              >
-                Most diffusers ultrasonically vibrate a tank of water, releasing
-                a faint, diluted mist into the room. The Monolith does
-                something different. Pressurised air atomises pure oil
-                directly — 70 to 90% concentration, not 1 to 3 — so what
-                reaches you is the fragrance itself, in its full architecture
-                of top, heart, and base notes. Quieter than a candle.
-                Cleaner than a spray. The room performs.
+              <p className="max-w-[44ch] text-[var(--text-base)] leading-[1.75] text-[color:var(--color-charcoal-soft)] md:col-span-5">
+                Cold air atomises the oil directly. Nothing is watered down, so
+                you get the full 70–90% concentration in the room.
               </p>
-            </FadeUp>
+            </div>
+          </FadeUp>
 
-            <FadeUp delay={0.1} className="md:col-span-5">
-              <ol className="grid gap-px overflow-hidden bg-[color:var(--color-stardust)]/15">
-                {[
-                  {
-                    no: "01",
-                    title: "Fill",
-                    body: "Pour a 100 ml refill into the reservoir. No water, no carrier oil.",
-                  },
-                  {
-                    no: "02",
-                    title: "Pair",
-                    body: "One-time Wi-Fi pairing via the Quint Home companion app.",
-                  },
-                  {
-                    no: "03",
-                    title: "Schedule",
-                    body: "Set a morning and evening profile. Intensity, duration, days.",
-                  },
-                  {
-                    no: "04",
-                    title: "Return",
-                    body: "The device runs on its own. You come home to scent.",
-                  },
-                ].map((step) => (
-                  <li
-                    key={step.no}
-                    className="grid grid-cols-[auto_1fr] gap-x-5 bg-[color:var(--color-verdant)] p-5"
+          <div className="grid gap-x-10 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
+            {steps.map((step, i) => (
+              <FadeUp key={step.no} delay={i * 0.06}>
+                <div className="border-t border-[color:var(--color-charcoal)] pt-5">
+                  <span className="text-[0.62rem] uppercase tracking-[0.32em] text-[color:var(--color-charcoal-soft)]">
+                    {step.no}
+                  </span>
+                  <h3
+                    className="mt-4"
+                    style={{
+                      fontFamily: "var(--font-serif)",
+                      fontSize: "var(--text-2xl)",
+                      lineHeight: 1.1,
+                      letterSpacing: "-0.012em",
+                      fontWeight: 400,
+                    }}
                   >
-                    <span className="text-[0.6rem] uppercase tracking-[0.32em] text-[color:var(--color-aerial-soft)]">
-                      {step.no}
-                    </span>
-                    <div>
-                      <p
-                        style={{
-                          fontFamily: "var(--font-serif)",
-                          fontSize: "1.05rem",
-                          letterSpacing: "-0.008em",
-                          color: "var(--color-stardust)",
-                        }}
-                      >
-                        {step.title}
-                      </p>
-                      <p
-                        className="mt-1 text-[0.82rem] leading-[1.6]"
-                        style={{ color: "rgba(238, 228, 216, 0.65)" }}
-                      >
-                        {step.body}
-                      </p>
-                    </div>
-                  </li>
-                ))}
-              </ol>
-            </FadeUp>
-          </div>
-        </div>
-      </section>
-
-      {/* ====================================================
-          §  IN SITU  —  drag carousel of environments
-          ==================================================== */}
-      <section className="py-[var(--spacing-section)]">
-        <div className="mx-auto max-w-[var(--container-full)] px-6 md:px-10">
-          <FadeUp>
-            <div className="mb-12 flex flex-col gap-6 border-b border-[color:var(--color-rule)] pb-6 md:mb-16 md:flex-row md:items-end md:justify-between">
-              <div>
-                <p className="text-[0.62rem] uppercase tracking-[0.42em] text-[color:var(--color-charcoal-soft)]">
-                  § Three · In Situ
-                </p>
-                <h2
-                  className="mt-5 max-w-[20ch] text-balance"
-                  style={{
-                    fontFamily: "var(--font-serif)",
-                    fontSize: "var(--text-3xl)",
-                    lineHeight: 1.08,
-                    letterSpacing: "-0.016em",
-                    fontWeight: 400,
-                  }}
-                >
-                  Six rooms.{" "}
-                  <em className="text-[color:var(--color-aerial-deep)]">
-                    One object, in each of them.
-                  </em>
-                </h2>
-              </div>
-              <p className="max-w-[28ch] text-[0.86rem] leading-[1.6] text-[color:var(--color-charcoal-soft)] md:text-right">
-                Studies of the same diffuser, photographed in six different
-                atmospheres.
-                <br />
-                <span className="text-[0.6rem] uppercase tracking-[0.32em]">
-                  Drag to browse →
-                </span>
-              </p>
-            </div>
-          </FadeUp>
-
-          <FadeUp delay={0.08}>
-            <EditorialCarousel
-              slides={
-                [
-                  {
-                    src: product.gallery[0],
-                    alt: "The Monolith on a sideboard against terracotta plaster",
-                    eyebrow: "01 · The Hallway",
-                    caption: "Against terracotta plaster. The first thing you notice on returning home.",
-                  },
-                  {
-                    src: product.gallery[2],
-                    alt: "The Monolith on a stone disc against travertine",
-                    eyebrow: "02 · The Atelier",
-                    caption: "On a stone disc. A small object, given weight.",
-                  },
-                  {
-                    src: product.gallery[3],
-                    alt: "Under a felt pendant lamp on a vintage wood table",
-                    eyebrow: "03 · The Snug",
-                    caption: "Under a felt pendant. Warm light, warm wood, warm scent.",
-                  },
-                  {
-                    src: product.gallery[4],
-                    alt: "On linen, a single sunbeam, dark teal wall",
-                    eyebrow: "04 · The Study",
-                    caption: "On linen. A single sunbeam. Three hours of unbroken work.",
-                  },
-                  {
-                    src: product.gallery[5],
-                    alt: "On orange velvet, dramatic spot lighting",
-                    eyebrow: "05 · The Drawing Room",
-                    caption: "On velvet, at dusk. A room reset for the evening.",
-                  },
-                  {
-                    src: product.gallery[1],
-                    alt: "Detail shot, amber light",
-                    eyebrow: "06 · The Bar",
-                    caption: "Amber light. The pause before guests arrive.",
-                  },
-                ] satisfies Slide[]
-              }
-              slideWidth={380}
-              slideWidthMobile={280}
-              withPlateNumbers={false}
-            />
-          </FadeUp>
-        </div>
-      </section>
-
-      {/* ====================================================
-          §  SPECIFICATIONS  —  editorial spec sheet
-          ==================================================== */}
-      <section className="border-y border-[color:var(--color-rule)] bg-[color:var(--color-stardust-soft)] py-[var(--spacing-section)]">
-        <div className="mx-auto max-w-[var(--container-full)] px-6 md:px-10">
-          <FadeUp>
-            <div className="mb-14 flex items-end justify-between border-b border-[color:var(--color-rule)] pb-6">
-              <div>
-                <p className="text-[0.62rem] uppercase tracking-[0.42em] text-[color:var(--color-charcoal-soft)]">
-                  § Four · Specification
-                </p>
-                <h2
-                  className="mt-5"
-                  style={{
-                    fontFamily: "var(--font-serif)",
-                    fontSize: "var(--text-3xl)",
-                    lineHeight: 1.04,
-                    letterSpacing: "-0.018em",
-                    fontWeight: 400,
-                  }}
-                >
-                  The technical card.
-                </h2>
-              </div>
-              <p className="hidden text-[0.62rem] uppercase tracking-[0.32em] text-[color:var(--color-charcoal-soft)] md:block">
-                Verified · {new Date().getFullYear()} · IFRA-Compliant
-              </p>
-            </div>
-          </FadeUp>
-
-          <div className="grid gap-x-12 md:grid-cols-2">
-            {product.specs.map((spec, i) => (
-              <FadeUp key={spec.label} delay={i * 0.03}>
-                <dl className="grid grid-cols-[160px_1fr] items-baseline gap-x-6 border-b border-[color:var(--color-rule)] py-5 md:grid-cols-[200px_1fr]">
-                  <dt className="text-[0.62rem] uppercase tracking-[0.32em] text-[color:var(--color-charcoal-soft)]">
-                    {spec.label}
-                  </dt>
-                  <dd className="text-[0.95rem] leading-[1.55] text-[color:var(--color-charcoal)]">
-                    {spec.value}
-                  </dd>
-                </dl>
+                    {step.title}
+                  </h3>
+                  <p className="mt-3 text-[0.9rem] leading-[1.65] text-[color:var(--color-charcoal-soft)]">
+                    {step.body}
+                  </p>
+                </div>
               </FadeUp>
             ))}
           </div>
@@ -590,35 +350,89 @@ export default async function ProductPage({
       </section>
 
       {/* ====================================================
-          §  PAIRS WITH  —  curated companion oils
+          §  SPECIFICATIONS  —  clean technical card
+          ==================================================== */}
+      <section className="border-y border-[color:var(--color-rule)] bg-[color:var(--color-stardust-soft)] py-[var(--spacing-section)]">
+        <div className="mx-auto max-w-[var(--container-full)] px-6 md:px-10">
+          <FadeUp>
+            <div className="mb-12 flex flex-wrap items-end justify-between gap-4 border-b border-[color:var(--color-rule)] pb-6">
+              <h2
+                style={{
+                  fontFamily: "var(--font-serif)",
+                  fontSize: "var(--text-4xl)",
+                  lineHeight: 1.04,
+                  letterSpacing: "-0.02em",
+                  fontWeight: 400,
+                }}
+              >
+                Specifications.
+              </h2>
+              <p className="text-[0.62rem] uppercase tracking-[0.32em] text-[color:var(--color-charcoal-soft)]">
+                Model {product.model} · IFRA-compliant oils
+              </p>
+            </div>
+          </FadeUp>
+
+          {/* Spec grid — each value set large in its own bordered cell, so the
+              numbers read as the hero. Hairline grid, no shadows. */}
+          <FadeUp delay={0.06}>
+            <dl className="grid grid-cols-2 border-l border-t border-[color:var(--color-rule)] md:grid-cols-3 lg:grid-cols-4">
+              {product.specs.map((spec, i) => (
+                <div
+                  key={spec.label}
+                  className="group flex min-w-0 flex-col border-b border-r border-[color:var(--color-rule)] bg-[color:var(--color-white)] p-6 transition-colors duration-500 hover:bg-[color:var(--color-ivory)] md:p-7"
+                >
+                  <div className="flex items-center gap-2">
+                    <span className="text-[0.56rem] tabular-nums text-[color:var(--color-clay)]">
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                    <dt className="text-[0.56rem] uppercase tracking-[0.28em] text-[color:var(--color-charcoal-soft)]">
+                      {spec.label}
+                    </dt>
+                  </div>
+                  <dd
+                    className="mt-5 break-words text-[color:var(--color-charcoal)]"
+                    style={{
+                      fontFamily: "var(--font-serif)",
+                      fontSize: "var(--text-xl)",
+                      lineHeight: 1.2,
+                      letterSpacing: "-0.012em",
+                    }}
+                  >
+                    {spec.value}
+                  </dd>
+                </div>
+              ))}
+            </dl>
+          </FadeUp>
+        </div>
+      </section>
+
+      {/* ====================================================
+          §  PAIRS WITH  —  companion oils
           ==================================================== */}
       <section className="py-[var(--spacing-section)]">
         <div className="mx-auto max-w-[var(--container-full)] px-6 md:px-10">
           <FadeUp>
-            <div className="mb-14 grid gap-6 md:grid-cols-[1fr_auto] md:items-end">
-              <div>
-                <p className="text-[0.62rem] uppercase tracking-[0.42em] text-[color:var(--color-charcoal-soft)]">
-                  The Pairings
-                </p>
-                <h2
-                  className="mt-5 text-balance"
-                  style={{
-                    fontFamily: "var(--font-serif)",
-                    fontSize: "var(--text-3xl)",
-                    lineHeight: 1.04,
-                    letterSpacing: "-0.018em",
-                    fontWeight: 400,
-                  }}
-                >
-                  An object is hardware.{" "}
-                  <em className="not-italic text-[color:var(--color-aerial-deep)]">
-                    The oil is the script.
-                  </em>
-                </h2>
-              </div>
+            <div className="mb-12 flex flex-wrap items-end justify-between gap-6 border-b border-[color:var(--color-rule)] pb-6">
+              <h2
+                className="text-balance"
+                style={{
+                  fontFamily: "var(--font-serif)",
+                  fontSize: "var(--text-3xl)",
+                  lineHeight: 1.06,
+                  letterSpacing: "-0.018em",
+                  fontWeight: 400,
+                }}
+              >
+                Pairs with{" "}
+                <em className="text-[color:var(--color-aerial-deep)]">
+                  the oils.
+                </em>
+              </h2>
               <Link
                 href="/shop?category=oils"
-                className="text-[0.74rem] uppercase tracking-[0.32em] underline-offset-4 hover:underline"
+                className="text-[0.72rem] uppercase tracking-[0.32em] underline-offset-4 hover:text-[color:var(--color-clay)] hover:underline"
               >
                 All scents →
               </Link>
@@ -644,42 +458,35 @@ export default async function ProductPage({
                     className="absolute inset-0"
                     style={{
                       background:
-                        "linear-gradient(180deg, rgba(58,53,50,0.25) 0%, rgba(58,53,50,0.0) 35%, rgba(58,53,50,0.72) 100%)",
+                        "linear-gradient(180deg, rgba(58,53,50,0.2) 0%, rgba(58,53,50,0.0) 38%, rgba(58,53,50,0.72) 100%)",
                     }}
                   />
-
-                  <div className="relative flex items-start justify-between text-[0.58rem] uppercase tracking-[0.32em] opacity-90">
-                    <span>№{String(oils.findIndex((x) => x.slug === o.slug) + 1).padStart(2, "0")}</span>
+                  <div className="relative flex items-start justify-end text-[0.58rem] uppercase tracking-[0.32em] opacity-90">
                     {o.tier === "hotel-credential" && (
                       <span className="rounded-full border border-current px-2 py-0.5 text-[0.5rem]">
-                        Hotel
+                        Credential
                       </span>
                     )}
                   </div>
-                  <div className="relative mt-auto">
+                  <div className="relative">
                     <h3
                       className="text-balance transition-transform duration-700 ease-[var(--ease-quint)] group-hover:-translate-y-1"
                       style={{
                         fontFamily: "var(--font-serif)",
                         fontSize: "var(--text-2xl)",
-                        lineHeight: 1.02,
+                        lineHeight: 1.04,
                         letterSpacing: "-0.018em",
                         color: "var(--color-stardust)",
                       }}
                     >
                       {o.name}
                     </h3>
-                    <p className="mt-3 max-w-[28ch] text-[0.82rem] leading-[1.55] opacity-90">
-                      {o.tagline}
-                    </p>
-                  </div>
-                  <div className="relative flex items-end justify-between text-[0.66rem] tracking-[0.04em] opacity-90">
-                    <span className="uppercase tracking-[0.18em] text-[0.58rem]">
-                      {o.notes.heart[0]}
-                    </span>
-                    <span className="tabular-nums">
-                      {formatINR(o.priceINR)}
-                    </span>
+                    <div className="mt-3 flex items-end justify-between text-[0.66rem] opacity-90">
+                      <span className="uppercase tracking-[0.18em] text-[0.56rem]">
+                        {o.notes.heart[0]}
+                      </span>
+                      <span className="tabular-nums">{formatINR(o.priceINR)}</span>
+                    </div>
                   </div>
                 </Link>
               </FadeUp>
@@ -689,61 +496,41 @@ export default async function ProductPage({
       </section>
 
       {/* ====================================================
-          §  CLOSING  —  native portrait image + CTA
+          §  CLOSING CTA
           ==================================================== */}
-      <section className="bg-[color:var(--color-white)] py-[var(--spacing-section)]">
-        <div className="mx-auto max-w-[var(--container-content)] px-6 md:px-10">
-          <div className="grid items-center gap-12 md:grid-cols-12 md:gap-16">
-            <FadeUp className="md:col-span-5">
-              <figure className="relative">
-                <div className="relative aspect-[4/5] overflow-hidden bg-[color:var(--color-aerial-soft)]">
-                  <Image
-                    src={product.gallery[1]}
-                    alt={`${product.name} — closing portrait`}
-                    fill
-                    sizes="(min-width: 768px) 40vw, 100vw"
-                    className="object-cover"
-                  />
-                </div>
-                <figcaption className="mt-4 flex items-center gap-3 text-[0.58rem] uppercase tracking-[0.36em] text-[color:var(--color-charcoal-soft)]">
-                  <span>The Object, in detail</span>
-                </figcaption>
-              </figure>
-            </FadeUp>
-
-            <FadeUp delay={0.1} className="md:col-span-7">
-              <p className="text-[0.62rem] uppercase tracking-[0.42em] text-[color:var(--color-charcoal-soft)]">
-                {product.name} · {formatINR(product.priceINR)}
-              </p>
-              <h2
-                className="mt-7 max-w-[22ch] text-balance"
-                style={{
-                  fontFamily: "var(--font-serif)",
-                  fontSize: "var(--text-3xl)",
-                  lineHeight: 1.08,
-                  letterSpacing: "-0.018em",
-                  fontWeight: 400,
-                }}
-              >
-                One object, one ritual.{" "}
-                <em className="text-[color:var(--color-aerial-deep)]">
-                  A room reset, twice a day, forever.
-                </em>
-              </h2>
-              <p className="mt-7 max-w-[44ch] text-[var(--text-base)] leading-[1.8] text-[color:var(--color-charcoal-soft)]">
-                Choose a scent at checkout and we&rsquo;ll include your first
-                100 ml refill in the box. Future refills arrive on a schedule
-                you set.
-              </p>
-              <Link
-                href="#top"
-                className="group mt-10 inline-flex items-center gap-3 border-b border-[color:var(--color-charcoal)] pb-1.5 text-[0.72rem] uppercase tracking-[0.32em] transition-colors duration-500 hover:text-[color:var(--color-clay)] hover:border-[color:var(--color-clay)]"
-              >
-                Configure your Monolith
-                <span className="transition-transform duration-500 group-hover:translate-x-1">↑</span>
-              </Link>
-            </FadeUp>
-          </div>
+      <section className="border-t border-[color:var(--color-rule)] py-[var(--spacing-section)]">
+        <div className="mx-auto max-w-[var(--container-content)] px-6 text-center md:px-10">
+          <FadeUp>
+            <p className="text-[0.62rem] uppercase tracking-[0.42em] text-[color:var(--color-charcoal-soft)]">
+              {product.name} · {formatINR(product.priceINR)}
+            </p>
+          </FadeUp>
+          <FadeUp delay={0.08}>
+            <h2
+              className="mx-auto mt-6 max-w-[20ch] text-balance"
+              style={{
+                fontFamily: "var(--font-serif)",
+                fontSize: "var(--text-3xl)",
+                lineHeight: 1.1,
+                letterSpacing: "-0.018em",
+                fontWeight: 400,
+              }}
+            >
+              Choose your scent.{" "}
+              <em className="text-[color:var(--color-aerial-deep)]">
+                Set the schedule once.
+              </em>
+            </h2>
+          </FadeUp>
+          <FadeUp delay={0.16}>
+            <Link
+              href="#top"
+              className="group mt-9 inline-flex items-center gap-3 border-b border-[color:var(--color-charcoal)] pb-1.5 text-[0.72rem] uppercase tracking-[0.32em] transition-colors duration-500 hover:border-[color:var(--color-clay)] hover:text-[color:var(--color-clay)]"
+            >
+              Add {product.name} to bag
+              <span className="transition-transform duration-500 group-hover:-translate-y-1">↑</span>
+            </Link>
+          </FadeUp>
         </div>
       </section>
     </article>
@@ -751,34 +538,246 @@ export default async function ProductPage({
 }
 
 // ============================================================
-//  Oils stub — handled in next pass
+//  Oil PDP — hero buy box + editorial sections
+//  NOTE: feature copy below is placeholder ("random for now") — to be
+//  replaced with final per-oil detail once supplied.
 // ============================================================
-function OilStub({ slug }: { slug: string }) {
-  const oil = getOil(slug);
-  if (!oil) return null;
+function OilProductPage({ oil }: { oil: FragranceOil }) {
+  // Placeholder feature set derived from the oil's data — swap for real copy later.
+  const features = [
+    "70–90% fragrance concentration — true perfumery strength, never watered down.",
+    "IFRA-compliant, blended from responsibly sourced aromatics.",
+    `${oil.volumeML} ml glass bottle — 60 to 140 days of scent per fill.`,
+    "Engineered for Quint waterless cold-air diffusers — no heat, no water.",
+    `A ${oil.mood.toLowerCase()} profile, built around ${oil.origin.toLowerCase()}.`,
+    "Throw tuned for rooms up to 100 m² on a Quint diffuser.",
+  ];
+
+  // Diffusers this oil pairs into — the buy box bundles them; this reinforces it.
+  const pairDiffusers = diffusers.slice(0, 4);
+
   return (
-    <div className="mx-auto max-w-[var(--container-content)] px-6 py-[var(--spacing-section)] md:px-10">
-      <p className="text-[0.62rem] uppercase tracking-[0.42em] text-[color:var(--color-charcoal-soft)]">
-        Fragrance Oil
-      </p>
-      <h1
-        className="mt-6 max-w-[14ch] text-balance"
-        style={{
-          fontFamily: "var(--font-serif)",
-          fontSize: "var(--text-5xl)",
-          lineHeight: 0.98,
-          letterSpacing: "-0.024em",
-          fontWeight: 400,
-        }}
+    <article id="top" className="bg-[color:var(--color-white)]">
+      {/* §  PRODUCT — gallery + buy box + bundle */}
+      <OilHero oil={oil} />
+
+      {/* §  THE SCENT — mood + origin given room, on the oil's own colour */}
+      <section
+        className="py-[var(--spacing-section)]"
+        style={{ backgroundColor: oil.swatch, color: oil.textColor }}
       >
-        {oil.name}
-      </h1>
-      <p className="mt-6 max-w-[44ch] text-[var(--text-lg)] leading-[1.55] text-[color:var(--color-charcoal-soft)]">
-        {oil.tagline}
-      </p>
-      <p className="mt-12 text-[0.78rem] uppercase tracking-[0.24em] text-[color:var(--color-charcoal-soft)]">
-        Oil PDP layout shipping next pass — for now, the diffuser PDP is the editorial template.
-      </p>
-    </div>
+        <div className="mx-auto max-w-[var(--container-full)] px-6 md:px-10">
+          <div className="grid gap-10 md:grid-cols-12 md:items-end md:gap-16">
+            <FadeUp className="md:col-span-7">
+              <p
+                className="text-[0.62rem] uppercase tracking-[0.42em]"
+                style={{ opacity: 0.7 }}
+              >
+                The scent
+              </p>
+              <h2
+                className="mt-6 max-w-[18ch] text-balance"
+                style={{
+                  fontFamily: "var(--font-serif)",
+                  fontSize: "var(--text-4xl)",
+                  lineHeight: 1.04,
+                  letterSpacing: "-0.022em",
+                  fontWeight: 400,
+                }}
+              >
+                {oil.mood}.
+              </h2>
+            </FadeUp>
+            <FadeUp delay={0.08} className="md:col-span-5">
+              <p className="max-w-[44ch] text-[var(--text-base)] leading-[1.85]" style={{ opacity: 0.88 }}>
+                {oil.description}
+              </p>
+              <p className="mt-6 text-[0.62rem] uppercase tracking-[0.32em]" style={{ opacity: 0.7 }}>
+                Origin · {oil.origin}
+              </p>
+            </FadeUp>
+          </div>
+        </div>
+      </section>
+
+      {/* §  KEY FEATURES */}
+      <section className="border-b border-[color:var(--color-rule)] bg-[color:var(--color-stardust-soft)] py-[var(--spacing-section)]">
+        <div className="mx-auto max-w-[var(--container-full)] px-6 md:px-10">
+          <FadeUp>
+            <div className="mb-12 flex flex-wrap items-end justify-between gap-4 border-b border-[color:var(--color-rule)] pb-6">
+              <h2
+                style={{
+                  fontFamily: "var(--font-serif)",
+                  fontSize: "var(--text-4xl)",
+                  lineHeight: 1.04,
+                  letterSpacing: "-0.02em",
+                  fontWeight: 400,
+                }}
+              >
+                Key{" "}
+                <em className="text-[color:var(--color-aerial-deep)]">features.</em>
+              </h2>
+              <p className="text-[0.62rem] uppercase tracking-[0.32em] text-[color:var(--color-charcoal-soft)]">
+                {features.length} reasons it&rsquo;s blended well
+              </p>
+            </div>
+          </FadeUp>
+
+          {/* Each feature split into a serif lead + plain description, in its own
+              bordered cell — scannable and easy to understand. */}
+          <FadeUp delay={0.06}>
+            <ul className="grid grid-cols-1 border-l border-t border-[color:var(--color-rule)] md:grid-cols-2">
+              {features.map((feature, i) => {
+                const dash = feature.indexOf(" — ");
+                const lead = dash > -1 ? feature.slice(0, dash) : feature;
+                const desc = dash > -1 ? feature.slice(dash + 3) : "";
+                return (
+                  <li
+                    key={i}
+                    className="group flex min-w-0 gap-5 border-b border-r border-[color:var(--color-rule)] bg-[color:var(--color-white)] p-7 transition-colors duration-500 hover:bg-[color:var(--color-ivory)] md:p-8"
+                  >
+                    <span
+                      className="shrink-0 tabular-nums text-[color:var(--color-clay)]"
+                      style={{
+                        fontFamily: "var(--font-serif)",
+                        fontSize: "var(--text-2xl)",
+                        lineHeight: 1,
+                        letterSpacing: "-0.02em",
+                      }}
+                    >
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                    <div className="min-w-0">
+                      <p
+                        className="text-[color:var(--color-charcoal)]"
+                        style={{
+                          fontFamily: "var(--font-serif)",
+                          fontSize: "var(--text-xl)",
+                          lineHeight: 1.2,
+                          letterSpacing: "-0.012em",
+                        }}
+                      >
+                        {lead}
+                      </p>
+                      {desc && (
+                        <p className="mt-2.5 text-[0.9rem] leading-[1.6] text-[color:var(--color-charcoal-soft)]">
+                          {desc}
+                        </p>
+                      )}
+                    </div>
+                  </li>
+                );
+              })}
+            </ul>
+          </FadeUp>
+        </div>
+      </section>
+
+      {/* §  PAIRS WITH — the diffusers (bundle in the buy box) */}
+      <section className="py-[var(--spacing-section)]">
+        <div className="mx-auto max-w-[var(--container-full)] px-6 md:px-10">
+          <FadeUp>
+            <div className="mb-12 flex flex-wrap items-end justify-between gap-6 border-b border-[color:var(--color-rule)] pb-6">
+              <h2
+                className="text-balance"
+                style={{
+                  fontFamily: "var(--font-serif)",
+                  fontSize: "var(--text-3xl)",
+                  lineHeight: 1.06,
+                  letterSpacing: "-0.018em",
+                  fontWeight: 400,
+                }}
+              >
+                Goes in{" "}
+                <em className="text-[color:var(--color-aerial-deep)]">
+                  the diffusers.
+                </em>
+              </h2>
+              <Link
+                href="/shop#diffusers"
+                className="text-[0.72rem] uppercase tracking-[0.32em] underline-offset-4 hover:text-[color:var(--color-clay)] hover:underline"
+              >
+                All diffusers →
+              </Link>
+            </div>
+          </FadeUp>
+
+          <div className="grid gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-4">
+            {pairDiffusers.map((d, i) => (
+              <FadeUp key={d.slug} delay={i * 0.05}>
+                <Link href={`/shop/${d.slug}`} className="group block">
+                  <div className="relative aspect-[4/5] overflow-hidden bg-[color:var(--color-stardust-soft)]">
+                    <Image
+                      src={d.image}
+                      alt={d.name}
+                      fill
+                      sizes="(min-width: 1024px) 22vw, (min-width: 640px) 45vw, 100vw"
+                      className="object-cover transition-transform duration-[1400ms] ease-[var(--ease-quint)] group-hover:scale-[1.05]"
+                    />
+                  </div>
+                  <div className="mt-4 flex items-baseline justify-between gap-2 border-b border-[color:var(--color-rule)] pb-3">
+                    <h3
+                      className="transition-colors duration-300 group-hover:text-[color:var(--color-clay)]"
+                      style={{
+                        fontFamily: "var(--font-serif)",
+                        fontSize: "var(--text-xl)",
+                        lineHeight: 1.06,
+                        letterSpacing: "-0.014em",
+                        fontWeight: 400,
+                      }}
+                    >
+                      {d.name}
+                    </h3>
+                    <span className="shrink-0 tabular-nums text-[0.8rem]">
+                      {formatINR(d.priceINR)}
+                    </span>
+                  </div>
+                  <p className="mt-2 text-[0.74rem] text-[color:var(--color-charcoal-soft)]">
+                    {d.coverageLabel}
+                  </p>
+                </Link>
+              </FadeUp>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* §  CLOSING CTA */}
+      <section className="border-t border-[color:var(--color-rule)] py-[var(--spacing-section)]">
+        <div className="mx-auto max-w-[var(--container-content)] px-6 text-center md:px-10">
+          <FadeUp>
+            <p className="text-[0.62rem] uppercase tracking-[0.42em] text-[color:var(--color-charcoal-soft)]">
+              {oil.name} · {formatINR(oil.priceINR)} · {oil.volumeML} ml
+            </p>
+          </FadeUp>
+          <FadeUp delay={0.08}>
+            <h2
+              className="mx-auto mt-6 max-w-[20ch] text-balance"
+              style={{
+                fontFamily: "var(--font-serif)",
+                fontSize: "var(--text-3xl)",
+                lineHeight: 1.1,
+                letterSpacing: "-0.018em",
+                fontWeight: 400,
+              }}
+            >
+              Add the oil.{" "}
+              <em className="text-[color:var(--color-aerial-deep)]">
+                Pair a diffuser and save.
+              </em>
+            </h2>
+          </FadeUp>
+          <FadeUp delay={0.16}>
+            <Link
+              href="#top"
+              className="group mt-9 inline-flex items-center gap-3 border-b border-[color:var(--color-charcoal)] pb-1.5 text-[0.72rem] uppercase tracking-[0.32em] transition-colors duration-500 hover:border-[color:var(--color-clay)] hover:text-[color:var(--color-clay)]"
+            >
+              Add {oil.name} to bag
+              <span className="transition-transform duration-500 group-hover:-translate-y-1">↑</span>
+            </Link>
+          </FadeUp>
+        </div>
+      </section>
+    </article>
   );
 }

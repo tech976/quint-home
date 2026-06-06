@@ -14,7 +14,7 @@ const groups = [
     items: [
       {
         q: "How is this different from a regular diffuser?",
-        a: "Most home diffusers ultrasonically vibrate a tank of water, releasing a faint, diluted mist (1–3% fragrance) plus humidified air into the room. Quint Home uses cold-air nebulisation — pressurised air atomises pure oil at 70–90% concentration, with no water, no heat, and no carrier. The result is significantly more potent, lasts longer, and carries the full architecture of top, heart, and base notes.",
+        a: "Most home diffusers vibrate a tank of water and release a faint, diluted mist of about 1 to 3 percent fragrance plus humidified air. Quint Home diffuses the oil directly, with no water and no heat, at 70 to 90 percent concentration. The scent is much stronger, lasts longer, and holds the full structure of top, heart, and base notes.",
       },
       {
         q: "Is it actually silent?",
@@ -22,7 +22,7 @@ const groups = [
       },
       {
         q: "What does it take to set up?",
-        a: "Fill the oil reservoir, pair with the Quint Home companion app once via Bluetooth, set a morning and evening schedule, and the device runs on its own from that point. No daily interaction is needed.",
+        a: "Fill the oil reservoir, pair with the Quint Home companion app once via Bluetooth, set a morning and evening schedule, and the device runs on its own from that point. No daily interaction is needed. The Plug-In model needs no app at all — it runs on a built-in 24-hour cyclic timer.",
       },
     ],
   },
@@ -32,29 +32,29 @@ const groups = [
     items: [
       {
         q: "How long does a 100 ml oil last?",
-        a: "Approximately 60–140 days, depending on the model and intensity. The Monolith averages around 90 days at moderate settings. We&rsquo;ll suggest a cadence at checkout.",
+        a: "Approximately 60–140 days, depending on the model and intensity. Most models average around 90 days at moderate settings. We&rsquo;ll suggest a cadence at checkout.",
       },
       {
         q: "Are the oils IFRA-compliant?",
         a: "Yes — every Quint Home oil is composed to IFRA (International Fragrance Association) standards. Safe around children and pets when used as directed.",
       },
       {
-        q: "What does a hotel-credential oil mean?",
-        a: "Two of our nine oils — Grand Lobby and The Carlton Room — are licensed from the scent programs of the Hilton and Ritz-Carlton respectively. Same molecule, same composition, now available for home.",
+        q: "What is a Credential oil?",
+        a: "Two of our nine oils, Grand Lobby and The Reading Room, are Credential blends: composed to the same brief as the signature scenting you find in considered public spaces, then made for the home. They are more complex to blend, carry a credential badge, and sit at a small price premium over the standard oils.",
       },
     ],
   },
   {
     chapter: "§ Three",
-    label: "Smart Home",
+    label: "App & Control",
     items: [
       {
-        q: "Which smart home systems are supported?",
-        a: "Apple Home (HomeKit), Amazon Alexa, Google Home, and Matter. Set routines that trigger by time, location, or scene.",
+        q: "How do I control it?",
+        a: "Over Bluetooth, through the Quint Home companion app for iOS and Android. Pair once, then set your schedules and intensity. Every model except the Plug-In is Bluetooth-enabled; the Plug-In runs on a built-in 24-hour cyclic timer with no app required.",
       },
       {
         q: "Does it need Wi-Fi to work?",
-        a: "No — you can run it on a schedule via the companion app over Bluetooth. Wi-Fi enables smart-home integration and remote control.",
+        a: "No. The diffusers run entirely over Bluetooth and an on-device schedule — no Wi-Fi, no account, and no cloud. You adjust settings from your phone when it is in range, and the device keeps to its schedule on its own.",
       },
     ],
   },

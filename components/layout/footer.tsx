@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Logo } from "@/components/brand/logo";
+import { Monogram } from "@/components/brand/logo";
 
 const cols = [
   {
@@ -7,7 +7,7 @@ const cols = [
     links: [
       { href: "/shop?category=diffusers", label: "Diffusers" },
       { href: "/shop?category=oils", label: "Fragrance Oils" },
-      { href: "/shop?category=hotel", label: "Hotel Credential" },
+      { href: "/shop?category=oils", label: "Credential Oils" },
       { href: "/shop", label: "All Objects" },
     ],
   },
@@ -16,7 +16,7 @@ const cols = [
     links: [
       { href: "/about", label: "About" },
       { href: "/journal", label: "Journal" },
-      { href: "/architects", label: "For Architects" },
+      { href: "/architects", label: "Trade" },
       { href: "/contact", label: "Contact" },
     ],
   },
@@ -55,7 +55,7 @@ export function Footer() {
               <input
                 type="email"
                 placeholder="Your email"
-                className="flex-1 bg-transparent text-[0.95rem] outline-none placeholder:text-[color:var(--color-charcoal-soft)]"
+                className="min-w-0 flex-1 bg-transparent text-[0.95rem] outline-none placeholder:text-[color:var(--color-charcoal-soft)]"
                 aria-label="Email"
               />
               <button
@@ -68,9 +68,9 @@ export function Footer() {
           </div>
 
           <div className="flex flex-col items-start md:items-end md:justify-between">
-            <Logo className="h-9 w-auto text-[color:var(--color-charcoal)]" />
+            <Monogram className="h-20 w-20 text-[color:var(--color-aerial)] md:h-24 md:w-24" />
             <p className="mt-6 max-w-[28ch] text-[0.9rem] leading-[1.7] text-[color:var(--color-charcoal-soft)] md:text-right">
-              Mumbai-born. Built around the question of why your home doesn&rsquo;t smell like a great hotel.
+              Designed in Mumbai. Waterless diffusers and concentrated oils, built so a room holds its scent.
             </p>
           </div>
         </div>
@@ -80,7 +80,7 @@ export function Footer() {
           <div>
             <p className="font-eyebrow mb-5">Quint Home</p>
             <p className="max-w-[24ch] text-[0.92rem] leading-[1.7] text-[color:var(--color-charcoal-soft)]">
-              Hotel-grade fragrance for the considered Indian home. Designed in Mumbai.
+              Considered home fragrance, designed in Mumbai.
             </p>
             <p className="mt-6 text-[0.78rem] tracking-[0.06em] text-[color:var(--color-charcoal-soft)]">
               Rusera Lifestyle

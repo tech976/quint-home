@@ -10,6 +10,12 @@ import { FadeUp } from "@/components/motion/fade-up";
  * actually tells the buyer what they are choosing between.
  */
 export function DiffuserShowcase() {
+  // Feature a curated three on the homepage — the column, the dual-mist, and the clock.
+  // The full range of five lives at /shop.
+  const featured = diffusers.filter((d) =>
+    ["tabletop-a326", "dual-mist-at302", "clock-at370"].includes(d.slug)
+  );
+
   return (
     <section className="bg-[color:var(--color-white)] py-[var(--spacing-section)]">
       <div className="mx-auto max-w-[var(--container-full)] px-6 md:px-10">
@@ -30,22 +36,22 @@ export function DiffuserShowcase() {
                   fontWeight: 400,
                 }}
               >
-                Three objects.{" "}
+                Five objects.{" "}
                 <em className="text-[color:var(--color-aerial-deep)]">
-                  One for every room.
+                  Three to begin with.
                 </em>
               </h2>
             </div>
             <p className="max-w-[32ch] text-[0.92rem] leading-[1.65] text-[color:var(--color-charcoal-soft)] md:text-right">
-              Brass, smoked glass, or cast ceramic — each sized for a different
-              room and finished by hand in Mumbai.
+              A selection from the full range — aluminum, fabric, acrylic and
+              glass, from compact to large-room coverage.
             </p>
           </div>
         </FadeUp>
 
         {/* Three product cards */}
         <div className="grid gap-y-16 md:grid-cols-3 md:gap-x-8 md:gap-y-0">
-          {diffusers.map((d, i) => (
+          {featured.map((d, i) => (
             <FadeUp key={d.slug} delay={i * 0.08}>
               <Link href={`/shop/${d.slug}`} className="group block h-full">
                 <div className="relative aspect-[4/5] overflow-hidden bg-[color:var(--color-stardust-soft)]">
@@ -65,9 +71,7 @@ export function DiffuserShowcase() {
                     </span>
                   </div>
                   <div className="absolute inset-x-0 bottom-0 flex items-end justify-between p-5 text-[0.6rem] uppercase tracking-[0.32em] text-[color:var(--color-stardust)] md:p-6">
-                    <span>
-                      {d.coverageSqFt[0]}–{d.coverageSqFt[1]} sq ft
-                    </span>
+                    <span>{d.coverageLabel}</span>
                     <span className="transition-transform duration-500 group-hover:-translate-y-0.5">
                       Explore →
                     </span>
@@ -108,10 +112,10 @@ export function DiffuserShowcase() {
         <FadeUp delay={0.3}>
           <div className="mt-16 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 border-t border-[color:var(--color-rule)] pt-10">
             <Link
-              href="/shop?category=diffusers"
+              href="/shop"
               className="group inline-flex items-center gap-3 border-b border-[color:var(--color-charcoal)] pb-1.5 text-[0.72rem] uppercase tracking-[0.32em] transition-colors duration-500 hover:text-[color:var(--color-clay)] hover:border-[color:var(--color-clay)]"
             >
-              See every diffuser
+              View all five
               <span className="transition-transform duration-500 group-hover:translate-x-1">
                 →
               </span>

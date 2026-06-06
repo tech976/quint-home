@@ -18,7 +18,7 @@ export default function JournalPage() {
               letterSpacing: "-0.02em",
             }}
           >
-            Writing on scent, hotels, and homes.
+            Writing on scent, the device, and the home.
           </h1>
         </div>
       </FadeUp>

@@ -2,18 +2,17 @@ import { FadeUp } from "@/components/motion/fade-up";
 import { EditorialCarousel, type Slide } from "@/components/ui/editorial-carousel";
 
 /**
- * A drag-scroll moodboard — what the brand looks like at the edges of vision.
- * Uses the brand vibe library as a curated visual library.
+ * A drag-scroll gallery of real rooms with a Quint diffuser in them.
+ * Eyebrows name the room; captions are short and plain.
  */
 const slides: Slide[] = [
-  { src: "/images/vibe/vibe-01.jpg", alt: "An open window, summer afternoon", eyebrow: "Morning Light", caption: "The light an hour before guests arrive." },
-  { src: "/images/vibe/vibe-14.jpg", alt: "Linen and morning shadow", eyebrow: "Linen", caption: "Still warm from the sun." },
-  { src: "/images/vibe/vibe-17.jpg", alt: "Sun through a canopy at dawn", eyebrow: "Daybreak", caption: "Light through the canopy, slowly." },
-  { src: "/images/vibe/vibe-16.jpg", alt: "Petals on stone", eyebrow: "Petals", caption: "On warm stone, late afternoon." },
-  { src: "/images/vibe/vibe-20.jpg", alt: "A doorway at dusk", eyebrow: "The Doorway", caption: "At the close of day." },
-  { src: "/images/vibe/vibe-22.jpg", alt: "A study, late afternoon", eyebrow: "The Study", caption: "Late afternoon. Unhurried." },
-  { src: "/images/vibe/vibe-13.jpg", alt: "An interior in winter light", eyebrow: "Winter Light", caption: "Through Mumbai windows." },
-  { src: "/images/vibe/vibe-21.jpg", alt: "Stillness", eyebrow: "Stillness", caption: "The quietest part of the day." },
+  { src: "/images/home/home-01.png", alt: "A living room at dusk with a Quint diffuser on a side table", eyebrow: "The Living Room", caption: "Warm light, and the air to match." },
+  { src: "/images/home/home-03.png", alt: "A sitting room with a black Quint diffuser on the coffee table", eyebrow: "The Sitting Room", caption: "On the table, not hidden away." },
+  { src: "/images/home/home-04.png", alt: "A bedroom nightstand with a Quint diffuser and a low lamp", eyebrow: "The Bedroom", caption: "The last thing on at night." },
+  { src: "/images/home/home-05.png", alt: "A lounge lit with warm ceiling spots and a Quint diffuser by the sofa", eyebrow: "The Lounge", caption: "Lit low, after dark." },
+  { src: "/images/home/home-06.png", alt: "A reading corner with an armchair, a round mirror, and a Quint diffuser", eyebrow: "The Reading Corner", caption: "A corner kept for yourself." },
+  { src: "/images/home/home-07.png", alt: "A bright drawing room with a curved sofa and a Quint diffuser on the table", eyebrow: "The Drawing Room", caption: "Late morning, with the curtains open." },
+  { src: "/images/home/home-08.png", alt: "A minimal living room with Quint diffusers on a marble console", eyebrow: "The Quiet Room", caption: "Where less is the point." },
 ];
 
 export function Atmosphere() {
@@ -24,7 +23,7 @@ export function Atmosphere() {
           <div className="mb-12 flex flex-col gap-6 border-b border-[color:var(--color-rule)] pb-6 md:mb-16 md:flex-row md:items-end md:justify-between">
             <div>
               <p className="text-[0.62rem] uppercase tracking-[0.42em] text-[color:var(--color-charcoal-soft)]">
-                § Four · Atmosphere
+                § Atmosphere
               </p>
               <h2
                 className="mt-5 max-w-[18ch] text-balance"
@@ -36,15 +35,14 @@ export function Atmosphere() {
                   fontWeight: 400,
                 }}
               >
-                The pictures that{" "}
+                The rooms we{" "}
                 <em className="text-[color:var(--color-aerial-deep)]">
-                  taught us how a room should feel.
+                  built Quint to live in.
                 </em>
               </h2>
             </div>
             <p className="max-w-[32ch] text-[0.88rem] leading-[1.65] text-[color:var(--color-charcoal-soft)] md:text-right">
-              A working moodboard — light, texture, and quiet — pulled from
-              three years of looking.
+              The diffuser at home, in the rooms it was made for.
               <br />
               <span className="text-[0.62rem] uppercase tracking-[0.32em]">
                 Drag to browse →

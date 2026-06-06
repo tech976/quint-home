@@ -2,19 +2,17 @@ import type { JournalPost } from "../types";
 
 export const journal: JournalPost[] = [
   {
-    slug: "the-taj-lake-palace",
-    title: "The Taj Lake Palace, and the question that started Quint Home",
+    slug: "a-lake-palace-in-udaipur",
+    title: "Why your home deserves scent that was actually designed",
     eyebrow: "Founder Letter",
     excerpt:
-      "Three years ago, I checked into one of India's most celebrated hotels in Udaipur. What I didn't expect was to stop in the corridor and stand there, trying to understand what I was breathing.",
+      "We spend years choosing the lighting, the furniture, the paint. Then we leave the air to chance, or to a plug-in that smells like a chemical version of a flower. That gap is the reason Quint Home exists.",
     body: [
-      "The fragrance was everywhere and nowhere. It wasn't a candle. It wasn't a spray. It was woven into the air of the entire palace — warm, unhurried, completely unlike anything I had ever smelled in someone's home.",
-      "I asked the staff. They smiled politely. The scent, they explained, was proprietary.",
-      "Las Vegas, a year later. The Aria. A different continent, a different aesthetic — but the same arrested moment in a lobby. Same answer.",
-      "It kept happening. The Four Seasons Safari Lodge in the Serengeti — warm baobab wood and wild earth. Alila Fort Bishangarh in Rajasthan — jasmine and ancient stone, a 236-year-old warrior fort reimagined into something quietly sacred. The Ritz-Carlton in Nusa Dua — Balinese frangipani on a sea breeze.",
-      "Each time, I tried to find the scent. Each time: proprietary.",
-      "Hotels understand something most of us don't. Scent is the invisible layer of luxury. It sets the tone before you see anything, before you touch anything. So why do we accept that our homes — the spaces where we spend the majority of our lives — smell like nothing in particular?",
-      "Quint Home exists because I couldn't stop thinking about that.",
+      "Scent is the first thing you notice about a room and the last thing most of us plan for. You walk in, and before you have looked at anything, the air has already told you something. Whether you meant it to or not.",
+      "Most of what is sold for the home works against you here. Sprays fade in minutes. Reed diffusers go quiet after a week. Ultrasonic machines dilute a little oil into a lot of water and push out humid air that smells faintly of the scent and mostly of damp.",
+      "We wanted the opposite. A scent you choose on purpose, blended like a perfume with top, heart, and base notes, held at full strength so the room actually carries it. That meant going waterless: atomising the oil directly, at 70 to 90 percent concentration, with no water and no heat in the way.",
+      "It also meant the machine had to disappear into the room rather than apologise for being there. Near silent, app and Bluetooth controlled, set once to a morning and evening schedule and then left alone. An object you display, not an appliance you hide.",
+      "Quint Home is the answer to a simple question. If we are this careful about everything else in a room, why not the air in it.",
     ],
     cover: "/images/vibe/vibe-21.jpg",
     publishedAt: "2026-03-12",
@@ -22,14 +20,14 @@ export const journal: JournalPost[] = [
   },
   {
     slug: "what-is-a-waterless-diffuser",
-    title: "Why we don't use water — and why it matters for the air you breathe",
+    title: "Why we don't use water, and why it changes the air you breathe",
     eyebrow: "Education",
     excerpt:
-      "The diffuser sitting on most Indian bedside tables tonight uses water and ultrasonic vibration. That's not how the great hotels do it. Here is the difference, in one paragraph.",
+      "The diffuser on most Indian bedside tables tonight runs on water and ultrasonic vibration. A waterless one works on a completely different principle. Here is the difference, in three short paragraphs.",
     body: [
-      "Ultrasonic diffusers dilute fragrance oil into water and then mist that water into the room. The scent that reaches you is roughly 1–3% fragrance by volume. The rest is water vapour. The room smells faintly of the scent, and noticeably of humidified air.",
-      "Waterless cold-air nebulisation atomises the oil directly using air pressure. No water, no heat, no dilution. What reaches the room is the fragrance itself, at 70–90% concentration. The result is more potent, sits in the air longer, and carries the full architecture of top, heart, and base notes — the same approach used in fine perfumery.",
-      "It is also quieter. There is no gurgle, no fan. A Quint Home diffuser in a sleeping bedroom is genuinely silent.",
+      "An ultrasonic diffuser dilutes a few drops of oil into a tank of water, then vibrates that water into mist. The scent that reaches you is roughly 1 to 3 percent fragrance by volume. The rest is water vapour. The room ends up smelling faintly of the scent and noticeably of humidified air.",
+      "Waterless cold-air nebulisation atomises the oil directly with air pressure. No water, no heat, no dilution. What reaches the room is the fragrance itself, at 70 to 90 percent concentration. It is more potent, it sits in the air for hours rather than minutes, and it carries the full structure of top, heart, and base notes the way a perfume does.",
+      "It is also quieter. There is no gurgle and no fan, so a Quint Home diffuser running in a bedroom at night is genuinely near silent. You control it over Bluetooth from the app, set a schedule once, and the device keeps to it on its own.",
     ],
     cover: "/images/vibe/vibe-17.jpg",
     publishedAt: "2026-03-28",
@@ -37,15 +35,15 @@ export const journal: JournalPost[] = [
   },
   {
     slug: "the-architecture-of-scent",
-    title: "Top, heart, base — the architecture of a hotel-grade fragrance",
+    title: "Top, heart, base: how to read a Quint Home scent profile",
     eyebrow: "Notes",
     excerpt:
-      "Every Quint Home oil is built like a perfume. Three layers, three lifespans, one room. Here is how to read a scent profile when you're choosing one.",
+      "Every Quint Home oil is built like a perfume, with three layers that arrive and fade at different speeds. Once you know how to read them, choosing a scent gets a lot easier.",
     body: [
-      "Top notes are the first impression — bright, evaporative, lasting fifteen to thirty minutes. They are usually citrus, herbs, or light spices. They are what greets you when you walk in.",
-      "Heart notes carry the room. They are the floral, fruity, and softly resinous notes that hold for several hours. The heart is the personality of the fragrance.",
-      "Base notes are the architecture. Woods, musks, ambers, resins. They give the fragrance its weight and its memory — they are what you notice on the cushions the morning after.",
-      "Read a Quint Home scent profile by reading downward. It will tell you exactly what the room will feel like at minute one, hour three, and the next day.",
+      "Top notes are the first impression. They are bright and quick to evaporate, lasting fifteen to thirty minutes, usually citrus, herbs, or light spice. They are what greets you when you walk into the room.",
+      "Heart notes carry the room. These are the floral, fruity, and softly resinous notes that hold for several hours, and they are where the personality of the fragrance lives.",
+      "Base notes give the scent its weight and its memory. Woods, musks, ambers, and resins settle in slowly and stay the longest. They are what you still notice on the cushions the next morning.",
+      "So read a scent profile from the top down. It tells you how the room will feel at minute one, at hour three, and the morning after.",
     ],
     cover: "/images/vibe/vibe-21.jpg",
     publishedAt: "2026-04-10",
