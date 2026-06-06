@@ -40,7 +40,7 @@ export const diffusers: Diffuser[] = [
       "15 ml glass bottle with PP shell — lightweight and durable",
     ],
     image: "/images/diffusers/plug-in-a815/01.png",
-    video: "/videos/plug-in-a815.mp4",
+    video: "https://res.cloudinary.com/dnv4kq8ml/video/upload/v1780760006/Video_Display_pjm1fk.mp4",
     gallery: [
       "/images/diffusers/plug-in-a815/01.png",
       "/images/diffusers/plug-in-a815/02.png",
@@ -200,7 +200,7 @@ export const diffusers: Diffuser[] = [
       "Bluetooth compatible — independently control each mist outlet from your phone",
     ],
     image: "/images/diffusers/dual-mist-at302/01.png",
-    video: "/videos/dual-mist-at302.mp4",
+    video: "https://res.cloudinary.com/dnv4kq8ml/video/upload/v1780759975/Video_Display_r7dj6z.mp4",
     gallery: [
       "/images/diffusers/dual-mist-at302/01.png",
       "/images/diffusers/dual-mist-at302/02.png",
@@ -245,7 +245,7 @@ export const diffusers: Diffuser[] = [
       "Bluetooth compatible — adjust fragrance settings from your phone",
     ],
     image: "/images/diffusers/clock-at370/01.png",
-    video: "/videos/clock-at370.mp4",
+    video: "https://res.cloudinary.com/dnv4kq8ml/video/upload/Video_Display_gggg5v.mp4",
     gallery: [
       "/images/diffusers/clock-at370/01.png",
       "/images/diffusers/clock-at370/02.png",
