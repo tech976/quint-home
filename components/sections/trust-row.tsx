@@ -3,8 +3,8 @@ import { FadeUp } from "@/components/motion/fade-up";
 const credentials = [
   { value: "IFRA", label: "Compliant Oils", sub: "International Fragrance Assoc." },
   { value: "70 → 90%", label: "Concentration", sub: "Versus 1–3% for ultrasonic" },
-  { value: "< 18 dB", label: "Whisper Quiet", sub: "Bedrooms · Studies · Suites" },
-  { value: "Two yrs", label: "Device Lifespan", sub: "Refill oil approx. 90–140 days" },
+  { value: "< 18 dB", label: "Near Silent", sub: "Safe for bedrooms" },
+  { value: "Two yrs", label: "Device Lifespan", sub: "Refill oil approx. 60–120 days" },
 ];
 
 export function TrustRow() {
@@ -14,7 +14,7 @@ export function TrustRow() {
         <FadeUp>
           <div className="mb-14 flex items-center justify-center gap-4 text-[0.6rem] uppercase tracking-[0.42em] text-[color:var(--color-charcoal-soft)]">
             <span className="h-px w-16 bg-[color:var(--color-rule)]" />
-            <span>Considered · Compliant · Quiet</span>
+            <span>What you are buying</span>
             <span className="h-px w-16 bg-[color:var(--color-rule)]" />
           </div>
         </FadeUp>

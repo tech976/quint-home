@@ -16,15 +16,15 @@ export function JournalTeaser() {
               Writing on scent,
               <br />
               <em className="not-italic text-[color:var(--color-aerial-deep)]">
-                hotels, and homes.
+                the device, and the home.
               </em>
             </>
           }
           meta={
             <>
-              Slow, considered, occasionally personal.
+              Plain notes on how scent works,
               <br />
-              New essays monthly.
+              and how to live with it. New posts monthly.
             </>
           }
         />

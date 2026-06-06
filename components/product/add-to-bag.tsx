@@ -36,7 +36,7 @@ export function AddToBag({ priceINR, subscribeOffer = true }: Props) {
               onChange={() => setMode("one-time")}
               className="mt-1 h-4 w-4 accent-[color:var(--color-clay)]"
             />
-            <span className="flex flex-1 items-baseline justify-between">
+            <span className="flex min-w-0 flex-1 items-baseline justify-between gap-3">
               <span>
                 <span className="block text-[0.95rem]">One-time purchase</span>
                 <span className="mt-1 block text-[0.78rem] text-[color:var(--color-charcoal-soft)]">
@@ -65,7 +65,7 @@ export function AddToBag({ priceINR, subscribeOffer = true }: Props) {
               onChange={() => setMode("subscribe")}
               className="mt-1 h-4 w-4 accent-[color:var(--color-clay)]"
             />
-            <span className="flex flex-1 items-baseline justify-between">
+            <span className="flex min-w-0 flex-1 items-baseline justify-between gap-3">
               <span>
                 <span className="flex items-center gap-3 text-[0.95rem]">
                   Subscribe &amp; save

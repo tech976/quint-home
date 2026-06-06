@@ -136,11 +136,11 @@ export default function ContactPage() {
                       fontWeight: 400,
                     }}
                   >
-                    For Architects
+                    Trade &amp; B2B
                   </p>
                   <p className="mt-3 max-w-[36ch] text-[0.92rem] leading-[1.65] text-[color:var(--color-charcoal-soft)]">
-                    For interior architects, designers, and hospitality
-                    specifiers. Project pricing, commercial machines.
+                    Commercial machines, bulk orders, and custom scent
+                    development for hotels, restaurants, retail, and offices.
                   </p>
                   <p className="mt-7 text-[0.6rem] uppercase tracking-[0.32em] text-[color:var(--color-charcoal-soft)] transition-transform duration-500 group-hover:translate-x-1">
                     Trade enquiries →

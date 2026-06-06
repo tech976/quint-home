@@ -1,10 +1,10 @@
 import { FadeUp } from "@/components/motion/fade-up";
 
 const integrations = [
-  { name: "Apple Home", note: "HomeKit · Matter" },
-  { name: "Amazon Alexa", note: "Routines · Skills" },
-  { name: "Google Home", note: "Assistant · Hubs" },
-  { name: "IFTTT / Matter", note: "Open protocols" },
+  { name: "Companion App", note: "iOS · Android" },
+  { name: "Bluetooth", note: "Pair once" },
+  { name: "Schedules", note: "Morning · Evening" },
+  { name: "Intensity", note: "Set & forget" },
 ];
 
 export function SmartHome() {
@@ -32,7 +32,7 @@ export function SmartHome() {
         <FadeUp>
           <div className="mx-auto flex items-center justify-center gap-4 text-[0.6rem] uppercase tracking-[0.42em] text-[color:var(--color-stardust)]/65">
             <span className="h-px w-12 bg-[color:var(--color-stardust)]/25" />
-            <span>§ Five · Set Once</span>
+            <span>§ Set Once</span>
             <span className="h-px w-12 bg-[color:var(--color-stardust)]/25" />
           </div>
         </FadeUp>
@@ -49,10 +49,10 @@ export function SmartHome() {
               color: "var(--color-stardust)",
             }}
           >
-            App-controlled. Smart-home native.
+            Run it from your phone.
             <br />
             <em className="not-italic text-[color:var(--color-aerial-soft)]">
-              Quiet by design.
+              Set it once and forget it.
             </em>
           </h2>
         </FadeUp>
@@ -62,9 +62,9 @@ export function SmartHome() {
             className="mx-auto mt-10 max-w-[54ch] text-[var(--text-base)] leading-[1.85]"
             style={{ color: "rgba(238, 228, 216, 0.92)" }}
           >
-            One configuration in the app. Two atmospheres a day. The diffuser
-            runs on schedule from that point — no daily interaction, no
-            replacing reeds, no candles to forget about.
+            Pair the diffuser over Bluetooth, then set a morning and an evening
+            schedule in the app. It runs on its own from there. Nothing to
+            light, nothing to top up with water, nothing to remember.
           </p>
         </FadeUp>
 

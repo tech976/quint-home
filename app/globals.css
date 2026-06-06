@@ -61,12 +61,6 @@
   --spacing-section: clamp(4rem, 6vw, 9rem);
   --spacing-section-sm: clamp(2.5rem, 4vw, 5rem);
 
-  /* — Container widths -------------------------------------- */
-  --container-narrow: 56rem;
-  --container-content: 72rem;
-  --container-wide: 88rem;
-  --container-full: 100rem;
-
   /* — Radius — soft, restrained ----------------------------- */
   --radius-xs: 2px;
   --radius-sm: 4px;
@@ -80,6 +74,23 @@
 }
 
 /* ============================================================
+   Container widths — defined OUTSIDE @theme on purpose.
+   In Tailwind v4 a `--container-*` token auto-generates width
+   utilities (e.g. `--container-full` would emit a `w-full` that
+   overrides the built-in `width:100%` — making every `w-full`
+   on the site 100rem wide). Declaring them as plain custom
+   properties keeps `var(--container-*)` working for our
+   `max-w-[var(--container-…)]` usages WITHOUT generating any
+   colliding utilities. Do not move these back into @theme.
+   ============================================================ */
+:root {
+  --container-narrow: 56rem;
+  --container-content: 72rem;
+  --container-wide: 88rem;
+  --container-full: 100rem;
+}
+
+/* ============================================================
    Base layer
    ============================================================ */
 
@@ -88,6 +99,23 @@
   *::before,
   *::after {
     @apply border-[color:var(--color-rule)];
+  }
+
+  /* ----------------------------------------------------------
+     Horizontal-overflow guard (recurring "elements too wide" bug)
+     ----------------------------------------------------------
+     A single rogue child wider than the viewport gives the whole
+     page a horizontal scrollbar and breaks the layout on mobile.
+     Clipping overflow on the page root stops that from ever
+     producing a scrollbar. We use `clip` instead of `hidden`
+     because `overflow: hidden` creates a scroll container that
+     silently breaks `position: sticky` descendants, while
+     `overflow: clip` does not. This is a safety net only — the
+     real fix is to size inner content correctly (see
+     docs/layout-width-discipline.md and the dev overflow detector). */
+  html,
+  body {
+    overflow-x: clip;
   }
 
   html {

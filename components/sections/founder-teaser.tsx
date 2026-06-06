@@ -74,16 +74,16 @@ export function FounderTeaser() {
                   fontWeight: 400,
                 }}
               >
-                It started in a corridor at the Taj.
+                It started with a scent I couldn&rsquo;t take home.
               </h2>
             </FadeUp>
 
             <FadeUp delay={0.16}>
               <div className="mt-8 space-y-5 text-[var(--text-base)] leading-[1.85] text-[color:var(--color-charcoal-soft)]">
                 <p className="max-w-[52ch] [&::first-letter]:float-left [&::first-letter]:mr-2 [&::first-letter]:font-[family-name:var(--font-serif)] [&::first-letter]:text-[3.2rem] [&::first-letter]:font-normal [&::first-letter]:leading-[0.9] [&::first-letter]:text-[color:var(--color-charcoal)]">
-                  I stood there for a while. The fragrance was everywhere and
-                  nowhere. It wasn&rsquo;t a candle. It wasn&rsquo;t a spray. It
-                  was woven into the air of the entire palace — warm,
+                  I stood in a hotel corridor longer than made sense. The
+                  fragrance was everywhere and nowhere. Not a candle, not a
+                  spray, just woven into the air of the whole building, warm and
                   unhurried, unlike anything I&rsquo;d ever smelled in
                   someone&rsquo;s home.
                 </p>
@@ -93,10 +93,9 @@ export function FounderTeaser() {
                   trying to source it. I couldn&rsquo;t.
                 </p>
                 <p className="max-w-[52ch]">
-                  Las Vegas, a year later. The Aria. The Four Seasons in the
-                  Serengeti. Alila Fort Bishangarh. The Ritz-Carlton in Nusa
-                  Dua. Each one, the same arrested moment. Each one, the same
-                  answer.
+                  It kept happening, in other cities and other rooms, always
+                  the same answer. Eventually I stopped asking the staff, and
+                  started building it myself.
                 </p>
               </div>
             </FadeUp>

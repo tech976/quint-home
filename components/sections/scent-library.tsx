@@ -14,40 +14,37 @@ export function ScentLibrary() {
           chapterTitle="9 Signatures"
           headline={
             <>
-              Nine compositions,
+              Nine scents,
               <br />
-              <em className="not-italic text-[color:var(--color-aerial-deep)]">two of them
-              hotel-credentialled.</em>
+              <em className="not-italic text-[color:var(--color-aerial-deep)]">nine ways
+              a room can feel.</em>
             </>
           }
           meta={
             <>
-              Each scent is built like fine perfumery —
+              Each one is built like a fine perfume,
               <br />
-              top, heart, base. 70–90% concentrate.
+              with top, heart and base notes,
               <br />
-              The room is the canvas.
+              at 70 to 90% concentration.
             </>
           }
         />
 
-        <div className="mt-20 grid gap-px overflow-hidden bg-[color:var(--color-rule)] sm:grid-cols-2 lg:grid-cols-3">
+        {/* Compact 3×3 grid — every tile is a photographic plate (no flat colour swatches) */}
+        <div className="mx-auto mt-12 grid max-w-[58rem] grid-cols-2 gap-px overflow-hidden bg-[color:var(--color-rule)] sm:grid-cols-3">
           {oils.map((o, i) => {
-            // Every other tile is a photographic plate; rest are colored swatches.
-            const photographic = i % 2 === 0;
-            const tileBg = photographic
-              ? { backgroundColor: "var(--color-stardust-soft)" }
-              : { backgroundColor: o.swatch, color: o.textColor };
-            const fg = photographic
-              ? "text-[color:var(--color-stardust)]"
-              : "";
-
+            const photographic = true;
             return (
-              <FadeUp key={o.slug} delay={i * 0.04} className="contents">
+              <FadeUp key={o.slug} delay={i * 0.03} className="contents">
                 <Link
                   href={`/shop/${o.slug}`}
-                  className="group relative flex aspect-[4/5] flex-col justify-between overflow-hidden p-7 transition-[padding] duration-700"
-                  style={tileBg}
+                  className="group relative flex aspect-square flex-col justify-between overflow-hidden p-4"
+                  style={
+                    photographic
+                      ? { backgroundColor: "var(--color-stardust-soft)" }
+                      : { backgroundColor: o.swatch, color: o.textColor }
+                  }
                 >
                   {photographic && (
                     <>
@@ -55,54 +52,63 @@ export function ScentLibrary() {
                         src={o.image}
                         alt={`${o.name} — bottle study`}
                         fill
-                        sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-                        className="object-cover transition-transform duration-[1800ms] ease-[var(--ease-quint)] group-hover:scale-[1.04]"
+                        sizes="(min-width: 640px) 19rem, 50vw"
+                        className="object-cover transition-transform duration-[1400ms] ease-[var(--ease-quint)] group-hover:scale-[1.05]"
                       />
                       <div
                         aria-hidden="true"
                         className="absolute inset-0"
                         style={{
                           background:
-                            "linear-gradient(180deg, rgba(58,53,50,0.25) 0%, rgba(58,53,50,0.0) 35%, rgba(58,53,50,0.72) 100%)",
+                            "linear-gradient(180deg, rgba(58,53,50,0.18) 0%, rgba(58,53,50,0) 40%, rgba(58,53,50,0.72) 100%)",
                         }}
                       />
                     </>
                   )}
 
-                  {/* Top row */}
-                  <div className={`relative flex items-start justify-between text-[0.6rem] uppercase tracking-[0.32em] opacity-80 ${fg}`}>
-                    <span>№{String(i + 1).padStart(2, "0")}</span>
+                  {/* Top — index + credential mark */}
+                  <div
+                    className={`relative flex items-start justify-between text-[0.52rem] uppercase tracking-[0.28em] ${
+                      photographic ? "text-[color:var(--color-stardust)]" : ""
+                    } opacity-80`}
+                  >
+                    <span className="tabular-nums">
+                      №{String(i + 1).padStart(2, "0")}
+                    </span>
                     {o.tier === "hotel-credential" && (
-                      <span className="rounded-full border border-current px-3 py-1 text-[0.54rem]">
-                        Hotel Credential
+                      <span className="rounded-full border border-current px-1.5 py-0.5 text-[0.46rem]">
+                        Credential
                       </span>
                     )}
                   </div>
 
-                  {/* Center / bottom name (centered on swatch, anchored to bottom on photographic) */}
-                  <div className={`relative ${photographic ? "mt-auto" : "my-auto"}`}>
+                  {/* Bottom — name + note + price */}
+                  <div
+                    className={`relative ${
+                      photographic ? "" : "mt-auto"
+                    }`}
+                  >
                     <h3
-                      className={`text-balance transition-transform duration-700 ease-[var(--ease-quint)] group-hover:-translate-y-1 ${fg}`}
+                      className={`text-balance transition-transform duration-700 ease-[var(--ease-quint)] group-hover:-translate-y-0.5 ${
+                        photographic ? "text-[color:var(--color-stardust)]" : ""
+                      }`}
                       style={{
                         fontFamily: "var(--font-serif)",
-                        fontSize: "var(--text-3xl)",
-                        lineHeight: 1,
-                        letterSpacing: "-0.022em",
+                        fontSize: "var(--text-xl)",
+                        lineHeight: 1.05,
+                        letterSpacing: "-0.016em",
                         fontWeight: 400,
                       }}
                     >
                       {o.name}
                     </h3>
-                    <p className={`mt-4 max-w-[28ch] text-[0.84rem] leading-[1.55] opacity-80 ${fg}`}>
-                      {o.tagline}
-                    </p>
-
-                    {/* Bottom row sits right after name on photographic tiles */}
-                    <div className={`mt-5 flex items-end justify-between gap-4 opacity-80 ${fg}`}>
-                      <span className="text-[0.62rem] uppercase tracking-[0.28em]">
-                        {o.notes.heart[0]} · {o.notes.base[0]}
-                      </span>
-                      <span className="text-[0.78rem] tabular-nums">
+                    <div
+                      className={`mt-2 flex items-end justify-between gap-2 text-[0.56rem] uppercase tracking-[0.2em] ${
+                        photographic ? "opacity-85" : "opacity-70"
+                      }`}
+                    >
+                      <span>{o.notes.heart[0]}</span>
+                      <span className="tabular-nums tracking-normal text-[0.72rem]">
                         {formatINR(o.priceINR)}
                       </span>
                     </div>

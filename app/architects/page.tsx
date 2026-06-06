@@ -1,38 +1,31 @@
-import Image from "next/image";
-import Link from "next/link";
 import type { Metadata } from "next";
 import { FadeUp } from "@/components/motion/fade-up";
 
 export const metadata: Metadata = {
-  title: "For Architects",
+  title: "Trade & B2B",
   description:
-    "A trade channel for interior architects, designers, and hospitality specifiers. Specification, commercial machines, project pricing.",
+    "Commercial diffusers, bulk orders, and custom scent development for hotels, restaurants, retail, and offices. Trade enquiries answered within 48 hours.",
 };
 
-const pillars = [
+const offerings = [
   {
     no: "01",
-    title: "Specification Support",
-    body: "Spec sheets, coverage calculators, BIM/IES files for the studio. We work alongside your studio on residential and hospitality fit-outs.",
+    title: "Commercial Machines",
+    body: "High-capacity diffusers for large floors, restaurants, retail, and offices, sized to the space and built to run quietly in the background.",
   },
   {
     no: "02",
-    title: "Commercial Machines",
-    body: "Lobby, restaurant, and retail-scale diffusers up to 4,000 sq ft per unit. HVAC-integrated systems, on request.",
+    title: "Bulk Orders",
+    body: "Volume pricing on diffusers and fragrance oils for multi-room fit-outs, gifting programmes, and rollouts across multiple locations.",
   },
   {
     no: "03",
-    title: "Trade Pricing",
-    body: "Architect and designer accounts receive project pricing on residential systems and bespoke scent compositions for commercial.",
-  },
-  {
-    no: "04",
-    title: "Co-Design",
-    body: "Bespoke scent profiles for hospitality, retail, and private residence projects. A 6–10 week development cycle.",
+    title: "Custom Scent Development",
+    body: "A signature scent composed for your brand or space, so the fragrance is your own and recognisable the moment someone walks in.",
   },
 ];
 
-export default function ArchitectsPage() {
+export default function TradePage() {
   return (
     <article className="bg-[color:var(--color-white)]">
       {/* ====================================================
@@ -43,10 +36,10 @@ export default function ArchitectsPage() {
           <div className="grid items-end gap-10 pb-12 md:grid-cols-12 md:gap-16">
             <FadeUp delay={0.05} className="md:col-span-7">
               <p className="text-[0.62rem] uppercase tracking-[0.42em] text-[color:var(--color-charcoal-soft)]">
-                Trade · For Architects &amp; Designers
+                Trade · B2B Enquiries
               </p>
               <h1
-                className="mt-7 max-w-[18ch] text-balance"
+                className="mt-7 max-w-[16ch] text-balance"
                 style={{
                   fontFamily: "var(--font-serif)",
                   fontSize: "var(--text-5xl)",
@@ -55,18 +48,18 @@ export default function ArchitectsPage() {
                   fontWeight: 400,
                 }}
               >
-                For the studios who treat air{" "}
+                Scent your space,{" "}
                 <em className="text-[color:var(--color-aerial-deep)]">
-                  as part of the build.
+                  at scale.
                 </em>
               </h1>
             </FadeUp>
 
             <FadeUp delay={0.1} className="md:col-span-5">
-              <p className="max-w-[40ch] text-[var(--text-base)] leading-[1.85] text-[color:var(--color-charcoal-soft)]">
-                Specification, commercial systems, project pricing, and
-                bespoke scent development — for interior architects, designers,
-                and hospitality specifiers across India.
+              <p className="max-w-[42ch] text-[var(--text-base)] leading-[1.85] text-[color:var(--color-charcoal-soft)]">
+                Commercial machines, bulk orders, and custom scent development
+                for hotels, restaurants, retail, offices, and developers. Tell
+                us about your project and we&rsquo;ll come back within 48 hours.
               </p>
             </FadeUp>
           </div>
@@ -74,45 +67,39 @@ export default function ArchitectsPage() {
       </section>
 
       {/* ====================================================
-          §  ONE — PILLARS
+          §  ONE — WHAT WE OFFER
           ==================================================== */}
       <section className="bg-[color:var(--color-stardust-soft)] py-[var(--spacing-section)]">
         <div className="mx-auto max-w-[var(--container-full)] px-6 md:px-10">
           <FadeUp>
-            <div className="mb-14 flex flex-col gap-6 border-b border-[color:var(--color-rule)] pb-6 md:flex-row md:items-end md:justify-between">
-              <div>
-                <p className="text-[0.62rem] uppercase tracking-[0.42em] text-[color:var(--color-charcoal-soft)]">
-                  § One · The Service
-                </p>
-                <h2
-                  className="mt-5 max-w-[22ch] text-balance"
-                  style={{
-                    fontFamily: "var(--font-serif)",
-                    fontSize: "var(--text-3xl)",
-                    lineHeight: 1.08,
-                    letterSpacing: "-0.016em",
-                    fontWeight: 400,
-                  }}
-                >
-                  Four pillars.{" "}
-                  <em className="text-[color:var(--color-aerial-deep)]">
-                    Everything a specifier needs.
-                  </em>
-                </h2>
-              </div>
-              <p className="max-w-[28ch] text-[0.86rem] leading-[1.65] text-[color:var(--color-charcoal-soft)] md:text-right">
-                Direct work with the founder &amp; design lead — not a sales
-                desk.
+            <div className="mb-14 border-b border-[color:var(--color-rule)] pb-6">
+              <p className="text-[0.62rem] uppercase tracking-[0.42em] text-[color:var(--color-charcoal-soft)]">
+                § One · What We Offer
               </p>
+              <h2
+                className="mt-5 max-w-[24ch] text-balance"
+                style={{
+                  fontFamily: "var(--font-serif)",
+                  fontSize: "var(--text-3xl)",
+                  lineHeight: 1.08,
+                  letterSpacing: "-0.016em",
+                  fontWeight: 400,
+                }}
+              >
+                Three ways we work{" "}
+                <em className="text-[color:var(--color-aerial-deep)]">
+                  with business.
+                </em>
+              </h2>
             </div>
           </FadeUp>
 
-          <div className="grid gap-y-12 md:grid-cols-2 md:gap-x-16">
-            {pillars.map((p, i) => (
-              <FadeUp key={p.no} delay={i * 0.06}>
+          <div className="grid gap-y-12 md:grid-cols-3 md:gap-x-12">
+            {offerings.map((o, i) => (
+              <FadeUp key={o.no} delay={i * 0.06}>
                 <div className="border-t border-[color:var(--color-rule)] pt-7">
                   <p className="text-[0.62rem] uppercase tracking-[0.42em] text-[color:var(--color-charcoal-soft)]">
-                    № {p.no}
+                    № {o.no}
                   </p>
                   <h3
                     className="mt-5"
@@ -124,10 +111,10 @@ export default function ArchitectsPage() {
                       fontWeight: 400,
                     }}
                   >
-                    {p.title}
+                    {o.title}
                   </h3>
-                  <p className="mt-5 max-w-[44ch] text-[var(--text-base)] leading-[1.85] text-[color:var(--color-charcoal-soft)]">
-                    {p.body}
+                  <p className="mt-5 max-w-[40ch] text-[var(--text-base)] leading-[1.85] text-[color:var(--color-charcoal-soft)]">
+                    {o.body}
                   </p>
                 </div>
               </FadeUp>
@@ -137,109 +124,14 @@ export default function ArchitectsPage() {
       </section>
 
       {/* ====================================================
-          §  TWO — A NOTE ON PROCESS
-          ==================================================== */}
-      <section className="py-[var(--spacing-section)]">
-        <div className="mx-auto max-w-[var(--container-full)] px-6 md:px-10">
-          <div className="grid items-center gap-12 md:grid-cols-12 md:gap-16">
-            <FadeUp className="md:col-span-6">
-              <div className="grid grid-cols-2 gap-4 md:gap-5">
-                <figure className="col-span-2">
-                  <div className="relative aspect-[16/10] overflow-hidden bg-[color:var(--color-aerial-soft)]">
-                    <Image
-                      src="/images/vibe/vibe-04.jpg"
-                      alt="A commissioned residence in Bandra"
-                      fill
-                      sizes="(min-width: 768px) 48vw, 100vw"
-                      className="object-cover"
-                    />
-                    <div className="absolute left-5 top-5 text-[0.58rem] uppercase tracking-[0.36em] text-[color:var(--color-stardust)]">
-                      A residence · Bandra
-                    </div>
-                  </div>
-                </figure>
-                <figure>
-                  <div className="relative aspect-[4/5] overflow-hidden bg-[color:var(--color-aerial-soft)]">
-                    <Image
-                      src="/images/diffusers/diffuser-02.png"
-                      alt="The Monolith specified in travertine"
-                      fill
-                      sizes="(min-width: 768px) 24vw, 50vw"
-                      className="object-cover"
-                    />
-                  </div>
-                  <figcaption className="mt-3 text-[0.58rem] uppercase tracking-[0.36em] text-[color:var(--color-charcoal-soft)]">
-                    Specified in travertine
-                  </figcaption>
-                </figure>
-                <figure>
-                  <div className="relative aspect-[4/5] overflow-hidden bg-[color:var(--color-aerial-soft)]">
-                    <Image
-                      src="/images/vibe/vibe-11.jpg"
-                      alt="Drawing room"
-                      fill
-                      sizes="(min-width: 768px) 24vw, 50vw"
-                      className="object-cover"
-                    />
-                  </div>
-                  <figcaption className="mt-3 text-[0.58rem] uppercase tracking-[0.36em] text-[color:var(--color-charcoal-soft)]">
-                    A drawing room
-                  </figcaption>
-                </figure>
-              </div>
-            </FadeUp>
-
-            <div className="md:col-span-6 md:pl-2 lg:pl-8">
-              <FadeUp>
-                <p className="text-[0.62rem] uppercase tracking-[0.42em] text-[color:var(--color-charcoal-soft)]">
-                  § Two · A Note on Process
-                </p>
-              </FadeUp>
-              <FadeUp delay={0.08}>
-                <h2
-                  className="mt-6 max-w-[20ch] text-balance"
-                  style={{
-                    fontFamily: "var(--font-serif)",
-                    fontSize: "var(--text-3xl)",
-                    lineHeight: 1.1,
-                    letterSpacing: "-0.016em",
-                    fontWeight: 400,
-                  }}
-                >
-                  Quiet engagement.{" "}
-                  <em className="text-[color:var(--color-aerial-deep)]">
-                    Specification you can rely on.
-                  </em>
-                </h2>
-              </FadeUp>
-              <FadeUp delay={0.16}>
-                <div className="mt-8 space-y-5 text-[var(--text-base)] leading-[1.85] text-[color:var(--color-charcoal-soft)]">
-                  <p className="max-w-[48ch]">
-                    Most trade enquiries are answered within 48 hours. We send
-                    a project questionnaire, then schedule a 30-minute call to
-                    establish brief, area, and operating profile.
-                  </p>
-                  <p className="max-w-[48ch]">
-                    For commissioned scent profiles, the development cycle is
-                    typically 6–10 weeks, including two scent panels and a
-                    sealed final reference.
-                  </p>
-                </div>
-              </FadeUp>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ====================================================
-          §  THREE — ENQUIRY (FORM stub)
+          §  TWO — TRADE ENQUIRY FORM
           ==================================================== */}
       <section className="bg-[color:var(--color-verdant)] py-[var(--spacing-section)] text-[color:var(--color-stardust)]">
         <div className="mx-auto max-w-[var(--container-content)] px-6 md:px-10">
           <FadeUp>
             <div className="mb-10 flex items-center gap-4 text-[0.6rem] uppercase tracking-[0.42em] text-[color:var(--color-stardust)]/65">
               <span className="h-px w-12 bg-[color:var(--color-stardust)]/25" />
-              <span>§ Three · Enquiry</span>
+              <span>§ Two · Trade Enquiry</span>
               <span className="h-px flex-1 bg-[color:var(--color-stardust)]/15" />
             </div>
           </FadeUp>
@@ -255,31 +147,29 @@ export default function ArchitectsPage() {
                 fontWeight: 400,
               }}
             >
-              Write to us.{" "}
+              Tell us about your project.{" "}
               <em className="not-italic text-[color:var(--color-aerial-soft)]">
-                We&rsquo;ll come back within 48 hours.
+                We&rsquo;ll get back within 48 hours.
               </em>
             </h2>
           </FadeUp>
 
           <FadeUp delay={0.12}>
             <form className="mt-12 grid gap-7 md:grid-cols-2 md:gap-x-10">
-              <Field label="Studio" placeholder="Studio or firm name" />
+              <Field label="Company / Brand" placeholder="Hotel, restaurant, studio, or company" />
               <Field label="Your name" placeholder="First and last" />
-              <Field label="Email" placeholder="you@studio.com" type="email" />
-              <Field label="Project city" placeholder="Mumbai, Bangalore, Delhi…" />
-              <Field
-                label="Project type"
-                placeholder="Residential · Hospitality · Retail · Other"
-              />
-              <Field
-                label="Square footage"
-                placeholder="Approximate area to be scented"
-              />
+              <Field label="Email" placeholder="you@company.com" type="email" />
+              <Field label="Phone" placeholder="Optional" />
+              <div className="md:col-span-2">
+                <Field
+                  label="What you need"
+                  placeholder="Commercial machines · Bulk order · Custom scent · Not sure yet"
+                />
+              </div>
               <div className="md:col-span-2">
                 <Field
                   label="A note"
-                  placeholder="Tell us about the project, timeline, or anything specific."
+                  placeholder="Tell us about your space, project, scale, or timeline."
                   textarea
                 />
               </div>
