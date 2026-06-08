@@ -1,0 +1,146 @@
+import Image from "next/image";
+import Link from "next/link";
+import { FadeUp } from "@/components/motion/fade-up";
+
+export function FounderTeaser() {
+  return (
+    <section className="bg-[color:var(--color-white)] py-[var(--spacing-section)]">
+      <div className="mx-auto max-w-[var(--container-full)] px-6 md:px-10">
+        <div className="grid items-start gap-12 md:grid-cols-12 md:gap-16">
+          {/* Image collage — two stacked images that together match text column height */}
+          <FadeUp className="md:col-span-6">
+            <div className="grid grid-cols-2 gap-4 md:gap-5">
+              <figure className="col-span-2">
+                <div className="relative aspect-[16/10] overflow-hidden bg-[color:var(--color-aerial-soft)]">
+                  <Image
+                    src="/images/vibe/vibe-07.jpg"
+                    alt="A palace corridor at golden hour"
+                    fill
+                    sizes="(min-width: 768px) 48vw, 100vw"
+                    className="object-cover"
+                    style={{ objectPosition: "center 30%" }}
+                  />
+                  <div className="absolute left-5 top-5 text-[0.6rem] uppercase tracking-[0.36em] text-[color:var(--color-stardust)]">
+                    Udaipur, 2023
+                  </div>
+                </div>
+              </figure>
+              <figure>
+                <div className="relative aspect-[4/5] overflow-hidden bg-[color:var(--color-aerial-soft)]">
+                  <Image
+                    src="/images/vibe/vibe-11.jpg"
+                    alt="A drawing room, considered"
+                    fill
+                    sizes="(min-width: 768px) 24vw, 50vw"
+                    className="object-cover"
+                  />
+                </div>
+                <figcaption className="mt-3 text-[0.58rem] uppercase tracking-[0.36em] text-[color:var(--color-charcoal-soft)]">
+                  The Drawing Room
+                </figcaption>
+              </figure>
+              <figure>
+                <div className="relative aspect-[4/5] overflow-hidden bg-[color:var(--color-aerial-soft)]">
+                  <Image
+                    src="/images/vibe/vibe-21.jpg"
+                    alt="A warm mid-century room, late afternoon"
+                    fill
+                    sizes="(min-width: 768px) 24vw, 50vw"
+                    className="object-cover"
+                  />
+                </div>
+                <figcaption className="mt-3 text-[0.58rem] uppercase tracking-[0.36em] text-[color:var(--color-charcoal-soft)]">
+                  A room, late afternoon
+                </figcaption>
+              </figure>
+            </div>
+          </FadeUp>
+
+          <div className="md:col-span-6 md:pl-2 lg:pl-8">
+            <FadeUp>
+              <p className="text-[0.62rem] uppercase tracking-[0.42em] text-[color:var(--color-charcoal-soft)]">
+                § Six · Founder Letter
+              </p>
+            </FadeUp>
+
+            <FadeUp delay={0.08}>
+              <h2
+                className="mt-6 text-balance"
+                style={{
+                  fontFamily: "var(--font-serif)",
+                  fontSize: "var(--text-3xl)",
+                  lineHeight: 1.1,
+                  letterSpacing: "-0.016em",
+                  fontWeight: 400,
+                }}
+              >
+                It started in a corridor at the Taj.
+              </h2>
+            </FadeUp>
+
+            <FadeUp delay={0.16}>
+              <div className="mt-8 space-y-5 text-[var(--text-base)] leading-[1.85] text-[color:var(--color-charcoal-soft)]">
+                <p className="max-w-[52ch] [&::first-letter]:float-left [&::first-letter]:mr-2 [&::first-letter]:font-[family-name:var(--font-serif)] [&::first-letter]:text-[3.2rem] [&::first-letter]:font-normal [&::first-letter]:leading-[0.9] [&::first-letter]:text-[color:var(--color-charcoal)]">
+                  I stood there for a while. The fragrance was everywhere and
+                  nowhere. It wasn&rsquo;t a candle. It wasn&rsquo;t a spray. It
+                  was woven into the air of the entire palace — warm,
+                  unhurried, unlike anything I&rsquo;d ever smelled in
+                  someone&rsquo;s home.
+                </p>
+                <p className="max-w-[52ch]">
+                  I asked the staff. They smiled politely. The scent, they
+                  explained, was proprietary. I went home and spent weeks
+                  trying to source it. I couldn&rsquo;t.
+                </p>
+                <p className="max-w-[52ch]">
+                  Las Vegas, a year later. The Aria. The Four Seasons in the
+                  Serengeti. Alila Fort Bishangarh. The Ritz-Carlton in Nusa
+                  Dua. Each one, the same arrested moment. Each one, the same
+                  answer.
+                </p>
+              </div>
+            </FadeUp>
+
+            <FadeUp delay={0.24}>
+              <div className="mt-10 flex flex-wrap items-center gap-x-8 gap-y-3">
+                <Link
+                  href="/about"
+                  className="group inline-flex items-center gap-3 border-b border-[color:var(--color-charcoal)] pb-1.5 text-[0.72rem] uppercase tracking-[0.32em] transition-colors duration-500 hover:text-[color:var(--color-clay)] hover:border-[color:var(--color-clay)]"
+                >
+                  Continue the letter
+                  <span className="transition-transform duration-500 group-hover:translate-x-1">
+                    →
+                  </span>
+                </Link>
+                <span className="text-[0.6rem] uppercase tracking-[0.32em] text-[color:var(--color-charcoal-soft)]">
+                  4 min · Journal
+                </span>
+              </div>
+
+              {/* Signature card */}
+              <div className="mt-10 flex items-center gap-5 border-t border-[color:var(--color-rule)] pt-6">
+                <div className="flex h-12 w-12 items-center justify-center rounded-full border border-[color:var(--color-rule)] text-[0.65rem] uppercase tracking-[0.18em] text-[color:var(--color-charcoal-soft)]">
+                  SR
+                </div>
+                <div>
+                  <p
+                    style={{
+                      fontFamily: "var(--font-serif)",
+                      fontStyle: "italic",
+                      fontSize: "0.95rem",
+                    }}
+                  >
+                    Semil Rambhiya
+                  </p>
+                  <p className="text-[0.62rem] uppercase tracking-[0.32em] text-[color:var(--color-charcoal-soft)]">
+                    Founder, Quint Home
+                  </p>
+                </div>
+              </div>
+            </FadeUp>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
