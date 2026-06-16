@@ -1,11 +1,7 @@
 import { FadeUp } from "@/components/motion/fade-up";
 
-const integrations = [
-  { name: "Apple Home", note: "HomeKit · Matter" },
-  { name: "Amazon Alexa", note: "Routines · Skills" },
-  { name: "Google Home", note: "Assistant · Hubs" },
-  { name: "IFTTT / Matter", note: "Open protocols" },
-];
+// Per the brief: "smart home integrated — Apple Home, Amazon Alexa, Google Home".
+const integrations = ["Apple Home", "Amazon Alexa", "Google Home"];
 
 export function SmartHome() {
   return (
@@ -49,7 +45,7 @@ export function SmartHome() {
               color: "var(--color-stardust)",
             }}
           >
-            App-controlled. Smart-home native.
+            App-controlled. Smart-home integrated.
             <br />
             <em className="not-italic text-[color:var(--color-aerial-soft)]">
               Quiet by design.
@@ -69,17 +65,19 @@ export function SmartHome() {
         </FadeUp>
 
         <FadeUp delay={0.3}>
-          <div className="mt-20 grid grid-cols-2 gap-y-10 border-t border-[color:var(--color-stardust)]/15 pt-12 md:grid-cols-4">
-            {integrations.map((i) => (
-              <div key={i.name} className="flex flex-col items-center gap-2">
-                <span className="text-[0.86rem] uppercase tracking-[0.18em] text-[color:var(--color-stardust)]/90">
-                  {i.name}
-                </span>
-                <span className="text-[0.6rem] uppercase tracking-[0.32em] text-[color:var(--color-stardust)]/45">
-                  {i.note}
-                </span>
-              </div>
-            ))}
+          <div className="mt-20 border-t border-[color:var(--color-stardust)]/15 pt-12">
+            <p className="text-[0.6rem] uppercase tracking-[0.42em] text-[color:var(--color-stardust)]/50">
+              Works with
+            </p>
+            <div className="mx-auto mt-8 grid max-w-[40rem] grid-cols-3 gap-6">
+              {integrations.map((name) => (
+                <div key={name} className="flex items-center justify-center">
+                  <span className="text-[0.86rem] uppercase tracking-[0.18em] text-[color:var(--color-stardust)]/90">
+                    {name}
+                  </span>
+                </div>
+              ))}
+            </div>
           </div>
         </FadeUp>
       </div>
