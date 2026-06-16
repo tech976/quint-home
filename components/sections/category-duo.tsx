@@ -20,10 +20,10 @@ const cards = [
     eyebrow: "The Library",
     title: "Fragrance Oils",
     description:
-      "Nine compositions, blended like fine perfumery. 70–90% concentrate, IFRA-compliant, read top, heart and base.",
+      "Eight compositions, blended like fine perfumery. 70–90% concentrate, IFRA-compliant, read top, heart and base.",
     href: "/shop?category=oils",
     image: "/images/vibe/vibe-09.jpg",
-    count: "Nine scents",
+    count: "Eight scents",
     background: "bg-[color:var(--color-aerial)]",
   },
 ];

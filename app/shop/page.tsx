@@ -38,14 +38,14 @@ export default function ShopPage() {
               >
                 The diffusers, and{" "}
                 <em className="text-[color:var(--color-aerial-deep)]">
-                  the nine oils that go in them.
+                  the eight oils that go in them.
                 </em>
               </h1>
             </FadeUp>
 
             <FadeUp delay={0.1} className="md:col-span-5 md:pl-2">
               <p className="max-w-[44ch] text-[var(--text-base)] leading-[1.85] text-[color:var(--color-charcoal-soft)]">
-                Pick the diffuser that fits the room. Then choose a scent: nine
+                Pick the diffuser that fits the room. Then choose a scent: eight
                 oils at 70&ndash;90% concentrate, each blended like fine
                 perfumery and built to fill a space quietly.
               </p>
@@ -195,7 +195,7 @@ export default function ShopPage() {
                     fontWeight: 400,
                   }}
                 >
-                  Nine oils.{" "}
+                  Eight oils.{" "}
                   <em className="text-[color:var(--color-aerial-deep)]">
                     Read them top, heart, base.
                   </em>
@@ -212,7 +212,7 @@ export default function ShopPage() {
           </FadeUp>
 
           {/*
-            Scent grid — uniform 3-up plates (nine oils = a clean 3×3). Symmetric
+            Scent grid — uniform 3-up plates (eight oils). Symmetric
             and orderly, but kept editorial: hairline rules, swatch chips, and the
             top/heart/base note pyramid under each bottle. No card-shadow Shopify look.
           */}

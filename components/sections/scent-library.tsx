@@ -11,10 +11,10 @@ export function ScentLibrary() {
       <div className="mx-auto max-w-[var(--container-full)] px-6 md:px-10">
         <SectionHeader
           chapter="The Library"
-          chapterTitle="9 Signatures"
+          chapterTitle="8 Signatures"
           headline={
             <>
-              Nine compositions,
+              Eight compositions,
               <br />
               <em className="not-italic text-[color:var(--color-aerial-deep)]">two of them
               hotel-credentialled.</em>

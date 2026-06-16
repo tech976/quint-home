@@ -40,7 +40,7 @@ const groups = [
       },
       {
         q: "What is a Credential oil?",
-        a: "Two of our nine oils, Grand Lobby and The Reading Room, are Credential blends: composed to the same brief as the signature scenting you find in considered public spaces, then made for the home. They are more complex to blend, carry a credential badge, and sit at a small price premium over the standard oils.",
+        a: "Two of our eight oils, Grand Lobby and The Arrival, are Credential blends: composed to the same brief as the signature scenting you find in considered public spaces, then made for the home. They are more complex to blend, carry a credential badge, and sit at a small price premium over the standard oils.",
       },
     ],
   },

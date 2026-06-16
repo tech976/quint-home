@@ -21,7 +21,7 @@ export const diffusers: Diffuser[] = [
   {
     slug: "plug-in-a815",
     model: "A815",
-    name: "Plug-In Diffuser",
+    name: "The Wisp",
     category: "diffuser",
     tier: "entry",
     tagline: "Scent Your Space. No Setup Required.",
@@ -64,7 +64,7 @@ export const diffusers: Diffuser[] = [
   {
     slug: "tabletop-a326",
     model: "A326",
-    name: "Tabletop Diffuser",
+    name: "The Monolith",
     category: "diffuser",
     tier: "premium",
     tagline: "A premium aluminum column — in brushed gold or matte black.",
@@ -136,7 +136,7 @@ export const diffusers: Diffuser[] = [
   {
     slug: "tabletop-fabric-a974",
     model: "A974",
-    name: "Tabletop Diffuser — Fabric",
+    name: "The Hearth",
     category: "diffuser",
     tier: "entry",
     tagline: "Soft to the Touch. Warm in Every Sense.",
@@ -180,7 +180,7 @@ export const diffusers: Diffuser[] = [
   {
     slug: "dual-mist-at302",
     model: "A-T302",
-    name: "Dual-Mist Diffuser",
+    name: "The Pillar",
     category: "diffuser",
     tier: "premium",
     tagline: "Two Scents. One Space. Infinite Combinations.",
@@ -225,7 +225,7 @@ export const diffusers: Diffuser[] = [
   {
     slug: "clock-at370",
     model: "A-T370",
-    name: "Clock Diffuser",
+    name: "The Ember",
     category: "diffuser",
     tier: "premium",
     tagline: "Always Know the Time. Always Set the Mood.",
@@ -274,5 +274,5 @@ export function getDiffuser(slug: string) {
 }
 
 export function getRelatedOils() {
-  return ["first-light", "temple-dusk", "the-drawing-room", "the-reading-room"];
+  return ["blanc-ritual", "shoreline", "grand-lobby", "the-arrival"];
 }
