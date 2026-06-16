@@ -4,7 +4,7 @@
 const tokens = [
   "Air Elevated",
   "Mumbai, est. 2026",
-  "Hotel-grade fragrance",
+  "70–90% concentrate",
   "Waterless · Silent · App-controlled",
   "IFRA-Compliant",
   "Apple Home · Alexa · Google Home",
