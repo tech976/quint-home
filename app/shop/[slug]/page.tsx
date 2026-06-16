@@ -73,11 +73,11 @@ export default async function ProductPage({
   // Lifestyle still for models WITHOUT a video — a distinct indoor interior per
   // product (video models show their video instead and use none of these).
   const LIFESTYLE_BY_SLUG: Record<string, string> = {
-    "tabletop-a326": "/images/indoor/indoor-01.png",
-    "tabletop-fabric-a974": "/images/indoor/indoor-02.png",
+    "tabletop-a326": "/images/indoor/indoor-01.webp",
+    "tabletop-fabric-a974": "/images/indoor/indoor-02.webp",
   };
   const lifestyleImage =
-    LIFESTYLE_BY_SLUG[product.slug] ?? "/images/indoor/indoor-03.png";
+    LIFESTYLE_BY_SLUG[product.slug] ?? "/images/indoor/indoor-03.webp";
 
   return (
     <article id="top" className="bg-[color:var(--color-white)]">

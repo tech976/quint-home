@@ -6,12 +6,12 @@ import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 
 const BANNERS = [
-  "/images/banners/banner-01.png",
-  "/images/banners/banner-02.png",
-  "/images/banners/banner-03.png",
-  "/images/banners/banner-04.png",
-  "/images/banners/banner-05.png",
-  "/images/banners/banner-06.png",
+  "/images/banners/banner-01.webp",
+  "/images/banners/banner-02.webp",
+  "/images/banners/banner-03.webp",
+  "/images/banners/banner-04.webp",
+  "/images/banners/banner-05.webp",
+  "/images/banners/banner-06.webp",
 ];
 
 const INTERVAL = 5000;
