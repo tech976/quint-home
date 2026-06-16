@@ -39,3 +39,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Local source asset folders (optimized copies live in public/)
+/udaipur/
+/banner/

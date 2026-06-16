@@ -32,6 +32,16 @@ const VISION = [
   "We serve individual customers looking to elevate their home, and commercial spaces that want a signature scent their customers will remember.",
 ];
 
+// Udaipur — the founding palace, where the story begins.
+const UDAIPUR = [
+  "/images/udaipur/udaipur-1.webp",
+  "/images/udaipur/udaipur-2.webp",
+  "/images/udaipur/udaipur-3.webp",
+  "/images/udaipur/udaipur-4.webp",
+  "/images/udaipur/udaipur-5.webp",
+  "/images/udaipur/udaipur-6.webp",
+];
+
 export default function AboutPage() {
   return (
     <article className="bg-[color:var(--color-white)]">
@@ -148,18 +158,29 @@ export default function AboutPage() {
             </h2>
           </FadeUp>
 
+          {/* A short Udaipur gallery — the palace where it began */}
           <FadeUp delay={0.1}>
-            <figure className="mx-auto mt-12 max-w-[44rem] md:mt-16">
-              <div className="relative aspect-[16/10] w-full overflow-hidden bg-[color:var(--color-stardust)]">
-                <Image
-                  src="/images/home/home-02.png"
-                  alt="A quiet, warm hallway at dusk"
-                  fill
-                  sizes="(min-width: 768px) 44rem, 92vw"
-                  className="object-cover"
-                />
+            <div className="mt-12 md:mt-16">
+              <div className="grid grid-cols-2 gap-3 md:grid-cols-3 md:gap-4">
+                {UDAIPUR.map((src, i) => (
+                  <div
+                    key={i}
+                    className="group relative aspect-[4/5] overflow-hidden bg-[color:var(--color-stardust)]"
+                  >
+                    <Image
+                      src={src}
+                      alt="Udaipur — a palace on the lake"
+                      fill
+                      sizes="(min-width: 768px) 30vw, 45vw"
+                      className="object-cover transition-transform duration-[1600ms] ease-[var(--ease-quint)] group-hover:scale-[1.04]"
+                    />
+                  </div>
+                ))}
               </div>
-            </figure>
+              <figcaption className="mt-4 text-center text-[var(--text-xs)] italic text-[color:var(--color-charcoal-soft)]">
+                Udaipur — where the question began.
+              </figcaption>
+            </div>
           </FadeUp>
 
           {/* The story, verbatim. First letter dropcapped; rest as a single measure. */}
