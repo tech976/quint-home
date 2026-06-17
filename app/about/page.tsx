@@ -211,7 +211,7 @@ export default function AboutPage() {
           </FadeUp>
 
           <FadeUp delay={0.12}>
-            <p className="mt-8 text-center text-[0.62rem] uppercase tracking-[0.32em] text-[color:var(--color-charcoal-soft)]">
+            <p className="mx-auto mt-8 text-center text-[0.62rem] uppercase tracking-[0.32em] text-[color:var(--color-charcoal-soft)]">
               Semil Rambhiya · Founder, Quint Home
             </p>
           </FadeUp>
