@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { FadeUp } from "@/components/motion/fade-up";
 import { SectionHeader } from "@/components/ui/section-header";
 
@@ -58,39 +59,67 @@ export function HowToUse() {
           }
         />
 
-        <div className="mt-14 grid gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-5 md:mt-20">
-          {steps.map((s, i) => (
-            <FadeUp key={s.n} delay={i * 0.06}>
-              <div className="border-t border-[color:var(--color-charcoal)] pt-5">
-                <span
-                  className="block tabular-nums text-[color:var(--color-aerial-deep)]"
-                  style={{
-                    fontFamily: "var(--font-serif)",
-                    fontSize: "var(--text-3xl)",
-                    lineHeight: 1,
-                    fontWeight: 400,
-                  }}
-                >
-                  {s.n}
-                </span>
-                <h3
-                  className="mt-5"
-                  style={{
-                    fontFamily: "var(--font-serif)",
-                    fontSize: "var(--text-xl)",
-                    lineHeight: 1.1,
-                    letterSpacing: "-0.012em",
-                    fontWeight: 400,
-                  }}
-                >
-                  {s.title}
-                </h3>
-                <p className="mt-3 text-[0.9rem] leading-[1.65] text-[color:var(--color-charcoal-soft)]">
-                  {s.body}
-                </p>
+        <div className="mt-14 grid items-center gap-12 md:mt-20 lg:grid-cols-2 lg:gap-20">
+          {/* The companion app — two phones, layered */}
+          <FadeUp>
+            <div className="relative mx-auto w-full max-w-[30rem] lg:mx-0">
+              <div className="relative aspect-[4/5] w-[72%] overflow-hidden border border-[color:var(--color-rule)] bg-[color:var(--color-stardust-soft)] shadow-[0_30px_70px_-40px_rgba(58,53,50,0.5)]">
+                <Image
+                  src="/images/ritual/app-home.webp"
+                  alt="The Quint Home app — diffuser controls and schedule"
+                  fill
+                  sizes="(min-width: 1024px) 22rem, 72vw"
+                  className="object-cover"
+                />
               </div>
-            </FadeUp>
-          ))}
+              <div className="absolute -bottom-6 right-0 aspect-[4/5] w-[48%] overflow-hidden border border-[color:var(--color-rule)] bg-[color:var(--color-stardust-soft)] shadow-[0_30px_70px_-40px_rgba(58,53,50,0.5)] ring-[6px] ring-[color:var(--color-white)]">
+                <Image
+                  src="/images/ritual/app-timer.webp"
+                  alt="The Quint Home app — set a timer and intensity"
+                  fill
+                  sizes="(min-width: 1024px) 15rem, 48vw"
+                  className="object-cover"
+                />
+              </div>
+            </div>
+          </FadeUp>
+
+          {/* The five steps */}
+          <div className="grid gap-6">
+            {steps.map((s, i) => (
+              <FadeUp key={s.n} delay={i * 0.05}>
+                <div className="flex gap-5 border-t border-[color:var(--color-rule)] pt-5">
+                  <span
+                    className="shrink-0 tabular-nums text-[color:var(--color-aerial-deep)]"
+                    style={{
+                      fontFamily: "var(--font-serif)",
+                      fontSize: "var(--text-2xl)",
+                      lineHeight: 1,
+                      fontWeight: 400,
+                    }}
+                  >
+                    {s.n}
+                  </span>
+                  <div className="min-w-0">
+                    <h3
+                      style={{
+                        fontFamily: "var(--font-serif)",
+                        fontSize: "var(--text-xl)",
+                        lineHeight: 1.1,
+                        letterSpacing: "-0.012em",
+                        fontWeight: 400,
+                      }}
+                    >
+                      {s.title}
+                    </h3>
+                    <p className="mt-2 max-w-[40ch] text-[0.92rem] leading-[1.6] text-[color:var(--color-charcoal-soft)]">
+                      {s.body}
+                    </p>
+                  </div>
+                </div>
+              </FadeUp>
+            ))}
+          </div>
         </div>
       </div>
     </section>
