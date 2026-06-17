@@ -28,7 +28,7 @@ export function SmartHome() {
         <FadeUp>
           <div className="mx-auto flex items-center justify-center gap-4 text-[0.6rem] uppercase tracking-[0.42em] text-[color:var(--color-stardust)]/65">
             <span className="h-px w-12 bg-[color:var(--color-stardust)]/25" />
-            <span>§ Five · Set Once</span>
+            <span>§ Five · Controls</span>
             <span className="h-px w-12 bg-[color:var(--color-stardust)]/25" />
           </div>
         </FadeUp>
@@ -48,7 +48,7 @@ export function SmartHome() {
             App-controlled. Smart-home integrated.
             <br />
             <em className="not-italic text-[color:var(--color-aerial-soft)]">
-              Quiet by design.
+              Or just press the button.
             </em>
           </h2>
         </FadeUp>
@@ -58,9 +58,10 @@ export function SmartHome() {
             className="mx-auto mt-10 max-w-[54ch] text-[var(--text-base)] leading-[1.85]"
             style={{ color: "rgba(238, 228, 216, 0.92)" }}
           >
-            One configuration in the app. Two atmospheres a day. The diffuser
-            runs on schedule from that point — no daily interaction, no
-            replacing reeds, no candles to forget about.
+            Set a schedule in the app, or control it from Apple Home, Alexa, or
+            Google Home. There are physical controls on the diffuser too, so you
+            never need your phone to turn it on. No reeds to replace, no candles
+            to forget about.
           </p>
         </FadeUp>
 

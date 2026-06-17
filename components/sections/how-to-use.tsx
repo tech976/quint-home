@@ -19,7 +19,7 @@ const steps = [
   {
     n: "03",
     title: "Set your schedule",
-    body: "Choose a morning and evening schedule and intensity level — set it once.",
+    body: "Pick when it runs each day and how strong, in the app.",
   },
   {
     n: "04",
@@ -42,18 +42,18 @@ export function HowToUse() {
           chapterTitle="How it works"
           headline={
             <>
-              Set it once.
+              Fill it, set it,
               <br />
               <em className="not-italic text-[color:var(--color-aerial-deep)]">
-                Then forget it&rsquo;s there.
+                and leave it alone.
               </em>
             </>
           }
           meta={
             <>
-              From bottle to scheduled atmosphere
+              Five steps from oil
               <br />
-              in five quiet steps.
+              to a room that runs on schedule.
             </>
           }
         />

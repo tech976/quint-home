@@ -86,15 +86,15 @@ export function ScentFinder() {
               Tell us the mood.
               <br />
               <em className="not-italic text-[color:var(--color-aerial-deep)]">
-                We&rsquo;ll find the scent.
+                We&rsquo;ll suggest a scent.
               </em>
             </>
           }
           meta={
             <>
-              Two taps — a feeling and a detail —
+              Two questions, two taps.
               <br />
-              and we&rsquo;ll point you to one of the eight.
+              You&rsquo;ll land on one of the eight oils.
             </>
           }
         />
@@ -240,7 +240,7 @@ export function ScentFinder() {
                     fontWeight: 400,
                   }}
                 >
-                  And the detail you love most?
+                  Which notes do you like?
                 </h3>
                 <div className="mt-7">
                   {ACCORDS.map((a) => (
@@ -287,7 +287,7 @@ export function ScentFinder() {
             {step === 3 && result && (
               <div>
                 <p className="text-[0.6rem] uppercase tracking-[0.42em] text-[color:var(--color-charcoal-soft)]">
-                  We&rsquo;d reach for
+                  Try
                 </p>
                 <h3
                   className="mt-4"

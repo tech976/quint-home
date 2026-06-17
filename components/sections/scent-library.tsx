@@ -14,19 +14,19 @@ export function ScentLibrary() {
           chapterTitle="8 Signatures"
           headline={
             <>
-              Eight compositions,
+              Eight scents,
               <br />
-              <em className="not-italic text-[color:var(--color-aerial-deep)]">two of them
-              hotel-credentialled.</em>
+              <em className="not-italic text-[color:var(--color-aerial-deep)]">two used in
+              hotels.</em>
             </>
           }
           meta={
             <>
-              Each scent is built like fine perfumery —
+              Top, heart, base — like a real perfume.
               <br />
-              top, heart, base. 70–90% concentrate.
+              70–90% concentrate, IFRA-compliant.
               <br />
-              The room is the canvas.
+              Pick the one you want to come home to.
             </>
           }
         />

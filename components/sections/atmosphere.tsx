@@ -6,14 +6,14 @@ import { EditorialCarousel, type Slide } from "@/components/ui/editorial-carouse
  * Uses the brand vibe library as a curated visual library.
  */
 const slides: Slide[] = [
-  { src: "/images/vibe/vibe-01.jpg", alt: "Soft morning light through a curtain", eyebrow: "Morning", caption: "Before the day has made up its mind." },
-  { src: "/images/vibe/vibe-14.jpg", alt: "A hillside at sunset", eyebrow: "Last Light", caption: "The last warmth before the hills turn blue." },
-  { src: "/images/vibe/vibe-17.jpg", alt: "Sun through a canopy of trees", eyebrow: "Daybreak", caption: "The trees letting the morning through." },
-  { src: "/images/vibe/vibe-16.jpg", alt: "Late sun scattered across water", eyebrow: "Surface", caption: "Afternoon, broken up on the water." },
-  { src: "/images/vibe/vibe-20.jpg", alt: "A figure running through a golden field", eyebrow: "Golden Hour", caption: "Outrunning the last of the gold." },
-  { src: "/images/vibe/vibe-22.jpg", alt: "A study in late afternoon light", eyebrow: "The Study", caption: "Afternoon, in no hurry to leave." },
-  { src: "/images/vibe/vibe-13.jpg", alt: "An interior in thin winter light", eyebrow: "Winter Light", caption: "Thin winter light, through old glass." },
-  { src: "/images/vibe/vibe-21.jpg", alt: "A still, quiet room", eyebrow: "Stillness", caption: "The hour that asks nothing of you." },
+  { src: "/images/vibe/vibe-01.jpg", alt: "Soft morning light through a curtain", eyebrow: "Morning", caption: "Early light through a curtain." },
+  { src: "/images/vibe/vibe-14.jpg", alt: "A hillside at sunset", eyebrow: "Last Light", caption: "A hillside just before sunset." },
+  { src: "/images/vibe/vibe-17.jpg", alt: "Sun through a canopy of trees", eyebrow: "Daybreak", caption: "Sun coming through the trees." },
+  { src: "/images/vibe/vibe-16.jpg", alt: "Late sun scattered across water", eyebrow: "Surface", caption: "Afternoon sun on the water." },
+  { src: "/images/vibe/vibe-20.jpg", alt: "A figure running through a golden field", eyebrow: "Golden Hour", caption: "Running through a field at golden hour." },
+  { src: "/images/vibe/vibe-22.jpg", alt: "A study in late afternoon light", eyebrow: "The Study", caption: "Late afternoon in a quiet room." },
+  { src: "/images/vibe/vibe-13.jpg", alt: "An interior in thin winter light", eyebrow: "Winter Light", caption: "Thin winter light through old glass." },
+  { src: "/images/vibe/vibe-21.jpg", alt: "A still, quiet room", eyebrow: "Stillness", caption: "A still, quiet room." },
 ];
 
 export function Atmosphere() {
@@ -36,15 +36,15 @@ export function Atmosphere() {
                   fontWeight: 400,
                 }}
               >
-                A room is mostly light —{" "}
+                The moods we kept{" "}
                 <em className="text-[color:var(--color-aerial-deep)]">
-                  and the hour you catch it.
+                  coming back to.
                 </em>
               </h2>
             </div>
             <p className="max-w-[32ch] text-[0.88rem] leading-[1.65] text-[color:var(--color-charcoal-soft)] md:text-right">
-              Years of references — the light, the texture, the quiet we kept
-              returning to.
+              The references behind the brand: light, texture, and a few quiet
+              rooms.
               <br />
               <span className="text-[0.62rem] uppercase tracking-[0.32em]">
                 Drag to browse →

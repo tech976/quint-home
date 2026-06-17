@@ -22,9 +22,9 @@ export function JournalTeaser() {
           }
           meta={
             <>
-              Slow, considered, occasionally personal.
+              Notes on fragrance and the rooms it lives in.
               <br />
-              New essays monthly.
+              A new piece every month.
             </>
           }
         />

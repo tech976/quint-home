@@ -22,7 +22,7 @@ const offerings = [
   {
     no: "03",
     title: "Signature scent",
-    body: "A bespoke fragrance composed for your brand alone.",
+    body: "A custom fragrance made for your brand alone.",
   },
 ];
 
@@ -30,19 +30,19 @@ const offerings = [
 const testimonials = [
   {
     quote:
-      "The scent became part of how guests describe us. People stop at the front desk just to ask what it is.",
+      "Guests ask about the scent at the front desk almost every day. It's become part of how they remember us.",
     name: "General Manager",
     role: "A boutique hotel",
   },
   {
     quote:
-      "Rolled out across eleven stores in a quarter. Consistent, low-maintenance, unmistakably ours.",
+      "We put it in eleven stores in a quarter. Same scent everywhere, almost no upkeep.",
     name: "Retail Operations",
     role: "A lifestyle brand",
   },
   {
     quote:
-      "Our café finally smells like a decision, not an accident. Guests stay longer.",
+      "The café smells the way we always wanted it to. People sit longer now.",
     name: "Founder",
     role: "A Mumbai restaurant group",
   },
@@ -55,7 +55,7 @@ export default function BusinessesPage() {
       <section className="relative isolate flex min-h-[72svh] items-end overflow-hidden text-[color:var(--color-stardust)]">
         <Image
           src="/images/indoor/indoor-03.webp"
-          alt="A considered interior, quietly scented"
+          alt="A hotel interior with a diffuser running"
           fill
           priority
           sizes="100vw"
@@ -145,7 +145,7 @@ export default function BusinessesPage() {
       <section className="relative isolate flex min-h-[56svh] items-center overflow-hidden text-[color:var(--color-stardust)]">
         <Image
           src="/images/indoor/indoor-01.webp"
-          alt="A warm interior at golden hour"
+          alt="A warm interior in evening light"
           fill
           sizes="100vw"
           className="object-cover"
@@ -170,9 +170,9 @@ export default function BusinessesPage() {
                 fontWeight: 400,
               }}
             >
-              The invisible layer{" "}
+              The first thing people notice,{" "}
               <em className="not-italic text-[color:var(--color-aerial-soft)]">
-                guests remember.
+                before they see anything.
               </em>
             </h2>
           </FadeUp>

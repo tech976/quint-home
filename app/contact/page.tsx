@@ -30,9 +30,9 @@ export default function ContactPage() {
                   fontWeight: 400,
                 }}
               >
-                Write to us,{" "}
+                Email us or{" "}
                 <em className="text-[color:var(--color-aerial-deep)]">
-                  message us, or visit.
+                  message us on WhatsApp.
                 </em>
               </h1>
             </FadeUp>

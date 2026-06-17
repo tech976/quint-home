@@ -25,7 +25,7 @@ const slides: Slide[] = [
   {
     type: "image",
     src: "/images/hero-2.webp",
-    alt: "Quint diffuser with fragrance oil and driftwood — smart, silent, sophisticated",
+    alt: "Quint diffuser with a fragrance oil bottle and driftwood",
     position: "center 50%",
   },
   { type: "video", src: "/videos/hero-4.mp4", hideHeader: true },

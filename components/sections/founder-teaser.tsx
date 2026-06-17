@@ -98,18 +98,17 @@ export function FounderTeaser() {
                 </p>
                 <p className="max-w-[52ch]">
                   Las Vegas, a year later — a luxury casino hotel on the Strip.
-                  A different continent, the same arrested moment in a lobby. It
-                  kept happening: a safari lodge in the Serengeti, warm with
+                  A different continent, and I stopped in the lobby the same way.
+                  It kept happening: a safari lodge in the Serengeti, warm with
                   baobab wood and wild earth; a beach hotel in Nusa Dua,
                   Balinese frangipani on a sea breeze. Each time I tried to find
                   the scent. Each time: proprietary.
                 </p>
                 <p className="max-w-[52ch]">
-                  Hotels understand something most of us don&rsquo;t. Scent is
-                  the invisible layer of luxury — it sets the tone before you
-                  see anything, before you touch anything. So why do we accept
-                  that our homes, where we spend the majority of our lives,
-                  smell like nothing in particular?
+                  Hotels understand something most of us don&rsquo;t. Scent sets
+                  the tone before you see anything, before you touch anything. So
+                  why do we accept that our homes, where we spend most of our
+                  lives, smell like nothing in particular?
                 </p>
                 <p className="max-w-[52ch] text-[color:var(--color-charcoal)]">
                   Quint Home exists because I couldn&rsquo;t stop thinking about

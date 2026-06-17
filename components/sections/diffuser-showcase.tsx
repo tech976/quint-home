@@ -30,15 +30,15 @@ export function DiffuserShowcase() {
                   fontWeight: 400,
                 }}
               >
-                Five objects.{" "}
+                Five diffusers.{" "}
                 <em className="text-[color:var(--color-aerial-deep)]">
                   One for every room.
                 </em>
               </h2>
             </div>
             <p className="max-w-[32ch] text-[0.92rem] leading-[1.65] text-[color:var(--color-charcoal-soft)] md:text-right">
-              Aluminium, soft fabric, and acrylic — each model sized for a
-              different room, from a compact plug-in to an open-plan column.
+              Aluminium, fabric and acrylic — from a small plug-in to a
+              floor-standing column. Pick the size your room needs.
             </p>
           </div>
         </FadeUp>

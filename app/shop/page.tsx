@@ -10,7 +10,7 @@ import { ShopBrowser } from "@/components/shop/shop-browser";
 export const metadata: Metadata = {
   title: "Shop",
   description:
-    "Diffusers and fragrance oils — the Quint Home range. Editorial, considered, IFRA-compliant.",
+    "Diffusers and fragrance oils — the full Quint Home range. IFRA-compliant.",
 };
 
 export default function ShopPage() {
@@ -45,9 +45,9 @@ export default function ShopPage() {
 
             <FadeUp delay={0.1} className="md:col-span-5 md:pl-2">
               <p className="max-w-[44ch] text-[var(--text-base)] leading-[1.85] text-[color:var(--color-charcoal-soft)]">
-                Pick the diffuser that fits the room. Then choose a scent: eight
-                oils at 70&ndash;90% concentrate, each blended like fine
-                perfumery and built to fill a space quietly.
+                Pick the diffuser that fits the room. Then pick a scent: eight
+                oils at 70&ndash;90% concentration, strong enough to fill a
+                space without water or heat.
               </p>
             </FadeUp>
           </div>
@@ -197,7 +197,7 @@ export default function ShopPage() {
                 >
                   Eight oils.{" "}
                   <em className="text-[color:var(--color-aerial-deep)]">
-                    Read them top, heart, base.
+                    Top, heart and base notes for each.
                   </em>
                 </h2>
               </div>
