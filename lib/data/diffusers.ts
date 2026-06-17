@@ -220,7 +220,7 @@ export const diffusers: Diffuser[] = [
     gallery: [
       "/images/diffusers/dual-mist-at302/pillar-v2-01.webp",
       "/images/diffusers/dual-mist-at302/pillar-v2-02.webp",
-      "/images/diffusers/dual-mist-at302/pillar-v2-03.webp",
+      "/images/diffusers/dual-mist-at302/pillar-v2-03b.webp",
       "/images/diffusers/dual-mist-at302/pillar-v2-04.webp",
     ],
     finish: "Aluminum alloy with PP + PET",
