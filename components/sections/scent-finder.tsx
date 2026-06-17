@@ -110,13 +110,13 @@ export function ScentFinder() {
 
         {/* Step 1 — mood as image tiles */}
         {step === 1 && (
-          <div className="mt-8 grid grid-cols-2 gap-4 md:grid-cols-4 md:gap-6">
+          <div className="mt-8 grid max-w-3xl grid-cols-2 gap-3 sm:grid-cols-4 md:gap-4">
             {MOODS.map((m, i) => (
               <FadeUp key={m.key} delay={i * 0.06}>
                 <button
                   type="button"
                   onClick={() => setMood(m.key)}
-                  className="group relative block aspect-[4/5] w-full overflow-hidden text-left outline-none"
+                  className="group relative block aspect-square w-full overflow-hidden text-left outline-none"
                 >
                   <Image
                     src={m.image}
@@ -133,12 +133,12 @@ export function ScentFinder() {
                         "linear-gradient(180deg, rgba(58,53,50,0) 38%, rgba(58,53,50,0.78) 100%)",
                     }}
                   />
-                  <div className="absolute inset-x-0 bottom-0 p-4 text-[color:var(--color-stardust)] md:p-5">
+                  <div className="absolute inset-x-0 bottom-0 p-3 text-[color:var(--color-stardust)] md:p-4">
                     <span
                       className="block"
                       style={{
                         fontFamily: "var(--font-serif)",
-                        fontSize: "var(--text-xl)",
+                        fontSize: "1.05rem",
                         lineHeight: 1.05,
                         letterSpacing: "-0.012em",
                         fontWeight: 400,
@@ -146,7 +146,7 @@ export function ScentFinder() {
                     >
                       {m.label}
                     </span>
-                    <span className="mt-1.5 block text-[0.6rem] uppercase tracking-[0.26em] opacity-85">
+                    <span className="mt-1 block text-[0.54rem] uppercase tracking-[0.24em] opacity-85">
                       {m.sub}
                     </span>
                   </div>
