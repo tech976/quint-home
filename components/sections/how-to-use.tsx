@@ -68,14 +68,14 @@ export function HowToUse() {
           {steps.map((s, i) => (
             <FadeUp key={s.n} delay={i * 0.06}>
               <div>
-                {/* Step image */}
-                <div className="relative aspect-[4/5] overflow-hidden bg-[color:var(--color-stardust-soft)]">
+                {/* Step image — transparent render, floats on the page (no box) */}
+                <div className="relative aspect-[4/5]">
                   <Image
                     src={s.img}
                     alt={s.title}
                     fill
                     sizes="(min-width: 1024px) 18vw, (min-width: 640px) 45vw, 100vw"
-                    className="object-cover"
+                    className="object-contain"
                   />
                 </div>
                 {/* Text below */}
