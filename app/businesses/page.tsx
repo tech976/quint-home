@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { FadeUp } from "@/components/motion/fade-up";
 
 export const metadata: Metadata = {
@@ -10,18 +11,18 @@ export const metadata: Metadata = {
 const offerings = [
   {
     no: "01",
-    title: "Commercial Machines",
-    body: "Lobby, restaurant, retail, and workspace-scale diffusers — sized for large areas and built to run continuously.",
+    title: "Commercial machines",
+    body: "Lobby- to floor-scale diffusers, built to run continuously.",
   },
   {
     no: "02",
-    title: "Bulk Orders",
-    body: "Volume pricing on devices and fragrance oils, for multi-site rollouts and ongoing supply.",
+    title: "Bulk orders",
+    body: "Volume pricing on devices and oils for multi-site rollouts.",
   },
   {
     no: "03",
-    title: "Personalized Scent Development",
-    body: "A signature scent composed for your brand — the invisible layer your customers remember.",
+    title: "Signature scent",
+    body: "A bespoke fragrance composed for your brand alone.",
   },
 ];
 
@@ -35,7 +36,7 @@ const testimonials = [
   },
   {
     quote:
-      "We rolled it out across eleven stores in a single quarter. Consistent, low-maintenance, and unmistakably ours.",
+      "Rolled out across eleven stores in a quarter. Consistent, low-maintenance, unmistakably ours.",
     name: "Retail Operations",
     role: "A lifestyle brand",
   },
@@ -50,63 +51,87 @@ const testimonials = [
 export default function BusinessesPage() {
   return (
     <article className="bg-[color:var(--color-white)]">
-      {/* ===== HERO ===== */}
-      <section className="border-b border-[color:var(--color-rule)] pt-10 md:pt-14">
-        <div className="mx-auto max-w-[var(--container-full)] px-6 md:px-10">
-          <div className="grid items-end gap-10 pb-12 md:grid-cols-12 md:gap-16">
-            <FadeUp delay={0.05} className="md:col-span-7">
-              <p className="text-[0.62rem] uppercase tracking-[0.42em] text-[color:var(--color-charcoal-soft)]">
-                For Businesses
-              </p>
-              <h1
-                className="mt-7 text-balance"
-                style={{
-                  fontFamily: "var(--font-serif)",
-                  fontSize: "var(--text-5xl)",
-                  lineHeight: 0.96,
-                  letterSpacing: "-0.024em",
-                  fontWeight: 400,
-                }}
-              >
-                Scent your{" "}
-                <em className="text-[color:var(--color-aerial-deep)]">space.</em>
-              </h1>
-            </FadeUp>
-
-            <FadeUp delay={0.1} className="md:col-span-5">
-              <p className="max-w-[42ch] text-[var(--text-base)] leading-[1.85] text-[color:var(--color-charcoal-soft)]">
-                Commercial scenting for hotels, restaurants, retail, and
-                workspaces — machines built for scale, bulk supply, and a
-                signature scent of your own.
-              </p>
-            </FadeUp>
-          </div>
+      {/* ===== HERO — full-bleed image ===== */}
+      <section className="relative isolate flex min-h-[72svh] items-end overflow-hidden text-[color:var(--color-stardust)]">
+        <Image
+          src="/images/indoor/indoor-03.webp"
+          alt="A considered interior, quietly scented"
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover"
+        />
+        <div
+          aria-hidden="true"
+          className="absolute inset-0"
+          style={{
+            background:
+              "linear-gradient(180deg, rgba(41,51,41,0.30) 0%, rgba(41,51,41,0.05) 40%, rgba(41,51,41,0.78) 100%)",
+          }}
+        />
+        <div className="relative z-10 mx-auto w-full max-w-[var(--container-full)] px-6 pb-14 md:px-10 md:pb-20">
+          <FadeUp>
+            <p className="text-[0.62rem] uppercase tracking-[0.42em] text-[color:var(--color-stardust)]/75">
+              For Businesses
+            </p>
+          </FadeUp>
+          <FadeUp delay={0.06}>
+            <h1
+              className="mt-6 max-w-[14ch] text-balance"
+              style={{
+                fontFamily: "var(--font-serif)",
+                fontSize: "var(--text-6xl)",
+                lineHeight: 0.95,
+                letterSpacing: "-0.026em",
+                fontWeight: 400,
+              }}
+            >
+              Scent your{" "}
+              <em className="not-italic text-[color:var(--color-aerial-soft)]">
+                space.
+              </em>
+            </h1>
+          </FadeUp>
+          <FadeUp delay={0.12}>
+            <p className="mt-6 max-w-[44ch] text-[var(--text-base)] leading-[1.7] text-[color:var(--color-stardust)]/85">
+              Commercial scenting for hotels, restaurants, retail and
+              workspaces.
+            </p>
+          </FadeUp>
         </div>
       </section>
 
-      {/* ===== OFFERINGS ===== */}
-      <section className="bg-[color:var(--color-stardust-soft)] py-[var(--spacing-section-sm)]">
+      {/* ===== OFFERINGS — three tight columns ===== */}
+      <section className="py-[var(--spacing-section)]">
         <div className="mx-auto max-w-[var(--container-full)] px-6 md:px-10">
-          <div className="grid gap-y-10 md:grid-cols-3 md:gap-x-14">
+          <div className="grid gap-x-12 gap-y-10 border-t border-[color:var(--color-rule)] pt-10 md:grid-cols-3">
             {offerings.map((o, i) => (
               <FadeUp key={o.no} delay={i * 0.06}>
-                <div className="border-t border-[color:var(--color-rule)] pt-6">
-                  <p className="text-[0.62rem] uppercase tracking-[0.42em] text-[color:var(--color-charcoal-soft)]">
-                    № {o.no}
-                  </p>
+                <div>
+                  <span
+                    className="block tabular-nums text-[color:var(--color-aerial-deep)]"
+                    style={{
+                      fontFamily: "var(--font-serif)",
+                      fontSize: "var(--text-3xl)",
+                      lineHeight: 1,
+                      fontWeight: 400,
+                    }}
+                  >
+                    {o.no}
+                  </span>
                   <h2
                     className="mt-4"
                     style={{
                       fontFamily: "var(--font-serif)",
                       fontSize: "var(--text-2xl)",
-                      lineHeight: 1.12,
+                      lineHeight: 1.1,
                       letterSpacing: "-0.014em",
                       fontWeight: 400,
                     }}
                   >
                     {o.title}
                   </h2>
-                  <p className="mt-4 max-w-[40ch] text-[0.95rem] leading-[1.75] text-[color:var(--color-charcoal-soft)]">
+                  <p className="mt-3 max-w-[34ch] text-[0.95rem] leading-[1.7] text-[color:var(--color-charcoal-soft)]">
                     {o.body}
                   </p>
                 </div>
@@ -116,8 +141,46 @@ export default function BusinessesPage() {
         </div>
       </section>
 
+      {/* ===== EDITORIAL IMAGE BAND ===== */}
+      <section className="relative isolate flex min-h-[56svh] items-center overflow-hidden text-[color:var(--color-stardust)]">
+        <Image
+          src="/images/indoor/indoor-01.webp"
+          alt="A warm interior at golden hour"
+          fill
+          sizes="100vw"
+          className="object-cover"
+        />
+        <div
+          aria-hidden="true"
+          className="absolute inset-0"
+          style={{
+            background:
+              "linear-gradient(90deg, rgba(41,51,41,0.72) 0%, rgba(41,51,41,0.25) 60%, rgba(41,51,41,0.10) 100%)",
+          }}
+        />
+        <div className="relative z-10 mx-auto w-full max-w-[var(--container-full)] px-6 md:px-10">
+          <FadeUp>
+            <h2
+              className="max-w-[18ch] text-balance"
+              style={{
+                fontFamily: "var(--font-serif)",
+                fontSize: "var(--text-4xl)",
+                lineHeight: 1.04,
+                letterSpacing: "-0.022em",
+                fontWeight: 400,
+              }}
+            >
+              The invisible layer{" "}
+              <em className="not-italic text-[color:var(--color-aerial-soft)]">
+                guests remember.
+              </em>
+            </h2>
+          </FadeUp>
+        </div>
+      </section>
+
       {/* ===== TESTIMONIALS ===== */}
-      <section className="py-[var(--spacing-section-sm)]">
+      <section className="py-[var(--spacing-section)]">
         <div className="mx-auto max-w-[var(--container-full)] px-6 md:px-10">
           <FadeUp>
             <p className="mb-12 text-[0.62rem] uppercase tracking-[0.42em] text-[color:var(--color-charcoal-soft)]">
@@ -151,7 +214,7 @@ export default function BusinessesPage() {
       </section>
 
       {/* ===== ENQUIRY FORM ===== */}
-      <section className="bg-[color:var(--color-verdant)] py-[var(--spacing-section-sm)] text-[color:var(--color-stardust)]">
+      <section className="bg-[color:var(--color-verdant)] py-[var(--spacing-section)] text-[color:var(--color-stardust)]">
         <div className="mx-auto max-w-[var(--container-content)] px-6 md:px-10">
           <FadeUp>
             <h2
@@ -183,7 +246,7 @@ export default function BusinessesPage() {
               <div className="md:col-span-2">
                 <Field
                   label="A note"
-                  placeholder="Tell us about the space, area, number of sites, or anything specific."
+                  placeholder="Area, number of sites, or anything specific."
                   textarea
                 />
               </div>
@@ -230,13 +293,13 @@ function Field({
         <textarea
           rows={4}
           placeholder={placeholder}
-          className="mt-2 w-full resize-none border-b border-[color:var(--color-stardust)]/25 bg-transparent py-2.5 text-[0.96rem] text-[color:var(--color-stardust)] placeholder:text-[color:var(--color-stardust)]/40 outline-none focus:border-[color:var(--color-stardust)]"
+          className="mt-2 w-[100%] resize-none border-b border-[color:var(--color-stardust)]/25 bg-transparent py-2.5 text-[0.96rem] text-[color:var(--color-stardust)] placeholder:text-[color:var(--color-stardust)]/40 outline-none focus:border-[color:var(--color-stardust)]"
         />
       ) : (
         <input
           type={type}
           placeholder={placeholder}
-          className="mt-2 w-full border-b border-[color:var(--color-stardust)]/25 bg-transparent py-2.5 text-[0.96rem] text-[color:var(--color-stardust)] placeholder:text-[color:var(--color-stardust)]/40 outline-none focus:border-[color:var(--color-stardust)]"
+          className="mt-2 w-[100%] border-b border-[color:var(--color-stardust)]/25 bg-transparent py-2.5 text-[0.96rem] text-[color:var(--color-stardust)] placeholder:text-[color:var(--color-stardust)]/40 outline-none focus:border-[color:var(--color-stardust)]"
         />
       )}
     </label>
