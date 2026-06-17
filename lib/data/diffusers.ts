@@ -221,7 +221,7 @@ export const diffusers: Diffuser[] = [
       "/images/diffusers/dual-mist-at302/pillar-v2-01.webp",
       "/images/diffusers/dual-mist-at302/pillar-v2-02.webp",
       "/images/diffusers/dual-mist-at302/pillar-v2-03b.webp",
-      "/images/diffusers/dual-mist-at302/pillar-v2-04.webp",
+      "/images/diffusers/dual-mist-at302/pillar-v2-04b.webp",
     ],
     finish: "Aluminum alloy with PP + PET",
     height: "140 × 93 × 218 mm",
