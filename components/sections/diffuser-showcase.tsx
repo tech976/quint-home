@@ -64,8 +64,7 @@ export function DiffuserShowcase() {
                       {d.tier === "premium" ? "Premium" : "Entry"}
                     </span>
                   </div>
-                  <div className="absolute inset-x-0 bottom-0 flex items-end justify-between p-5 text-[0.6rem] uppercase tracking-[0.32em] text-[color:var(--color-stardust)] md:p-6">
-                    <span>{d.coverageLabel}</span>
+                  <div className="absolute inset-x-0 bottom-0 flex items-end justify-end p-5 text-[0.6rem] uppercase tracking-[0.32em] text-[color:var(--color-stardust)] md:p-6">
                     <span className="transition-transform duration-500 group-hover:-translate-y-0.5">
                       Explore →
                     </span>

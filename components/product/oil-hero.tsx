@@ -20,7 +20,7 @@ export function OilHero({ oil }: { oil: FragranceOil }) {
     name: d.name,
     priceINR: d.priceINR,
     image: d.image,
-    meta: d.coverageLabel,
+    meta: d.finish,
   }));
 
   const facts = [

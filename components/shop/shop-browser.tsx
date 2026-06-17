@@ -48,7 +48,7 @@ const ITEMS: BrowseItem[] = [
     priceINR: d.priceINR,
     category: "diffusers",
     categoryLabel: d.tier === "premium" ? "Diffuser · Premium" : "Diffuser",
-    meta: d.coverageLabel,
+    meta: d.finish,
     keywords: [
       d.name,
       d.model,
