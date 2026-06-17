@@ -1,49 +1,43 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
-# dependencies
-/node_modules
-/.pnp
-.pnp.*
-.yarn/*
 !.yarn/patches
 !.yarn/plugins
 !.yarn/releases
 !.yarn/versions
-
-# testing
-/coverage
-
-# next.js
-/.next/
-/out/
-
-# production
-/build
-
-# misc
-.DS_Store
-*.pem
-
+# Local source asset folders (optimized copies live in public/)
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 # debug
+# dependencies
+# env files (can opt-in for committing if needed)
+# misc
+# next.js
+# production
+# testing
+# typescript
+# vercel
+*.pem
+*.tsbuildinfo
+.DS_Store
+.env*
+.pnp.*
+.pnpm-debug.log*
+.vercel
+.yarn/*
+/.next/
+/.pnp
+/Loom/
+/banner/
+/build
+/chose your sent/
+/coverage
+/monolith black/
+/monolith/
+/node_modules
+/out/
+/pillar/
+/udaipur/
+chose your sent/
+next-env.d.ts
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-.pnpm-debug.log*
-
-# env files (can opt-in for committing if needed)
-.env*
-
-# vercel
-.vercel
-
-# typescript
-*.tsbuildinfo
-next-env.d.ts
-
-# Local source asset folders (optimized copies live in public/)
-/udaipur/
-/banner/
-/monolith/
-/monolith black/
-/Loom/
-/pillar/
+chose your sent*

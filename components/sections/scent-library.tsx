@@ -3,7 +3,6 @@ import Image from "next/image";
 import { oils } from "@/lib/data/oils";
 import { FadeUp } from "@/components/motion/fade-up";
 import { SectionHeader } from "@/components/ui/section-header";
-import { ScentFinder } from "@/components/sections/scent-finder";
 import { formatINR } from "@/lib/utils";
 
 export function ScentLibrary() {
@@ -111,9 +110,6 @@ export function ScentLibrary() {
             );
           })}
         </div>
-
-        {/* Scent Finder — two-tap quiz that recommends one of the eight */}
-        <ScentFinder />
       </div>
     </section>
   );

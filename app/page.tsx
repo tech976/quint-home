@@ -7,6 +7,7 @@ import { SmartHome } from "@/components/sections/smart-home";
 import { FounderTeaser } from "@/components/sections/founder-teaser";
 import { JournalTeaser } from "@/components/sections/journal-teaser";
 import { Reviews } from "@/components/sections/reviews";
+import { ScentFinder } from "@/components/sections/scent-finder";
 import { MonogramDivider } from "@/components/brand/monogram-divider";
 
 export default function Home() {
@@ -26,6 +27,7 @@ export default function Home() {
       <FounderTeaser />
       <Atmosphere />
       <Reviews />
+      <ScentFinder />
       <JournalTeaser />
     </>
   );
