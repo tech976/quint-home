@@ -14,18 +14,18 @@ export function ScentLibrary() {
           chapterTitle="8 Signatures"
           headline={
             <>
-              Eight oils,
+              Eight scents,
               <br />
               <em className="not-italic text-[color:var(--color-aerial-deep)]">
-                blended like perfume.
+                made the way perfumers do.
               </em>
             </>
           }
           meta={
             <>
-              Top, heart and base, at 70–90% concentration.
+              Top, heart and base notes.
               <br />
-              Two are scents you&rsquo;ll know from hotels.
+              Two you&rsquo;ll recognise from hotel lobbies.
             </>
           }
         />

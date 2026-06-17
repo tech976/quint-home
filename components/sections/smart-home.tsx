@@ -45,7 +45,7 @@ export function SmartHome() {
               color: "var(--color-stardust)",
             }}
           >
-            App-controlled. Smart-home integrated.
+            Run it from your phone.
             <br />
             <em className="not-italic text-[color:var(--color-aerial-soft)]">
               Or just press the button.

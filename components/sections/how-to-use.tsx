@@ -42,18 +42,18 @@ export function HowToUse() {
           chapterTitle="How it works"
           headline={
             <>
-              Fill it, set it,
+              Set it once,
               <br />
               <em className="not-italic text-[color:var(--color-aerial-deep)]">
-                and leave it alone.
+                then forget about it.
               </em>
             </>
           }
           meta={
             <>
-              Five steps from oil
+              Five steps,
               <br />
-              to a room that runs on schedule.
+              and the room does the rest.
             </>
           }
         />
