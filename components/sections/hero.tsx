@@ -184,10 +184,10 @@ export function Hero() {
       {/* === Bottom hairline metadata strip === */}
       <div className="relative z-20 mx-auto w-full max-w-[var(--container-full)] border-t border-[color:var(--color-white)]/20 px-6 md:px-10">
         <div className="flex flex-wrap items-center justify-between gap-x-8 gap-y-3 py-5 text-[0.6rem] uppercase tracking-[0.36em] text-[color:var(--color-white)]/75">
-          <span>Hotel-grade fragrance</span>
-          <span className="hidden md:inline">Waterless · Silent</span>
-          <span className="hidden md:inline">App-controlled</span>
-          <span>IFRA-compliant · 70–90%</span>
+          <span>Diffusers</span>
+          <span className="hidden md:inline">Fragrance Oils</span>
+          <span className="hidden md:inline">Candles</span>
+          <span>Reed Diffusers</span>
         </div>
       </div>
     </section>
