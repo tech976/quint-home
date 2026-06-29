@@ -15,15 +15,15 @@ export default function Home() {
   return (
     <>
       <Hero />
-      {/* Minimal white breathing space between the hero and the smart-home section */}
+      {/* Minimal white breathing space between the hero and the product sections */}
       <div
         aria-hidden
         className="h-[clamp(1.25rem,3vh,2.25rem)] bg-[color:var(--color-white)]"
       />
-      <SmartHome />
-      <USPs />
       <DiffuserShowcase />
       <ScentLibrary />
+      <SmartHome />
+      <USPs />
       <HowToUse />
       <MonogramDivider className="py-[var(--spacing-section-sm)]" />
       <FounderTeaser />
