@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Logo } from "@/components/brand/logo";
+import { Monogram } from "@/components/brand/logo";
 
 const cols = [
   {
@@ -65,8 +65,8 @@ export function Footer() {
             </form>
           </div>
 
-          <div className="flex flex-col items-start md:items-end md:justify-between">
-            <Logo className="h-9 w-auto text-[color:var(--color-charcoal)]" />
+          <div className="flex items-center justify-start md:justify-end">
+            <Monogram className="h-24 w-24 text-[color:var(--color-charcoal)] md:h-32 md:w-32" />
           </div>
         </div>
 
