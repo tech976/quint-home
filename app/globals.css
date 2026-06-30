@@ -45,7 +45,7 @@
   --text-2xl: clamp(1.45rem, 1.30rem + 0.65vw, 1.75rem);
   --text-3xl: clamp(1.70rem, 1.50rem + 0.90vw, 2.10rem);
   --text-4xl: clamp(2.10rem, 1.75rem + 1.50vw, 2.80rem);
-  --text-5xl: clamp(2.60rem, 2.00rem + 2.50vw, 3.75rem);
+  --text-5xl: clamp(2.30rem, 1.78rem + 2.15vw, 3.25rem);
   --text-display: clamp(3.00rem, 2.10rem + 4.00vw, 5.25rem);
 
   /* — Tracking & leading ------------------------------------ */
