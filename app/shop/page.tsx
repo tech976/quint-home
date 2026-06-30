@@ -22,7 +22,7 @@ export default function ShopPage() {
           ==================================================== */}
       <section className="border-b border-[color:var(--color-rule)] pt-10 md:pt-14">
         <div className="mx-auto max-w-[var(--container-full)] px-6 md:px-10">
-          <div className="grid items-end gap-10 pb-12 md:grid-cols-12 md:gap-16">
+          <div className="grid items-end gap-8 pb-9 md:grid-cols-12 md:gap-16">
             <FadeUp delay={0.05} className="md:col-span-7">
               <p className="text-[0.62rem] uppercase tracking-[0.42em] text-[color:var(--color-charcoal-soft)]">
                 Shop · Diffusers · Oils
@@ -63,10 +63,10 @@ export default function ShopPage() {
       {/* ====================================================
           § ONE · DIFFUSERS
           ==================================================== */}
-      <section id="diffusers" className="scroll-mt-24 py-[var(--spacing-section)]">
+      <section id="diffusers" className="scroll-mt-24 pt-[var(--spacing-section-sm)] pb-[var(--spacing-section)]">
         <div className="mx-auto max-w-[var(--container-full)] px-6 md:px-10">
           <FadeUp>
-            <div className="mb-12 flex flex-col gap-6 border-b border-[color:var(--color-rule)] pb-6 md:mb-16 md:flex-row md:items-end md:justify-between">
+            <div className="mb-8 flex flex-col gap-5 border-b border-[color:var(--color-rule)] pb-6 md:mb-10 md:flex-row md:items-end md:justify-between">
               <div>
                 <p className="text-[0.62rem] uppercase tracking-[0.42em] text-[color:var(--color-charcoal-soft)]">
                   <Monogram className="mr-1.5 inline-block h-[0.9em] w-[0.9em] align-[-0.12em]" />One · Diffusers
