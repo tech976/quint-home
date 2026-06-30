@@ -25,6 +25,13 @@ const FOUNDER_STORY = [
 const FOUNDER_CLOSING =
   "Quint Home exists because I couldn't stop thinking about that.";
 
+// Founder bio — for the "Meet the founder" section with his portrait.
+const FOUNDER_BIO = [
+  "Semil Rambhiya is the kind of person who notices everything. A background in real estate taught him how spaces work. A love for travel taught him how they feel. And a lifelong inability to settle for anything less than exactly right taught him the difference between the two.",
+  "When he set about designing his own home, he found himself stuck on one detail that kept escaping him — scent. Every option available felt like a compromise. For someone like Semil, that gap wasn't something to make peace with. It was something to fix.",
+  "Quint Home is what he built — for himself first, and then for everyone else who refuses to settle.",
+];
+
 // Vision — verbatim, as supplied.
 const VISION = [
   "We want to create a world where beautifully engineered diffusers and the finest fragrance oils come together seamlessly — making scent an effortless, living part of every room. Our vision is to become India's defining premium scenting brand — transforming the way homes, restaurants, hotels and stores use and experience fragrance.",
@@ -215,6 +222,55 @@ export default function AboutPage() {
               Semil Rambhiya · Founder, Quint Home
             </p>
           </FadeUp>
+        </div>
+      </section>
+
+      {/* ====================================================
+          §  THE FOUNDER — short bio + portrait
+          ==================================================== */}
+      <section className="border-t border-[color:var(--color-rule)] bg-[color:var(--color-stardust-soft)] py-[var(--spacing-section)]">
+        <div className="mx-auto max-w-[var(--container-content)] px-6 md:px-10">
+          <FadeUp>
+            <div className="flex items-center justify-center gap-4 text-[0.62rem] uppercase tracking-[0.42em] text-[color:var(--color-charcoal-soft)]">
+              <span className="h-px w-10 bg-[color:var(--color-rule)]" />
+              <span>The Founder</span>
+              <span className="h-px w-10 bg-[color:var(--color-rule)]" />
+            </div>
+          </FadeUp>
+
+          <div className="mt-12 grid gap-10 md:mt-16 md:grid-cols-12 md:items-start md:gap-16">
+            {/* Portrait */}
+            <FadeUp className="md:col-span-5">
+              <figure>
+                <div className="relative aspect-[4/5] overflow-hidden border border-[color:var(--color-rule)] bg-[color:var(--color-stardust)]">
+                  {/* TODO: drop in the founder's photo at /images/founder/semil.webp */}
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <span className="text-[0.58rem] uppercase tracking-[0.36em] text-[color:var(--color-charcoal-soft)]">
+                      Portrait
+                    </span>
+                  </div>
+                </div>
+                <figcaption className="mt-4 text-[0.6rem] uppercase tracking-[0.32em] text-[color:var(--color-charcoal-soft)]">
+                  Semil Rambhiya · Founder
+                </figcaption>
+              </figure>
+            </FadeUp>
+
+            {/* Bio */}
+            <div className="md:col-span-7">
+              <FadeUp delay={0.06}>
+                <p className="max-w-[44ch] text-[var(--text-xl)] leading-[1.5] text-[color:var(--color-charcoal)]">
+                  {FOUNDER_BIO[0]}
+                </p>
+              </FadeUp>
+              <FadeUp delay={0.12}>
+                <div className="mt-6 max-w-[52ch] space-y-5 border-t border-[color:var(--color-rule)] pt-6 text-[var(--text-base)] leading-[1.9] text-[color:var(--color-charcoal-soft)]">
+                  <p>{FOUNDER_BIO[1]}</p>
+                  <p>{FOUNDER_BIO[2]}</p>
+                </div>
+              </FadeUp>
+            </div>
+          </div>
         </div>
       </section>
 
