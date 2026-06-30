@@ -11,14 +11,17 @@ import {
 } from "lucide-react";
 
 /**
- * USPs — the brand's selling points, from the brief. Compact card grid: one
- * tight row of cards (image · number · lead · stat) instead of tall rows.
+ * USPs — the brand's selling points, from the brief. Magazine-style bento:
+ * a tall feature image (01) beside a mosaic of the rest, each with the number,
+ * lead and stat set over the photograph like an editorial caption.
  */
 type Usp = {
   n: string;
   lead: string;
   image: string;
   stat: { icon: LucideIcon; value: string };
+  /** Grid placement classes. */
+  span: string;
 };
 
 const usps: Usp[] = [
@@ -27,30 +30,35 @@ const usps: Usp[] = [
     lead: "Waterless cold-air nebulization",
     image: "/images/usp/usp-1.webp",
     stat: { icon: Wind, value: "200–500+ sq ft coverage" },
+    span: "md:row-span-2",
   },
   {
     n: "02",
     lead: "App-controlled, smart-home ready",
     image: "/images/usp/usp-2.webp",
     stat: { icon: Smartphone, value: "Apple · Alexa · Google" },
+    span: "",
   },
   {
     n: "03",
     lead: "Luxury hotel scents, for home",
     image: "/images/usp/usp-3.webp",
     stat: { icon: Droplets, value: "70–90% concentration" },
+    span: "",
   },
   {
     n: "04",
     lead: "A decor object, not an appliance",
     image: "/images/usp/usp-4.webp",
     stat: { icon: Sparkles, value: "Made to be seen" },
+    span: "",
   },
   {
     n: "05",
     lead: "Wireless and rechargeable",
     image: "/images/usp/usp-5.webp",
     stat: { icon: BatteryCharging, value: "Cord-free, runs for weeks" },
+    span: "",
   },
 ];
 
@@ -82,52 +90,73 @@ export function USPs() {
                 </em>
               </h2>
             </div>
+            <p className="max-w-[26ch] text-[0.86rem] leading-[1.6] text-[color:var(--color-charcoal-soft)] md:text-right">
+              Engineering, design and fragrance, in one object.
+            </p>
           </div>
         </FadeUp>
 
-        {/* Compact card grid — 2 / 3 / 5 across */}
-        <div className="grid grid-cols-2 gap-3 md:grid-cols-3 md:gap-4 lg:grid-cols-5">
+        {/* Magazine bento */}
+        <div className="grid grid-cols-1 gap-3 md:grid-cols-2 md:auto-rows-[13.5rem] md:gap-4 lg:auto-rows-[15.5rem]">
           {usps.map((u, i) => {
             const Icon = u.stat.icon;
+            const featured = i === 0;
             return (
-              <FadeUp key={u.n} delay={(i % 5) * 0.05} className="h-[100%]">
-                <article className="group flex h-[100%] flex-col overflow-hidden border border-[color:var(--color-rule)] bg-[color:var(--color-white)] transition-shadow duration-500 hover:shadow-[0_24px_50px_-30px_rgba(58,53,50,0.45)]">
-                  <div className="relative aspect-[4/3] overflow-hidden">
-                    <Image
-                      src={u.image}
-                      alt={u.lead}
-                      fill
-                      sizes="(min-width: 1024px) 18vw, (min-width: 768px) 30vw, 45vw"
-                      className="object-cover transition-transform duration-[1400ms] ease-[var(--ease-quint)] group-hover:scale-[1.05]"
-                    />
-                  </div>
+              <FadeUp
+                key={u.n}
+                delay={(i % 5) * 0.05}
+                className={`min-h-[14rem] md:min-h-0 md:h-[100%] ${u.span}`}
+              >
+                <article className="group relative h-[100%] min-h-[14rem] overflow-hidden">
+                  <Image
+                    src={u.image}
+                    alt={u.lead}
+                    fill
+                    sizes={
+                      featured
+                        ? "(min-width: 768px) 50vw, 100vw"
+                        : "(min-width: 768px) 50vw, 100vw"
+                    }
+                    className="object-cover transition-transform duration-[1600ms] ease-[var(--ease-quint)] group-hover:scale-[1.04]"
+                  />
+                  <div
+                    aria-hidden="true"
+                    className="absolute inset-0"
+                    style={{
+                      background:
+                        "linear-gradient(180deg, rgba(41,51,41,0.12) 0%, rgba(41,51,41,0) 32%, rgba(41,51,41,0.78) 100%)",
+                    }}
+                  />
 
-                  <div className="flex flex-1 flex-col p-4 md:p-5">
-                    <span className="text-[0.6rem] tabular-nums tracking-[0.2em] text-[color:var(--color-clay)]">
+                  <div className="absolute inset-0 flex flex-col justify-between p-5 text-[color:var(--color-stardust)] md:p-6">
+                    <span className="text-[0.6rem] tabular-nums uppercase tracking-[0.3em] opacity-85">
                       {u.n}
                     </span>
-                    <h3
-                      className="mt-2 text-balance"
-                      style={{
-                        fontFamily: "var(--font-serif)",
-                        fontSize: "1.05rem",
-                        lineHeight: 1.18,
-                        letterSpacing: "-0.012em",
-                        fontWeight: 400,
-                      }}
-                    >
-                      {u.lead}
-                    </h3>
-
-                    <div className="mt-auto flex items-center gap-2.5 border-t border-[color:var(--color-rule)] pt-3.5">
-                      <Icon
-                        className="h-4 w-4 shrink-0 text-[color:var(--color-aerial-deep)]"
-                        strokeWidth={1.4}
-                        aria-hidden="true"
-                      />
-                      <span className="text-[0.62rem] leading-[1.35] text-[color:var(--color-charcoal-soft)]">
-                        {u.stat.value}
-                      </span>
+                    <div>
+                      <h3
+                        className="max-w-[20ch] text-balance"
+                        style={{
+                          fontFamily: "var(--font-serif)",
+                          fontSize: featured
+                            ? "var(--text-3xl)"
+                            : "var(--text-xl)",
+                          lineHeight: 1.08,
+                          letterSpacing: "-0.014em",
+                          fontWeight: 400,
+                        }}
+                      >
+                        {u.lead}
+                      </h3>
+                      <div className="mt-3 flex items-center gap-2.5 opacity-90">
+                        <Icon
+                          className="h-4 w-4 shrink-0 text-[color:var(--color-aerial-soft)]"
+                          strokeWidth={1.5}
+                          aria-hidden="true"
+                        />
+                        <span className="text-[0.62rem] uppercase tracking-[0.18em]">
+                          {u.stat.value}
+                        </span>
+                      </div>
                     </div>
                   </div>
                 </article>
