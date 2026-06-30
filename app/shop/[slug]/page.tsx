@@ -146,44 +146,6 @@ export default async function ProductPage({
         </div>
       </section>
 
-      {/* ====================================================
-          §  CLOSING CTA
-          ==================================================== */}
-      <section className="border-t border-[color:var(--color-rule)] py-[var(--spacing-section)]">
-        <div className="mx-auto max-w-[var(--container-content)] px-6 text-center md:px-10">
-          <FadeUp>
-            <p className="mx-auto w-fit text-[0.62rem] uppercase tracking-[0.42em] text-[color:var(--color-charcoal-soft)]">
-              {product.name} · {formatINR(product.priceINR)}
-            </p>
-          </FadeUp>
-          <FadeUp delay={0.08}>
-            <h2
-              className="mx-auto mt-6 max-w-[20ch] text-balance"
-              style={{
-                fontFamily: "var(--font-serif)",
-                fontSize: "var(--text-3xl)",
-                lineHeight: 1.1,
-                letterSpacing: "-0.018em",
-                fontWeight: 400,
-              }}
-            >
-              Choose your scent.{" "}
-              <em className="text-[color:var(--color-aerial-deep)]">
-                Set the schedule once.
-              </em>
-            </h2>
-          </FadeUp>
-          <FadeUp delay={0.16}>
-            <Link
-              href="#top"
-              className="group mt-9 inline-flex items-center gap-3 border-b border-[color:var(--color-charcoal)] pb-1.5 text-[0.72rem] uppercase tracking-[0.32em] transition-colors duration-500 hover:border-[color:var(--color-clay)] hover:text-[color:var(--color-clay)]"
-            >
-              Add {product.name} to bag
-              <span className="transition-transform duration-500 group-hover:-translate-y-1">↑</span>
-            </Link>
-          </FadeUp>
-        </div>
-      </section>
     </article>
   );
 }
@@ -272,42 +234,6 @@ function OilProductPage({ oil }: { oil: FragranceOil }) {
         </div>
       </section>
 
-      {/* §  CLOSING CTA */}
-      <section className="border-t border-[color:var(--color-rule)] py-[var(--spacing-section)]">
-        <div className="mx-auto max-w-[var(--container-content)] px-6 text-center md:px-10">
-          <FadeUp>
-            <p className="mx-auto w-fit text-[0.62rem] uppercase tracking-[0.42em] text-[color:var(--color-charcoal-soft)]">
-              {oil.name} · {formatINR(oil.priceINR)} · {oil.volumeML} ml
-            </p>
-          </FadeUp>
-          <FadeUp delay={0.08}>
-            <h2
-              className="mx-auto mt-6 max-w-[20ch] text-balance"
-              style={{
-                fontFamily: "var(--font-serif)",
-                fontSize: "var(--text-3xl)",
-                lineHeight: 1.1,
-                letterSpacing: "-0.018em",
-                fontWeight: 400,
-              }}
-            >
-              Add the oil.{" "}
-              <em className="text-[color:var(--color-aerial-deep)]">
-                Pair a diffuser and save.
-              </em>
-            </h2>
-          </FadeUp>
-          <FadeUp delay={0.16}>
-            <Link
-              href="#top"
-              className="group mt-9 inline-flex items-center gap-3 border-b border-[color:var(--color-charcoal)] pb-1.5 text-[0.72rem] uppercase tracking-[0.32em] transition-colors duration-500 hover:border-[color:var(--color-clay)] hover:text-[color:var(--color-clay)]"
-            >
-              Add {oil.name} to bag
-              <span className="transition-transform duration-500 group-hover:-translate-y-1">↑</span>
-            </Link>
-          </FadeUp>
-        </div>
-      </section>
     </article>
   );
 }
