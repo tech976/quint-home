@@ -52,7 +52,7 @@ export interface Diffuser {
   /** Companion-app control. 5 of 6 catalogue models support it (A815 does not). */
   bluetooth: boolean;
   coverageSqFt: [number, number];
-  /** Display string for coverage, verbatim/derived from the catalogue (e.g. "Up to 100 m² (≈1,075 sq ft)"). */
+  /** Display string for coverage, in sq ft only (e.g. "Up to 1,075 sq ft"). */
   coverageLabel: string;
   /** Catalogue "BEST FOR" placement tags. */
   bestFor: string[];

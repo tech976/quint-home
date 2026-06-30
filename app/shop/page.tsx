@@ -88,7 +88,7 @@ export default function ShopPage() {
                 Aluminium, fabric, acrylic and glass. Waterless, near-silent, controlled from the app.
                 <br />
                 <span className="text-[0.6rem] uppercase tracking-[0.32em]">
-                  Coverage to ~100 m² →
+                  Coverage to ~1,075 sq ft →
                 </span>
               </p>
             </div>

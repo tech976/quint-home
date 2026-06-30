@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { Menu, Search, ShoppingBag } from "lucide-react";
+import { Menu, Search, ShoppingBag, ChevronDown } from "lucide-react";
 import { Logo } from "@/components/brand/logo";
 import { cn } from "@/lib/utils";
 
@@ -13,6 +13,12 @@ const navLinks = [
   { href: "/about", label: "About" },
   { href: "/journal", label: "Journal" },
   { href: "/businesses", label: "For Businesses" },
+];
+
+// Shop dropdown — diffusers first, then oils. No "everything" entry.
+const shopMenu = [
+  { href: "/shop#diffusers", label: "Diffusers" },
+  { href: "/shop#oils", label: "Oils" },
 ];
 
 export function Header() {
@@ -133,7 +139,32 @@ export function Header() {
         <div className="mx-auto grid max-w-[var(--container-full)] grid-cols-[1fr_auto_1fr] items-center gap-6 px-6 py-5 md:px-10">
           {/* Left nav */}
           <nav className="hidden items-center gap-8 md:flex">
-            {navLinks.slice(0, 2).map((l) => (
+            {/* Shop — with category dropdown */}
+            <div className="group relative">
+              <Link
+                href="/shop"
+                className="flex items-center gap-1.5 text-[0.78rem] uppercase tracking-[0.18em] transition-colors duration-300 hover:text-[color:var(--color-clay)]"
+              >
+                Shop
+                <ChevronDown className="h-3.5 w-3.5 opacity-60 transition-transform duration-300 group-hover:rotate-180" />
+              </Link>
+              <div className="invisible absolute left-0 top-full pt-4 opacity-0 transition-all duration-200 ease-[var(--ease-quint)] group-hover:visible group-hover:opacity-100">
+                <ul className="min-w-[12rem] border border-[color:var(--color-rule)] bg-[color:var(--color-white)] py-2 text-[color:var(--color-charcoal)] shadow-[0_18px_50px_-20px_rgba(58,53,50,0.28)]">
+                  {shopMenu.map((s) => (
+                    <li key={s.href}>
+                      <Link
+                        href={s.href}
+                        className="block px-5 py-2.5 text-[0.72rem] uppercase tracking-[0.2em] text-[color:var(--color-charcoal-soft)] transition-colors duration-200 hover:bg-[color:var(--color-stardust-soft)] hover:text-[color:var(--color-clay)]"
+                      >
+                        {s.label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+
+            {navLinks.slice(1, 2).map((l) => (
               <Link
                 key={l.href}
                 href={l.href}
@@ -216,18 +247,33 @@ export function Header() {
             </div>
             <nav className="mt-20 flex flex-col gap-6">
               {navLinks.map((l) => (
-                <Link
-                  key={l.href}
-                  href={l.href}
-                  onClick={() => setMobileOpen(false)}
-                  className="font-serif text-[color:var(--color-charcoal)]"
-                  style={{
-                    fontFamily: "var(--font-serif)",
-                    fontSize: "var(--text-3xl)",
-                  }}
-                >
-                  {l.label}
-                </Link>
+                <div key={l.href}>
+                  <Link
+                    href={l.href}
+                    onClick={() => setMobileOpen(false)}
+                    className="font-serif text-[color:var(--color-charcoal)]"
+                    style={{
+                      fontFamily: "var(--font-serif)",
+                      fontSize: "var(--text-3xl)",
+                    }}
+                  >
+                    {l.label}
+                  </Link>
+                  {l.href === "/shop" && (
+                    <div className="mt-3 flex flex-col gap-2.5 pl-0.5">
+                      {shopMenu.map((s) => (
+                        <Link
+                          key={s.href}
+                          href={s.href}
+                          onClick={() => setMobileOpen(false)}
+                          className="text-[0.8rem] uppercase tracking-[0.18em] text-[color:var(--color-charcoal-soft)]"
+                        >
+                          {s.label}
+                        </Link>
+                      ))}
+                    </div>
+                  )}
+                </div>
               ))}
             </nav>
             <div className="mt-auto text-[0.72rem] uppercase tracking-[0.18em] text-[color:var(--color-charcoal-soft)]">
