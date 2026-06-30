@@ -41,7 +41,7 @@ const OP_APP_SCHEDULE =
 const descFor = (operation: string) =>
   `${DESC_INTRO}\n\n${operation}\n\n${DESC_DESIGN}\n\n${DESC_CARE}`;
 
-export const diffusers: Diffuser[] = [
+const diffusersByDefinition: Diffuser[] = [
   {
     slug: "plug-in-a815",
     model: "A815",
@@ -281,6 +281,18 @@ export const diffusers: Diffuser[] = [
     ],
   },
 ];
+
+// Display order across the site: Pebble · Monolith · Ember · Pillar · Loom.
+const DIFFUSER_ORDER = [
+  "plug-in-a815",
+  "tabletop-a326",
+  "clock-at370",
+  "dual-mist-at302",
+  "tabletop-fabric-a974",
+];
+export const diffusers: Diffuser[] = DIFFUSER_ORDER.map(
+  (slug) => diffusersByDefinition.find((d) => d.slug === slug)!,
+);
 
 export function getDiffuser(slug: string) {
   return diffusers.find((d) => d.slug === slug);
