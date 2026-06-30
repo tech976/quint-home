@@ -31,7 +31,7 @@ export function SmartHome() {
             <span className="h-px w-12 bg-[color:var(--color-stardust)]/25" />
             <span className="inline-flex items-center gap-2">
               <Monogram className="h-[0.9em] w-[0.9em]" />
-              Five · Controls
+              The Range
             </span>
             <span className="h-px w-12 bg-[color:var(--color-stardust)]/25" />
           </div>
@@ -39,34 +39,32 @@ export function SmartHome() {
 
         <FadeUp delay={0.1}>
           <h2
-            className="mx-auto mt-12 max-w-[30ch] text-balance"
+            className="mx-auto mt-12 max-w-[20ch] text-balance"
             style={{
               fontFamily: "var(--font-serif)",
-              fontSize: "var(--text-3xl)",
-              lineHeight: 1.14,
-              letterSpacing: "-0.018em",
+              fontSize: "var(--text-4xl)",
+              lineHeight: 1.08,
+              letterSpacing: "-0.022em",
               fontWeight: 400,
               color: "var(--color-stardust)",
             }}
           >
-            Beautifully designed waterless diffusers, curated scent blends, and
-            smart technology that makes exceptional scenting{" "}
+            Objects that elevate your home.
+            <br />
             <em className="not-italic text-[color:var(--color-aerial-soft)]">
-              effortless.
+              Fragrances that stay with you.
             </em>
           </h2>
         </FadeUp>
 
         <FadeUp delay={0.2}>
-          <p
-            className="mx-auto mt-8 max-w-[60ch] text-[var(--text-base)] leading-[1.85]"
-            style={{ color: "rgba(238, 228, 216, 0.92)" }}
-          >
-            We make electronic, waterless diffusers that sit at the intersection
-            of technology, design, and fragrance. Because a beautifully scented
-            room shouldn&rsquo;t require compromise — on aesthetics, on
-            performance, or on how it makes you feel.
-          </p>
+          <div className="mx-auto mt-9 flex flex-wrap items-center justify-center gap-x-6 gap-y-3 text-[0.78rem] uppercase tracking-[0.24em] text-[color:var(--color-stardust)]/85">
+            <span>Waterless Diffusers</span>
+            <span className="text-[color:var(--color-stardust)]/35">·</span>
+            <span>Reed Diffusers &amp; Candles</span>
+            <span className="text-[color:var(--color-stardust)]/35">·</span>
+            <span>Fragrance Oils</span>
+          </div>
         </FadeUp>
 
         <FadeUp delay={0.3}>
