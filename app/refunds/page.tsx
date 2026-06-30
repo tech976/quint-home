@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Monogram } from "@/components/brand/logo";
 import type { Metadata } from "next";
 import { FadeUp } from "@/components/motion/fade-up";
 
@@ -12,21 +13,21 @@ const LAST_UPDATED = "5 June 2026";
 
 const sections = [
   {
-    chapter: "§ One",
+    chapter: "One",
     label: "Eligibility for Return",
     paragraphs: [
       "Returns are accepted within 7 days of delivery for unused product in its original, undamaged condition and packaging. For hygiene and safety reasons, fragrance-oil bottles must remain sealed and unopened to be eligible for return.",
     ],
   },
   {
-    chapter: "§ Two",
+    chapter: "Two",
     label: "Damaged or Defective Items",
     paragraphs: [
       "Please inspect your order carefully on delivery. If a product is found to be damaged or defective, notify us within 3 days of receipt. Verified damaged or defective items are replaced or refunded at no cost to you. This does not cover products that have been used, altered, or damaged due to customer handling.",
     ],
   },
   {
-    chapter: "§ Three",
+    chapter: "Three",
     label: "How to Request",
     paragraphs: [
       "To start a return or report damage, get in touch with our team within the applicable window at hello@quinthome.in. Please include your order number, a description of the product, and — for damage or defects — clear photographs. Once your request is approved, we will arrange a pickup.",
@@ -34,21 +35,21 @@ const sections = [
     ],
   },
   {
-    chapter: "§ Four",
+    chapter: "Four",
     label: "Refunds",
     paragraphs: [
       "Approved refunds are processed to your original payment method within 7–10 business days of our receiving and inspecting the returned item. You will be notified by email once your refund has been issued.",
     ],
   },
   {
-    chapter: "§ Five",
+    chapter: "Five",
     label: "Cancellations",
     paragraphs: [
       "Orders may be cancelled for a full refund any time before they are dispatched. Once an order has shipped, our returns process applies.",
     ],
   },
   {
-    chapter: "§ Six",
+    chapter: "Six",
     label: "Exclusions",
     paragraphs: [
       "Used, opened, altered, or customer-damaged items, and items returned without their original packaging, are not eligible for return or exchange. Commercial and bulk (B2B) orders are governed by the separate terms agreed at the time of purchase.",
@@ -121,8 +122,7 @@ export default function RefundsPage() {
                 <FadeUp className="md:col-span-4">
                   <div className="md:sticky md:top-32">
                     <p className="text-[0.62rem] uppercase tracking-[0.42em] text-[color:var(--color-charcoal-soft)]">
-                      {group.chapter}
-                    </p>
+                      <Monogram className="mr-1.5 inline-block h-[0.9em] w-[0.9em] align-[-0.12em]" />{group.chapter}                    </p>
                     <h2
                       className="mt-5 max-w-[16ch] text-balance"
                       style={{

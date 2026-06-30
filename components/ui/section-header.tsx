@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { FadeUp } from "@/components/motion/fade-up";
+import { Monogram } from "@/components/brand/logo";
 import { cn } from "@/lib/utils";
 
 interface SectionHeaderProps {
@@ -32,7 +33,10 @@ export function SectionHeader({
               : "text-[color:var(--color-charcoal-soft)]"
           )}
         >
-          <span className="whitespace-nowrap">{chapter}</span>
+          <span className="flex items-center gap-2 whitespace-nowrap">
+            <Monogram className="h-3 w-3 shrink-0" />
+            {chapter.replace(/^§\s*/, "")}
+          </span>
           <span
             className={cn(
               "h-px flex-1 origin-left",

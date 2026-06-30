@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Monogram } from "@/components/brand/logo";
 import type { Metadata } from "next";
 import { FadeUp } from "@/components/motion/fade-up";
 
@@ -12,42 +13,42 @@ const LAST_UPDATED = "5 June 2026";
 
 const sections = [
   {
-    chapter: "§ One",
+    chapter: "One",
     label: "Order Processing",
     paragraphs: [
       "Once your order is placed and confirmed, we require a processing time of 1–2 business days to prepare your items for shipment. This includes order verification, quality checks, and careful packaging.",
     ],
   },
   {
-    chapter: "§ Two",
+    chapter: "Two",
     label: "Delivery Time",
     paragraphs: [
       "After dispatch, orders are typically delivered within 3–5 business days anywhere in India, shipped from Mumbai through our courier partners. Delivery duration may vary based on destination and circumstances beyond our control.",
     ],
   },
   {
-    chapter: "§ Three",
+    chapter: "Three",
     label: "Shipping Charges",
     paragraphs: [
       "Shipping is complimentary on all orders above ₹3,000. A flat shipping fee applies to orders below this value and is shown clearly at checkout before payment.",
     ],
   },
   {
-    chapter: "§ Four",
+    chapter: "Four",
     label: "Shipping Methods",
     paragraphs: [
       "We partner with established courier services to ensure reliable, tracked delivery. The shipping method is selected based on the dimensions, weight, and destination of your order.",
     ],
   },
   {
-    chapter: "§ Five",
+    chapter: "Five",
     label: "Tracking & Support",
     paragraphs: [
       "Once your order ships, you will receive tracking details by email. If you have not received your order, or have experienced any issue with delivery, please contact us at hello@quinthome.in and we will assist you promptly.",
     ],
   },
   {
-    chapter: "§ Six",
+    chapter: "Six",
     label: "International Shipping",
     paragraphs: [
       "We currently ship within India only. International shipping is planned for a future phase — write to us if you would like to be notified when it becomes available.",
@@ -118,8 +119,7 @@ export default function ShippingPage() {
                 <FadeUp className="md:col-span-4">
                   <div className="md:sticky md:top-32">
                     <p className="text-[0.62rem] uppercase tracking-[0.42em] text-[color:var(--color-charcoal-soft)]">
-                      {group.chapter}
-                    </p>
+                      <Monogram className="mr-1.5 inline-block h-[0.9em] w-[0.9em] align-[-0.12em]" />{group.chapter}                    </p>
                     <h2
                       className="mt-5 max-w-[16ch] text-balance"
                       style={{

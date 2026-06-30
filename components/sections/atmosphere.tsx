@@ -1,4 +1,5 @@
 import { FadeUp } from "@/components/motion/fade-up";
+import { Monogram } from "@/components/brand/logo";
 import { EditorialCarousel, type Slide } from "@/components/ui/editorial-carousel";
 
 /**
@@ -24,7 +25,7 @@ export function Atmosphere() {
           <div className="mb-12 flex flex-col gap-6 border-b border-[color:var(--color-rule)] pb-6 md:mb-16 md:flex-row md:items-end md:justify-between">
             <div>
               <p className="text-[0.62rem] uppercase tracking-[0.42em] text-[color:var(--color-charcoal-soft)]">
-                § Four · Atmosphere
+                <Monogram className="mr-1.5 inline-block h-[0.9em] w-[0.9em] align-[-0.12em]" />Four · Atmosphere
               </p>
               <h2
                 className="mt-5 max-w-[18ch] text-balance"

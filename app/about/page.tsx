@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Monogram } from "@/components/brand/logo";
 import Image from "next/image";
 import type { Metadata } from "next";
 import { FadeUp } from "@/components/motion/fade-up";
@@ -50,13 +51,13 @@ export default function AboutPage() {
   return (
     <article className="bg-[color:var(--color-white)]">
       {/* ====================================================
-          §  ONE — QUINTESSENCE (the word)
+          § ONE — QUINTESSENCE (the word)
           ==================================================== */}
       <section className="border-b border-[color:var(--color-rule)] bg-[color:var(--color-stardust-soft)] pt-14 pb-[var(--spacing-section)] md:pt-24">
         <div className="mx-auto max-w-[var(--container-full)] px-6 md:px-10">
           <FadeUp>
             <div className="flex items-center gap-4 text-[0.62rem] uppercase tracking-[0.42em] text-[color:var(--color-charcoal-soft)]">
-              <span>§ One · The Word</span>
+              <span><Monogram className="mr-1.5 inline-block h-[0.9em] w-[0.9em] align-[-0.12em]" />One · The Word</span>
               <span className="h-px flex-1 bg-[color:var(--color-rule)]" />
             </div>
           </FadeUp>
@@ -135,14 +136,14 @@ export default function AboutPage() {
       </section>
 
       {/* ====================================================
-          §  TWO — THE FOUNDER'S STORY (verbatim)
+          § TWO — THE FOUNDER'S STORY (verbatim)
           ==================================================== */}
       <section className="py-[var(--spacing-section)]">
         <div className="mx-auto max-w-[var(--container-content)] px-6 md:px-10">
           <FadeUp>
             <div className="flex items-center justify-center gap-4 text-[0.62rem] uppercase tracking-[0.42em] text-[color:var(--color-charcoal-soft)]">
               <span className="h-px w-10 bg-[color:var(--color-rule)]" />
-              <span>§ Two · The Story</span>
+              <span><Monogram className="mr-1.5 inline-block h-[0.9em] w-[0.9em] align-[-0.12em]" />Two · The Story</span>
               <span className="h-px w-10 bg-[color:var(--color-rule)]" />
             </div>
           </FadeUp>
@@ -226,7 +227,7 @@ export default function AboutPage() {
       </section>
 
       {/* ====================================================
-          §  THE FOUNDER — short bio + portrait
+          § THE FOUNDER — short bio + portrait
           ==================================================== */}
       <section className="border-t border-[color:var(--color-rule)] bg-[color:var(--color-stardust-soft)] py-[var(--spacing-section)]">
         <div className="mx-auto max-w-[var(--container-content)] px-6 md:px-10">
@@ -275,14 +276,14 @@ export default function AboutPage() {
       </section>
 
       {/* ====================================================
-          §  THREE — THE VISION (verbatim, inverted)
+          § THREE — THE VISION (verbatim, inverted)
           ==================================================== */}
       <section className="bg-[color:var(--color-verdant)] py-[var(--spacing-section)] text-[color:var(--color-stardust)]">
         <div className="mx-auto max-w-[var(--container-full)] px-6 md:px-10">
           <FadeUp>
             <div className="mb-12 flex items-center gap-4 text-[0.6rem] uppercase tracking-[0.42em] text-[color:var(--color-stardust)]/65">
               <span className="h-px w-12 bg-[color:var(--color-stardust)]/25" />
-              <span>§ Three · The Vision</span>
+              <span><Monogram className="mr-1.5 inline-block h-[0.9em] w-[0.9em] align-[-0.12em]" />Three · The Vision</span>
               <span className="h-px flex-1 bg-[color:var(--color-stardust)]/15" />
             </div>
           </FadeUp>
@@ -339,7 +340,7 @@ export default function AboutPage() {
       </FadeUp>
 
       {/* ====================================================
-          §  CLOSING — the invitation
+          § CLOSING — the invitation
           ==================================================== */}
       <section className="pb-[var(--spacing-section)] pt-12 md:pt-16">
         <div className="mx-auto max-w-[var(--container-content)] px-6 text-center md:px-10">

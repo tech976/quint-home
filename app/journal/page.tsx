@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Monogram } from "@/components/brand/logo";
 import Image from "next/image";
 import { journal } from "@/lib/data/journal";
 import { FadeUp } from "@/components/motion/fade-up";
@@ -8,7 +9,7 @@ export default function JournalPage() {
     <div className="mx-auto max-w-[var(--container-full)] px-6 py-[var(--spacing-section)] md:px-10">
       <FadeUp>
         <div className="border-b border-[color:var(--color-rule)] pb-10">
-          <p className="font-eyebrow">§ The Journal</p>
+          <p className="font-eyebrow"><Monogram className="mr-1.5 inline-block h-[0.9em] w-[0.9em] align-[-0.12em]" />The Journal</p>
           <h1
             className="mt-7 max-w-[18ch]"
             style={{

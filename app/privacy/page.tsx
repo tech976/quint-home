@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Monogram } from "@/components/brand/logo";
 import type { Metadata } from "next";
 import { FadeUp } from "@/components/motion/fade-up";
 
@@ -12,7 +13,7 @@ const LAST_UPDATED = "5 June 2026";
 
 const sections = [
   {
-    chapter: "§ One",
+    chapter: "One",
     label: "Information Provided by You",
     paragraphs: [
       "When you create an account, place an order, or sign up for our newsletter, we collect the information you voluntarily provide. This may include your name, email address, shipping and billing address, phone number, transaction-related information (such as purchases, refunds, and offers), and information you enter while using our website or services (such as saving items or placing an order).",
@@ -21,7 +22,7 @@ const sections = [
     ],
   },
   {
-    chapter: "§ Two",
+    chapter: "Two",
     label: "Use of Information",
     paragraphs: [
       "The collected information is used for research, trend analysis, administering services, understanding customer behaviour, and gathering demographic data. We may share anonymised, aggregated, and individual data with external service providers to enhance our offerings. Personalised content and improved product recommendations can be achieved by combining individual data and behaviour patterns with other information. Third-party service providers assist with data analysis and personalisation but cannot share the information independently. Unless authorised by you, we do not trade, sell, or rent personal information to third parties.",
@@ -29,56 +30,56 @@ const sections = [
     ],
   },
   {
-    chapter: "§ Three",
+    chapter: "Three",
     label: "Personal Information Access",
     paragraphs: [
       "We provide you with the means to access and update your personally identifiable information through your account or by contacting us. We take reasonable security measures to protect your password from unauthorised access.",
     ],
   },
   {
-    chapter: "§ Four",
+    chapter: "Four",
     label: "Reviews & Public Content",
     paragraphs: [
       "When you use certain features of our website, such as submitting a product review or rating, please be aware that any personal information you choose to post or share — including comments, ratings, and photos — may be accessible to other users and become public information. It is important to understand the risks associated with sharing such information, as we cannot control its use by others. If you disclose personal information in your profile or when posting publicly, it may become publicly available.",
     ],
   },
   {
-    chapter: "§ Five",
+    chapter: "Five",
     label: "Cookies",
     paragraphs: [
       "We use cookies — small text files sent to your device — to enhance your browsing experience. Cookies help you log in more quickly, remember your preferences, and gather aggregated data to understand customer trends. This data helps us improve our offerings by providing more relevant content. Most web browsers are initially set to accept cookies, but you can adjust your browser settings to refuse cookies or be notified when a cookie is being sent. Disabling cookies may affect the functionality of certain features and services.",
     ],
   },
   {
-    chapter: "§ Six",
+    chapter: "Six",
     label: "Security",
     paragraphs: [
       "We are committed to safeguarding the confidentiality of your information. We implement electronic, physical, and procedural safeguards to protect the data we collect and maintain. Access to this information is restricted to authorised personnel on a need-to-know basis, for the purpose of operating, developing, or improving our website, products, and services. While we strive to provide reasonable security measures, no system is completely immune to potential security breaches.",
     ],
   },
   {
-    chapter: "§ Seven",
+    chapter: "Seven",
     label: "Log Information",
     paragraphs: [
       "When you access our website, our servers automatically record information sent by your browser. This may include your internet protocol (IP) address, web request, browser language, browser type, the date and time of your request, and one or more cookies that may uniquely identify your browser.",
     ],
   },
   {
-    chapter: "§ Eight",
+    chapter: "Eight",
     label: "Your Consent",
     paragraphs: [
       "By registering with us, placing an order, or subscribing to our newsletter, you provide informed consent for the collection, processing, storage, handling, and disclosure of your information as outlined in this policy. We process your information in India, and if you reside outside India, your data will be transferred, processed, and stored in accordance with the applicable data protection laws of India.",
     ],
   },
   {
-    chapter: "§ Nine",
+    chapter: "Nine",
     label: "User Communications",
     paragraphs: [
       "When you communicate with us via email, WhatsApp, or other means, we retain those communications to address your inquiries, respond to your requests, and improve our services.",
     ],
   },
   {
-    chapter: "§ Ten",
+    chapter: "Ten",
     label: "Changes to This Statement",
     paragraphs: [
       "As our company evolves, our privacy policy will also evolve to address new circumstances. We recommend reviewing this policy regularly for any updates, as your continued use of our website, products, and services indicates your acceptance of any changes made.",
@@ -90,7 +91,7 @@ export default function PrivacyPage() {
   return (
     <article className="bg-[color:var(--color-white)]">
       {/* ====================================================
-          §  HERO MASTHEAD
+          § HERO MASTHEAD
           ==================================================== */}
       <section className="border-b border-[color:var(--color-rule)] pt-10 md:pt-14">
         <div className="mx-auto max-w-[var(--container-full)] px-6 md:px-10">
@@ -133,7 +134,7 @@ export default function PrivacyPage() {
       </section>
 
       {/* ====================================================
-          §  DISCLAIMER STRIP
+          § DISCLAIMER STRIP
           ==================================================== */}
       <section className="border-b border-[color:var(--color-rule)] bg-[color:var(--color-stardust-soft)]">
         <div className="mx-auto max-w-[var(--container-full)] px-6 py-7 md:px-10">
@@ -156,7 +157,7 @@ export default function PrivacyPage() {
       </section>
 
       {/* ====================================================
-          §  POLICY SECTIONS
+          § POLICY SECTIONS
           ==================================================== */}
       <section className="py-[var(--spacing-section)]">
         <div className="mx-auto max-w-[var(--container-full)] px-6 md:px-10">
@@ -169,8 +170,7 @@ export default function PrivacyPage() {
                 <FadeUp className="md:col-span-4">
                   <div className="md:sticky md:top-32">
                     <p className="text-[0.62rem] uppercase tracking-[0.42em] text-[color:var(--color-charcoal-soft)]">
-                      {group.chapter}
-                    </p>
+                      <Monogram className="mr-1.5 inline-block h-[0.9em] w-[0.9em] align-[-0.12em]" />{group.chapter}                    </p>
                     <h2
                       className="mt-5 max-w-[16ch] text-balance"
                       style={{
@@ -202,14 +202,14 @@ export default function PrivacyPage() {
       </section>
 
       {/* ====================================================
-          §  RIGHTS & CONTACT (DPDP)
+          § RIGHTS & CONTACT (DPDP)
           ==================================================== */}
       <section className="bg-[color:var(--color-verdant)] py-[var(--spacing-section)] text-[color:var(--color-stardust)]">
         <div className="mx-auto max-w-[var(--container-full)] px-6 md:px-10">
           <FadeUp>
             <div className="mb-12 flex items-center gap-4 text-[0.6rem] uppercase tracking-[0.42em] text-[color:var(--color-stardust)]/65">
               <span className="h-px w-12 bg-[color:var(--color-stardust)]/25" />
-              <span>§ Your Rights &amp; Contact</span>
+              <span><Monogram className="mr-1.5 inline-block h-[0.9em] w-[0.9em] align-[-0.12em]" />Your Rights &amp; Contact</span>
               <span className="h-px flex-1 bg-[color:var(--color-stardust)]/15" />
             </div>
           </FadeUp>

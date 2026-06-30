@@ -1,10 +1,11 @@
 import { FadeUp } from "@/components/motion/fade-up";
+import { Monogram } from "@/components/brand/logo";
 
 export default function CartPage() {
   return (
     <div className="mx-auto flex max-w-[var(--container-content)] flex-col items-center px-6 py-[var(--spacing-section)] text-center md:px-10">
       <FadeUp>
-        <p className="font-eyebrow">§ Bag</p>
+        <p className="font-eyebrow"><Monogram className="mr-1.5 inline-block h-[0.9em] w-[0.9em] align-[-0.12em]" />Bag</p>
         <h1
           className="mt-7 max-w-[18ch]"
           style={{

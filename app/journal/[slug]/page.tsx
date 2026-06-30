@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { Monogram } from "@/components/brand/logo";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
@@ -37,7 +38,7 @@ export default async function JournalPostPage({
   return (
     <article className="bg-[color:var(--color-white)]">
       {/* ====================================================
-          §  HERO — Editorial Masthead
+          § HERO — Editorial Masthead
           ==================================================== */}
       <section className="border-b border-[color:var(--color-rule)] pt-10 md:pt-14">
         <div className="mx-auto max-w-[var(--container-full)] px-6 md:px-10">
@@ -56,7 +57,7 @@ export default async function JournalPostPage({
           <div className="grid items-end gap-10 pb-14 md:grid-cols-12 md:gap-16">
             <FadeUp delay={0.05} className="md:col-span-8">
               <p className="text-[0.62rem] uppercase tracking-[0.42em] text-[color:var(--color-charcoal-soft)]">
-                § {post.eyebrow}
+                <Monogram className="mr-1.5 inline-block h-[0.9em] w-[0.9em] align-[-0.12em]" />{post.eyebrow}
               </p>
               <h1
                 className="mt-7 max-w-[22ch] text-balance"
@@ -99,7 +100,7 @@ export default async function JournalPostPage({
       </section>
 
       {/* ====================================================
-          §  COVER PLATE (matches PDP "The Form" composition)
+          § COVER PLATE (matches PDP "The Form" composition)
           ==================================================== */}
       <FadeUp>
         <section className="bg-[color:var(--color-stardust-soft)] py-12 md:py-16">
@@ -124,14 +125,14 @@ export default async function JournalPostPage({
       </FadeUp>
 
       {/* ====================================================
-          §  BODY
+          § BODY
           ==================================================== */}
       <section className="py-[var(--spacing-section)]">
         <div className="mx-auto max-w-[var(--container-full)] px-6 md:px-10">
           <div className="grid gap-12 md:grid-cols-12 md:gap-16">
             <FadeUp className="md:col-span-4">
               <div className="md:sticky md:top-32 text-[0.62rem] uppercase tracking-[0.42em] text-[color:var(--color-charcoal-soft)]">
-                <p>§ The Letter</p>
+                <p><Monogram className="mr-1.5 inline-block h-[0.9em] w-[0.9em] align-[-0.12em]" />The Letter</p>
                 <p className="mt-1.5">{formatDate(post.publishedAt)}</p>
               </div>
             </FadeUp>
@@ -195,14 +196,14 @@ export default async function JournalPostPage({
       </section>
 
       {/* ====================================================
-          §  CONTINUE READING
+          § CONTINUE READING
           ==================================================== */}
       <section className="border-t border-[color:var(--color-rule)] py-[var(--spacing-section)]">
         <div className="mx-auto max-w-[var(--container-full)] px-6 md:px-10">
           <FadeUp>
             <div className="mb-14 flex items-center gap-4 text-[0.6rem] uppercase tracking-[0.42em] text-[color:var(--color-charcoal-soft)]">
               <span className="h-px w-12 bg-[color:var(--color-rule)]" />
-              <span>§ Continue Reading</span>
+              <span><Monogram className="mr-1.5 inline-block h-[0.9em] w-[0.9em] align-[-0.12em]" />Continue Reading</span>
               <span className="h-px flex-1 bg-[color:var(--color-rule)]" />
             </div>
           </FadeUp>

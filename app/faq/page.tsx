@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Monogram } from "@/components/brand/logo";
 import type { Metadata } from "next";
 import { FadeUp } from "@/components/motion/fade-up";
 
@@ -9,7 +10,7 @@ export const metadata: Metadata = {
 
 const groups = [
   {
-    chapter: "§ One",
+    chapter: "One",
     label: "The Object",
     items: [
       {
@@ -27,7 +28,7 @@ const groups = [
     ],
   },
   {
-    chapter: "§ Two",
+    chapter: "Two",
     label: "The Oils",
     items: [
       {
@@ -45,7 +46,7 @@ const groups = [
     ],
   },
   {
-    chapter: "§ Three",
+    chapter: "Three",
     label: "App & Control",
     items: [
       {
@@ -59,7 +60,7 @@ const groups = [
     ],
   },
   {
-    chapter: "§ Four",
+    chapter: "Four",
     label: "Shipping & Returns",
     items: [
       {
@@ -82,7 +83,7 @@ export default function FAQPage() {
   return (
     <article className="bg-[color:var(--color-white)]">
       {/* ====================================================
-          §  HERO
+          § HERO
           ==================================================== */}
       <section className="border-b border-[color:var(--color-rule)] pt-10 md:pt-14">
         <div className="mx-auto max-w-[var(--container-full)] px-6 md:px-10">
@@ -119,7 +120,7 @@ export default function FAQPage() {
       </section>
 
       {/* ====================================================
-          §  GROUPS
+          § GROUPS
           ==================================================== */}
       <section className="py-[var(--spacing-section)]">
         <div className="mx-auto max-w-[var(--container-full)] px-6 md:px-10">
@@ -129,8 +130,7 @@ export default function FAQPage() {
                 <FadeUp className="md:col-span-4">
                   <div className="md:sticky md:top-32">
                     <p className="text-[0.62rem] uppercase tracking-[0.42em] text-[color:var(--color-charcoal-soft)]">
-                      {group.chapter}
-                    </p>
+                      <Monogram className="mr-1.5 inline-block h-[0.9em] w-[0.9em] align-[-0.12em]" />{group.chapter}                    </p>
                     <h2
                       className="mt-5"
                       style={{
@@ -183,13 +183,13 @@ export default function FAQPage() {
       </section>
 
       {/* ====================================================
-          §  CLOSING
+          § CLOSING
           ==================================================== */}
       <section className="bg-[color:var(--color-stardust-soft)] py-[var(--spacing-section)]">
         <div className="mx-auto max-w-[var(--container-content)] px-6 text-center md:px-10">
           <FadeUp>
             <p className="text-[0.62rem] uppercase tracking-[0.42em] text-[color:var(--color-charcoal-soft)]">
-              § Still curious
+              <Monogram className="mr-1.5 inline-block h-[0.9em] w-[0.9em] align-[-0.12em]" />Still curious
             </p>
           </FadeUp>
           <FadeUp delay={0.08}>

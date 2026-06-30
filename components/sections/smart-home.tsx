@@ -1,4 +1,5 @@
 import { FadeUp } from "@/components/motion/fade-up";
+import { Monogram } from "@/components/brand/logo";
 
 // Per the brief: "smart home integrated — Apple Home, Amazon Alexa, Google Home".
 const integrations = ["Apple Home", "Amazon Alexa", "Google Home"];
@@ -28,7 +29,10 @@ export function SmartHome() {
         <FadeUp>
           <div className="mx-auto flex items-center justify-center gap-4 text-[0.6rem] uppercase tracking-[0.42em] text-[color:var(--color-stardust)]/65">
             <span className="h-px w-12 bg-[color:var(--color-stardust)]/25" />
-            <span>§ Five · Controls</span>
+            <span className="inline-flex items-center gap-2">
+              <Monogram className="h-[0.9em] w-[0.9em]" />
+              Five · Controls
+            </span>
             <span className="h-px w-12 bg-[color:var(--color-stardust)]/25" />
           </div>
         </FadeUp>

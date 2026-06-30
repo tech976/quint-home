@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Monogram } from "@/components/brand/logo";
 import Image from "next/image";
 import type { Metadata } from "next";
 import { diffusers } from "@/lib/data/diffusers";
@@ -17,7 +18,7 @@ export default function ShopPage() {
   return (
     <article className="bg-[color:var(--color-white)]">
       {/* ====================================================
-          §  HERO MASTHEAD
+          § HERO MASTHEAD
           ==================================================== */}
       <section className="border-b border-[color:var(--color-rule)] pt-10 md:pt-14">
         <div className="mx-auto max-w-[var(--container-full)] px-6 md:px-10">
@@ -55,12 +56,12 @@ export default function ShopPage() {
       </section>
 
       {/* ====================================================
-          §  BROWSE — search + category, inline product finder
+          § BROWSE — search + category, inline product finder
           ==================================================== */}
       <ShopBrowser />
 
       {/* ====================================================
-          §  ONE · DIFFUSERS
+          § ONE · DIFFUSERS
           ==================================================== */}
       <section id="diffusers" className="scroll-mt-24 py-[var(--spacing-section)]">
         <div className="mx-auto max-w-[var(--container-full)] px-6 md:px-10">
@@ -68,7 +69,7 @@ export default function ShopPage() {
             <div className="mb-12 flex flex-col gap-6 border-b border-[color:var(--color-rule)] pb-6 md:mb-16 md:flex-row md:items-end md:justify-between">
               <div>
                 <p className="text-[0.62rem] uppercase tracking-[0.42em] text-[color:var(--color-charcoal-soft)]">
-                  § One · Diffusers
+                  <Monogram className="mr-1.5 inline-block h-[0.9em] w-[0.9em] align-[-0.12em]" />One · Diffusers
                 </p>
                 <h2
                   className="mt-5 max-w-[22ch] text-balance"
@@ -175,7 +176,7 @@ export default function ShopPage() {
       </section>
 
       {/* ====================================================
-          §  TWO · OILS — the editorial scent grid
+          § TWO · OILS — the editorial scent grid
           ==================================================== */}
       <section id="oils" className="scroll-mt-24 bg-[color:var(--color-stardust-soft)] py-[var(--spacing-section)]">
         <div className="mx-auto max-w-[var(--container-full)] px-6 md:px-10">
@@ -183,7 +184,7 @@ export default function ShopPage() {
             <div className="mb-12 flex flex-col gap-6 border-b border-[color:var(--color-rule)] pb-6 md:mb-16 md:flex-row md:items-end md:justify-between">
               <div>
                 <p className="text-[0.62rem] uppercase tracking-[0.42em] text-[color:var(--color-charcoal-soft)]">
-                  § Two · The Oils
+                  <Monogram className="mr-1.5 inline-block h-[0.9em] w-[0.9em] align-[-0.12em]" />Two · The Oils
                 </p>
                 <h2
                   className="mt-5 max-w-[22ch] text-balance"
@@ -314,13 +315,13 @@ export default function ShopPage() {
       </section>
 
       {/* ====================================================
-          §  CLOSING — Pair & Save
+          § CLOSING — Pair & Save
           ==================================================== */}
       <section className="py-[var(--spacing-section)]">
         <div className="mx-auto max-w-[var(--container-content)] px-6 text-center md:px-10">
           <FadeUp>
             <p className="text-[0.62rem] uppercase tracking-[0.42em] text-[color:var(--color-charcoal-soft)]">
-              § Pair & Subscribe
+              <Monogram className="mr-1.5 inline-block h-[0.9em] w-[0.9em] align-[-0.12em]" />Pair & Subscribe
             </p>
           </FadeUp>
           <FadeUp delay={0.08}>

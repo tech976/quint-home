@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Monogram } from "@/components/brand/logo";
 import type { Metadata } from "next";
 import { FadeUp } from "@/components/motion/fade-up";
 
@@ -11,7 +12,7 @@ export default function ContactPage() {
   return (
     <article className="bg-[color:var(--color-white)]">
       {/* ====================================================
-          §  HERO
+          § HERO
           ==================================================== */}
       <section className="border-b border-[color:var(--color-rule)] pt-10 md:pt-14">
         <div className="mx-auto max-w-[var(--container-full)] px-6 md:px-10">
@@ -48,7 +49,7 @@ export default function ContactPage() {
       </section>
 
       {/* ====================================================
-          §  THREE CHANNELS
+          § THREE CHANNELS
           ==================================================== */}
       <section className="py-[var(--spacing-section)]">
         <div className="mx-auto max-w-[var(--container-full)] px-6 md:px-10">
@@ -153,14 +154,14 @@ export default function ContactPage() {
       </section>
 
       {/* ====================================================
-          §  FORM
+          § FORM
           ==================================================== */}
       <section className="bg-[color:var(--color-stardust-soft)] py-[var(--spacing-section)]">
         <div className="mx-auto max-w-[var(--container-content)] px-6 md:px-10">
           <FadeUp>
             <div className="mb-12 flex items-center gap-4 text-[0.6rem] uppercase tracking-[0.42em] text-[color:var(--color-charcoal-soft)]">
               <span className="h-px w-12 bg-[color:var(--color-rule)]" />
-              <span>§ Two · A message</span>
+              <span><Monogram className="mr-1.5 inline-block h-[0.9em] w-[0.9em] align-[-0.12em]" />Two · A message</span>
               <span className="h-px flex-1 bg-[color:var(--color-rule)]" />
             </div>
           </FadeUp>

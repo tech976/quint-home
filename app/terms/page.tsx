@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Monogram } from "@/components/brand/logo";
 import type { Metadata } from "next";
 import { FadeUp } from "@/components/motion/fade-up";
 
@@ -12,63 +13,63 @@ const LAST_UPDATED = "5 June 2026";
 
 const sections = [
   {
-    chapter: "§ One",
+    chapter: "One",
     label: "Acceptance of Terms",
     paragraphs: [
       "By accessing or using this website, you confirm that you have read, understood, and agreed to these Terms & Conditions. If you do not agree with any part of these terms, please refrain from using the site.",
     ],
   },
   {
-    chapter: "§ Two",
+    chapter: "Two",
     label: "Website Content",
     paragraphs: [
       "All materials on this website — including text, images, graphics, logos, icons, and videos — are owned by or licensed to Quint Home and are protected by copyright and other intellectual property laws. You may not reproduce, distribute, modify, or otherwise use any content from this website without our prior written permission.",
     ],
   },
   {
-    chapter: "§ Three",
+    chapter: "Three",
     label: "Product Information",
     paragraphs: [
       "We aim to provide accurate product details, pricing, and availability at all times. However, we do not guarantee that such information is complete, error-free, or current, and it may be changed or updated without prior notice.",
     ],
   },
   {
-    chapter: "§ Four",
+    chapter: "Four",
     label: "Online Purchases",
     paragraphs: [
       "When placing an order, you agree to provide accurate and complete billing and shipping information. All purchases are subject to our Shipping Policy and our Exchange & Cancellations Policy, which are incorporated into these terms by reference.",
     ],
   },
   {
-    chapter: "§ Five",
+    chapter: "Five",
     label: "User Conduct",
     paragraphs: [
       "You agree to use this website lawfully and in compliance with all applicable regulations. You must not disrupt or interfere with the functioning of the website, its security, or another user's experience of it.",
     ],
   },
   {
-    chapter: "§ Six",
+    chapter: "Six",
     label: "Disclaimer of Warranties",
     paragraphs: [
       "This website and our services are provided on an “as is” and “as available” basis, without warranties or representations of any kind, whether express or implied. We do not guarantee that the website will be uninterrupted, timely, error-free, or free of viruses or other harmful components.",
     ],
   },
   {
-    chapter: "§ Seven",
+    chapter: "Seven",
     label: "Limitation of Liability",
     paragraphs: [
       "To the fullest extent permitted by law, Quint Home and Rusera Lifestyle disclaim liability for any direct, indirect, incidental, consequential, or punitive damages arising out of or in connection with your use of, or inability to use, this website or our products and services.",
     ],
   },
   {
-    chapter: "§ Eight",
+    chapter: "Eight",
     label: "Modification of Terms",
     paragraphs: [
       "We reserve the right to modify these terms at any time without prior notice. Any changes take effect immediately upon being posted on this page, and your continued use of the website constitutes your acceptance of the revised terms.",
     ],
   },
   {
-    chapter: "§ Nine",
+    chapter: "Nine",
     label: "Governing Law",
     paragraphs: [
       "These Terms & Conditions are governed by and construed in accordance with the laws of India. Any disputes arising in relation to them shall be subject to the exclusive jurisdiction of the courts of Mumbai, Maharashtra.",
@@ -145,8 +146,7 @@ export default function TermsPage() {
                 <FadeUp className="md:col-span-4">
                   <div className="md:sticky md:top-32">
                     <p className="text-[0.62rem] uppercase tracking-[0.42em] text-[color:var(--color-charcoal-soft)]">
-                      {group.chapter}
-                    </p>
+                      <Monogram className="mr-1.5 inline-block h-[0.9em] w-[0.9em] align-[-0.12em]" />{group.chapter}                    </p>
                     <h2
                       className="mt-5 max-w-[16ch] text-balance"
                       style={{
