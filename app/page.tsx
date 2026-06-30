@@ -7,7 +7,6 @@ import { SmartHome } from "@/components/sections/smart-home";
 import { USPs } from "@/components/sections/usps";
 import { FounderTeaser } from "@/components/sections/founder-teaser";
 import { JournalTeaser } from "@/components/sections/journal-teaser";
-import { ScentFinder } from "@/components/sections/scent-finder";
 import { MonogramDivider } from "@/components/brand/monogram-divider";
 
 export default function Home() {
@@ -27,7 +26,6 @@ export default function Home() {
       <MonogramDivider className="py-[var(--spacing-section-sm)]" />
       <FounderTeaser />
       <Atmosphere />
-      <ScentFinder />
       <JournalTeaser />
     </>
   );
