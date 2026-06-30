@@ -165,6 +165,9 @@ function OilProductPage({ oil }: { oil: FragranceOil }) {
       {/* §  PRODUCT — gallery + buy box + bundle */}
       <OilHero oil={oil} />
 
+      {/* §  FIND YOUR SCENT */}
+      <ScentFinder />
+
 
       {/* §  PAIRS WITH — the diffusers (bundle in the buy box) */}
       <section className="py-[var(--spacing-section)]">
@@ -234,9 +237,6 @@ function OilProductPage({ oil }: { oil: FragranceOil }) {
           </div>
         </div>
       </section>
-
-      {/* §  FIND YOUR SCENT */}
-      <ScentFinder />
     </article>
   );
 }
