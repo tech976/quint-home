@@ -26,7 +26,7 @@ import type { Diffuser } from "../types";
 //  (materials, dimensions, coverage) live in `specs`.
 // ------------------------------------------------------------
 const DESC_INTRO =
-  "Waterless cold-air nebulizing electronic diffuser. Cold-air nebulization — no water, no steam, no heat. Fragrance oil atomised into microscopic particles using air pressure.";
+  "Waterless cold-air nebulising electronic diffuser. Cold-air nebulisation — no water, no steam, no heat. Fragrance oil atomised into microscopic particles using air pressure.";
 const DESC_DESIGN =
   "A sculpted decor object — designed to be displayed on a shelf, not hidden. Form and finish matter as much as function.";
 const DESC_CARE =

@@ -24,7 +24,7 @@ type Usp = {
 const usps: Usp[] = [
   {
     n: "01",
-    lead: "Waterless cold-air nebulization",
+    lead: "Waterless cold-air nebulisation",
     image: "/images/usp/usp-1.webp",
     stat: { icon: Wind, value: "200–500+ sq ft coverage" },
   },
