@@ -96,7 +96,7 @@ const diffusersByDefinition: Diffuser[] = [
     bluetooth: true,
     coverageSqFt: [108, 1075],
     coverageLabel: "Up to 1,075 sq ft",
-    bestFor: ["Brand Stores", "Home", "Office", "Hotel"],
+    bestFor: ["Living Rooms", "Larger Rooms", "Open-Plan Spaces", "Brand Stores", "Hotels", "Offices"],
     keyFeatures: [
       "Premium aluminum column construction — in brushed gold or matte black",
       "Built-in 2200 mAh rechargeable Li-ion battery — truly wireless",
