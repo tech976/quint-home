@@ -18,9 +18,6 @@ type Usp = {
   n: string;
   lead: string;
   image: string;
-  /** Native pixel dimensions — so mobile can show the photo un-cropped. */
-  w: number;
-  h: number;
   stat: { icon: LucideIcon; value: string };
 };
 
@@ -29,40 +26,30 @@ const usps: Usp[] = [
     n: "01",
     lead: "Waterless cold-air nebulisation",
     image: "/images/usp/usp-1.webp",
-    w: 1400,
-    h: 737,
     stat: { icon: Wind, value: "200–500+ sq ft coverage" },
   },
   {
     n: "02",
     lead: "App-controllable",
     image: "/images/usp/usp-2.webp",
-    w: 1400,
-    h: 722,
     stat: { icon: Smartphone, value: "Set it from your phone" },
   },
   {
     n: "03",
     lead: "Luxury hotel scents, for home",
     image: "/images/usp/usp-3.webp",
-    w: 1400,
-    h: 934,
     stat: { icon: Droplets, value: "70–90% concentration" },
   },
   {
     n: "04",
     lead: "A decor object, not an appliance",
     image: "/images/usp/usp-4.webp",
-    w: 1400,
-    h: 934,
     stat: { icon: Sparkles, value: "Made to be seen" },
   },
   {
     n: "05",
     lead: "Wireless and rechargeable",
     image: "/images/usp/usp-5.webp",
-    w: 1400,
-    h: 1109,
     stat: { icon: BatteryCharging, value: "Cord-free, runs for weeks" },
   },
 ];
@@ -71,34 +58,49 @@ export function USPs() {
   return (
     <section className="border-y border-[color:var(--color-rule)] bg-[color:var(--color-stardust-soft)] py-[var(--spacing-section-sm)]">
       <div className="mx-auto max-w-[var(--container-full)] px-6 md:px-10">
-        {/* Header — compact eyebrow only */}
+        {/* Header */}
         <FadeUp>
-          <p className="mb-6 flex items-center gap-3 text-[0.6rem] uppercase tracking-[0.42em] text-[color:var(--color-charcoal-soft)] md:mb-8">
-            <Monogram className="h-4 w-4 shrink-0" />
-            Why Quint
-          </p>
+          <div className="mb-8 flex flex-col gap-3 md:mb-10 md:flex-row md:items-end md:justify-between">
+            <div>
+              <p className="flex items-center gap-3 text-[0.6rem] uppercase tracking-[0.42em] text-[color:var(--color-charcoal-soft)]">
+                <Monogram className="h-4 w-4 shrink-0" />
+                Why Quint
+              </p>
+              <h2
+                className="mt-4 max-w-[18ch] text-balance"
+                style={{
+                  fontFamily: "var(--font-serif)",
+                  fontSize: "var(--text-3xl)",
+                  lineHeight: 1.05,
+                  letterSpacing: "-0.02em",
+                  fontWeight: 400,
+                }}
+              >
+                Five things that{" "}
+                <em className="not-italic text-[color:var(--color-aerial-deep)]">
+                  set it apart.
+                </em>
+              </h2>
+            </div>
+            <p className="max-w-[26ch] text-[0.86rem] leading-[1.6] text-[color:var(--color-charcoal-soft)] md:text-right">
+              Engineering, design and fragrance, in one object.
+            </p>
+          </div>
         </FadeUp>
 
-        {/* Cards — 2-col masonry on mobile (uncropped), a 3/5-up grid on larger screens */}
-        <div className="columns-2 gap-3 md:grid md:grid-cols-3 md:gap-4 lg:grid-cols-5">
+        {/* One row of equal cards */}
+        <div className="grid grid-cols-2 gap-3 md:grid-cols-3 md:gap-4 lg:grid-cols-5">
           {usps.map((u, i) => {
             const Icon = u.stat.icon;
             return (
-              <FadeUp
-                key={u.n}
-                delay={(i % 5) * 0.05}
-                className="mb-3 break-inside-avoid md:mb-0 md:h-[100%]"
-              >
+              <FadeUp key={u.n} delay={(i % 5) * 0.05} className="h-[100%]">
                 <article className="group flex h-[100%] flex-col overflow-hidden border border-[color:var(--color-rule)] bg-[color:var(--color-white)] transition-shadow duration-500 hover:shadow-[0_24px_50px_-30px_rgba(58,53,50,0.45)]">
-                  <div
-                    className="relative overflow-hidden bg-[color:var(--color-stardust-soft)] md:!aspect-[4/3]"
-                    style={{ aspectRatio: `${u.w} / ${u.h}` }}
-                  >
+                  <div className="relative aspect-[4/3] overflow-hidden bg-[color:var(--color-stardust-soft)]">
                     <Image
                       src={u.image}
                       alt={u.lead}
                       fill
-                      sizes="(min-width: 1024px) 18vw, (min-width: 768px) 30vw, 100vw"
+                      sizes="(min-width: 1024px) 18vw, (min-width: 768px) 30vw, 45vw"
                       className="object-cover transition-transform duration-[1400ms] ease-[var(--ease-quint)] group-hover:scale-[1.05]"
                     />
                   </div>
