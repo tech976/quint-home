@@ -17,6 +17,12 @@ type Slide =
 const slides: Slide[] = [
   {
     type: "image",
+    src: "/images/hero-lounge.webp",
+    alt: "A man reading in a serene living room, a Quint diffuser misting on the table",
+    position: "center 50%",
+  },
+  {
+    type: "image",
     src: "/images/hero-1.webp",
     alt: "A couple at ease in a sunlit living room, a Quint diffuser on the table",
     position: "center 50%",
