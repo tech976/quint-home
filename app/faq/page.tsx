@@ -43,6 +43,10 @@ const groups = [
         q: "What is a Hotel Credential oil?",
         a: "Two of our oils, Grand Lobby and The Arrival, are Hotel Credential blends: composed to the same brief as the signature scenting you find in considered public spaces, then made for the home. They are more complex to blend, carry a Hotel Credential badge, and sit at a small price premium over the standard oils.",
       },
+      {
+        q: "Can I use other oils in the diffuser?",
+        a: "Use only Quint Home oils. Ours are undiluted, high-concentration blends made specifically for waterless cold-air nebulisation. Diluted oils, water-based oils, or third-party blends can clog the nebuliser and won&rsquo;t perform as intended — and may void your warranty.",
+      },
     ],
   },
   {
@@ -56,24 +60,6 @@ const groups = [
       {
         q: "Does it need Wi-Fi to work?",
         a: "No. The diffusers run from the companion app and an on-device schedule — no Wi-Fi, no account, and no cloud. You adjust settings from your phone, and the device keeps to its schedule on its own.",
-      },
-    ],
-  },
-  {
-    chapter: "Four",
-    label: "Shipping & Returns",
-    items: [
-      {
-        q: "Where do you ship?",
-        a: "All of India. 3–5 business days from Mumbai via our courier partner. Free shipping over ₹3,000.",
-      },
-      {
-        q: "Can I return it?",
-        a: "Within 7 days of receipt for unused product. The oil bottle must remain sealed. We&rsquo;ll arrange pickup.",
-      },
-      {
-        q: "Do you ship internationally?",
-        a: "Not yet. Planned for 2027 — UAE, Singapore, UK first. Write to us if you&rsquo;d like to be on the list.",
       },
     ],
   },
@@ -102,9 +88,9 @@ export default function FAQPage() {
                   fontWeight: 400,
                 }}
               >
-                Everything,{" "}
+                Your questions,{" "}
                 <em className="text-[color:var(--color-aerial-deep)]">
-                  asked before.
+                  answered.
                 </em>
               </h1>
             </FadeUp>

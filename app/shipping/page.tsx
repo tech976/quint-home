@@ -24,7 +24,7 @@ const sections = [
     chapter: "Two",
     label: "Shipping Charges",
     paragraphs: [
-      "Shipping is complimentary on all orders above ₹3,000. A flat fee applies below that and is shown clearly at checkout before payment. We currently ship within India only.",
+      "Shipping is complimentary on all orders above ₹5,000. A flat fee applies below that and is shown clearly at checkout before payment. We currently ship within India only.",
     ],
   },
   {
@@ -83,7 +83,7 @@ export default function ShippingPage() {
                 How your order reaches you, and what happens if something
                 arrives damaged. We ship across India from Mumbai, with
                 complimentary delivery over{" "}
-                <span className="text-[color:var(--color-charcoal)]">₹3,000</span>.
+                <span className="text-[color:var(--color-charcoal)]">₹5,000</span>.
               </p>
               <p className="mt-5 text-[0.62rem] uppercase tracking-[0.32em] text-[color:var(--color-charcoal-soft)]">
                 Last updated {LAST_UPDATED}
