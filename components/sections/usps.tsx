@@ -94,40 +94,33 @@ export function USPs() {
             <FadeUp
               key={u.n}
               delay={(i % 5) * 0.05}
-              className="mb-3 break-inside-avoid md:mb-0"
+              className="mb-3 break-inside-avoid md:mb-0 md:h-[100%]"
             >
-              <article
-                className="group relative block overflow-hidden bg-[color:var(--color-stardust-soft)] md:!aspect-[4/3]"
-                style={{ aspectRatio: `${u.w} / ${u.h}` }}
-              >
-                <Image
-                  src={u.image}
-                  alt={u.lead}
-                  fill
-                  sizes="(min-width: 1024px) 18vw, (min-width: 768px) 30vw, 47vw"
-                  className="object-cover transition-transform duration-[1400ms] ease-[var(--ease-quint)] group-hover:scale-[1.05]"
-                />
+              <article className="group flex h-[100%] flex-col overflow-hidden border border-[color:var(--color-rule)] bg-[color:var(--color-white)] transition-shadow duration-500 hover:shadow-[0_24px_50px_-30px_rgba(58,53,50,0.45)]">
                 <div
-                  aria-hidden="true"
-                  className="absolute inset-0"
-                  style={{
-                    background:
-                      "linear-gradient(180deg, rgba(30,38,30,0.45) 0%, rgba(30,38,30,0.05) 26%, rgba(30,38,30,0.55) 60%, rgba(30,38,30,0.94) 100%)",
-                  }}
-                />
-                <div className="absolute inset-0 flex flex-col justify-between p-4 text-[color:var(--color-stardust)] md:p-5">
-                  <span className="text-[0.6rem] tabular-nums uppercase tracking-[0.3em] opacity-90">
+                  className="relative overflow-hidden bg-[color:var(--color-stardust-soft)] md:!aspect-[4/3]"
+                  style={{ aspectRatio: `${u.w} / ${u.h}` }}
+                >
+                  <Image
+                    src={u.image}
+                    alt={u.lead}
+                    fill
+                    sizes="(min-width: 1024px) 18vw, (min-width: 768px) 30vw, 47vw"
+                    className="object-cover transition-transform duration-[1400ms] ease-[var(--ease-quint)] group-hover:scale-[1.05]"
+                  />
+                </div>
+                <div className="flex flex-1 flex-col p-4 md:p-5">
+                  <span className="text-[0.6rem] tabular-nums tracking-[0.2em] text-[color:var(--color-clay)]">
                     {u.n}
                   </span>
                   <h3
-                    className="max-w-[16ch] text-balance"
+                    className="mt-2 text-balance"
                     style={{
                       fontFamily: "var(--font-serif)",
-                      fontSize: "1.1rem",
-                      lineHeight: 1.16,
+                      fontSize: "1.05rem",
+                      lineHeight: 1.18,
                       letterSpacing: "-0.012em",
                       fontWeight: 400,
-                      color: "var(--color-stardust)",
                     }}
                   >
                     {u.lead}
