@@ -28,7 +28,7 @@ const FOUNDER_CLOSING =
 
 // Founder bio — for the "Meet the founder" section with his portrait.
 const FOUNDER_BIO = [
-  "Semil Rambhiya is the Founder of Quint Home. With a background in real estate and a deep appreciation for architecture, interiors, and thoughtful design, he believes the spaces we inhabit shape the way we feel.",
+  "With a background in real estate and a deep appreciation for architecture, interiors, and thoughtful design, he believes the spaces we inhabit shape the way we feel.",
   "Through Quint Home, he brings this philosophy to life with objects and devices that blend fragrance, design, and technology — creating everyday experiences that feel intentional, elevated, and effortlessly beautiful.",
 ];
 
@@ -226,48 +226,72 @@ export default function AboutPage() {
       </section>
 
       {/* ====================================================
-          § THE FOUNDER — short bio + portrait
+          § THE FOUNDER — highlight: portrait + big editorial bio
           ==================================================== */}
-      <section className="border-t border-[color:var(--color-rule)] bg-[color:var(--color-stardust-soft)] py-[var(--spacing-section)]">
-        <div className="mx-auto max-w-[var(--container-content)] px-6 md:px-10">
+      <section className="border-y border-[color:var(--color-rule)] bg-[color:var(--color-stardust-soft)] py-[var(--spacing-section)]">
+        <div className="mx-auto max-w-[var(--container-full)] px-6 md:px-10">
           <FadeUp>
-            <div className="flex items-center justify-center gap-4 text-[0.62rem] uppercase tracking-[0.42em] text-[color:var(--color-charcoal-soft)]">
+            <div className="mb-14 flex items-center justify-center gap-4 text-[0.62rem] uppercase tracking-[0.42em] text-[color:var(--color-charcoal-soft)] md:mb-20">
               <span className="h-px w-10 bg-[color:var(--color-rule)]" />
               <span>The Founder</span>
               <span className="h-px w-10 bg-[color:var(--color-rule)]" />
             </div>
           </FadeUp>
 
-          <div className="mt-12 grid gap-10 md:mt-16 md:grid-cols-12 md:items-start md:gap-16">
+          <div className="grid gap-10 md:grid-cols-12 md:items-center md:gap-16 lg:gap-20">
             {/* Portrait */}
             <FadeUp className="md:col-span-5">
-              <figure>
-                <div className="relative aspect-[3/4] overflow-hidden border border-[color:var(--color-rule)] bg-[color:var(--color-stardust)]">
-                  <Image
-                    src="/images/founder/semil.webp"
-                    alt="Semil Rambhiya, Founder of Quint Home"
-                    fill
-                    sizes="(min-width: 768px) 40vw, 100vw"
-                    className="object-cover"
-                  />
-                </div>
-                <figcaption className="mt-4 text-[0.6rem] uppercase tracking-[0.32em] text-[color:var(--color-charcoal-soft)]">
-                  Semil Rambhiya · Founder
-                </figcaption>
-              </figure>
+              <div className="relative aspect-[3/4] overflow-hidden border border-[color:var(--color-rule)] bg-[color:var(--color-stardust)]">
+                <Image
+                  src="/images/founder/semil.webp"
+                  alt="Semil Rambhiya, Founder of Quint Home"
+                  fill
+                  sizes="(min-width: 768px) 42vw, 100vw"
+                  className="object-cover"
+                />
+              </div>
             </FadeUp>
 
-            {/* Bio */}
-            <div className="md:col-span-7">
-              <FadeUp delay={0.06}>
-                <p className="max-w-[44ch] text-[var(--text-xl)] leading-[1.5] text-[color:var(--color-charcoal)]">
+            {/* Bio — large editorial */}
+            <div className="md:col-span-7 md:pl-4">
+              <FadeUp>
+                <h2
+                  className="text-balance"
+                  style={{
+                    fontFamily: "var(--font-serif)",
+                    fontSize: "var(--text-5xl)",
+                    lineHeight: 1.0,
+                    letterSpacing: "-0.022em",
+                    fontWeight: 400,
+                  }}
+                >
+                  Semil Rambhiya
+                </h2>
+                <p className="mt-5 text-[0.66rem] uppercase tracking-[0.36em] text-[color:var(--color-clay)]">
+                  Founder · Quint Home
+                </p>
+              </FadeUp>
+
+              <FadeUp delay={0.08}>
+                <p
+                  className="mt-10 max-w-[32ch] text-balance"
+                  style={{
+                    fontFamily: "var(--font-serif)",
+                    fontSize: "var(--text-2xl)",
+                    lineHeight: 1.4,
+                    letterSpacing: "-0.01em",
+                    fontWeight: 400,
+                    color: "var(--color-charcoal)",
+                  }}
+                >
                   {FOUNDER_BIO[0]}
                 </p>
               </FadeUp>
-              <FadeUp delay={0.12}>
-                <div className="mt-6 max-w-[52ch] space-y-5 border-t border-[color:var(--color-rule)] pt-6 text-[var(--text-base)] leading-[1.9] text-[color:var(--color-charcoal-soft)]">
-                  <p>{FOUNDER_BIO[1]}</p>
-                </div>
+
+              <FadeUp delay={0.14}>
+                <p className="mt-8 max-w-[54ch] border-t border-[color:var(--color-rule)] pt-8 text-[var(--text-lg)] leading-[1.8] text-[color:var(--color-charcoal-soft)]">
+                  {FOUNDER_BIO[1]}
+                </p>
               </FadeUp>
             </div>
           </div>
