@@ -226,72 +226,70 @@ export default function AboutPage() {
       </section>
 
       {/* ====================================================
-          § THE FOUNDER — highlight feature (masthead + portrait + pull-quote)
+          § THE FOUNDER — highlight feature (centered masthead + portrait + pull-quote)
           ==================================================== */}
       <section className="border-y border-[color:var(--color-rule)] bg-[color:var(--color-stardust-soft)] py-[var(--spacing-section)]">
-        <div className="mx-auto max-w-[var(--container-full)] px-6 md:px-10">
-          {/* Masthead */}
+        <div className="mx-auto max-w-[var(--container-content)] px-6 md:px-10">
+          {/* Centered masthead */}
           <FadeUp>
-            <div className="flex flex-col gap-7 border-b border-[color:var(--color-rule)] pb-8 md:flex-row md:items-end md:justify-between md:pb-10">
-              <div>
-                <p className="flex items-center gap-3 text-[0.62rem] uppercase tracking-[0.42em] text-[color:var(--color-charcoal-soft)]">
-                  <Monogram className="h-4 w-4 shrink-0" />
-                  The Founder
-                </p>
-                <h2
-                  className="mt-6"
-                  style={{
-                    fontFamily: "var(--font-serif)",
-                    fontSize: "var(--text-display)",
-                    lineHeight: 0.95,
-                    letterSpacing: "-0.03em",
-                    fontWeight: 400,
-                  }}
-                >
-                  Semil Rambhiya
-                </h2>
-              </div>
-              <p className="text-[0.66rem] uppercase tracking-[0.36em] text-[color:var(--color-clay)] md:pb-3 md:text-right">
-                Founder · Quint&nbsp;Home
+            <div className="text-center">
+              <p className="mx-auto flex w-fit items-center justify-center gap-3 text-[0.62rem] uppercase tracking-[0.42em] text-[color:var(--color-charcoal-soft)]">
+                <Monogram className="h-4 w-4 shrink-0" />
+                The Founder
+              </p>
+              <h2
+                className="mt-6"
+                style={{
+                  fontFamily: "var(--font-serif)",
+                  fontSize: "var(--text-display)",
+                  lineHeight: 0.95,
+                  letterSpacing: "-0.03em",
+                  fontWeight: 400,
+                }}
+              >
+                Semil Rambhiya
+              </h2>
+              <p className="mx-auto mt-5 w-fit text-[0.66rem] uppercase tracking-[0.36em] text-[color:var(--color-clay)]">
+                Founder · Quint Home
               </p>
             </div>
           </FadeUp>
 
-          {/* Feature — portrait + pull-quote */}
-          <div className="mt-12 grid gap-10 md:mt-16 md:grid-cols-12 md:items-start md:gap-16 lg:gap-20">
+          {/* Feature — portrait + pull-quote at equal height */}
+          <div className="mt-12 grid gap-10 border-t border-[color:var(--color-rule)] pt-12 md:mt-14 md:grid-cols-12 md:items-stretch md:gap-14 md:pt-14">
             <FadeUp className="md:col-span-5">
-              <div className="relative aspect-[4/5] overflow-hidden border border-[color:var(--color-rule)] bg-[color:var(--color-stardust)]">
+              <div className="relative h-full min-h-[20rem] overflow-hidden border border-[color:var(--color-rule)] bg-[color:var(--color-stardust)]">
                 <Image
                   src="/images/founder/semil.webp"
                   alt="Semil Rambhiya, Founder of Quint Home"
                   fill
-                  sizes="(min-width: 768px) 42vw, 100vw"
-                  className="object-cover object-[50%_30%]"
+                  sizes="(min-width: 768px) 40vw, 100vw"
+                  className="object-cover object-[50%_22%]"
                 />
               </div>
             </FadeUp>
 
-            <div className="md:col-span-7 md:pt-2 md:pl-4">
+            <div className="flex flex-col justify-center md:col-span-7 md:pl-2">
               <FadeUp>
                 <span
                   aria-hidden="true"
                   className="block text-[color:var(--color-aerial)]"
                   style={{
                     fontFamily: "var(--font-serif)",
-                    fontSize: "4.5rem",
+                    fontSize: "4rem",
                     lineHeight: 0.5,
-                    height: "2.25rem",
+                    height: "2rem",
                   }}
                 >
                   &ldquo;
                 </span>
                 <p
-                  className="mt-2 max-w-[26ch] text-balance"
+                  className="mt-2 max-w-[28ch] text-balance"
                   style={{
                     fontFamily: "var(--font-serif)",
-                    fontSize: "var(--text-3xl)",
-                    lineHeight: 1.28,
-                    letterSpacing: "-0.016em",
+                    fontSize: "var(--text-2xl)",
+                    lineHeight: 1.32,
+                    letterSpacing: "-0.014em",
                     fontWeight: 400,
                     color: "var(--color-charcoal)",
                   }}
@@ -305,7 +303,7 @@ export default function AboutPage() {
               </FadeUp>
 
               <FadeUp delay={0.12}>
-                <p className="mt-10 max-w-[52ch] border-t border-[color:var(--color-rule)] pt-8 text-[var(--text-lg)] leading-[1.8] text-[color:var(--color-charcoal-soft)]">
+                <p className="mt-7 max-w-[52ch] border-t border-[color:var(--color-rule)] pt-7 text-[var(--text-base)] leading-[1.85] text-[color:var(--color-charcoal-soft)]">
                   {FOUNDER_BIO[1]}
                 </p>
               </FadeUp>
