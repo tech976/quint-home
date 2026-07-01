@@ -22,8 +22,7 @@ const cols = [
     heading: "Considered",
     links: [
       { href: "/faq", label: "FAQ" },
-      { href: "/shipping", label: "Shipping" },
-      { href: "/refunds", label: "Returns" },
+      { href: "/shipping", label: "Shipping & Returns" },
       { href: "/privacy", label: "Privacy" },
       { href: "/terms", label: "Terms" },
     ],

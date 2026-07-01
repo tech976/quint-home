@@ -144,12 +144,12 @@ export default function PrivacyPage() {
             </span>
             Quint Home is operated by Rusera Lifestyle, Mumbai, India. We reserve
             the right to withhold or decline a sale transaction at our
-            discretion. Returns and refunds are governed by our{" "}
+            discretion. Exchanges and warranty are governed by our{" "}
             <Link
-              href="/refunds"
+              href="/shipping"
               className="text-[color:var(--color-charcoal)] underline-offset-4 hover:text-[color:var(--color-clay)] hover:underline"
             >
-              Returns Policy
+              Shipping &amp; Returns policy
             </Link>
             .
           </p>

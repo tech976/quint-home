@@ -37,7 +37,7 @@ const sections = [
     chapter: "Four",
     label: "Online Purchases",
     paragraphs: [
-      "When placing an order, you agree to provide accurate and complete billing and shipping information. All purchases are subject to our Shipping Policy and our Exchange & Cancellations Policy, which are incorporated into these terms by reference.",
+      "When placing an order, you agree to provide accurate and complete billing and shipping information. All purchases are subject to our Shipping & Returns policy, which is incorporated into these terms by reference. We do not offer refunds or cancellations; damaged or defective items are exchanged as described there.",
     ],
   },
   {
@@ -216,16 +216,9 @@ export default function TermsPage() {
                   href="/shipping"
                   className="underline-offset-4 hover:text-[color:var(--color-aerial-soft)] hover:underline"
                 >
-                  Shipping Policy
-                </Link>
-                ,{" "}
-                <Link
-                  href="/refunds"
-                  className="underline-offset-4 hover:text-[color:var(--color-aerial-soft)] hover:underline"
-                >
-                  Exchange &amp; Cancellations
-                </Link>
-                , and{" "}
+                  Shipping &amp; Returns
+                </Link>{" "}
+                and{" "}
                 <Link
                   href="/privacy"
                   className="underline-offset-4 hover:text-[color:var(--color-aerial-soft)] hover:underline"
