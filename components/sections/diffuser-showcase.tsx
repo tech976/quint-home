@@ -4,6 +4,7 @@ import { diffusers } from "@/lib/data/diffusers";
 import { formatINR } from "@/lib/utils";
 import { FadeUp } from "@/components/motion/fade-up";
 import { HCarousel } from "@/components/ui/h-carousel";
+import { Monogram } from "@/components/brand/logo";
 
 /**
  * Diffuser Showcase — features the full diffuser range in editorial cards.
@@ -65,9 +66,7 @@ export function DiffuserShowcase() {
                     <span className="tabular-nums">
                       {String(i + 1).padStart(2, "0")}
                     </span>
-                    <span>
-                      {d.tier === "premium" ? "Premium" : "Entry"}
-                    </span>
+                    <Monogram className="h-6 w-6 text-[color:var(--color-stardust)]/70" />
                   </div>
                   <div className="absolute inset-x-0 bottom-0 flex items-end justify-between p-5 text-[0.6rem] uppercase tracking-[0.32em] text-[color:var(--color-stardust)] md:p-6">
                     <span>{d.coverageLabel}</span>

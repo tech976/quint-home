@@ -34,7 +34,7 @@ export function Logo(props: SVGProps<SVGSVGElement>) {
 // context (dark on light sections, light on the dark-green section) and stays
 // crisp at every size. Sizing/colour come from the passed className, exactly
 // like the previous inline SVG, so all call sites keep working unchanged.
-const MONOGRAM_SRC = "/images/brand/monogram.png";
+const MONOGRAM_SRC = "/images/brand/monogram.webp";
 
 export function Monogram({
   className = "",

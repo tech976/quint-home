@@ -92,6 +92,13 @@
     @apply border-[color:var(--color-rule)];
   }
 
+  /* Deter casual image saving — block drag and the iOS long-press "Save Image". */
+  img {
+    -webkit-user-drag: none;
+    -webkit-touch-callout: none;
+    user-select: none;
+  }
+
   html {
     -webkit-text-size-adjust: 100%;
     text-rendering: optimizeLegibility;

@@ -102,7 +102,7 @@ export function ScentFinder() {
         {/* Two-panel finder card */}
         <div className="mt-12 grid overflow-hidden border border-[color:var(--color-rule)] bg-[color:var(--color-white)] shadow-[0_30px_80px_-50px_rgba(58,53,50,0.45)] md:grid-cols-2">
           {/* ===== Visual panel ===== */}
-          <div className="relative h-72 md:h-auto md:min-h-[34rem]">
+          <div className="relative h-[26rem] md:h-auto md:min-h-[34rem]">
             {/* Mood images, cross-fading (steps 1–2) */}
             {MOODS.map((m) => (
               <Image

@@ -6,6 +6,7 @@ import { AnnouncementBar } from "@/components/layout/announcement-bar";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { Grain } from "@/components/atmosphere/grain";
+import { ImageGuard } from "@/components/atmosphere/image-guard";
 
 export const metadata: Metadata = {
   title: {
@@ -34,6 +35,7 @@ export default function RootLayout({
     >
       <body className="flex min-h-screen flex-col bg-[color:var(--color-white)] text-[color:var(--color-charcoal)]">
         <LenisProvider />
+        <ImageGuard />
         <Grain />
         <AnnouncementBar />
         <Header />

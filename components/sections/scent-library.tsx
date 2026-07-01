@@ -4,6 +4,7 @@ import { oils } from "@/lib/data/oils";
 import { FadeUp } from "@/components/motion/fade-up";
 import { SectionHeader } from "@/components/ui/section-header";
 import { HCarousel } from "@/components/ui/h-carousel";
+import { Monogram } from "@/components/brand/logo";
 import { formatINR } from "@/lib/utils";
 
 export function ScentLibrary() {
@@ -71,23 +72,18 @@ export function ScentLibrary() {
                     </>
                   )}
 
-                  {/* Top row */}
-                  <div className={`relative flex items-start justify-between text-[0.6rem] uppercase tracking-[0.32em] opacity-80 ${fg}`}>
-                    <span>№{String(i + 1).padStart(2, "0")}</span>
-                    {o.tier === "hotel-credential" && (
-                      <span className="rounded-full border border-current px-2 py-0.5 text-[0.5rem]">
-                        Hotel Credential
-                      </span>
-                    )}
+                  {/* Brand monogram — top-right */}
+                  <div className="relative flex">
+                    <Monogram className={`ml-auto h-6 w-6 ${fg} opacity-70`} />
                   </div>
 
-                  {/* Bottom text — name folded into the label group (no large heading) */}
-                  <div className={`relative mt-auto ${fg}`}>
+                  {/* Name + price only */}
+                  <div className={`relative mt-auto flex items-end justify-between gap-3 ${fg}`}>
                     <h3
                       className="transition-transform duration-700 ease-[var(--ease-quint)] group-hover:-translate-y-0.5"
                       style={{
                         fontFamily: "var(--font-serif)",
-                        fontSize: "0.95rem",
+                        fontSize: "1.05rem",
                         lineHeight: 1.15,
                         letterSpacing: "-0.01em",
                         fontWeight: 400,
@@ -95,17 +91,9 @@ export function ScentLibrary() {
                     >
                       {o.name}
                     </h3>
-                    <p className="mt-1.5 max-w-[26ch] text-[0.66rem] leading-[1.4] opacity-75">
-                      {o.tagline}
-                    </p>
-                    <div className="mt-2.5 flex items-end justify-between gap-3 opacity-80">
-                      <span className="text-[0.56rem] uppercase tracking-[0.24em]">
-                        {o.notes.heart[0]} · {o.notes.base[0]}
-                      </span>
-                      <span className="text-[0.72rem] tabular-nums">
-                        {formatINR(o.priceINR)}
-                      </span>
-                    </div>
+                    <span className="shrink-0 text-[0.8rem] tabular-nums opacity-90">
+                      {formatINR(o.priceINR)}
+                    </span>
                   </div>
                   </Link>
                 );
