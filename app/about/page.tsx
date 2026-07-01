@@ -220,37 +220,11 @@ export default function AboutPage() {
       </section>
 
       {/* ====================================================
-          § THE FOUNDER — highlight feature (centered masthead + portrait + pull-quote)
+          § THE FOUNDER — portrait + founder's note, signed
           ==================================================== */}
       <section className="border-y border-[color:var(--color-rule)] bg-[color:var(--color-stardust-soft)] py-[var(--spacing-section)]">
         <div className="mx-auto max-w-[var(--container-content)] px-6 md:px-10">
-          {/* Centered masthead */}
-          <FadeUp>
-            <div className="text-center">
-              <p className="mx-auto flex w-fit items-center justify-center gap-3 text-[0.62rem] uppercase tracking-[0.42em] text-[color:var(--color-charcoal-soft)]">
-                <Monogram className="h-4 w-4 shrink-0" />
-                The Founder
-              </p>
-              <h2
-                className="mt-6"
-                style={{
-                  fontFamily: "var(--font-serif)",
-                  fontSize: "var(--text-4xl)",
-                  lineHeight: 1.0,
-                  letterSpacing: "-0.022em",
-                  fontWeight: 400,
-                }}
-              >
-                Semil Rambhiya
-              </h2>
-              <p className="mx-auto mt-5 w-fit text-[0.66rem] uppercase tracking-[0.36em] text-[color:var(--color-clay)]">
-                Founder · Quint Home
-              </p>
-            </div>
-          </FadeUp>
-
-          {/* Feature — portrait + pull-quote at equal height */}
-          <div className="mt-12 grid gap-10 border-t border-[color:var(--color-rule)] pt-12 md:mt-14 md:grid-cols-12 md:items-center md:gap-14 md:pt-14">
+          <div className="grid gap-10 md:grid-cols-12 md:items-center md:gap-14">
             <FadeUp className="md:col-span-5">
               <div className="relative aspect-[3/4] overflow-hidden border border-[color:var(--color-rule)] bg-[color:var(--color-stardust)]">
                 <Image
@@ -278,7 +252,7 @@ export default function AboutPage() {
                   &ldquo;
                 </span>
                 <p
-                  className="mt-2 max-w-[28ch] text-balance"
+                  className="mt-2 max-w-[30ch] text-balance"
                   style={{
                     fontFamily: "var(--font-serif)",
                     fontSize: "var(--text-2xl)",
@@ -296,10 +270,30 @@ export default function AboutPage() {
                 </p>
               </FadeUp>
 
-              <FadeUp delay={0.12}>
+              <FadeUp delay={0.1}>
                 <p className="mt-7 max-w-[52ch] border-t border-[color:var(--color-rule)] pt-7 text-[var(--text-base)] leading-[1.85] text-[color:var(--color-charcoal-soft)]">
                   {FOUNDER_BIO[1]}
                 </p>
+              </FadeUp>
+
+              {/* Signature */}
+              <FadeUp delay={0.16}>
+                <div className="mt-8">
+                  <p
+                    style={{
+                      fontFamily: "var(--font-serif)",
+                      fontSize: "var(--text-xl)",
+                      lineHeight: 1.1,
+                      letterSpacing: "-0.01em",
+                      fontWeight: 400,
+                    }}
+                  >
+                    Semil Rambhiya
+                  </p>
+                  <p className="mt-1.5 text-[0.6rem] uppercase tracking-[0.34em] text-[color:var(--color-clay)]">
+                    Founder · Quint Home
+                  </p>
+                </div>
               </FadeUp>
             </div>
           </div>
