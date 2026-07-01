@@ -11,21 +11,29 @@ import { useEffect, useRef, useState } from "react";
  */
 
 type Slide =
-  | { type: "image"; src: string; alt: string; position?: string }
+  | {
+      type: "image";
+      src: string;
+      /** Portrait crop shown on phones; falls back to `src` when absent. */
+      srcMobile?: string;
+      alt: string;
+      position?: string;
+    }
   | { type: "video"; src: string; hideHeader?: boolean };
 
 const slides: Slide[] = [
   {
     type: "image",
-    src: "/images/hero-lounge.webp",
-    alt: "A man reading in a serene living room, a Quint diffuser misting on the table",
+    src: "/images/hero-reading.webp",
+    srcMobile: "/images/hero-reading-mobile.webp",
+    alt: "A man reading in a serene living room, a Quint diffuser misting nearby",
     position: "center 50%",
   },
   { type: "video", src: "/videos/hero-5.mp4" },
   {
     type: "image",
-    src: "/images/hero-1.webp",
-    alt: "A couple at ease in a sunlit living room, a Quint diffuser on the table",
+    src: "/images/hero-couple.webp",
+    alt: "A couple relaxing in a sunlit living room with a Quint diffuser",
     position: "center 50%",
   },
   { type: "video", src: "/videos/hero-3.mp4" },
@@ -106,15 +114,40 @@ export function Hero() {
           style={{ opacity: i === index ? 1 : 0 }}
         >
           {s.type === "image" ? (
-            <Image
-              src={s.src}
-              alt={s.alt}
-              fill
-              priority={i === 0}
-              sizes="100vw"
-              className="object-cover motion-safe:animate-hero-drift"
-              style={{ objectPosition: s.position }}
-            />
+            s.srcMobile ? (
+              <>
+                {/* Desktop / tablet — landscape crop */}
+                <Image
+                  src={s.src}
+                  alt={s.alt}
+                  fill
+                  priority={i === 0}
+                  sizes="100vw"
+                  className="hidden object-cover motion-safe:animate-hero-drift md:block"
+                  style={{ objectPosition: s.position }}
+                />
+                {/* Phones — portrait crop */}
+                <Image
+                  src={s.srcMobile}
+                  alt={s.alt}
+                  fill
+                  priority={i === 0}
+                  sizes="100vw"
+                  className="object-cover motion-safe:animate-hero-drift md:hidden"
+                  style={{ objectPosition: s.position }}
+                />
+              </>
+            ) : (
+              <Image
+                src={s.src}
+                alt={s.alt}
+                fill
+                priority={i === 0}
+                sizes="100vw"
+                className="object-cover motion-safe:animate-hero-drift"
+                style={{ objectPosition: s.position }}
+              />
+            )
           ) : (
             <video
               ref={(el) => {
