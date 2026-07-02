@@ -18,6 +18,8 @@ type Slide =
       srcMobile?: string;
       alt: string;
       position?: string;
+      /** Only show this slide on phones (hidden on desktop/tablet). */
+      mobileOnly?: boolean;
     }
   | { type: "video"; src: string; hideHeader?: boolean; desktopOnly?: boolean };
 
@@ -38,6 +40,28 @@ const slides: Slide[] = [
     position: "center 50%",
   },
   { type: "video", src: "/videos/hero-3.mp4", desktopOnly: true },
+  // Phone-only slides — appended after the shared slides above.
+  {
+    type: "image",
+    src: "/images/hero-m-woman.webp",
+    alt: "A hand resting on the Quint tower diffuser on a wooden console",
+    position: "center 50%",
+    mobileOnly: true,
+  },
+  {
+    type: "image",
+    src: "/images/hero-m-features.webp",
+    alt: "The Quint diffuser and its features — cold-air mist, aluminium body, touch panel",
+    position: "center 50%",
+    mobileOnly: true,
+  },
+  {
+    type: "image",
+    src: "/images/hero-m-clock.webp",
+    alt: "The Quint clock diffuser glowing at 08:00 on a side table",
+    position: "center 50%",
+    mobileOnly: true,
+  },
 ];
 
 const IMAGE_MS = 5000;
@@ -63,7 +87,7 @@ export function Hero() {
     () =>
       isMobile
         ? slides.filter((s) => s.type !== "video")
-        : slides,
+        : slides.filter((s) => !(s.type === "image" && s.mobileOnly)),
     [isMobile]
   );
 
