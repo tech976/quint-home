@@ -5,8 +5,8 @@ const cols = [
   {
     heading: "Shop",
     links: [
-      { href: "/shop?category=diffusers", label: "Diffusers" },
-      { href: "/shop?category=oils", label: "Fragrance Oils" },
+      { href: "/shop#diffusers", label: "Diffusers" },
+      { href: "/shop#oils", label: "Fragrance Oils" },
     ],
   },
   {

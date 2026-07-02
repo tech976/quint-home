@@ -23,9 +23,12 @@ export function ShopBrowser() {
   function go(c: { target?: string }) {
     if (c.target) {
       setSoon(false);
-      document
-        .getElementById(c.target)
-        ?.scrollIntoView({ behavior: "smooth", block: "start" });
+      const el = document.getElementById(c.target);
+      if (!el) return;
+      // Route through Lenis when active so its internal scroll position stays in
+      // sync (a raw scrollIntoView desyncs Lenis and snaps back on next wheel).
+      if (window.__lenis) window.__lenis.scrollTo(el);
+      else el.scrollIntoView({ behavior: "smooth", block: "start" });
     } else {
       setSoon((s) => !s);
     }

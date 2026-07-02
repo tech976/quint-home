@@ -10,7 +10,7 @@ const cards = [
     title: "Diffusers",
     description:
       "Sculpted, silent, waterless. Designed to live on a shelf with the same presence as a piece of pottery.",
-    href: "/shop?category=diffusers",
+    href: "/shop#diffusers",
     image: "/images/diffusers/diffuser-04.png",
     count: "Four models",
     background: "bg-[color:var(--color-stardust-soft)]",
@@ -21,7 +21,7 @@ const cards = [
     title: "Fragrance Oils",
     description:
       "Compositions blended like fine perfumery. 70–90% concentrate, IFRA-compliant, read top, heart and base.",
-    href: "/shop?category=oils",
+    href: "/shop#oils",
     image: "/images/vibe/vibe-09.webp",
     count: "Signature scents",
     background: "bg-[color:var(--color-aerial)]",

@@ -106,7 +106,7 @@ export function ScentLibrary() {
         <FadeUp delay={0.2}>
           <div className="mt-14 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 border-t border-[color:var(--color-rule)] pt-10">
             <Link
-              href="/shop?category=diffusers"
+              href="/shop#diffusers"
               className="group inline-flex items-center gap-3 border-b border-[color:var(--color-charcoal)] pb-1.5 text-[0.72rem] uppercase tracking-[0.32em] transition-colors duration-500 hover:text-[color:var(--color-clay)] hover:border-[color:var(--color-clay)]"
             >
               See every diffuser
@@ -115,7 +115,7 @@ export function ScentLibrary() {
               </span>
             </Link>
             <Link
-              href="/shop?category=oils"
+              href="/shop#oils"
               className="text-[0.72rem] uppercase tracking-[0.32em] text-[color:var(--color-charcoal-soft)] hover:text-[color:var(--color-charcoal)] transition-colors duration-500"
             >
               Or browse the oils →
