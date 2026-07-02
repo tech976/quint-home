@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { FadeUp } from "@/components/motion/fade-up";
 import { ProductGallery } from "@/components/product/product-gallery";
 import { AddToBag } from "@/components/product/add-to-bag";
@@ -24,6 +25,9 @@ export function OilHero({ oil }: { oil: FragranceOil }) {
   }));
 
   const descriptionParagraphs = oil.description.split("\n\n");
+
+  // A styled note-pyramid card per scent (top/heart/base ingredients, shot).
+  const notesImage = `/images/oils/notes/${oil.slug}.webp`;
 
   const NOTES = [
     ["Top", oil.notes.top],
@@ -175,6 +179,18 @@ export function OilHero({ oil }: { oil: FragranceOil }) {
           <FadeUp delay={0.06}>
             <div className="mt-12 border-t border-[color:var(--color-rule)] pt-10">
               <p className={sectionLabel}>The notes</p>
+              {/* Note-pyramid card — the individual ingredients, shot. */}
+              <div className="relative mt-6 aspect-square overflow-hidden bg-[color:var(--color-stardust-soft)]">
+                <Image
+                  src={notesImage}
+                  alt={`${oil.name} — the notes: ${oil.notes.top
+                    .concat(oil.notes.heart, oil.notes.base)
+                    .join(", ")}`}
+                  fill
+                  sizes="(min-width: 1024px) 40rem, 100vw"
+                  className="object-cover"
+                />
+              </div>
               <dl className="mt-6 border-t border-[color:var(--color-rule)]">
                 {NOTES.map(([label, arr]) => (
                   <div
