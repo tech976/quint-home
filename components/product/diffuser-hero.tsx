@@ -23,11 +23,19 @@ export function DiffuserHero({ product }: { product: Diffuser }) {
 
   const gallery = color?.gallery ?? product.gallery;
 
+  // Finish-specific copy — when a colour variant carries its own tagline /
+  // description / key features, they replace the product-level defaults while
+  // that finish is selected (e.g. the A326 in gold vs black).
+  const tagline = color?.tagline ?? product.tagline;
+  const keyFeatures = color?.keyFeatures ?? product.keyFeatures;
+
   // Included starting oil — chosen here rather than at checkout.
   const [oilSlug, setOilSlug] = useState(oils[0].slug);
   const selectedOil = oils.find((o) => o.slug === oilSlug) ?? oils[0];
 
-  const descriptionParagraphs = product.description.split("\n\n");
+  const descriptionParagraphs = (color?.description ?? product.description).split(
+    "\n\n"
+  );
 
   // Bundle — add an extra oil to the order at a discount. Carry the note
   // summary so the picker reads as a fragrance, not just a name.
@@ -41,11 +49,8 @@ export function DiffuserHero({ product }: { product: Diffuser }) {
   }));
 
   // Technical specifications — the per-model spec sheet, taken verbatim from the
-  // Aroma Diffuser Collection product catalogue, plus the warranty.
-  const techSpecs: { label: string; value: string }[] = [
-    ...product.specs,
-    { label: "Warranty", value: "1-year limited device warranty" },
-  ];
+  // Aroma Diffuser Collection product catalogue.
+  const techSpecs = product.specs;
 
   const sectionLabel =
     "text-[0.62rem] uppercase tracking-[0.42em] text-[color:var(--color-charcoal-soft)]";
@@ -96,7 +101,7 @@ export function DiffuserHero({ product }: { product: Diffuser }) {
 
           <FadeUp delay={0.12}>
             <p className="mt-5 max-w-[40ch] text-[var(--text-lg)] leading-[1.5] text-[color:var(--color-charcoal-soft)]">
-              {product.tagline}
+              {tagline}
             </p>
           </FadeUp>
 
@@ -267,7 +272,7 @@ export function DiffuserHero({ product }: { product: Diffuser }) {
             <div className="mt-12 border-t border-[color:var(--color-rule)] pt-10">
               <p className={sectionLabel}>Key features</p>
               <ul className="mt-6 grid gap-4">
-                {product.keyFeatures.map((feature, i) => {
+                {keyFeatures.map((feature, i) => {
                   const dash = feature.indexOf(" — ");
                   const lead = dash > -1 ? feature.slice(0, dash) : feature;
                   const desc = dash > -1 ? feature.slice(dash + 3) : "";

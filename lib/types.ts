@@ -37,6 +37,11 @@ export interface DiffuserColor {
   finish: string;
   image: string;
   gallery: string[];
+  /** Optional finish-specific copy. When present, the PDP swaps these in for the
+   *  product-level defaults while this finish is selected. */
+  tagline?: string;
+  description?: string;
+  keyFeatures?: string[];
 }
 
 export interface Diffuser {
