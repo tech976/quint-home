@@ -8,7 +8,7 @@ import { formatINR } from "@/lib/utils";
 import { SectionHeader } from "@/components/ui/section-header";
 
 /**
- * Scent Finder — a polished two-panel quiz. The left panel is a large visual
+ * Scent Finder – a polished two-panel quiz. The left panel is a large visual
  * that updates live as you hover/choose a mood, then resolves to the matched
  * oil. The right panel carries the two questions and the result. Deterministic:
  * each oil has a (mood, accord) profile and the closest match wins.
@@ -33,7 +33,7 @@ const ACCORDS: { key: Accord; label: string; sub: string }[] = [
 
 const PROFILE: Record<string, { mood: Mood; accord: Accord }> = {
   "blanc-ritual": { mood: "calm", accord: "citrus" },
-  quietude: { mood: "grounded", accord: "green" },
+  terrain: { mood: "grounded", accord: "green" },
   "first-rain": { mood: "fresh", accord: "citrus" },
   "soft-hour": { mood: "warm", accord: "amber" },
   solitude: { mood: "fresh", accord: "green" },
@@ -175,7 +175,7 @@ export function ScentFinder() {
               </span>
             </div>
 
-            {/* Step 1 — mood */}
+            {/* Step 1 – mood */}
             {step === 1 && (
               <div>
                 <h3
@@ -227,7 +227,7 @@ export function ScentFinder() {
               </div>
             )}
 
-            {/* Step 2 — accord */}
+            {/* Step 2 – accord */}
             {step === 2 && (
               <div>
                 <h3
@@ -283,7 +283,7 @@ export function ScentFinder() {
               </div>
             )}
 
-            {/* Step 3 — result */}
+            {/* Step 3 – result */}
             {step === 3 && result && (
               <div>
                 <p className="text-[0.6rem] uppercase tracking-[0.42em] text-[color:var(--color-charcoal-soft)]">

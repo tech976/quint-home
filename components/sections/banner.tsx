@@ -18,7 +18,7 @@ const INTERVAL = 5000;
 
 /**
  * Top-of-home promotional banner. Calm auto-crossfade through the designed
- * banner set — no dots, no arrows, one easing curve. Links to the shop.
+ * banner set – no dots, no arrows, one easing curve. Links to the shop.
  */
 export function Banner() {
   const [active, setActive] = useState(0);
@@ -47,7 +47,7 @@ export function Banner() {
           <Image
             key={src}
             src={src}
-            alt="Quint Home — Air, Elevated"
+            alt="Quint Home – Air, Elevated"
             fill
             priority={i === 0}
             sizes="100vw"

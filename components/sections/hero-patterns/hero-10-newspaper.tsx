@@ -4,7 +4,7 @@ import { FadeUp } from "@/components/motion/fade-up";
 import { Logo } from "@/components/brand/logo";
 
 /**
- * Hero 10 — Newspaper Masthead.
+ * Hero 10 – Newspaper Masthead.
  *
  * Editorial broadsheet: wordmark masthead with date / edition / volume rules,
  * a large serif headline beneath, then three columns of body copy (CSS
@@ -16,7 +16,7 @@ export function HeroNewspaper() {
   return (
     <section className="relative w-full bg-[color:var(--color-white)] pt-8 md:pt-10">
       <div className="mx-auto max-w-[var(--container-content)] px-6 md:px-10">
-        {/* Masthead row — date, wordmark, edition */}
+        {/* Masthead row – date, wordmark, edition */}
         <div className="grid grid-cols-3 items-center gap-4 border-b border-[color:var(--color-charcoal)] pb-4 text-[0.6rem] uppercase tracking-[0.36em] text-[color:var(--color-charcoal-soft)]">
           <div className="flex flex-col gap-1">
             <span>Thursday</span>
@@ -32,7 +32,7 @@ export function HeroNewspaper() {
           </div>
         </div>
 
-        {/* Second hairline below masthead — broadsheet double-rule */}
+        {/* Second hairline below masthead – broadsheet double-rule */}
         <div className="mt-1 h-px w-full bg-[color:var(--color-rule)]" />
 
         {/* Section eyebrow */}
@@ -58,7 +58,7 @@ export function HeroNewspaper() {
           </h1>
         </FadeUp>
 
-        {/* Deck — italic standfirst */}
+        {/* Deck – italic standfirst */}
         <FadeUp delay={0.25}>
           <p
             className="mt-5 max-w-[60ch] text-[color:var(--color-charcoal-soft)]"
@@ -72,7 +72,7 @@ export function HeroNewspaper() {
           >
             Five seconds in a hotel corridor and the room changes character.
             A note from the founder, on why we are making that room yours
-            &mdash; quietly, and from Mumbai.
+            &ndash; quietly, and from Mumbai.
           </p>
         </FadeUp>
 
@@ -87,7 +87,7 @@ export function HeroNewspaper() {
           <span>Reading time &middot; Four minutes</span>
         </div>
 
-        {/* Body — true newspaper columns with an inset image the text wraps around */}
+        {/* Body – true newspaper columns with an inset image the text wraps around */}
         <FadeUp delay={0.35}>
           <div
             className="mt-6 text-[color:var(--color-charcoal)] [column-fill:balance] md:columns-3 md:gap-10"
@@ -116,11 +116,11 @@ export function HeroNewspaper() {
               You are walking past an open doorway on the fourteenth
               floor of an old hotel, and the air there is not the air
               of the rest of the building. It carries something
-              &mdash; tuberose held back, a little cedar, a memory of
+              &ndash; tuberose held back, a little cedar, a memory of
               monsoon dust on a clay roof.
             </p>
 
-            {/* Inline figure — floats inside columns; text wraps around it */}
+            {/* Inline figure – floats inside columns; text wraps around it */}
             <figure className="mb-4 inline-block w-full">
               <div className="relative aspect-[4/5] w-full overflow-hidden bg-[color:var(--color-stardust-soft)]">
                 <Image
@@ -141,7 +141,7 @@ export function HeroNewspaper() {
             <p className="mb-4">
               You stop. You stand there for half a second longer than
               is polite. And then you walk on, and the rest of the
-              corridor smells of nothing in particular &mdash; carpet,
+              corridor smells of nothing in particular &ndash; carpet,
               cleaning product, the sealed circulated nothing of every
               other building on the island.
             </p>
@@ -151,7 +151,7 @@ export function HeroNewspaper() {
               idea that a room can announce itself before you do; that
               the air in a doorway can do the work of an introduction.
               We spent two years asking what it would take to keep
-              that quality on a shelf &mdash; not a candle, not a
+              that quality on a shelf &ndash; not a candle, not a
               spray, not a stick in oil that surrenders by the third
               week. Something with the steady, almost editorial
               composure of a piece of furniture.
@@ -168,7 +168,7 @@ export function HeroNewspaper() {
 
             <p className="mb-4">
               This first volume is twenty-two pages long. It is a
-              field guide, mostly &mdash; to corridors, to doorways,
+              field guide, mostly &ndash; to corridors, to doorways,
               to the rooms we have lived in and the rooms we are
               still trying to make. You are reading the front page.
               The rest is below.
@@ -189,7 +189,7 @@ export function HeroNewspaper() {
 
         {/* Bottom: by-line + small product preview + CTAs */}
         <div className="mt-8 grid grid-cols-1 items-end gap-8 pb-14 md:grid-cols-12 md:gap-10 md:pb-20">
-          {/* Product preview — small, hairlined */}
+          {/* Product preview – small, hairlined */}
           <div className="md:col-span-4">
             <FadeUp delay={0.45}>
               <figure className="flex items-end gap-4 border-t border-[color:var(--color-rule)] pt-4">
@@ -241,7 +241,7 @@ export function HeroNewspaper() {
               >
                 Set in Literata. Filed from Mumbai, 14&deg;
                 north of the air-conditioning of every other
-                fragrance house. &mdash; The Editors
+                fragrance house. &ndash; The Editors
               </p>
 
               <div className="mt-6 flex flex-wrap items-center gap-x-10 gap-y-3">

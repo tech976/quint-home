@@ -1,4 +1,4 @@
-// Editorial marquee — a slow, continuous tagline ribbon between Hero and Brand Statement.
+// Editorial marquee – a slow, continuous tagline ribbon between Hero and Brand Statement.
 // Quiet by design: small caps, low contrast, single line.
 
 const tokens = [

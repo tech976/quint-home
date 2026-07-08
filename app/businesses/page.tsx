@@ -5,7 +5,7 @@ import { FadeUp } from "@/components/motion/fade-up";
 export const metadata: Metadata = {
   title: "For Businesses",
   description:
-    "Scent your space — commercial diffusers, bulk orders, and personalized scent development for hotels, restaurants, retail, and workspaces.",
+    "Scent your space – commercial diffusers, bulk orders, and personalized scent development for hotels, restaurants, retail, and workspaces.",
 };
 
 const offerings = [
@@ -22,7 +22,7 @@ const offerings = [
   {
     no: "03",
     title: "Signature Scents",
-    body: "A fragrance developed exclusively for you — and no one else.",
+    body: "A fragrance developed exclusively for you – and no one else.",
   },
 ];
 
@@ -54,7 +54,7 @@ const testimonials = [
 export default function BusinessesPage() {
   return (
     <article className="bg-[color:var(--color-white)]">
-      {/* ===== HERO — text on brand green ===== */}
+      {/* ===== HERO – text on brand green ===== */}
       <section className="border-b border-[color:var(--color-stardust)]/10 bg-[color:var(--color-verdant)] pb-[var(--spacing-section)] pt-16 text-[color:var(--color-stardust)] md:pt-24">
         <div className="mx-auto w-[100%] max-w-[var(--container-full)] px-6 md:px-10">
           <FadeUp>
@@ -88,7 +88,7 @@ export default function BusinessesPage() {
         </div>
       </section>
 
-      {/* ===== OFFERINGS — three tight columns ===== */}
+      {/* ===== OFFERINGS – three tight columns ===== */}
       <section className="py-[var(--spacing-section)]">
         <div className="mx-auto max-w-[var(--container-full)] px-6 md:px-10">
           <div className="grid gap-x-12 gap-y-10 border-t border-[color:var(--color-rule)] pt-10 md:grid-cols-3">
@@ -235,6 +235,11 @@ export default function BusinessesPage() {
               <Field label="Company" placeholder="Business or brand name" />
               <Field label="Your name" placeholder="First and last" />
               <Field label="Email" placeholder="you@company.com" type="email" />
+              <Field
+                label="Mobile number"
+                placeholder="+91 98765 43210"
+                type="tel"
+              />
               <Field
                 label="Type of space"
                 placeholder="Hotel · Restaurant · Retail · Office · Other"

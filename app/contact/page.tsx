@@ -4,7 +4,7 @@ import { FadeUp } from "@/components/motion/fade-up";
 
 export const metadata: Metadata = {
   title: "Contact",
-  description: "Get in touch with Quint Home — WhatsApp or email.",
+  description: "Get in touch with Quint Home – WhatsApp or email.",
 };
 
 export default function ContactPage() {

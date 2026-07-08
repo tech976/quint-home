@@ -1,7 +1,7 @@
 import { FadeUp } from "@/components/motion/fade-up";
 
 /**
- * Brand Statement — the "why Quint" beat. A large serif claim paired with a
+ * Brand Statement – the "why Quint" beat. A large serif claim paired with a
  * concentration-contrast panel (70–90% vs 1–3%) that visualises the single
  * fact the brand turns on. Editorial: hairline rules, one clay accent, no cards.
  */
@@ -16,7 +16,7 @@ export function BrandStatement() {
   return (
     <section className="border-y border-[color:var(--color-rule)] bg-[color:var(--color-stardust-soft)] py-[var(--spacing-section)]">
       <div className="mx-auto max-w-[var(--container-full)] px-6 md:px-10">
-        {/* Centered eyebrow — symmetric rules on each side */}
+        {/* Centered eyebrow – symmetric rules on each side */}
         <FadeUp>
           <div className="flex items-center justify-center gap-4 text-[0.6rem] uppercase tracking-[0.42em] text-[color:var(--color-charcoal-soft)]">
             <span className="h-px w-10 bg-[color:var(--color-rule)]" />
@@ -40,13 +40,13 @@ export function BrandStatement() {
             You think about every surface in a room, then leave the air to
             chance.{" "}
             <em className="text-[color:var(--color-aerial-deep)]">
-              Scent is the part of a home you actually breathe — and most homes
+              Scent is the part of a home you actually breathe – and most homes
               forget it.
             </em>
           </h2>
         </FadeUp>
 
-        {/* Concentration contrast — a symmetric two-side comparison */}
+        {/* Concentration contrast – a symmetric two-side comparison */}
         <FadeUp delay={0.12}>
           <div className="mx-auto mt-14 max-w-[46rem] md:mt-16">
             <p className="mx-auto w-fit text-center text-[0.58rem] uppercase tracking-[0.36em] text-[color:var(--color-charcoal-soft)]">
@@ -104,12 +104,12 @@ export function BrandStatement() {
             </div>
 
             <p className="mx-auto mt-8 max-w-[40ch] text-center text-[0.82rem] leading-[1.6] text-[color:var(--color-charcoal-soft)]">
-              The full perfume in the room — never watered down.
+              The full perfume in the room – never watered down.
             </p>
           </div>
         </FadeUp>
 
-        {/* Supporting line — large serif statement */}
+        {/* Supporting line – large serif statement */}
         <FadeUp delay={0.06}>
           <p
             className="mx-auto mt-16 max-w-[50ch] text-balance border-t border-[color:var(--color-rule)] pt-12 text-center md:mt-20"
@@ -128,7 +128,7 @@ export function BrandStatement() {
           </p>
         </FadeUp>
 
-        {/* Proof points — a symmetric, centered 4-up row */}
+        {/* Proof points – a symmetric, centered 4-up row */}
         <div className="mx-auto mt-14 grid max-w-[64rem] grid-cols-2 border-t border-[color:var(--color-rule)] md:mt-16 md:grid-cols-4 md:divide-x md:divide-[color:var(--color-rule)]">
           {facts.map((f, i) => (
             <FadeUp key={f} delay={0.1 + i * 0.06}>

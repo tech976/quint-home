@@ -1,6 +1,6 @@
 import type { SVGProps, HTMLAttributes } from "react";
 
-// Inlined Quint Home wordmark — uses currentColor so it inherits text color.
+// Inlined Quint Home wordmark – uses currentColor so it inherits text color.
 export function Logo(props: SVGProps<SVGSVGElement>) {
   return (
     <svg
@@ -29,7 +29,7 @@ export function Logo(props: SVGProps<SVGSVGElement>) {
   );
 }
 
-// Monogram — the official Quint Home logomark (brand PNG). Rendered through a
+// Monogram – the official Quint Home logomark (brand PNG). Rendered through a
 // CSS mask tinted with currentColor, so it inherits the text colour of its
 // context (dark on light sections, light on the dark-green section) and stays
 // crisp at every size. Sizing/colour come from the passed className, exactly

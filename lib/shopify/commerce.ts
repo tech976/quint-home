@@ -23,7 +23,7 @@ export interface ShopifyCommerce {
   variants: ShopifyVariant[];
 }
 
-/** Shopify auto-generates handles from the title — mirror that from a name. */
+/** Shopify auto-generates handles from the title – mirror that from a name. */
 export function shopifyHandle(name: string): string {
   return name
     .toLowerCase()

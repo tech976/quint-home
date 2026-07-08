@@ -3,7 +3,7 @@ import { Monogram } from "@/components/brand/logo";
 import { RevealLines } from "@/components/motion/fade-up";
 
 /**
- * Hero 06 — Pure Typography.
+ * Hero 06 – Pure Typography.
  * Hermès / Loewe ultra-minimal. The whole hero is type and silence on stardust-soft.
  * No photography. A whisper of monogram, a single terracotta hairline, generous air.
  */
@@ -13,7 +13,7 @@ export function HeroPureTypography() {
       className="relative flex w-full flex-col bg-[color:var(--color-stardust-soft)] text-[color:var(--color-charcoal)]"
       style={{ minHeight: "90vh" }}
     >
-      {/* Top meta strip — thin, restrained */}
+      {/* Top meta strip – thin, restrained */}
       <header className="mx-auto flex w-full max-w-[var(--container-full)] items-center justify-between px-6 pt-8 md:px-12 md:pt-10">
         <span className="text-[0.6rem] uppercase tracking-[0.42em] text-[color:var(--color-charcoal-soft)]">
           Volume 01
@@ -37,7 +37,7 @@ export function HeroPureTypography() {
           Quint Home · Est. 2026
         </span>
 
-        {/* The headline — anchored center, massive, calm */}
+        {/* The headline – anchored center, massive, calm */}
         <h1>
           <RevealLines
             lines={["Air,", "Elevated."]}
@@ -53,14 +53,14 @@ export function HeroPureTypography() {
           />
         </h1>
 
-        {/* Single terracotta hairline — the only colour gesture */}
+        {/* Single terracotta hairline – the only colour gesture */}
         <span
           aria-hidden="true"
           className="mt-14 block h-px w-20 bg-[color:var(--color-clay)] animate-fade-in"
           style={{ animationDelay: "0.95s" }}
         />
 
-        {/* One italic subline — the room you make your home */}
+        {/* One italic subline – the room you make your home */}
         <p
           className="mt-14 max-w-[42ch] text-[var(--text-lg)] leading-[1.55] text-[color:var(--color-charcoal-soft)] animate-fade-up"
           style={{
@@ -73,7 +73,7 @@ export function HeroPureTypography() {
           We make that room your home.
         </p>
 
-        {/* CTAs — almost incidental, paired below the silence */}
+        {/* CTAs – almost incidental, paired below the silence */}
         <div
           className="mt-16 flex flex-wrap items-center justify-center gap-x-12 gap-y-4 animate-fade-up"
           style={{ animationDelay: "1.3s" }}

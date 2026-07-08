@@ -8,7 +8,7 @@ import { Monogram } from "@/components/brand/logo";
 import { getCommerceMap, shopifyHandle } from "@/lib/shopify/commerce";
 
 /**
- * Diffuser Showcase — features the full diffuser range in editorial cards.
+ * Diffuser Showcase – features the full diffuser range in editorial cards.
  * Replaces the old generic "Diffusers vs Oils" CategoryDuo with something that
  * actually tells the buyer what they are choosing between.
  */
@@ -47,7 +47,7 @@ export async function DiffuserShowcase() {
           </div>
         </FadeUp>
 
-        {/* Product cards — single-line horizontal carousel */}
+        {/* Product cards – single-line horizontal carousel */}
         <FadeUp>
           <HCarousel ariaLabel="Diffusers" arrowTop="top-[34%]">
             {diffusers.map((d, i) => (

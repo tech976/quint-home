@@ -15,7 +15,7 @@ declare global {
  * Smooth scroll (pointer devices only) PLUS navigation scroll management.
  *
  * Next's App Router *maintains* scroll position on client navigation by default,
- * and Lenis owns the scroll container — so without this, pages open wherever you
+ * and Lenis owns the scroll container – so without this, pages open wherever you
  * last were. On every route change we jump to the top, or, when the URL carries a
  * hash (e.g. /shop#oils), land precisely on that section (honouring its
  * `scroll-margin-top` / `scroll-mt-*`). Same-page hash clicks are routed through
@@ -25,11 +25,11 @@ export function LenisProvider() {
   const pathname = usePathname();
   const lenisRef = useRef<Lenis | null>(null);
 
-  // Create Lenis once — off for touch (floaty) and reduced-motion.
+  // Create Lenis once – off for touch (floaty) and reduced-motion.
   useEffect(() => {
     if (typeof window === "undefined") return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    // Touch devices keep native scrolling — the smooth-scroll inertia feels
+    // Touch devices keep native scrolling – the smooth-scroll inertia feels
     // "floaty"/unstable on phones. Smooth scroll stays on for pointer devices.
     if (window.matchMedia("(pointer: coarse)").matches) return;
 
@@ -81,7 +81,7 @@ export function LenisProvider() {
 
   // Same-page hash links (pathname unchanged, so the effect above won't fire).
   // Intercept in the capture phase so Next's own hash scroll never competes with
-  // Lenis. Native scroll (no Lenis) is left alone — scroll-mt handles the offset.
+  // Lenis. Native scroll (no Lenis) is left alone – scroll-mt handles the offset.
   useEffect(() => {
     function onClick(e: MouseEvent) {
       const lenis = lenisRef.current;

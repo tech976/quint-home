@@ -1,7 +1,7 @@
 "use client";
 
 /**
- * OverflowDetector — dev-only horizontal-overflow finder.
+ * OverflowDetector – dev-only horizontal-overflow finder.
  *
  * This component renders nothing and has ZERO effect in production:
  * it is gated on `process.env.NODE_ENV !== "production"`, so the body
@@ -83,7 +83,7 @@ export function OverflowDetector() {
       }[] = [];
 
       // True if some ancestor (excluding html/body, whose overflow-x:clip is
-      // our intentional safety net) clips horizontally — then the element is
+      // our intentional safety net) clips horizontally – then the element is
       // contained and is NOT a real page-overflow offender. This is what stops
       // the false positives: a wide native <select> inside an `overflow-hidden`
       // box is clipped and harmless, so we skip it.

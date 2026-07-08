@@ -18,7 +18,7 @@ const moments: Moment[] = [
     no: "01",
     time: "06:42",
     room: "Hallway",
-    scent: "First Light — bergamot, green tea, white pepper.",
+    scent: "First Light – bergamot, green tea, white pepper.",
     image: "/images/vibe/vibe-12.webp",
     alt: "A bright living room catching the first morning light.",
     grid: "md:col-span-1 md:row-span-2",
@@ -29,7 +29,7 @@ const moments: Moment[] = [
     no: "02",
     time: "10:15",
     room: "Study",
-    scent: "Clarity — vetiver, linen, a pale citrus.",
+    scent: "Clarity – vetiver, linen, a pale citrus.",
     image: "/images/vibe/vibe-14.webp",
     alt: "Linen and morning shadow falling across a quiet workspace.",
     grid: "md:col-span-2",
@@ -40,7 +40,7 @@ const moments: Moment[] = [
     no: "03",
     time: "13:30",
     room: "Drawing Room",
-    scent: "Afternoon Stillness — neroli, jasmine sambac.",
+    scent: "Afternoon Stillness – neroli, jasmine sambac.",
     image: "/images/vibe/vibe-11.webp",
     alt: "A drawing room held in afternoon stillness.",
     grid: "md:col-span-1",
@@ -51,7 +51,7 @@ const moments: Moment[] = [
     no: "04",
     time: "17:48",
     room: "Threshold",
-    scent: "Golden Hour — saffron, dried fig, amber.",
+    scent: "Golden Hour – saffron, dried fig, amber.",
     image: "/images/vibe/vibe-05.webp",
     alt: "Wildflowers and warm light at golden hour.",
     grid: "md:col-span-1",
@@ -62,7 +62,7 @@ const moments: Moment[] = [
     no: "05",
     time: "20:12",
     room: "Living Room",
-    scent: "The Hour of Wood — oud, tobacco leaf, cashmere.",
+    scent: "The Hour of Wood – oud, tobacco leaf, cashmere.",
     image: "/images/vibe/vibe-18.webp",
     alt: "A warm, lamp-lit evening interior.",
     grid: "md:col-span-2",
@@ -73,7 +73,7 @@ const moments: Moment[] = [
     no: "06",
     time: "22:50",
     room: "Bedroom",
-    scent: "Night Incense — sandalwood, frankincense, myrrh.",
+    scent: "Night Incense – sandalwood, frankincense, myrrh.",
     image: "/images/vibe/vibe-15.webp",
     alt: "Incense smoke moving through a temple-quiet room.",
     grid: "md:col-span-1",
@@ -129,7 +129,7 @@ export function Ritual() {
           </header>
         </FadeUp>
 
-        {/* The timeline grid — 6 moments, asymmetric */}
+        {/* The timeline grid – 6 moments, asymmetric */}
         <div className="mt-16 grid gap-6 md:grid-cols-3 md:gap-x-8 md:gap-y-10 lg:gap-x-12">
           {moments.map((m, i) => (
             <FadeUp key={m.no} delay={i * 0.08} className={m.grid}>
@@ -178,7 +178,7 @@ export function Ritual() {
           ))}
         </div>
 
-        {/* Footer — supporting paragraph + app-control line */}
+        {/* Footer – supporting paragraph + app-control line */}
         <FadeUp delay={0.1}>
           <footer className="mt-20 grid gap-10 border-t border-[color:var(--color-rule)] pt-10 md:grid-cols-12 md:gap-12">
             <div className="md:col-span-2">

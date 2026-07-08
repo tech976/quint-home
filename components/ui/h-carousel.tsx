@@ -3,7 +3,7 @@
 import { useRef, type ReactNode } from "react";
 
 /**
- * HCarousel — a single-line horizontal, snap-scrolling carousel with arrows.
+ * HCarousel – a single-line horizontal, snap-scrolling carousel with arrows.
  * Children are the cards (each should be `shrink-0 snap-start` with a fixed
  * width). Scrollbar is hidden; arrows show on large screens, swipe on touch.
  */

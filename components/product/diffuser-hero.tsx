@@ -2,8 +2,10 @@
 
 import { useState } from "react";
 import { FadeUp } from "@/components/motion/fade-up";
+import { Monogram } from "@/components/brand/logo";
 import { ProductGallery } from "@/components/product/product-gallery";
 import { AddToBag } from "@/components/product/add-to-bag";
+import { MobileBuyBar } from "@/components/product/mobile-buy-bar";
 import { PairBundle, type PairOption } from "@/components/product/pair-bundle";
 import { oils, oilNoteSummary } from "@/lib/data/oils";
 import { cn } from "@/lib/utils";
@@ -11,11 +13,11 @@ import type { Diffuser } from "@/lib/types";
 import type { ShopifyCommerce } from "@/lib/shopify/commerce";
 
 /**
- * Diffuser PDP — images on the left (sticky), and a single right column that
- * carries the buy box, then the overview, key features and technical
- * specifications (the per-model catalogue spec sheet). A colour selector swaps
- * the gallery + finish in place for multi-finish models (e.g. the A326 in
- * gold / black).
+ * Diffuser PDP – images on the left (sticky), and a single right column. The
+ * buy box (price + add to bag) sits at the top, followed immediately by the
+ * overview and key features so the product story is reachable without scrolling
+ * past the configurators; the "included oil" picker and bundle sit below. The
+ * technical specifications live as their own slide in the gallery carousel.
  */
 export function DiffuserHero({
   product,
@@ -36,13 +38,13 @@ export function DiffuserHero({
 
   const gallery = color?.gallery ?? product.gallery;
 
-  // Finish-specific copy — when a colour variant carries its own tagline /
+  // Finish-specific copy – when a colour variant carries its own tagline /
   // description / key features, they replace the product-level defaults while
   // that finish is selected (e.g. the A326 in gold vs black).
   const tagline = color?.tagline ?? product.tagline;
   const keyFeatures = color?.keyFeatures ?? product.keyFeatures;
 
-  // Included starting oil — chosen here rather than at checkout.
+  // Included starting oil – chosen here rather than at checkout.
   const [oilSlug, setOilSlug] = useState(oils[0].slug);
   const selectedOil = oils.find((o) => o.slug === oilSlug) ?? oils[0];
 
@@ -50,7 +52,7 @@ export function DiffuserHero({
     "\n\n"
   );
 
-  // Bundle — add an extra oil to the order at a discount. Carry the note
+  // Bundle – add an extra oil to the order at a discount. Carry the note
   // summary so the picker reads as a fragrance, not just a name.
   const oilOptions: PairOption[] = oils.map((o) => ({
     slug: o.slug,
@@ -61,17 +63,64 @@ export function DiffuserHero({
     note: oilNoteSummary(o),
   }));
 
-  // Technical specifications — the per-model spec sheet, taken verbatim from the
+  // Technical specifications – the per-model spec sheet, taken verbatim from the
   // Aroma Diffuser Collection product catalogue.
   const techSpecs = product.specs;
 
   const sectionLabel =
     "text-[0.62rem] uppercase tracking-[0.42em] text-[color:var(--color-charcoal-soft)]";
 
+  // Designed specifications slide – the last gallery photo (a visual spec sheet,
+  // not a plain table in the column).
+  const specsCard = (
+    <div className="flex h-full w-full flex-col justify-center overflow-hidden bg-[color:var(--color-stardust-soft)] px-7 py-6 md:px-9 md:py-8">
+      <div className="flex items-center gap-3">
+        <Monogram className="h-5 w-5 text-[color:var(--color-clay)]" />
+        {color && (
+          <span
+            aria-hidden="true"
+            className="h-2.5 w-2.5 rounded-full"
+            style={{ backgroundColor: color.swatch }}
+          />
+        )}
+      </div>
+      <p className="mt-4 text-[0.54rem] uppercase tracking-[0.42em] text-[color:var(--color-charcoal-soft)]">
+        Technical specifications
+      </p>
+      <p
+        className="mt-1.5 text-[color:var(--color-charcoal)]"
+        style={{
+          fontFamily: "var(--font-serif)",
+          fontSize: "1.35rem",
+          lineHeight: 1.05,
+          letterSpacing: "-0.01em",
+        }}
+      >
+        {product.name}
+      </p>
+      <dl className="mt-4 border-t border-[color:var(--color-rule)]">
+        {techSpecs.map((s) => (
+          <div
+            key={s.label}
+            className="grid grid-cols-[6.5rem_1fr] gap-3 border-b border-[color:var(--color-rule)] py-1.5"
+          >
+            <dt className="pt-0.5 text-[0.46rem] uppercase tracking-[0.18em] text-[color:var(--color-charcoal-soft)]">
+              {s.label}
+            </dt>
+            <dd className="text-[0.74rem] leading-snug text-[color:var(--color-charcoal)]">
+              {s.value}
+            </dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+  );
+
   return (
+    <>
     <section className="border-b border-[color:var(--color-rule)] pt-10 md:pt-14">
       <div className="mx-auto grid max-w-[var(--container-full)] gap-12 px-6 pb-[var(--spacing-section)] md:px-10 lg:grid-cols-[minmax(0,38rem)_minmax(0,40rem)] lg:justify-center lg:gap-16">
-        {/* ===== Gallery — sticky on the left ===== */}
+        {/* ===== Gallery – sticky on the left ===== */}
         <div className="min-w-0 lg:sticky lg:top-28 lg:self-start">
           <FadeUp>
             <div className="mb-6 flex items-center gap-4 text-[0.6rem] uppercase tracking-[0.42em] text-[color:var(--color-charcoal-soft)]">
@@ -85,12 +134,13 @@ export function DiffuserHero({
             <ProductGallery
               key={active}
               images={gallery}
-              alt={`${product.name}${color ? ` — ${color.name}` : ""} — Quint Home`}
+              alt={`${product.name}${color ? ` – ${color.name}` : ""} – Quint Home`}
+              cards={[{ key: "specs", thumbLabel: "Specs", content: specsCard }]}
             />
           </FadeUp>
         </div>
 
-        {/* ===== Right column — buy box, overview, key features, specs ===== */}
+        {/* ===== Right column – buy box, overview, key features, then configurators ===== */}
         <aside className="min-w-0">
           {/* --- Buy box --- */}
           <FadeUp>
@@ -118,12 +168,12 @@ export function DiffuserHero({
             </p>
           </FadeUp>
 
-          {/* Colour selector — only when the model ships in more than one finish */}
+          {/* Colour selector – only when the model ships in more than one finish */}
           {colors && colors.length > 1 && (
             <FadeUp delay={0.16}>
               <div className="mt-8">
                 <p className="text-[0.58rem] uppercase tracking-[0.32em] text-[color:var(--color-charcoal-soft)]">
-                  Finish — {color?.name}
+                  Finish – {color?.name}
                 </p>
                 <div className="mt-3 flex items-center gap-3">
                   {colors.map((c, i) => (
@@ -148,9 +198,22 @@ export function DiffuserHero({
             </FadeUp>
           )}
 
-          {/* Starting oil selector — included free, on every diffuser */}
-          <FadeUp delay={0.18}>
-            <div className="mt-8">
+          {/* Price + Add to bag – kept high so the CTA is reachable at once */}
+          <FadeUp delay={0.2}>
+            <div id="buy" className="mt-8 scroll-mt-24">
+              {/* No subscribe & save on diffusers – that offer is for the oils only */}
+              <AddToBag
+                priceINR={variant?.price ?? product.priceINR}
+                subscribeOffer={false}
+                variantId={variant?.id}
+                available={variant?.available ?? true}
+              />
+            </div>
+          </FadeUp>
+
+          {/* --- Choose your included oil – directly under the buy box --- */}
+          <FadeUp delay={0.22}>
+            <div className="mt-12 border-t border-[color:var(--color-rule)] pt-10">
               <label
                 htmlFor="starting-oil"
                 className="text-[0.58rem] uppercase tracking-[0.32em] text-[color:var(--color-charcoal-soft)]"
@@ -166,8 +229,10 @@ export function DiffuserHero({
                 >
                   {oils.map((o) => (
                     <option key={o.slug} value={o.slug}>
-                      {o.name} — {oilNoteSummary(o)}
-                      {o.tier === "hotel-credential" ? " · Hotel Credential" : ""}
+                      {o.name} – {oilNoteSummary(o)}
+                      {o.tier === "hotel-credential"
+                        ? " · Hotel Credential (+₹200)"
+                        : ""}
                     </option>
                   ))}
                 </select>
@@ -179,7 +244,7 @@ export function DiffuserHero({
                 </span>
               </div>
 
-              {/* Live scent profile for the chosen oil — so the name in the
+              {/* Live scent profile for the chosen oil – so the name in the
                   dropdown is never a mystery. Updates as the selection changes. */}
               <div className="mt-3 border-t border-[color:var(--color-rule)] pt-3">
                 <p className="font-[family-name:var(--font-serif)] text-[0.92rem] italic leading-[1.5] text-[color:var(--color-charcoal)]">
@@ -204,27 +269,15 @@ export function DiffuserHero({
               </div>
 
               <p className="mt-3 text-[0.72rem] leading-[1.5] text-[color:var(--color-charcoal-soft)]">
-                Your first 100 ml is included free. Swap scents or add more
-                anytime.
+                Your first 50 ml is included free (Hotel Credential oils carry a
+                ₹200 supplement). Swap scents or add more anytime.
               </p>
             </div>
           </FadeUp>
 
-          <FadeUp delay={0.22}>
-            <div className="mt-8">
-              {/* No subscribe & save on diffusers — that offer is for the oils only */}
-              <AddToBag
-                priceINR={variant?.price ?? product.priceINR}
-                subscribeOffer={false}
-                variantId={variant?.id}
-                available={variant?.available ?? true}
-              />
-            </div>
-          </FadeUp>
-
-          {/* Bundle — add another oil to the set */}
+          {/* Bundle – add another oil to the set */}
           <FadeUp delay={0.24}>
-            <div className="mt-8">
+            <div className="mt-12 border-t border-[color:var(--color-rule)] pt-10">
               <p className="mb-3 text-[0.62rem] uppercase tracking-[0.32em] text-[color:var(--color-charcoal-soft)]">
                 Build your set
               </p>
@@ -239,24 +292,24 @@ export function DiffuserHero({
           </FadeUp>
 
           {/* Assurances */}
-          <FadeUp delay={0.26}>
+          <FadeUp delay={0.24}>
             <ul className="mt-8 grid gap-2.5 border-t border-[color:var(--color-rule)] pt-8 text-[0.8rem] leading-[1.5] text-[color:var(--color-charcoal-soft)]">
               <li className="flex items-baseline gap-3">
-                <span className="text-[color:var(--color-clay)]">—</span>
-                Ships with your chosen 100 ml oil, ready to use.
+                <span className="text-[color:var(--color-clay)]">–</span>
+                Ships with your chosen 50 ml oil, ready to use.
               </li>
               <li className="flex items-baseline gap-3">
-                <span className="text-[color:var(--color-clay)]">—</span>
+                <span className="text-[color:var(--color-clay)]">–</span>
                 1-year limited device warranty.
               </li>
               <li className="flex items-baseline gap-3">
-                <span className="text-[color:var(--color-clay)]">—</span>
+                <span className="text-[color:var(--color-clay)]">–</span>
                 IFRA-compliant oils at 70–90% concentration.
               </li>
             </ul>
           </FadeUp>
 
-          {/* --- Overview --- */}
+          {/* --- Overview – moved up, right after the buy box --- */}
           <FadeUp delay={0.06}>
             <div className="mt-14 border-t border-[color:var(--color-rule)] pt-10">
               <p className={sectionLabel}>Overview</p>
@@ -285,13 +338,13 @@ export function DiffuserHero({
             </div>
           </FadeUp>
 
-          {/* --- Key features --- */}
+          {/* --- Key features – moved up --- */}
           <FadeUp delay={0.06}>
             <div className="mt-12 border-t border-[color:var(--color-rule)] pt-10">
               <p className={sectionLabel}>Key features</p>
               <ul className="mt-6 grid gap-4">
                 {keyFeatures.map((feature, i) => {
-                  const dash = feature.indexOf(" — ");
+                  const dash = feature.indexOf(" – ");
                   const lead = dash > -1 ? feature.slice(0, dash) : feature;
                   const desc = dash > -1 ? feature.slice(dash + 3) : "";
                   return (
@@ -316,29 +369,13 @@ export function DiffuserHero({
             </div>
           </FadeUp>
 
-          {/* --- Technical specifications --- */}
-          <FadeUp delay={0.06}>
-            <div className="mt-12 border-t border-[color:var(--color-rule)] pt-10">
-              <p className={sectionLabel}>Technical specifications</p>
-              <dl className="mt-6 border-t border-[color:var(--color-rule)]">
-                {techSpecs.map((s) => (
-                  <div
-                    key={s.label}
-                    className="grid grid-cols-[8.5rem_1fr] gap-4 border-b border-[color:var(--color-rule)] py-3.5"
-                  >
-                    <dt className="pt-0.5 text-[0.56rem] uppercase tracking-[0.26em] text-[color:var(--color-charcoal-soft)]">
-                      {s.label}
-                    </dt>
-                    <dd className="text-[0.9rem] leading-[1.5] text-[color:var(--color-charcoal)]">
-                      {s.value}
-                    </dd>
-                  </div>
-                ))}
-              </dl>
-            </div>
-          </FadeUp>
         </aside>
       </div>
     </section>
+    <MobileBuyBar
+      name={product.name}
+      priceINR={variant?.price ?? product.priceINR}
+    />
+    </>
   );
 }

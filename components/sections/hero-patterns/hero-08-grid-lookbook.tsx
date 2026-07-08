@@ -3,10 +3,10 @@ import Link from "next/link";
 import { RevealLines } from "@/components/motion/fade-up";
 
 /**
- * Hero 08 — Grid Lookbook.
+ * Hero 08 – Grid Lookbook.
  * A thin editorial masthead row sits above a 2x2 portrait grid (left) and a
  * vertical typographic column (right). Reads like a Vitruvi / Tom Dixon catalogue
- * spread — native portrait aspects, no harsh crops, plenty of paper between.
+ * spread – native portrait aspects, no harsh crops, plenty of paper between.
  */
 
 const PLATES: ReadonlyArray<{
@@ -17,25 +17,25 @@ const PLATES: ReadonlyArray<{
 }> = [
   {
     src: "/images/vibe/vibe-03.webp",
-    alt: "Plate I — botanical study at dawn",
+    alt: "Plate I – botanical study at dawn",
     caption: "Plate I · The Garden, Pre-Dawn",
     position: "center 40%",
   },
   {
     src: "/images/vibe/vibe-08.webp",
-    alt: "Plate II — interior with diffused light",
+    alt: "Plate II – interior with diffused light",
     caption: "Plate II · A Room, Held Still",
     position: "center 35%",
   },
   {
     src: "/images/vibe/vibe-12.webp",
-    alt: "Plate III — texture in golden hour",
+    alt: "Plate III – texture in golden hour",
     caption: "Plate III · The Hour Before Six",
     position: "center 50%",
   },
   {
     src: "/images/vibe/vibe-17.webp",
-    alt: "Plate IV — hands and rain",
+    alt: "Plate IV – hands and rain",
     caption: "Plate IV · Mumbai, In the Wet",
     position: "center 45%",
   },
@@ -44,7 +44,7 @@ const PLATES: ReadonlyArray<{
 export function HeroGridLookbook() {
   return (
     <section className="relative w-full bg-[color:var(--color-white)] text-[color:var(--color-charcoal)]">
-      {/* Editorial masthead — thin row */}
+      {/* Editorial masthead – thin row */}
       <div className="mx-auto w-full max-w-[var(--container-full)] border-b border-[color:var(--color-rule)] px-6 md:px-10">
         <div className="flex flex-wrap items-baseline justify-between gap-x-8 gap-y-3 py-5 text-[0.6rem] uppercase tracking-[0.4em] text-[color:var(--color-charcoal-soft)]">
           <span>
@@ -52,7 +52,7 @@ export function HeroGridLookbook() {
             · The Mumbai Edition
           </span>
           <span className="hidden md:inline">A Lookbook in Four Plates</span>
-          <span>Chapter I — The Mood</span>
+          <span>Chapter I – The Mood</span>
           <span className="hidden md:inline">Est. 2026 · Issued in Mumbai</span>
         </div>
       </div>
@@ -86,7 +86,7 @@ export function HeroGridLookbook() {
 
       {/* Main composition: 2x2 grid (left) + vertical type column (right) */}
       <div className="mx-auto mt-10 grid w-full max-w-[var(--container-full)] grid-cols-1 gap-x-12 gap-y-12 px-6 pb-16 md:mt-14 md:grid-cols-12 md:px-10 md:pb-24">
-        {/* 2x2 grid of plates — portrait aspect, native crops */}
+        {/* 2x2 grid of plates – portrait aspect, native crops */}
         <div className="md:col-span-8">
           <div className="grid grid-cols-2 gap-x-6 gap-y-10 md:gap-x-8 md:gap-y-14">
             {PLATES.map((plate, i) => (
@@ -120,7 +120,7 @@ export function HeroGridLookbook() {
           </div>
         </div>
 
-        {/* Vertical typographic column — name, tagline, CTAs */}
+        {/* Vertical typographic column – name, tagline, CTAs */}
         <aside className="md:col-span-4">
           <div className="md:sticky md:top-24 flex flex-col gap-8 border-l border-[color:var(--color-rule)] pl-6 md:gap-10 md:pl-8">
             <span
@@ -158,7 +158,7 @@ export function HeroGridLookbook() {
 
             <div className="h-px w-12 bg-[color:var(--color-clay)]" />
 
-            {/* CTAs — stacked, catalogue style */}
+            {/* CTAs – stacked, catalogue style */}
             <div
               className="flex flex-col gap-4 animate-fade-up"
               style={{ animationDelay: "0.75s" }}

@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useEffect, useMemo, useRef, useState } from "react";
 
 /**
- * Home Hero — full-bleed carousel.
+ * Home Hero – full-bleed carousel.
  * Order: image 1 → video → image 2 (add image 4 to the array when ready).
  * Images auto-advance after 5s; the video plays in full, then advances.
  * Thin arrows switch manually. Header floats over the top (tracks #hero).
@@ -40,7 +40,7 @@ const slides: Slide[] = [
     position: "center 50%",
   },
   { type: "video", src: "/videos/hero-3.mp4", desktopOnly: true },
-  // Phone-only slides — appended after the shared slides above.
+  // Phone-only slides – appended after the shared slides above.
   {
     type: "image",
     src: "/images/hero-m-woman.webp",
@@ -51,7 +51,7 @@ const slides: Slide[] = [
   {
     type: "image",
     src: "/images/hero-m-features.webp",
-    alt: "The Quint diffuser and its features — cold-air mist, aluminium body, touch panel",
+    alt: "The Quint diffuser and its features – cold-air mist, aluminium body, touch panel",
     position: "center 50%",
     mobileOnly: true,
   },
@@ -165,7 +165,7 @@ export function Hero() {
           {s.type === "image" ? (
             s.srcMobile ? (
               <>
-                {/* Desktop / tablet — landscape crop */}
+                {/* Desktop / tablet – landscape crop */}
                 <Image
                   src={s.src}
                   alt={s.alt}
@@ -175,7 +175,7 @@ export function Hero() {
                   className="hidden object-cover md:block"
                   style={{ objectPosition: s.position }}
                 />
-                {/* Phones — portrait crop */}
+                {/* Phones – portrait crop */}
                 <Image
                   src={s.srcMobile}
                   alt={s.alt}
@@ -213,7 +213,7 @@ export function Hero() {
         </div>
       ))}
 
-      {/* Shadows — keep the header (top) and metadata strip (bottom) legible. */}
+      {/* Shadows – keep the header (top) and metadata strip (bottom) legible. */}
       <div className="pointer-events-none absolute inset-x-0 top-0 z-10 h-48 bg-gradient-to-b from-black/60 to-transparent" />
       <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-40 bg-gradient-to-t from-black/60 to-transparent" />
 
@@ -239,7 +239,7 @@ export function Hero() {
         </svg>
       </button>
 
-      {/* Sound toggle — only on the video slides */}
+      {/* Sound toggle – only on the video slides */}
       {currentIsVideo && (
         <button
           type="button"

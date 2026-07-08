@@ -27,9 +27,11 @@ export async function ScentLibrary() {
           }
           meta={
             <>
-              Top, heart and base notes.
+              Every scent has three notes – top, heart and base, unfolding
+              slowly, the way memory does.
               <br />
-              Two you&rsquo;ll recognise from hotel lobbies.
+              Two signature scents that you&rsquo;ll recognise from hotel
+              lobbies.
             </>
           }
         />
@@ -58,7 +60,7 @@ export async function ScentLibrary() {
                     <>
                       <Image
                         src={o.image}
-                        alt={`${o.name} — bottle study`}
+                        alt={`${o.name} – bottle study`}
                         fill
                         sizes="(min-width: 1024px) 20vw, (min-width: 768px) 33vw, 50vw"
                         className="object-cover transition-transform duration-[1800ms] ease-[var(--ease-quint)] group-hover:scale-[1.04]"
@@ -74,9 +76,18 @@ export async function ScentLibrary() {
                     </>
                   )}
 
-                  {/* Brand monogram — top-right */}
-                  <div className="relative flex">
-                    <Monogram className={`ml-auto h-6 w-6 ${fg} opacity-70`} />
+                  {/* Top row – hotel-credential tag (left) + brand monogram (right) */}
+                  <div className="relative flex items-center justify-between gap-2">
+                    {o.tier === "hotel-credential" ? (
+                      <span
+                        className={`inline-flex items-center rounded-full border border-current bg-[color:var(--color-charcoal)]/20 px-2 py-0.5 text-[0.5rem] tracking-[0.28em] backdrop-blur-[2px] ${fg}`}
+                      >
+                        Hotel Credential
+                      </span>
+                    ) : (
+                      <span aria-hidden="true" />
+                    )}
+                    <Monogram className={`h-6 w-6 ${fg} opacity-70`} />
                   </div>
 
                   {/* Name + price only */}
@@ -104,7 +115,7 @@ export async function ScentLibrary() {
           </div>
         </FadeUp>
 
-        {/* Closing links — browse the full range (after the oils) */}
+        {/* Closing links – browse the full range (after the oils) */}
         <FadeUp delay={0.2}>
           <div className="mt-14 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 border-t border-[color:var(--color-rule)] pt-10">
             <Link

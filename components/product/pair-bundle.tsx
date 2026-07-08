@@ -78,7 +78,7 @@ export function PairBundle({
         </span>
       </label>
 
-      {/* Picker — revealed when paired. Thumbnail + name select on the left,
+      {/* Picker – revealed when paired. Thumbnail + name select on the left,
           bundled price pinned right so the row reads balanced, never sparse. */}
       {paired && partner && (
         <div className="border-t border-[color:var(--color-rule)] p-5">
@@ -109,7 +109,7 @@ export function PairBundle({
                   {options.map((o) => (
                     <option key={o.slug} value={o.slug}>
                       {o.name}
-                      {o.note ? ` — ${o.note}` : ""}
+                      {o.note ? ` – ${o.note}` : ""}
                     </option>
                   ))}
                 </select>
@@ -138,7 +138,7 @@ export function PairBundle({
         </div>
       )}
 
-      {/* Running total + bundle action — only once a partner is added.
+      {/* Running total + bundle action – only once a partner is added.
           The primary "Add to bag" lives in the buy box above; this stays
           secondary so it never competes with it. */}
       {paired && (
@@ -151,7 +151,7 @@ export function PairBundle({
               {formatINR(total)}
             </span>
           </div>
-          {/* Contained secondary button — not a full-bleed bar, so it reads as
+          {/* Contained secondary button – not a full-bleed bar, so it reads as
               a button and never looks stretched. */}
           <button
             type="button"

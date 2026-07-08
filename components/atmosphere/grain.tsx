@@ -1,4 +1,4 @@
-// Fixed grain overlay — adds analog warmth and depth to every page.
+// Fixed grain overlay – adds analog warmth and depth to every page.
 // Renders as an inline SVG fractal noise filter, sits above everything at low opacity.
 export function Grain() {
   return (

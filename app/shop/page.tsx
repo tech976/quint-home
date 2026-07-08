@@ -7,12 +7,13 @@ import { oils } from "@/lib/data/oils";
 import { formatINR } from "@/lib/utils";
 import { FadeUp } from "@/components/motion/fade-up";
 import { ShopBrowser } from "@/components/shop/shop-browser";
+import { DiffuserCompare } from "@/components/sections/diffuser-compare";
 import { getCommerceMap, shopifyHandle } from "@/lib/shopify/commerce";
 
 export const metadata: Metadata = {
   title: "Shop",
   description:
-    "Diffusers and fragrance oils — the full Quint Home range. IFRA-compliant.",
+    "Diffusers and fragrance oils – the full Quint Home range. IFRA-compliant.",
 };
 
 export default async function ShopPage() {
@@ -58,7 +59,7 @@ export default async function ShopPage() {
       </section>
 
       {/* ====================================================
-          § BROWSE — search + category, inline product finder
+          § BROWSE – search + category, inline product finder
           ==================================================== */}
       <ShopBrowser />
 
@@ -178,7 +179,12 @@ export default async function ShopPage() {
       </section>
 
       {/* ====================================================
-          § TWO · OILS — the editorial scent grid
+          § DEVICE COMPARISON – coverage, power, features side by side
+          ==================================================== */}
+      <DiffuserCompare />
+
+      {/* ====================================================
+          § TWO · OILS – the editorial scent grid
           ==================================================== */}
       <section id="oils" className="scroll-mt-24 bg-[color:var(--color-stardust-soft)] py-[var(--spacing-section)]">
         <div className="mx-auto max-w-[var(--container-full)] px-6 md:px-10">
@@ -205,17 +211,17 @@ export default async function ShopPage() {
                 </h2>
               </div>
               <p className="max-w-[28ch] text-[0.86rem] leading-[1.65] text-[color:var(--color-charcoal-soft)] md:text-right">
-                100 ml a bottle, 70–90% concentrate.
+                50 ml a bottle, 70–90% concentrate.
                 <br />
                 <span className="text-[0.6rem] uppercase tracking-[0.32em]">
-                  60–140 days a fill →
+                  45–60 days a fill →
                 </span>
               </p>
             </div>
           </FadeUp>
 
           {/*
-            Scent grid — uniform 3-up plates (the oils). Symmetric
+            Scent grid – uniform 3-up plates (the oils). Symmetric
             and orderly, but kept editorial: hairline rules, swatch chips, and the
             top/heart/base note pyramid under each bottle. No card-shadow Shopify look.
           */}
@@ -229,11 +235,11 @@ export default async function ShopPage() {
                     href={`/shop/${o.slug}`}
                     className="group flex h-full flex-col"
                   >
-                    {/* Plate tile — every oil rendered identically for symmetry */}
+                    {/* Plate tile – every oil rendered identically for symmetry */}
                     <div className="relative aspect-[4/5] overflow-hidden border border-[color:var(--color-rule)] bg-[color:var(--color-stardust)]">
                       <Image
                         src={o.image}
-                        alt={`${o.name} — bottle study`}
+                        alt={`${o.name} – bottle study`}
                         fill
                         sizes="(min-width: 1024px) 30vw, (min-width: 640px) 45vw, 100vw"
                         className="object-cover transition-transform duration-[1600ms] ease-[var(--ease-quint)] group-hover:scale-[1.04]"
@@ -281,7 +287,7 @@ export default async function ShopPage() {
                         </span>
                       </div>
 
-                      {/* Three note lines — the editorial pyramid, kept calm */}
+                      {/* Three note lines – the editorial pyramid, kept calm */}
                       <dl className="mt-3 grid gap-1 text-[0.78rem] leading-[1.45]">
                         {(
                           [
@@ -305,7 +311,7 @@ export default async function ShopPage() {
                       </dl>
 
                       <span className="mt-4 inline-flex items-center gap-2 text-[0.54rem] uppercase tracking-[0.28em] text-[color:var(--color-charcoal-soft)] transition-transform duration-500 group-hover:translate-x-1">
-                        100 ml · View →
+                        50 ml · View →
                       </span>
                     </div>
                   </Link>
@@ -317,7 +323,7 @@ export default async function ShopPage() {
       </section>
 
       {/* ====================================================
-          § CLOSING — Pair & Save
+          § CLOSING – Pair & Save
           ==================================================== */}
       <section className="py-[var(--spacing-section)]">
         <div className="mx-auto max-w-[var(--container-content)] px-6 text-center md:px-10">
@@ -352,7 +358,7 @@ export default async function ShopPage() {
           <FadeUp delay={0.24}>
             <div className="mt-10 flex flex-wrap items-center justify-center gap-x-8 gap-y-3">
               <Link
-                href="/shop/tabletop-a326"
+                href="/shop/monolith"
                 className="group inline-flex items-center gap-3 border-b border-[color:var(--color-charcoal)] pb-1.5 text-[0.72rem] uppercase tracking-[0.32em] transition-colors duration-500 hover:text-[color:var(--color-clay)] hover:border-[color:var(--color-clay)]"
               >
                 Configure the diffuser

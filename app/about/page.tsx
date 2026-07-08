@@ -8,38 +8,38 @@ import { MonogramDivider } from "@/components/brand/monogram-divider";
 export const metadata: Metadata = {
   title: "About",
   description:
-    "Quintessence, the founder's story, and the vision behind Quint Home — hotel-grade home fragrance from Mumbai.",
+    "Quintessence, the founder's story, and the vision behind Quint Home – hotel-grade home fragrance from Mumbai.",
 };
 
-// Founder's story — verbatim from the Quint Home website brief. Do not edit the wording.
+// Founder's story – verbatim from the Quint Home website brief. Do not edit the wording.
 const FOUNDER_STORY = [
-  "Three years ago, I checked into one of India's most celebrated hotels in Udaipur. I expected beauty — the architecture, the lake, the service. What I didn't expect was to stop in the corridor and simply stand there, trying to understand what I was breathing.",
-  "The fragrance was everywhere and nowhere. It wasn't a candle. It wasn't a spray. It was woven into the air of the entire palace — warm, unhurried, completely unlike anything I had ever smelled in someone's home. I asked the staff. They smiled politely. The scent, they explained, was proprietary.",
+  "Three years ago, I checked into one of India's most celebrated hotels in Udaipur. I expected beauty – the architecture, the lake, the service. What I didn't expect was to stop in the corridor and simply stand there, trying to understand what I was breathing.",
+  "The fragrance was everywhere and nowhere. It wasn't a candle. It wasn't a spray. It was woven into the air of the entire palace – warm, unhurried, completely unlike anything I had ever smelled in someone's home. I asked the staff. They smiled politely. The scent, they explained, was proprietary.",
   "I went home and spent weeks trying to source it anyway. I couldn't.",
-  "Las Vegas, a year later. A luxury casino hotel on the Strip. A different continent, a different aesthetic — but the same moment in a lobby. The same quiet certainty that someone had thought deeply about how this space should smell, and had made it so. I tried again. Same answer.",
-  "It kept happening. A safari lodge in the Serengeti — warm baobab wood and wild earth, the Tanzanian plains made intimate. A beach hotel in Nusa Dua — Balinese frangipani on a sea breeze, cool and luminous, the Indian Ocean present in every breath.",
+  "Las Vegas, a year later. A luxury casino hotel on the Strip. A different continent, a different aesthetic – but the same moment in a lobby. The same quiet certainty that someone had thought deeply about how this space should smell, and had made it so. I tried again. Same answer.",
+  "It kept happening. A safari lodge in the Serengeti – warm baobab wood and wild earth, the Tanzanian plains made intimate. A beach hotel in Nusa Dua – Balinese frangipani on a sea breeze, cool and luminous, the Indian Ocean present in every breath.",
   "Each time, I tried to find the scent. Each time: proprietary.",
   "Hotels understand something most of us don't. Scent is the invisible layer of luxury. It sets the tone before you see anything, before you touch anything.",
-  "So why do we accept that our homes — the spaces where we spend the majority of our lives — smell like nothing in particular?",
+  "So why do we accept that our homes – the spaces where we spend the majority of our lives – smell like nothing in particular?",
 ];
 
 const FOUNDER_CLOSING =
   "Quint Home exists because I couldn't stop thinking about that.";
 
-// Founder bio — for the "Meet the founder" section with his portrait.
+// Founder bio – for the "Meet the founder" section with his portrait.
 const FOUNDER_BIO = [
   "With a background in real estate and a deep appreciation for architecture, interiors, and thoughtful design, he believes the spaces we inhabit shape the way we feel.",
-  "Through Quint Home, he brings this philosophy to life with objects and devices that blend fragrance, design, and technology — creating everyday experiences that feel intentional, elevated, and effortlessly beautiful.",
+  "Through Quint Home, he brings this philosophy to life with objects and devices that blend fragrance, design, and technology – creating everyday experiences that feel intentional, elevated, and effortlessly beautiful.",
 ];
 
-// Vision — verbatim, as supplied.
+// Vision – verbatim, as supplied.
 const VISION = [
-  "We want to create a world where beautifully engineered diffusers and the finest fragrance oils come together seamlessly — making scent an effortless, living part of every room. Our vision is to become India's defining premium scenting brand — transforming the way homes, restaurants, hotels and stores use and experience fragrance.",
+  "We want to create a world where beautifully engineered diffusers and the finest fragrance oils come together seamlessly – making scent an effortless, living part of every room. Our vision is to become India's defining premium scenting brand – transforming the way homes, restaurants, hotels and stores use and experience fragrance.",
   "We hold every product to an uncompromising standard: diffusers that perform consistently, and oils with the depth and strength to fill a room and stay there.",
   "We serve individual customers looking to elevate their home, and commercial spaces that want a signature scent their customers will remember.",
 ];
 
-// Udaipur — the founding palace, where the story begins.
+// Udaipur – the founding palace, where the story begins.
 const UDAIPUR = [
   "/images/udaipur/udaipur-lake-1.webp",
   "/images/udaipur/udaipur-lake-2.webp",
@@ -51,7 +51,7 @@ export default function AboutPage() {
   return (
     <article className="bg-[color:var(--color-white)]">
       {/* ====================================================
-          § ONE — QUINTESSENCE (the word)
+          § ONE – QUINTESSENCE (the word)
           ==================================================== */}
       <section className="border-b border-[color:var(--color-rule)] bg-[color:var(--color-stardust-soft)] pt-14 pb-[var(--spacing-section)] md:pt-24">
         <div className="mx-auto max-w-[var(--container-full)] px-6 md:px-10">
@@ -136,7 +136,7 @@ export default function AboutPage() {
       </section>
 
       {/* ====================================================
-          § TWO — THE FOUNDER'S STORY (verbatim)
+          § TWO – THE FOUNDER'S STORY (verbatim)
           ==================================================== */}
       <section className="py-[var(--spacing-section)]">
         <div className="mx-auto max-w-[var(--container-content)] px-6 md:px-10">
@@ -163,7 +163,7 @@ export default function AboutPage() {
             </h2>
           </FadeUp>
 
-          {/* A short Udaipur gallery — the palace where it began */}
+          {/* A short Udaipur gallery – the palace where it began */}
           <FadeUp delay={0.1}>
             <div className="mt-12 md:mt-16">
               <div className="grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-4">
@@ -174,7 +174,7 @@ export default function AboutPage() {
                   >
                     <Image
                       src={src}
-                      alt="Udaipur — a palace on the lake"
+                      alt="Udaipur – a palace on the lake"
                       fill
                       sizes="(min-width: 768px) 30vw, 45vw"
                       className="object-cover transition-transform duration-[1600ms] ease-[var(--ease-quint)] group-hover:scale-[1.04]"
@@ -183,7 +183,7 @@ export default function AboutPage() {
                 ))}
               </div>
               <figcaption className="mt-4 text-center text-[var(--text-xs)] italic text-[color:var(--color-charcoal-soft)]">
-                Udaipur — where the question began.
+                Udaipur – where the question began.
               </figcaption>
             </div>
           </FadeUp>
@@ -221,7 +221,7 @@ export default function AboutPage() {
       </section>
 
       {/* ====================================================
-          § THE FOUNDER — portrait + founder's note, signed
+          § THE FOUNDER – portrait + founder's note, signed
           ==================================================== */}
       <section className="border-y border-[color:var(--color-rule)] bg-[color:var(--color-stardust-soft)] py-[var(--spacing-section)]">
         <div className="mx-auto max-w-[var(--container-content)] px-6 md:px-10">
@@ -302,7 +302,7 @@ export default function AboutPage() {
       </section>
 
       {/* ====================================================
-          § THREE — THE VISION (verbatim, inverted)
+          § THREE – THE VISION (verbatim, inverted)
           ==================================================== */}
       <section className="bg-[color:var(--color-verdant)] py-[var(--spacing-section)] text-[color:var(--color-stardust)]">
         <div className="mx-auto max-w-[var(--container-full)] px-6 md:px-10">
@@ -366,7 +366,7 @@ export default function AboutPage() {
       </FadeUp>
 
       {/* ====================================================
-          § CLOSING — the invitation
+          § CLOSING – the invitation
           ==================================================== */}
       <section className="pb-[var(--spacing-section)] pt-12 md:pt-16">
         <div className="mx-auto max-w-[var(--container-content)] px-6 text-center md:px-10">

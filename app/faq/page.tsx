@@ -19,11 +19,11 @@ const groups = [
       },
       {
         q: "Is it actually silent?",
-        a: "Under 18 dB — quieter than a refrigerator hum. There is no fan, no gurgling water, and no clicking. Safe for bedrooms, studies, and offices.",
+        a: "Under 18 dB – quieter than a refrigerator hum. There is no fan, no gurgling water, and no clicking. Safe for bedrooms, studies, and offices.",
       },
       {
         q: "What does it take to set up?",
-        a: "Fill the oil reservoir, pair with the Quint Home companion app once, set a morning and evening schedule, and the device runs on its own from that point. No daily interaction is needed. The Plug-In model needs no app at all — it runs on a built-in 24-hour cyclic timer.",
+        a: "For all models except the Pebble, the process is simple: Fill the oil reservoir, pair with the Quint Home companion app once, set a schedule, and the device runs on its own from that point. No daily interaction is needed, unless you want to change any settings.\n\nThe Pebble is a plug-in model and needs no app at all – it runs on a built-in 8-hour intelligent cyclic timer. Once switched on, it runs automatically for 8 hours, then enters sleep mode for 16 hours before restarting on its own. This 24-hour cycle repeats every day. The plug-in diffuser is designed to operate intelligently with minimal intervention.\n\nAfter 16 days of continuous operation, the diffuser enters Auto Shut-Off Mode as a safety feature. Simply press the power button to restart the cycle.\n\nIf you wish to restart the diffuser or change the fragrance intensity at any time, press the power button and select your preferred intensity. The diffuser will begin a fresh cycle, running for 8 hours, sleeping for 16 hours, and continuing this pattern until the next automatic shut-off after 16 days.",
       },
     ],
   },
@@ -32,20 +32,16 @@ const groups = [
     label: "The Oils",
     items: [
       {
-        q: "How long does a 100 ml oil last?",
-        a: "Approximately 60–140 days, depending on the model and intensity. Most models average around 90 days at moderate settings. We’ll suggest a cadence at checkout.",
+        q: "How long does a 50 ml oil last?",
+        a: "Approximately 45–60 days, depending on the model and intensity. Most models average around 50 days at moderate settings.",
       },
       {
         q: "Are the oils IFRA-compliant?",
-        a: "Yes — every Quint Home oil is composed to IFRA (International Fragrance Association) standards. Safe around children and pets when used as directed.",
-      },
-      {
-        q: "What is a Hotel Credential oil?",
-        a: "Two of our oils, Grand Lobby and The Arrival, are Hotel Credential blends: composed to the same brief as the signature scenting you find in considered public spaces, then made for the home. They are more complex to blend, carry a Hotel Credential badge, and sit at a small price premium over the standard oils.",
+        a: "Yes – every Quint Home oil is composed to IFRA (International Fragrance Association) standards. Safe around children and pets when used as directed.",
       },
       {
         q: "Can I use other oils in the diffuser?",
-        a: "Use only Quint Home oils. Ours are undiluted, high-concentration blends made specifically for waterless cold-air nebulisation. Diluted oils, water-based oils, or third-party blends can clog the nebuliser and won’t perform as intended — and may void your warranty.",
+        a: "Use only Quint Home oils. Ours are undiluted, high-concentration blends made specifically for waterless cold-air nebulisation. Diluted oils, water-based oils, or third-party blends can clog the nebuliser and won’t perform as intended – and may void your warranty.",
       },
     ],
   },
@@ -59,7 +55,7 @@ const groups = [
       },
       {
         q: "Does it need Wi-Fi to work?",
-        a: "No. The diffusers run from the companion app and an on-device schedule — no Wi-Fi, no account, and no cloud. You adjust settings from your phone, and the device keeps to its schedule on its own.",
+        a: "No. The diffusers run from the companion app and an on-device schedule – no Wi-Fi, no account, and no cloud. You adjust settings from your phone, and the device keeps to its schedule on its own.",
       },
     ],
   },
@@ -98,7 +94,7 @@ export default function FAQPage() {
             <FadeUp delay={0.1} className="md:col-span-5">
               <p className="max-w-[40ch] text-[var(--text-base)] leading-[1.85] text-[color:var(--color-charcoal-soft)]">
                 If your question isn’t answered below, write to us at
-                hello@quinthome.in — we reply within 24 hours.
+                hello@quinthome.in – we reply within 24 hours.
               </p>
             </FadeUp>
           </div>
@@ -154,9 +150,11 @@ export default function FAQPage() {
                               +
                             </span>
                           </summary>
-                          <p className="max-w-[58ch] pb-7 text-[var(--text-base)] leading-[1.85] text-[color:var(--color-charcoal-soft)]">
-                            {item.a}
-                          </p>
+                          <div className="max-w-[58ch] space-y-4 pb-7 text-[var(--text-base)] leading-[1.85] text-[color:var(--color-charcoal-soft)]">
+                            {item.a.split("\n\n").map((para, pi) => (
+                              <p key={pi}>{para}</p>
+                            ))}
+                          </div>
                         </details>
                       </FadeUp>
                     ))}

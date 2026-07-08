@@ -7,7 +7,7 @@ export function FounderTeaser() {
     <section className="bg-[color:var(--color-white)] py-[var(--spacing-section)]">
       <div className="mx-auto max-w-[var(--container-full)] px-6 md:px-10">
         <div className="grid items-start gap-12 md:grid-cols-12 md:gap-16">
-          {/* Image collage — two stacked images that together match text column height */}
+          {/* Image collage – two stacked images that together match text column height */}
           <FadeUp className="md:col-span-6">
             <div className="grid grid-cols-2 gap-4 md:gap-5">
               <figure className="col-span-2">
@@ -35,9 +35,6 @@ export function FounderTeaser() {
                     className="object-cover"
                   />
                 </div>
-                <figcaption className="mt-3 text-[0.58rem] uppercase tracking-[0.36em] text-[color:var(--color-charcoal-soft)]">
-                  The Drawing Room
-                </figcaption>
               </figure>
               <figure>
                 <div className="relative aspect-[4/5] overflow-hidden bg-[color:var(--color-aerial-soft)]">
@@ -49,9 +46,6 @@ export function FounderTeaser() {
                     className="object-cover"
                   />
                 </div>
-                <figcaption className="mt-3 text-[0.58rem] uppercase tracking-[0.36em] text-[color:var(--color-charcoal-soft)]">
-                  A room, late afternoon
-                </figcaption>
               </figure>
             </div>
           </FadeUp>
@@ -82,7 +76,7 @@ export function FounderTeaser() {
               <div className="mt-8 space-y-5 text-[var(--text-base)] leading-[1.85] text-[color:var(--color-charcoal-soft)]">
                 <p className="max-w-[52ch] [&::first-letter]:float-left [&::first-letter]:mr-2 [&::first-letter]:font-[family-name:var(--font-serif)] [&::first-letter]:text-[3.2rem] [&::first-letter]:font-normal [&::first-letter]:leading-[0.9] [&::first-letter]:text-[color:var(--color-charcoal)]">
                   Three years ago, I checked into one of India&rsquo;s most
-                  celebrated hotels in Udaipur. I expected beauty — the
+                  celebrated hotels in Udaipur. I expected beauty – the
                   architecture, the lake, the service. What I didn&rsquo;t
                   expect was to stop in the corridor and simply stand there,
                   trying to understand what I was breathing.
@@ -90,14 +84,14 @@ export function FounderTeaser() {
                 <p className="max-w-[52ch]">
                   The fragrance was everywhere and nowhere. It wasn&rsquo;t a
                   candle. It wasn&rsquo;t a spray. It was woven into the air of
-                  the entire palace — warm, unhurried, completely unlike
+                  the entire palace – warm, unhurried, completely unlike
                   anything I had ever smelled in someone&rsquo;s home. I asked
                   the staff. They smiled politely. The scent, they explained,
                   was proprietary. I went home and spent weeks trying to source
                   it anyway. I couldn&rsquo;t.
                 </p>
                 <p className="max-w-[52ch]">
-                  Las Vegas, a year later — a luxury casino hotel on the Strip.
+                  Las Vegas, a year later – a luxury casino hotel on the Strip.
                   A different continent, and I stopped in the lobby the same way.
                   It kept happening: a safari lodge in the Serengeti, warm with
                   baobab wood and wild earth; a beach hotel in Nusa Dua,
@@ -128,9 +122,6 @@ export function FounderTeaser() {
                     →
                   </span>
                 </Link>
-                <span className="text-[0.6rem] uppercase tracking-[0.32em] text-[color:var(--color-charcoal-soft)]">
-                  Mumbai · 2023
-                </span>
               </div>
 
               {/* Signature card */}

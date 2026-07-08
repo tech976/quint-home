@@ -5,7 +5,7 @@ import { Monogram } from "@/components/brand/logo";
 export function SmartHome() {
   return (
     <section className="relative overflow-hidden bg-[color:var(--color-verdant)] py-[var(--spacing-section)] text-[color:var(--color-stardust)]">
-      {/* Atmospheric radial bloom — soft sage light */}
+      {/* Atmospheric radial bloom – soft sage light */}
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0"

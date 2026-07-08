@@ -3,7 +3,7 @@ import { FadeUp } from "@/components/motion/fade-up";
 import { Monogram } from "@/components/brand/logo";
 
 /**
- * USPs — the brand's selling points, from the brief. Editorial overlay cards:
+ * USPs – the brand's selling points, from the brief. Editorial overlay cards:
  * the number and title sit over each photograph. Masonry on mobile (photos
  * shown in full, never cropped), a uniform row on larger screens.
  */
@@ -11,7 +11,7 @@ type Usp = {
   n: string;
   lead: string;
   image: string;
-  /** Native pixel dimensions — lets mobile show the photo un-cropped. */
+  /** Native pixel dimensions – lets mobile show the photo un-cropped. */
   w: number;
   h: number;
 };
@@ -33,10 +33,10 @@ const usps: Usp[] = [
   },
   {
     n: "03",
-    lead: "Luxury hotel scents, for home",
-    image: "/images/usp/usp-3.webp",
+    lead: "Wireless and rechargeable",
+    image: "/images/usp/usp-5.webp",
     w: 1400,
-    h: 934,
+    h: 1109,
   },
   {
     n: "04",
@@ -47,10 +47,10 @@ const usps: Usp[] = [
   },
   {
     n: "05",
-    lead: "Wireless and rechargeable",
-    image: "/images/usp/usp-5.webp",
+    lead: "Luxury hotel-inspired scents, for home",
+    image: "/images/usp/usp-3.webp",
     w: 1400,
-    h: 1109,
+    h: 934,
   },
 ];
 
@@ -78,17 +78,17 @@ export function USPs() {
               >
                 Five things that{" "}
                 <em className="not-italic text-[color:var(--color-aerial-deep)]">
-                  set it apart.
+                  set us apart.
                 </em>
               </h2>
             </div>
             <p className="max-w-[26ch] text-[0.86rem] leading-[1.6] text-[color:var(--color-charcoal-soft)] md:text-right">
-              Engineering, design and fragrance, in one object.
+              Innovation, design and fragrance, in one object.
             </p>
           </div>
         </FadeUp>
 
-        {/* Cards — swipeable 3:2 carousel with peek on mobile, a 5-up row on desktop.
+        {/* Cards – swipeable 3:2 carousel with peek on mobile, a 5-up row on desktop.
             One FadeUp around the whole track so cards don't re-animate while swiping. */}
         <FadeUp>
         <div className="-mx-6 flex snap-x snap-mandatory gap-3 overflow-x-auto overscroll-x-contain px-6 pb-1 [scrollbar-width:none] md:mx-0 md:grid md:grid-cols-5 md:gap-4 md:overflow-visible md:px-0 md:pb-0 [&::-webkit-scrollbar]:hidden">
@@ -130,7 +130,7 @@ export function USPs() {
         </div>
         </FadeUp>
 
-        {/* Swipe hint — mobile only */}
+        {/* Swipe hint – mobile only */}
         <p className="mt-4 text-[0.58rem] uppercase tracking-[0.32em] text-[color:var(--color-charcoal-soft)] md:hidden">
           Swipe to explore →
         </p>

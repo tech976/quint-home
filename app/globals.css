@@ -1,22 +1,22 @@
 @import "tailwindcss";
 
 /* ============================================================
-   QUINT HOME — Design Tokens
+   QUINT HOME – Design Tokens
    60% Stardust Veil · 30% Aerial Mist · 10% Solar Clay
    ============================================================ */
 
 @theme {
-  /* — Palette ----------------------------------------------- */
-  --color-white: #ffffff;           /* dominant — main surface */
-  --color-stardust: #eee4d8;        /* accent — warm beige (Brand: was 60%) */
+  /* – Palette ----------------------------------------------- */
+  --color-white: #ffffff;           /* dominant – main surface */
+  --color-stardust: #eee4d8;        /* accent – warm beige (Brand: was 60%) */
   --color-stardust-soft: #f5efe6;   /* lighter stardust for hover wash */
   --color-ivory: #faf8f3;           /* near-white, used for soft alternate sections */
-  --color-aerial: #77918d;          /* structural — sage teal */
+  --color-aerial: #77918d;          /* structural – sage teal */
   --color-aerial-soft: #aebcb9;     /* lighter aerial */
   --color-aerial-deep: #5a7370;     /* deeper aerial for hover */
-  --color-verdant: #293329;         /* deepest sage — inverted bg / shadow */
-  --color-clay: #c15a27;            /* terracotta — primary CTA */
-  --color-clay-deep: #6a2e0c;       /* rammed earth — CTA hover */
+  --color-verdant: #293329;         /* deepest sage – inverted bg / shadow */
+  --color-clay: #c15a27;            /* terracotta – primary CTA */
+  --color-clay-deep: #6a2e0c;       /* rammed earth – CTA hover */
   --color-charcoal: #3a3532;        /* body text + logo */
   --color-charcoal-soft: #6a625e;   /* secondary text */
   --color-rule: #e6dfd2;            /* hairline dividers on white */
@@ -29,12 +29,12 @@
   --color-accent: var(--color-clay);
   --color-accent-foreground: var(--color-ivory);
 
-  /* — Fonts (wired to next/font css vars) ------------------- */
+  /* – Fonts (wired to next/font css vars) ------------------- */
   --font-serif: var(--font-literata), ui-serif, Georgia, serif;
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
 
-  /* — Fluid type scale (clamp: min · preferred · max) -------
-     Refined editorial — closer to Aesop / Cereal magazine register.
+  /* – Fluid type scale (clamp: min · preferred · max) -------
+     Refined editorial – closer to Aesop / Cereal magazine register.
      Headlines are restrained on purpose. The brand is calm. */
   --text-eyebrow: 0.7rem;                                                /* 11.2px */
   --text-xs: clamp(0.72rem, 0.70rem + 0.10vw, 0.78rem);
@@ -48,7 +48,7 @@
   --text-5xl: clamp(2.30rem, 1.78rem + 2.15vw, 3.25rem);
   --text-display: clamp(3.00rem, 2.10rem + 4.00vw, 5.25rem);
 
-  /* — Tracking & leading ------------------------------------ */
+  /* – Tracking & leading ------------------------------------ */
   --tracking-display: -0.02em;
   --tracking-heading: -0.01em;
   --tracking-eyebrow: 0.18em;
@@ -56,27 +56,27 @@
   --leading-heading: 1.08;
   --leading-body: 1.65;
 
-  /* — Spacing additions ------------------------------------- */
+  /* – Spacing additions ------------------------------------- */
   --spacing-section: clamp(4rem, 6vw, 9rem);
   --spacing-section-sm: clamp(2.5rem, 4vw, 5rem);
 
-  /* — Container widths -------------------------------------- */
+  /* – Container widths -------------------------------------- */
   --container-narrow: 56rem;
   --container-content: 72rem;
   --container-wide: 88rem;
   --container-full: 100rem;
 
-  /* — Header height (refined at runtime by the Header via JS) - */
+  /* – Header height (refined at runtime by the Header via JS) - */
   --header-h: 80px;
 
-  /* — Radius — soft, restrained ----------------------------- */
+  /* – Radius – soft, restrained ----------------------------- */
   --radius-xs: 2px;
   --radius-sm: 4px;
   --radius-md: 8px;
   --radius-lg: 14px;
   --radius-pill: 999px;
 
-  /* — Motion — single calm curve everywhere ----------------- */
+  /* – Motion – single calm curve everywhere ----------------- */
   --ease-quint: cubic-bezier(0.22, 0.61, 0.36, 1);
   --ease-soft: cubic-bezier(0.32, 0.72, 0, 1);
 }
@@ -92,7 +92,7 @@
     @apply border-[color:var(--color-rule)];
   }
 
-  /* Deter casual image saving — block drag and the iOS long-press "Save Image". */
+  /* Deter casual image saving – block drag and the iOS long-press "Save Image". */
   img {
     -webkit-user-drag: none;
     -webkit-touch-callout: none;
@@ -122,7 +122,7 @@
     color: var(--color-ivory);
   }
 
-  /* Calm focus ring — sage outline, never blue */
+  /* Calm focus ring – sage outline, never blue */
   :focus-visible {
     outline: 2px solid var(--color-aerial);
     outline-offset: 3px;
@@ -204,7 +204,7 @@
 }
 
 /* ============================================================
-   Entrance animations — CSS keyframes, work even in screenshot tools
+   Entrance animations – CSS keyframes, work even in screenshot tools
    ============================================================ */
 
 @keyframes reveal-line {
@@ -261,7 +261,7 @@
   animation: hero-zoom 2.4s var(--ease-quint) both;
 }
 
-/* Slow, continuous banner drift — keeps the hero alive without distracting. */
+/* Slow, continuous banner drift – keeps the hero alive without distracting. */
 @keyframes hero-drift {
   from {
     transform: scale(1.02);
@@ -316,7 +316,7 @@ html.lenis body {
   overscroll-behavior: contain;
 }
 
-/* Honor reduced motion — kill all transitions/animations */
+/* Honor reduced motion – kill all transitions/animations */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

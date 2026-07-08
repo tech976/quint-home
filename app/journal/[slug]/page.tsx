@@ -38,7 +38,7 @@ export default async function JournalPostPage({
   return (
     <article className="bg-[color:var(--color-white)]">
       {/* ====================================================
-          § HERO — Editorial Masthead
+          § HERO – Editorial Masthead
           ==================================================== */}
       <section className="border-b border-[color:var(--color-rule)] pt-10 md:pt-14">
         <div className="mx-auto max-w-[var(--container-full)] px-6 md:px-10">
@@ -192,6 +192,52 @@ export default async function JournalPostPage({
               </FadeUp>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* ====================================================
+          § BROWSE THE RANGE – nudge from editorial into product
+          ==================================================== */}
+      <section className="border-t border-[color:var(--color-rule)] bg-[color:var(--color-stardust-soft)] py-[var(--spacing-section)]">
+        <div className="mx-auto max-w-[var(--container-content)] px-6 text-center md:px-10">
+          <FadeUp>
+            <p className="mx-auto w-fit text-[0.62rem] uppercase tracking-[0.42em] text-[color:var(--color-charcoal-soft)]">
+              <Monogram className="mr-1.5 inline-block h-[0.9em] w-[0.9em] align-[-0.12em]" />
+              Interested?
+            </p>
+            <h2
+              className="mx-auto mt-6 max-w-[20ch] text-balance"
+              style={{
+                fontFamily: "var(--font-serif)",
+                fontSize: "var(--text-3xl)",
+                lineHeight: 1.1,
+                letterSpacing: "-0.016em",
+                fontWeight: 400,
+              }}
+            >
+              Bring the feeling home.{" "}
+              <em className="text-[color:var(--color-aerial-deep)]">
+                Browse the range.
+              </em>
+            </h2>
+            <div className="mt-9 flex flex-wrap items-center justify-center gap-x-8 gap-y-3">
+              <Link
+                href="/shop#diffusers"
+                className="group inline-flex items-center gap-3 border-b border-[color:var(--color-charcoal)] pb-1.5 text-[0.72rem] uppercase tracking-[0.32em] transition-colors duration-500 hover:border-[color:var(--color-clay)] hover:text-[color:var(--color-clay)]"
+              >
+                Shop diffusers
+                <span className="transition-transform duration-500 group-hover:translate-x-1">
+                  →
+                </span>
+              </Link>
+              <Link
+                href="/shop#oils"
+                className="text-[0.72rem] uppercase tracking-[0.32em] text-[color:var(--color-charcoal-soft)] transition-colors duration-500 hover:text-[color:var(--color-charcoal)]"
+              >
+                Or the oils →
+              </Link>
+            </div>
+          </FadeUp>
         </div>
       </section>
 

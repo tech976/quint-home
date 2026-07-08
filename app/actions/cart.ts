@@ -26,7 +26,7 @@ async function writeCartId(id: string): Promise<void> {
   });
 }
 
-/** Read the current cart (or null). Never throws — returns null on any error. */
+/** Read the current cart (or null). Never throws – returns null on any error. */
 export async function getCartAction(): Promise<Cart | null> {
   try {
     const id = await readCartId();

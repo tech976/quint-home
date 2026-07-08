@@ -3,15 +3,23 @@ import { FadeUp } from "@/components/motion/fade-up";
 import { SectionHeader } from "@/components/ui/section-header";
 
 /**
- * How it works — the five-step ritual from the brief's "How to Use —
+ * How it works – the five-step ritual from the brief's "How to Use –
  * Electronic Diffuser". Each step shows its image with the text below.
  */
-const steps = [
+const steps: {
+  n: string;
+  title: string;
+  body: string;
+  img: string;
+  /** Full-bleed lifestyle photo (object-cover) vs a floating cutout / app screen. */
+  photo?: boolean;
+}[] = [
   {
     n: "01",
     title: "Fill the reservoir",
-    body: "Add your chosen Quint Home fragrance oil. No water, no dilution — just the oil.",
-    img: "/images/ritual/fill-the-reservoir.webp",
+    body: "Add your chosen Quint Home fragrance oil. No water, no dilution – just the oil.",
+    img: "/images/diffusers/a326-gold/gold-v2-01.webp",
+    photo: true,
   },
   {
     n: "02",
@@ -29,13 +37,15 @@ const steps = [
     n: "04",
     title: "It runs itself",
     body: "The diffuser follows your schedule automatically. No daily interaction required.",
-    img: "/images/ritual/it-runs-itself.webp",
+    img: "/images/diffusers/a326-gold/gold-v2-02.webp",
+    photo: true,
   },
   {
     n: "05",
     title: "Refill & swap",
     body: "Top up the oil as needed; change scents by season or mood through the app.",
-    img: "/images/ritual/refill-and-swap.webp",
+    img: "/images/diffusers/a326-gold/gold-v2-03.webp",
+    photo: true,
   },
 ];
 
@@ -57,9 +67,9 @@ export function HowToUse() {
           }
           meta={
             <>
-              Five steps,
+              Five Steps,
               <br />
-              and the room does the rest.
+              and Quint Home does the rest.
             </>
           }
         />
@@ -68,14 +78,19 @@ export function HowToUse() {
           {steps.map((s, i) => (
             <FadeUp key={s.n} delay={i * 0.06}>
               <div>
-                {/* Step image — transparent render, floats on the page (no box) */}
-                <div className="relative aspect-[4/5]">
+                {/* Step image – photo steps fill the tile (object-cover); app
+                    screens are transparent cutouts that float (object-contain). */}
+                <div
+                  className={`relative aspect-[4/5] ${
+                    s.photo ? "overflow-hidden" : ""
+                  }`}
+                >
                   <Image
                     src={s.img}
                     alt={s.title}
                     fill
                     sizes="(min-width: 1024px) 18vw, (min-width: 640px) 45vw, 100vw"
-                    className="object-contain"
+                    className={s.photo ? "object-cover" : "object-contain"}
                   />
                 </div>
                 {/* Text below */}
@@ -111,6 +126,13 @@ export function HowToUse() {
             </FadeUp>
           ))}
         </div>
+
+        <FadeUp>
+          <p className="mt-12 max-w-[60ch] text-[0.72rem] leading-[1.6] text-[color:var(--color-charcoal-soft)] md:mt-16">
+            App screens shown are representative only and may differ from the
+            actual Quint Home companion app.
+          </p>
+        </FadeUp>
       </div>
     </section>
   );

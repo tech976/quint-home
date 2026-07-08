@@ -1,17 +1,18 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import { FadeUp } from "@/components/motion/fade-up";
+import { Monogram } from "@/components/brand/logo";
 import { ProductGallery } from "@/components/product/product-gallery";
 import { AddToBag } from "@/components/product/add-to-bag";
+import { MobileBuyBar } from "@/components/product/mobile-buy-bar";
 import { PairBundle, type PairOption } from "@/components/product/pair-bundle";
 import { diffusers } from "@/lib/data/diffusers";
 import type { FragranceOil } from "@/lib/types";
 import type { ShopifyCommerce } from "@/lib/shopify/commerce";
 
 /**
- * Oil PDP — bottle study on the left (sticky), and a single right column that
+ * Oil PDP – bottle study on the left (sticky), and a single right column that
  * carries the buy box, then the overview, the notes and the specifications.
  * Mirrors the diffuser PDP layout. Oils keep the subscribe & save option.
  */
@@ -43,24 +44,73 @@ export function OilHero({
     ["Base", oil.notes.base],
   ] as const;
 
-  // Oil specifications — from the website brief's "Fragrance Oil Specifications".
+  // Oil specifications – from the website brief's "Fragrance Oil Specifications".
   const techSpecs: { label: string; value: string }[] = [
     { label: "Volume", value: `${oil.volumeML} ml per bottle` },
-    { label: "Concentration", value: "70–90% fragrance — no water dilution" },
+    { label: "Concentration", value: "70–90% fragrance – no water dilution" },
     { label: "Composition", value: "Top, heart and base notes" },
     { label: "Compliance", value: "IFRA-compliant" },
-    { label: "Lasts", value: "Approximately 60–120 days per bottle" },
+    { label: "Lasts", value: "Approximately 45–60 days, depending on usage intensity" },
     { label: "Coverage", value: "A steady background scent over several hours" },
-    { label: "Compatibility", value: "Quint Home electronic diffusers only" },
+    { label: "Compatible with", value: "Quint Home waterless diffusers" },
   ];
 
   const sectionLabel =
     "text-[0.62rem] uppercase tracking-[0.42em] text-[color:var(--color-charcoal-soft)]";
 
+  // Designed specifications slide – the third gallery photo (a visual spec
+  // sheet, not a plain table).
+  const specsCard = (
+    <div className="flex h-full w-full flex-col justify-center overflow-hidden bg-[color:var(--color-stardust-soft)] px-7 py-6 md:px-9 md:py-8">
+      <div className="flex items-center gap-3">
+        <Monogram className="h-5 w-5 text-[color:var(--color-clay)]" />
+        <span
+          aria-hidden="true"
+          className="h-2.5 w-2.5 rounded-full"
+          style={{ backgroundColor: oil.swatch }}
+        />
+      </div>
+      <p className="mt-4 text-[0.54rem] uppercase tracking-[0.42em] text-[color:var(--color-charcoal-soft)]">
+        Specifications
+      </p>
+      <p
+        className="mt-1.5 text-[color:var(--color-charcoal)]"
+        style={{
+          fontFamily: "var(--font-serif)",
+          fontSize: "1.35rem",
+          lineHeight: 1.05,
+          letterSpacing: "-0.01em",
+        }}
+      >
+        {oil.name}
+      </p>
+      <dl className="mt-4 border-t border-[color:var(--color-rule)]">
+        {techSpecs.map((s) => (
+          <div
+            key={s.label}
+            className="grid grid-cols-[6rem_1fr] gap-3 border-b border-[color:var(--color-rule)] py-1.5"
+          >
+            <dt className="pt-0.5 text-[0.46rem] uppercase tracking-[0.18em] text-[color:var(--color-charcoal-soft)]">
+              {s.label}
+            </dt>
+            <dd className="text-[0.74rem] leading-snug text-[color:var(--color-charcoal)]">
+              {s.value}
+            </dd>
+          </div>
+        ))}
+      </dl>
+      <p className="mt-4 text-[0.58rem] leading-[1.45] text-[color:var(--color-charcoal-soft)]">
+        For external use only. Do not spray directly on or near eyes, face, or
+        skin.
+      </p>
+    </div>
+  );
+
   return (
+    <>
     <section className="border-b border-[color:var(--color-rule)] pt-10 md:pt-14">
       <div className="mx-auto grid max-w-[var(--container-full)] gap-12 px-6 pb-[var(--spacing-section)] md:px-10 lg:grid-cols-[minmax(0,38rem)_minmax(0,40rem)] lg:justify-center lg:gap-16">
-        {/* ===== Bottle study — sticky on the left ===== */}
+        {/* ===== Bottle study – sticky on the left ===== */}
         <div className="min-w-0 lg:sticky lg:top-28 lg:self-start">
           <FadeUp>
             <div className="mb-6 flex items-center gap-4 text-[0.6rem] uppercase tracking-[0.42em] text-[color:var(--color-charcoal-soft)]">
@@ -73,13 +123,16 @@ export function OilHero({
           </FadeUp>
           <FadeUp delay={0.05}>
             <ProductGallery
-              images={[oil.image]}
-              alt={`${oil.name} — bottle study`}
+              images={[oil.image, notesImage]}
+              alt={`${oil.name} – bottle study`}
+              cards={[
+                { key: "specs", thumbLabel: "Specs", content: specsCard },
+              ]}
             />
           </FadeUp>
         </div>
 
-        {/* ===== Right column — buy box, overview, notes, specs ===== */}
+        {/* ===== Right column – buy box, overview, notes, specs ===== */}
         <aside className="min-w-0">
           {/* --- Buy box --- */}
           <FadeUp>
@@ -115,7 +168,7 @@ export function OilHero({
           </FadeUp>
 
           <FadeUp delay={0.18}>
-            <div className="mt-8">
+            <div id="buy" className="mt-8 scroll-mt-24">
               <AddToBag
                 priceINR={variant?.price ?? oil.priceINR}
                 variantId={variant?.id}
@@ -124,7 +177,7 @@ export function OilHero({
             </div>
           </FadeUp>
 
-          {/* Bundle — pair with a diffuser */}
+          {/* Bundle – pair with a diffuser */}
           <FadeUp delay={0.22}>
             <div className="mt-8">
               <p className="mb-3 text-[0.62rem] uppercase tracking-[0.32em] text-[color:var(--color-charcoal-soft)]">
@@ -144,16 +197,16 @@ export function OilHero({
           <FadeUp delay={0.26}>
             <ul className="mt-8 grid gap-2.5 border-t border-[color:var(--color-rule)] pt-8 text-[0.8rem] leading-[1.5] text-[color:var(--color-charcoal-soft)]">
               <li className="flex items-baseline gap-3">
-                <span className="text-[color:var(--color-clay)]">—</span>
+                <span className="text-[color:var(--color-clay)]">–</span>
                 IFRA-compliant, blended like fine perfumery.
               </li>
               <li className="flex items-baseline gap-3">
-                <span className="text-[color:var(--color-clay)]">—</span>
-                Made for Quint waterless diffusers only.
+                <span className="text-[color:var(--color-clay)]">–</span>
+                Compatible with Quint Home waterless diffusers.
               </li>
               <li className="flex items-baseline gap-3">
-                <span className="text-[color:var(--color-clay)]">—</span>
-                Subscribe &amp; Save on refills — pause anytime.
+                <span className="text-[color:var(--color-clay)]">–</span>
+                Subscribe &amp; Save on refills – pause anytime.
               </li>
             </ul>
           </FadeUp>
@@ -191,18 +244,6 @@ export function OilHero({
           <FadeUp delay={0.06}>
             <div className="mt-12 border-t border-[color:var(--color-rule)] pt-10">
               <p className={sectionLabel}>The notes</p>
-              {/* Note-pyramid card — the individual ingredients, shot. */}
-              <div className="relative mt-6 aspect-square overflow-hidden bg-[color:var(--color-stardust-soft)]">
-                <Image
-                  src={notesImage}
-                  alt={`${oil.name} — the notes: ${oil.notes.top
-                    .concat(oil.notes.heart, oil.notes.base)
-                    .join(", ")}`}
-                  fill
-                  sizes="(min-width: 1024px) 40rem, 100vw"
-                  className="object-cover"
-                />
-              </div>
               <dl className="mt-6 border-t border-[color:var(--color-rule)]">
                 {NOTES.map(([label, arr]) => (
                   <div
@@ -240,10 +281,16 @@ export function OilHero({
                   </div>
                 ))}
               </dl>
+              <p className="mt-6 text-[0.78rem] leading-[1.6] text-[color:var(--color-charcoal-soft)]">
+                For external use only. Do not spray directly on or near eyes,
+                face, or skin.
+              </p>
             </div>
           </FadeUp>
         </aside>
       </div>
     </section>
+    <MobileBuyBar name={oil.name} priceINR={variant?.price ?? oil.priceINR} />
+    </>
   );
 }

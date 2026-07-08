@@ -3,7 +3,7 @@ import { HCarousel } from "@/components/ui/h-carousel";
 import { Monogram } from "@/components/brand/logo";
 
 /**
- * Reed Diffusers & Candles — a future category. Placeholder carousel that
+ * Reed Diffusers & Candles – a future category. Placeholder carousel that
  * matches the product card design; swap in real products + images later.
  */
 const items = ["Reed Diffuser", "Reed Diffuser", "Candle", "Candle"];
@@ -69,7 +69,7 @@ export function ReedCandles() {
                     </span>
                   </div>
                   <p className="text-[0.92rem] leading-[1.65] text-[color:var(--color-charcoal-soft)]">
-                    In development — joining the Quint Home range.
+                    In development – joining the Quint Home range.
                   </p>
                 </div>
               </div>

@@ -4,7 +4,7 @@ const credentials = [
   { value: "IFRA", label: "Compliant Oils", sub: "International Fragrance Assoc." },
   { value: "70 → 90%", label: "Concentration", sub: "Versus 1–3% for ultrasonic" },
   { value: "< 18 dB", label: "Near Silent", sub: "Safe for bedrooms" },
-  { value: "Two yrs", label: "Device Lifespan", sub: "Refill oil approx. 60–120 days" },
+  { value: "Two yrs", label: "Device Lifespan", sub: "Refill oil approx. 45–60 days" },
 ];
 
 export function TrustRow() {

@@ -3,7 +3,7 @@ import Link from "next/link";
 import { RevealLines } from "@/components/motion/fade-up";
 
 /**
- * Pattern 01 — Editorial Split.
+ * Pattern 01 – Editorial Split.
  * Type left, single square image right, vertically centered.
  * Hairline metadata strip below. Cereal magazine register.
  */

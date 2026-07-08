@@ -7,6 +7,7 @@ import { oils, getOil } from "@/lib/data/oils";
 import { formatINR } from "@/lib/utils";
 import { FadeUp } from "@/components/motion/fade-up";
 import { DiffuserHero } from "@/components/product/diffuser-hero";
+import { DiffuserCompare } from "@/components/sections/diffuser-compare";
 import { OilHero } from "@/components/product/oil-hero";
 import { getCommerceByName } from "@/lib/shopify/commerce";
 import { ScentFinder } from "@/components/sections/scent-finder";
@@ -29,9 +30,26 @@ export async function generateMetadata({
   const { slug } = await params;
   const product = getDiffuser(slug) ?? getOil(slug);
   if (!product) return { title: "Not found" };
+  const kind = product.category === "oil" ? "Fragrance Oil" : "Diffuser";
+  const description = `${product.tagline} ${product.name} — a Quint Home ${kind.toLowerCase()}, hotel-grade home fragrance from Mumbai.`;
+  const ogTitle = `${product.name} — Quint Home ${kind}`;
   return {
     title: product.name,
-    description: product.tagline,
+    description,
+    alternates: { canonical: `/shop/${slug}` },
+    openGraph: {
+      title: ogTitle,
+      description,
+      url: `/shop/${slug}`,
+      type: "website",
+      images: [{ url: product.image, alt: product.name }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: ogTitle,
+      description,
+      images: [product.image],
+    },
   };
 }
 
@@ -49,7 +67,7 @@ export default async function ProductPage({
     return <OilProductPage oil={oil} />;
   }
 
-  // Companion scents — surface the two hotel-credential oils first.
+  // Companion scents – surface the two hotel-credential oils first.
   const relatedOils = oils
     .slice()
     .sort((a, b) => (a.tier === "hotel-credential" ? -1 : 1))
@@ -59,12 +77,15 @@ export default async function ProductPage({
 
   return (
     <article id="top" className="bg-[color:var(--color-white)]">
-      {/* §  PRODUCT  —  images left; overview, key features & technical specs on the right */}
+      {/* §  PRODUCT  –  images left; overview, key features & technical specs on the right */}
       <DiffuserHero product={product} commerce={commerce} />
+
+      {/* §  COMPARE  –  this device against the rest of the range */}
+      <DiffuserCompare highlightModel={product.model} />
 
 
       {/* ====================================================
-          §  PAIRS WITH  —  companion oils
+          §  PAIRS WITH  –  companion oils
           ==================================================== */}
       <section className="py-[var(--spacing-section)]">
         <div className="mx-auto max-w-[var(--container-full)] px-6 md:px-10">
@@ -103,7 +124,7 @@ export default async function ProductPage({
                 >
                   <Image
                     src={o.image}
-                    alt={`${o.name} — bottle study`}
+                    alt={`${o.name} – bottle study`}
                     fill
                     sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
                     className="absolute inset-0 object-cover transition-transform duration-[1800ms] ease-[var(--ease-quint)] group-hover:scale-[1.04]"
@@ -155,26 +176,26 @@ export default async function ProductPage({
 }
 
 // ============================================================
-//  Oil PDP — hero buy box + editorial sections
-//  NOTE: feature copy below is placeholder ("random for now") — to be
+//  Oil PDP – hero buy box + editorial sections
+//  NOTE: feature copy below is placeholder ("random for now") – to be
 //  replaced with final per-oil detail once supplied.
 // ============================================================
 async function OilProductPage({ oil }: { oil: FragranceOil }) {
-  // Diffusers this oil pairs into — the buy box bundles them; this reinforces it.
+  // Diffusers this oil pairs into – the buy box bundles them; this reinforces it.
   const pairDiffusers = diffusers.slice(0, 4);
 
   const commerce = await getCommerceByName(oil.name);
 
   return (
     <article id="top" className="bg-[color:var(--color-white)]">
-      {/* §  PRODUCT — gallery + buy box + bundle */}
+      {/* §  PRODUCT – gallery + buy box + bundle */}
       <OilHero oil={oil} commerce={commerce} />
 
       {/* §  FIND YOUR SCENT */}
       <ScentFinder />
 
 
-      {/* §  PAIRS WITH — the diffusers (bundle in the buy box) */}
+      {/* §  PAIRS WITH – the diffusers (bundle in the buy box) */}
       <section className="py-[var(--spacing-section)]">
         <div className="mx-auto max-w-[var(--container-full)] px-6 md:px-10">
           <FadeUp>

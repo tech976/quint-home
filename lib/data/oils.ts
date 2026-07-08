@@ -1,7 +1,7 @@
 import type { FragranceOil } from "../types";
 
 /**
- * A compact, representative scent-note line for pickers and dropdowns — one
+ * A compact, representative scent-note line for pickers and dropdowns – one
  * note from each layer, e.g. "Citrus · Cardamom · Musk". Enough for a shopper
  * to recognise the fragrance from the name alone, without over-filling a
  * native <option> (which can only render plain text).
@@ -12,8 +12,8 @@ export function oilNoteSummary(oil: FragranceOil): string {
 }
 
 // ============================================================
-//  Quint Home — Signature Scents
-//  Source of truth: Quint Home Website Brief vF — "Fragrance
+//  Quint Home – Signature Scents
+//  Source of truth: Quint Home Website Brief vF – "Fragrance
 //  Oils, Signature Scents at Launch". Names, one-liners and
 //  note pyramids are taken from the brief. Original supplier
 //  names are intentionally NOT referenced anywhere.
@@ -25,11 +25,11 @@ export const oils: FragranceOil[] = [
     name: "Blanc Ritual",
     category: "oil",
     tier: "standard",
-    tagline: "A clean, meditative calm — citrus-lit and softly woody.",
+    tagline: "A clean, meditative calm – citrus-lit and softly woody.",
     description:
       "Citrus, orange blossom and tea open onto cardamom and ambrette, then settle into musk, amber and jasmine. Clean and meditative, lit from within.",
-    priceINR: 1499,
-    volumeML: 100,
+    priceINR: 899,
+    volumeML: 50,
     notes: {
       top: ["Citrus", "Orange Blossom", "Tea"],
       heart: ["Cardamom", "Ambrette"],
@@ -42,15 +42,15 @@ export const oils: FragranceOil[] = [
     textColor: "#3A3532",
   },
   {
-    slug: "quietude",
-    name: "Quietude",
+    slug: "terrain",
+    name: "Terrain",
     category: "oil",
     tier: "standard",
-    tagline: "The stillness of being deep in the wild — grounded, mineral, unhurried.",
+    tagline: "The stillness of being deep in the wild – grounded, mineral, unhurried.",
     description:
       "Flint and pepper over patchouli, oud and lavender, grounded by vetiver, cedar and benzoin. The stillness of being somewhere vast and untouched.",
-    priceINR: 1499,
-    volumeML: 100,
+    priceINR: 899,
+    volumeML: 50,
     notes: {
       top: ["Flint", "Pepper"],
       heart: ["Patchouli", "Oud", "Lavender"],
@@ -67,11 +67,11 @@ export const oils: FragranceOil[] = [
     name: "First Rain",
     category: "oil",
     tier: "standard",
-    tagline: "Dewy, alive and luminous — the air just after a downpour.",
+    tagline: "Dewy, alive and luminous – the air just after a downpour.",
     description:
       "Pear, grapefruit and violet leaf over lotus, jasmine and lily of the valley, on amber and benzoin. The air the moment the rain stops.",
-    priceINR: 1499,
-    volumeML: 100,
+    priceINR: 899,
+    volumeML: 50,
     notes: {
       top: ["Pear", "Grapefruit", "Violet Leaf"],
       heart: ["Lotus", "Jasmine", "Lily of the Valley"],
@@ -88,11 +88,11 @@ export const oils: FragranceOil[] = [
     name: "Soft Hour",
     category: "oil",
     tier: "standard",
-    tagline: "Warm and indulgent — almond and peony that settle like a quiet evening.",
+    tagline: "Warm and indulgent – almond and peony that settle like a quiet evening.",
     description:
       "Almond, pear and lime over magnolia, peony and ginseng, on vanilla, amber and tonka bean. Warm and indulgent, the way an evening softens.",
-    priceINR: 1499,
-    volumeML: 100,
+    priceINR: 899,
+    volumeML: 50,
     notes: {
       top: ["Almond", "Pear", "Lime"],
       heart: ["Magnolia", "Peony", "Ginseng"],
@@ -109,11 +109,11 @@ export const oils: FragranceOil[] = [
     name: "Solitude",
     category: "oil",
     tier: "standard",
-    tagline: "Alone somewhere vast and beautiful — sharp, alive, deeply calm.",
+    tagline: "Alone somewhere vast and beautiful – sharp, alive, deeply calm.",
     description:
       "Bergamot, nettle and currant leaf over pink pepper and achillea, on vetiver, cedar and musk. Sharp and green, and completely at ease.",
-    priceINR: 1499,
-    volumeML: 100,
+    priceINR: 899,
+    volumeML: 50,
     notes: {
       top: ["Bergamot", "Nettle", "Currant Leaf"],
       heart: ["Pink Pepper", "Achillea"],
@@ -130,11 +130,11 @@ export const oils: FragranceOil[] = [
     name: "Shoreline",
     category: "oil",
     tier: "standard",
-    tagline: "Salt air and warm leather — a coastline with nowhere else to be.",
+    tagline: "Salt air and warm leather – a coastline with nowhere else to be.",
     description:
       "Citrus, lemon and sea water over lavender, clove and leather, on sandalwood, ambergris and cypress. Salt on the skin and warm leather in the sun.",
-    priceINR: 1499,
-    volumeML: 100,
+    priceINR: 899,
+    volumeML: 50,
     notes: {
       top: ["Citrus", "Lemon", "Sea Water"],
       heart: ["Lavender", "Clove", "Leather"],
@@ -151,15 +151,15 @@ export const oils: FragranceOil[] = [
     name: "Grand Lobby",
     category: "oil",
     tier: "hotel-credential",
-    tagline: "Polished and welcoming — the scent of arriving somewhere exceptional.",
+    tagline: "Polished and welcoming – the scent of arriving somewhere exceptional.",
     description:
       "Melon, peach and apple over tuberose, freesia and mimosa, on sandalwood, musk and oakmoss. Open, generous, the note you walk into and remember.",
-    priceINR: 1999,
-    volumeML: 100,
+    priceINR: 1099,
+    volumeML: 50,
     credential: {
       line: "Hotel Credential",
       story:
-        "Composed in the spirit of a grand hotel lobby — the scent of arrival, held at full home concentration.",
+        "Composed in the spirit of a grand hotel lobby – the scent of arrival, held at full home concentration.",
     },
     notes: {
       top: ["Melon", "Peach", "Apple"],
@@ -177,15 +177,15 @@ export const oils: FragranceOil[] = [
     name: "The Arrival",
     category: "oil",
     tier: "hotel-credential",
-    tagline: "Polished and quietly grand — walking into a lobby that knows what it's doing.",
+    tagline: "Polished and quietly grand – walking into a lobby that knows what it's doing.",
     description:
       "Peach, citrus and pink grapefruit over rose, violet and lily of the valley, on tea, musk and amber. Composed, confident, quietly grand.",
-    priceINR: 1999,
-    volumeML: 100,
+    priceINR: 1099,
+    volumeML: 50,
     credential: {
       line: "Hotel Credential",
       story:
-        "Composed in the spirit of a grand hotel arrival — polished and assured, held at full home concentration.",
+        "Composed in the spirit of a grand hotel arrival – polished and assured, held at full home concentration.",
     },
     notes: {
       top: ["Peach", "Citrus", "Pink Grapefruit"],

@@ -23,7 +23,7 @@ const sections = [
     chapter: "Two",
     label: "Website Content",
     paragraphs: [
-      "All materials on this website — including text, images, graphics, logos, icons, and videos — are owned by or licensed to Quint Home and are protected by copyright and other intellectual property laws. You may not reproduce, distribute, modify, or otherwise use any content from this website without our prior written permission.",
+      "All materials on this website – including text, images, graphics, logos, icons, and videos – are owned by or licensed to Quint Home and are protected by copyright and other intellectual property laws. You may not reproduce, distribute, modify, or otherwise use any content from this website without our prior written permission.",
     ],
   },
   {
@@ -31,6 +31,7 @@ const sections = [
     label: "Product Information",
     paragraphs: [
       "We aim to provide accurate product details, pricing, and availability at all times. However, we do not guarantee that such information is complete, error-free, or current, and it may be changed or updated without prior notice.",
+      "Images, illustrations, and companion-app screens shown on this website are for representational purposes only. The actual Quint Home app’s design, interface, and features may differ from those depicted.",
     ],
   },
   {
@@ -125,7 +126,7 @@ export default function TermsPage() {
         <div className="mx-auto max-w-[var(--container-full)] px-6 py-7 md:px-10">
           <p className="max-w-[80ch] text-[0.86rem] leading-[1.7] text-[color:var(--color-charcoal-soft)]">
             <span className="text-[0.62rem] uppercase tracking-[0.18em] text-[color:var(--color-charcoal)]">
-              Disclaimer —{" "}
+              Disclaimer –{" "}
             </span>
             Quint Home is operated by Rusera Lifestyle, Mumbai, India. We reserve
             the right to withhold or decline any sale transaction at our

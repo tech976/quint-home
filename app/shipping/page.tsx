@@ -11,12 +11,17 @@ export const metadata: Metadata = {
 
 const LAST_UPDATED = "1 July 2026";
 
-const sections = [
+const sections: {
+  chapter: string;
+  label: string;
+  paragraphs: string[];
+  bullets?: string[];
+}[] = [
   {
     chapter: "One",
     label: "Processing & Delivery",
     paragraphs: [
-      "Orders are prepared and dispatched within 1–2 business days of confirmation, shipped from Mumbai through our courier partners. Delivery typically takes 3–5 business days anywhere in India; timelines are estimates and may vary with destination.",
+      "Orders are prepared and dispatched within 3 business days of confirmation, shipped from Mumbai through our courier partners. Delivery typically takes 3–5 business days anywhere in India; timelines are estimates and may vary with destination.",
       "Once your order ships, you will receive tracking details by email. If anything is delayed or amiss, write to us at hello@quinthome.in and we will follow up promptly.",
     ],
   },
@@ -31,7 +36,7 @@ const sections = [
     chapter: "Three",
     label: "Refunds & Cancellations",
     paragraphs: [
-      "We do not offer refunds or cancellations. A product is eligible for exchange only if it arrives damaged or defective — see below.",
+      "We’re unable to offer cancellations or refunds once an order is placed. If your product is damaged or defective though, we’ll gladly exchange it – see below for details.",
     ],
   },
   {
@@ -39,14 +44,34 @@ const sections = [
     label: "Damaged or Defective Items",
     paragraphs: [
       "Please inspect your order carefully on delivery. If an item arrives damaged or defective, notify us within 3 days at hello@quinthome.in with your order number, the product, and a clear photo or description of the issue.",
-      "Once verified, the item will be exchanged for a new one — no refund is issued. Returns are not accepted for products that have been used, altered, or damaged through customer negligence. The item must be returned in its original packaging with all accessories and documentation, and shipped back within 3 days of the exchange being authorised.",
+      "Once verified, the item will be exchanged for a new one – no refund is issued. Returns are not accepted for products that have been used, altered, or damaged through customer negligence. The item must be returned in its original packaging with all accessories and documentation, and shipped back within 3 days of the exchange being authorised.",
     ],
   },
   {
     chapter: "Five",
+    label: "Returns Not Accepted",
+    paragraphs: [
+      "Returns will not be accepted under the following conditions:",
+    ],
+    bullets: [
+      "The product is damaged due to misuse or neglect.",
+      "The product is returned without original packaging, including price tags, labels, free items, original packing, freebies, and other accessories, or if the original packaging is damaged.",
+      "The serial number of the product has been tampered with.",
+      "Defective products that are not covered under the seller or manufacturer’s warranty.",
+      "The product has been used, altered, or shows signs of wear.",
+      "The return request is initiated after 3 business days from the order delivery date.",
+      "Returns initiated by customers who have not followed the proper return procedure (e.g., failing to contact Customer Support first) will not be accepted.",
+      "Any items that have been personalised, customised, or made-to-order are final sale and not eligible for return.",
+      "Items purchased during promotional sales or clearance events are non-returnable and will not be accepted.",
+      "Returns will be rejected if the product is found to be counterfeit or not purchased directly from Quint Home.",
+      "Any items that have crossed the warranty period.",
+    ],
+  },
+  {
+    chapter: "Six",
     label: "Limited Warranty",
     paragraphs: [
-      "Every Quint Home device carries a limited warranty of up to one year from the date of purchase against manufacturing defects. The warranty covers the device itself — not fragrance oils, nor damage from misuse, accident, or unauthorised repair. To make a claim, write to us with your order number and we will take it from there.",
+      "Every Quint Home device carries a limited warranty of up to one year from the date of purchase against manufacturing defects. The warranty covers the device itself – not fragrance oils, nor damage from misuse, accident, or unauthorised repair. To make a claim, write to us with your order number and we will take it from there.",
     ],
   },
 ];
@@ -80,9 +105,8 @@ export default function ShippingPage() {
 
             <FadeUp delay={0.1} className="md:col-span-5">
               <p className="max-w-[44ch] text-[var(--text-base)] leading-[1.85] text-[color:var(--color-charcoal-soft)]">
-                How your order reaches you, and what happens if something
-                arrives damaged. We ship across India from Mumbai, with
-                complimentary delivery over{" "}
+                We ship across India from Mumbai, with complimentary delivery
+                over{" "}
                 <span className="text-[color:var(--color-charcoal)]">₹5,000</span>.
               </p>
               <p className="mt-5 text-[0.62rem] uppercase tracking-[0.32em] text-[color:var(--color-charcoal-soft)]">
@@ -90,19 +114,6 @@ export default function ShippingPage() {
               </p>
             </FadeUp>
           </div>
-        </div>
-      </section>
-
-      <section className="border-b border-[color:var(--color-rule)] bg-[color:var(--color-stardust-soft)]">
-        <div className="mx-auto max-w-[var(--container-full)] px-6 py-7 md:px-10">
-          <p className="max-w-[80ch] text-[0.86rem] leading-[1.7] text-[color:var(--color-charcoal-soft)]">
-            <span className="text-[0.62rem] uppercase tracking-[0.18em] text-[color:var(--color-charcoal)]">
-              In short —{" "}
-            </span>
-            We don&rsquo;t offer refunds or cancellations. Damaged or defective
-            items are exchanged for a replacement if reported within 3 days, and
-            every device is covered by a limited 1-year warranty.
-          </p>
         </div>
       </section>
 
@@ -142,6 +153,19 @@ export default function ShippingPage() {
                         {p}
                       </p>
                     ))}
+                    {group.bullets && (
+                      <ul className="max-w-[68ch] space-y-3">
+                        {group.bullets.map((b, i) => (
+                          <li key={i} className="flex gap-3">
+                            <span
+                              aria-hidden="true"
+                              className="mt-[0.62em] h-1 w-1 shrink-0 rounded-full bg-[color:var(--color-clay)]"
+                            />
+                            <span>{b}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
                   </div>
                 </FadeUp>
               </div>

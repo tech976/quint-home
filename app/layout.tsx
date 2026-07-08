@@ -12,7 +12,7 @@ import { CartDrawer } from "@/components/cart/cart-drawer";
 
 export const metadata: Metadata = {
   title: {
-    default: "Quint Home — Air Elevated",
+    default: "Quint Home – Air Elevated",
     template: "%s · Quint Home",
   },
   description:
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://quinthome.in"),
   openGraph: {
     type: "website",
-    title: "Quint Home — Air Elevated",
+    title: "Quint Home – Air Elevated",
     description:
       "Hotel-grade home fragrance from Mumbai. Designed for the considered Indian home.",
     siteName: "Quint Home",

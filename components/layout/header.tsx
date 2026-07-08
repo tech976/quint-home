@@ -16,7 +16,7 @@ const navLinks = [
   { href: "/businesses", label: "For Businesses" },
 ];
 
-// Shop dropdown — diffusers first, then oils. No "everything" entry.
+// Shop dropdown – diffusers first, then oils. No "everything" entry.
 const shopMenu = [
   { href: "/shop#diffusers", label: "Diffusers" },
   { href: "/shop#oils", label: "Oils" },
@@ -40,7 +40,7 @@ export function Header() {
   const headerRef = useRef<HTMLElement>(null);
 
   // On the homepage the header stays transparent and merged into the banner for
-  // the WHOLE hero. The solid header only exists *below* the hero — and there it
+  // the WHOLE hero. The solid header only exists *below* the hero – and there it
   // hides on scroll-down and slides back on scroll-up. Inner pages are always solid.
   const transparent = overlay && !pastHero && !hovered && !mobileOpen;
 
@@ -141,7 +141,7 @@ export function Header() {
         <div className="mx-auto grid max-w-[var(--container-full)] grid-cols-[1fr_auto_1fr] items-center gap-6 px-6 py-5 md:px-10">
           {/* Left nav */}
           <nav className="hidden items-center gap-8 md:flex">
-            {/* Shop — with category dropdown */}
+            {/* Shop – with category dropdown */}
             <div className="group relative">
               <Link
                 href="/shop"
@@ -187,11 +187,11 @@ export function Header() {
             <Menu className="h-5 w-5" />
           </button>
 
-          {/* Center logo — inline SVG, inherits header color */}
+          {/* Center logo – inline SVG, inherits header color */}
           <Link
             href="/"
             className="justify-self-center"
-            aria-label="Quint Home — Home"
+            aria-label="Quint Home – Home"
           >
             <Logo className="h-9 w-auto md:h-10" />
           </Link>

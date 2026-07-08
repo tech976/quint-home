@@ -4,7 +4,7 @@ import { useEffect, useRef, useState, type ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
 /**
- * FadeUp — content is visible by default (works in SSR / no-JS / headless tools).
+ * FadeUp – content is visible by default (works in SSR / no-JS / headless tools).
  * When the component mounts on the client, it temporarily hides itself and replays
  * an entrance animation as it scrolls into view.
  */
@@ -29,13 +29,13 @@ export function FadeUp({
     const el = ref.current;
     if (!el) return;
 
-    // Respect reduced motion — leave visible, no entrance.
+    // Respect reduced motion – leave visible, no entrance.
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       setHydrated(true);
       return;
     }
 
-    // If the element is already in the viewport at mount, skip the entrance —
+    // If the element is already in the viewport at mount, skip the entrance –
     // avoids a flash of opacity-0 for above-the-fold content.
     const rect = el.getBoundingClientRect();
     const inViewAtMount =

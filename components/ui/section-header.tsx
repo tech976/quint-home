@@ -23,7 +23,7 @@ export function SectionHeader({
   const isLight = tone === "light";
   return (
     <header className="relative">
-      {/* Chapter row — small, rules running outward */}
+      {/* Chapter row – small, rules running outward */}
       <FadeUp className="mb-10">
         <div
           className={cn(

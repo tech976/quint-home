@@ -1,7 +1,7 @@
 import { Monogram } from "@/components/brand/logo";
 
 /**
- * MonogramDivider — a quiet section break: the Quint monogram centred between
+ * MonogramDivider – a quiet section break: the Quint monogram centred between
  * two hairlines. Inherits color from the surrounding text, so it works on both
  * light and inverted (verdant) sections. Decorative only.
  */

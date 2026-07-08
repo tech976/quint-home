@@ -4,7 +4,7 @@ import { useEffect } from "react";
 
 /**
  * Deters casual image downloading: blocks the right-click / long-press context
- * menu when the target is an image. (Not bulletproof — nothing on the web is —
+ * menu when the target is an image. (Not bulletproof – nothing on the web is –
  * but it stops the obvious "Save image as…".) Pairs with the CSS in globals
  * that disables image dragging and the iOS long-press callout.
  */

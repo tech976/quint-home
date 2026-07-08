@@ -7,7 +7,7 @@ import { useCart } from "@/components/cart/cart-provider";
 interface Props {
   priceINR: number;
   subscribeOffer?: boolean;
-  /** Shopify variant id for the current selection — required to add to bag. */
+  /** Shopify variant id for the current selection – required to add to bag. */
   variantId?: string;
   /** Whether the selected variant is in stock. */
   available?: boolean;
@@ -26,6 +26,27 @@ export function AddToBag({
 
   return (
     <div className="grid gap-5">
+      {/* Plain price line – shown when there's no subscribe/one-time chooser
+          (e.g. diffusers), otherwise the price lives inside the options below. */}
+      {!subscribeOffer && (
+        <div className="flex items-baseline justify-between gap-3 border-b border-[color:var(--color-rule)] pb-5">
+          <span className="text-[0.62rem] uppercase tracking-[0.32em] text-[color:var(--color-charcoal-soft)]">
+            Price
+          </span>
+          <span
+            className="tabular-nums text-[color:var(--color-charcoal)]"
+            style={{
+              fontFamily: "var(--font-serif)",
+              fontSize: "1.75rem",
+              lineHeight: 1,
+              letterSpacing: "-0.01em",
+            }}
+          >
+            {formatINR(priceINR)}
+          </span>
+        </div>
+      )}
+
       {subscribeOffer && (
         <fieldset className="grid gap-2">
           <legend className="mb-2 text-[0.62rem] uppercase tracking-[0.32em] text-[color:var(--color-charcoal-soft)]">
@@ -52,7 +73,7 @@ export function AddToBag({
               <span>
                 <span className="block text-[0.95rem]">One-time purchase</span>
                 <span className="mt-1 block text-[0.78rem] text-[color:var(--color-charcoal-soft)]">
-                  Free shipping in India · 7-day returns
+                  Ships from Mumbai · exchanges on damaged items
                 </span>
               </span>
               <span className="text-[1rem] tabular-nums">

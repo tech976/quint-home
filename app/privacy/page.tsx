@@ -6,7 +6,7 @@ import { FadeUp } from "@/components/motion/fade-up";
 export const metadata: Metadata = {
   title: "Privacy Policy",
   description:
-    "How Quint Home collects, uses, and protects your personal information — DPDP Act (India) compliant.",
+    "How Quint Home collects, uses, and protects your personal information – DPDP Act (India) compliant.",
 };
 
 const LAST_UPDATED = "5 June 2026";
@@ -40,14 +40,14 @@ const sections = [
     chapter: "Four",
     label: "Reviews & Public Content",
     paragraphs: [
-      "When you use certain features of our website, such as submitting a product review or rating, please be aware that any personal information you choose to post or share — including comments, ratings, and photos — may be accessible to other users and become public information. It is important to understand the risks associated with sharing such information, as we cannot control its use by others. If you disclose personal information in your profile or when posting publicly, it may become publicly available.",
+      "When you use certain features of our website, such as submitting a product review or rating, please be aware that any personal information you choose to post or share – including comments, ratings, and photos – may be accessible to other users and become public information. It is important to understand the risks associated with sharing such information, as we cannot control its use by others. If you disclose personal information in your profile or when posting publicly, it may become publicly available.",
     ],
   },
   {
     chapter: "Five",
     label: "Cookies",
     paragraphs: [
-      "We use cookies — small text files sent to your device — to enhance your browsing experience. Cookies help you log in more quickly, remember your preferences, and gather aggregated data to understand customer trends. This data helps us improve our offerings by providing more relevant content. Most web browsers are initially set to accept cookies, but you can adjust your browser settings to refuse cookies or be notified when a cookie is being sent. Disabling cookies may affect the functionality of certain features and services.",
+      "We use cookies – small text files sent to your device – to enhance your browsing experience. Cookies help you log in more quickly, remember your preferences, and gather aggregated data to understand customer trends. This data helps us improve our offerings by providing more relevant content. Most web browsers are initially set to accept cookies, but you can adjust your browser settings to refuse cookies or be notified when a cookie is being sent. Disabling cookies may affect the functionality of certain features and services.",
     ],
   },
   {
@@ -140,7 +140,7 @@ export default function PrivacyPage() {
         <div className="mx-auto max-w-[var(--container-full)] px-6 py-7 md:px-10">
           <p className="max-w-[80ch] text-[0.86rem] leading-[1.7] text-[color:var(--color-charcoal-soft)]">
             <span className="uppercase tracking-[0.18em] text-[0.62rem] text-[color:var(--color-charcoal)]">
-              Disclaimer —{" "}
+              Disclaimer –{" "}
             </span>
             Quint Home is operated by Rusera Lifestyle, Mumbai, India. We reserve
             the right to withhold or decline a sale transaction at our

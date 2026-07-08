@@ -3,10 +3,10 @@ import Link from "next/link";
 import { FadeUp, RevealLines } from "@/components/motion/fade-up";
 
 /**
- * Hero 09 — Asymmetric Collage.
+ * Hero 09 – Asymmetric Collage.
  *
  * Designer-studio composition: three images at native aspect ratios laid out
- * on an irregular 12-column grid — a wide landscape "plate", a tall portrait
+ * on an irregular 12-column grid – a wide landscape "plate", a tall portrait
  * "spine", and a small square "footnote". Headline thins across the top in a
  * single editorial row; an italic running caption sits below the masthead rule.
  * Nothing is cropped harshly; whitespace carries the rhythm.
@@ -14,13 +14,13 @@ import { FadeUp, RevealLines } from "@/components/motion/fade-up";
 export function HeroAsymmetricCollage() {
   return (
     <section className="relative w-full bg-[color:var(--color-white)] pt-10 md:pt-14">
-      {/* Masthead — chapter strip */}
+      {/* Masthead – chapter strip */}
       <div className="mx-auto flex max-w-[var(--container-full)] items-center gap-5 px-6 text-[0.62rem] uppercase tracking-[0.36em] text-[color:var(--color-charcoal-soft)] md:px-10">
         <span>Volume 01</span>
         <span className="h-px flex-1 bg-[color:var(--color-rule)]" />
         <span className="hidden md:inline">The Mumbai Edition · Est. 2026</span>
         <span className="hidden h-px w-10 bg-[color:var(--color-rule)] md:inline-block" />
-        <span className="hidden md:inline">Plates I — III</span>
+        <span className="hidden md:inline">Plates I – III</span>
       </div>
 
       {/* Headline as a thin row across the top */}
@@ -49,23 +49,23 @@ export function HeroAsymmetricCollage() {
               fontWeight: 400,
             }}
           >
-            A study in three plates &mdash; the corridor, the doorway,
+            A study in three plates &ndash; the corridor, the doorway,
             the room you call yours.
           </p>
         </div>
         <div className="mt-7 h-px w-full bg-[color:var(--color-rule)]" />
       </div>
 
-      {/* The irregular collage — 12-col grid, native aspects, offsets */}
+      {/* The irregular collage – 12-col grid, native aspects, offsets */}
       <div className="mx-auto mt-10 max-w-[var(--container-full)] px-6 pb-12 md:mt-14 md:px-10 md:pb-20">
         <div className="grid grid-cols-12 gap-x-5 gap-y-10 md:gap-x-8 md:gap-y-0">
-          {/* PLATE I — wide landscape, top-left, spans 8 cols */}
+          {/* PLATE I – wide landscape, top-left, spans 8 cols */}
           <FadeUp delay={0.1} className="col-span-12 md:col-span-8 md:row-start-1">
             <figure className="relative">
               <div className="relative aspect-[3/2] w-full overflow-hidden bg-[color:var(--color-stardust-soft)]">
                 <Image
                   src="/images/vibe/vibe-05.webp"
-                  alt="Golden-hour botanicals — the corridor that changes the room"
+                  alt="Golden-hour botanicals – the corridor that changes the room"
                   fill
                   preload
                   sizes="(min-width: 768px) 64vw, 100vw"
@@ -79,13 +79,13 @@ export function HeroAsymmetricCollage() {
             </figure>
           </FadeUp>
 
-          {/* PLATE II — tall portrait, right side, offset down */}
+          {/* PLATE II – tall portrait, right side, offset down */}
           <FadeUp delay={0.3} className="col-span-7 md:col-span-4 md:row-start-1 md:translate-y-16">
             <figure className="relative">
               <div className="relative aspect-[3/4] w-full overflow-hidden bg-[color:var(--color-stardust-soft)]">
                 <Image
                   src="/images/vibe/vibe-11.webp"
-                  alt="A quiet doorway — the spine of the room"
+                  alt="A quiet doorway – the spine of the room"
                   fill
                   sizes="(min-width: 768px) 32vw, 60vw"
                   className="object-cover"
@@ -98,7 +98,7 @@ export function HeroAsymmetricCollage() {
             </figure>
           </FadeUp>
 
-          {/* PLATE III — square, lower-left, offset down + nudged right */}
+          {/* PLATE III – square, lower-left, offset down + nudged right */}
           <FadeUp
             delay={0.5}
             className="col-span-7 col-start-1 md:col-span-3 md:col-start-3 md:row-start-2 md:-mt-8"
@@ -107,7 +107,7 @@ export function HeroAsymmetricCollage() {
               <div className="relative aspect-square w-full overflow-hidden bg-[color:var(--color-stardust-soft)]">
                 <Image
                   src="/images/vibe/vibe-18.webp"
-                  alt="A texture at rest — the footnote"
+                  alt="A texture at rest – the footnote"
                   fill
                   sizes="(min-width: 768px) 24vw, 60vw"
                   className="object-cover"
@@ -120,7 +120,7 @@ export function HeroAsymmetricCollage() {
             </figure>
           </FadeUp>
 
-          {/* Brand statement — placed in the negative space under Plate III */}
+          {/* Brand statement – placed in the negative space under Plate III */}
           <FadeUp
             delay={0.7}
             className="col-span-12 md:col-span-5 md:col-start-7 md:row-start-2 md:mt-12"

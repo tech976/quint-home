@@ -88,6 +88,16 @@ export function Footer() {
                 hello@quinthome.in
               </a>
             </p>
+            <p className="mt-3 text-[0.78rem] tracking-[0.06em] text-[color:var(--color-charcoal-soft)]">
+              <a
+                href="https://www.instagram.com/quinthome/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline-offset-4 transition-colors hover:text-[color:var(--color-clay)] hover:underline"
+              >
+                Follow @quinthome on Instagram →
+              </a>
+            </p>
           </div>
           {cols.map((c) => (
             <div key={c.heading}>
@@ -111,7 +121,7 @@ export function Footer() {
         {/* Baseline */}
         <div className="mt-20 flex flex-col-reverse items-start justify-between gap-4 border-t border-[color:var(--color-rule)] pt-6 text-[0.72rem] uppercase tracking-[0.18em] text-[color:var(--color-charcoal-soft)] md:flex-row md:items-center">
           <span>© {new Date().getFullYear()} Quint Home · Create Your Sanctuary</span>
-          <span>Rusera Lifestyle</span>
+          <span>Rusera Lifestyle · GSTIN 27AIAPR7406F1ZB</span>
         </div>
       </div>
     </footer>

@@ -134,6 +134,9 @@ export function CartDrawer() {
                   →
                 </span>
               </a>
+              <p className="mt-3 text-center text-[0.7rem] leading-[1.5] text-[color:var(--color-charcoal-soft)]">
+                A tracking link is emailed to you once your order ships.
+              </p>
             </div>
           </>
         )}

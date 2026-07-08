@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 /**
- * Hero 07 — Album Cover / Folio.
+ * Hero 07 – Album Cover / Folio.
  * One centered square image, max 520px wide. Type wraps around the sleeve:
  *   "Air,"      top-left
  *   "Volume 01" top-right
@@ -57,7 +57,7 @@ export function HeroAlbumCover() {
             <div className="relative aspect-square overflow-hidden bg-[color:var(--color-stardust-soft)] shadow-[0_30px_60px_-30px_rgba(41,51,41,0.25)]">
               <Image
                 src="/images/vibe/vibe-14.webp"
-                alt="Quint Home — Volume 01, the sleeve"
+                alt="Quint Home – Volume 01, the sleeve"
                 fill
                 priority
                 sizes="(min-width: 768px) 520px, 90vw"

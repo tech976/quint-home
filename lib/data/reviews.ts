@@ -7,7 +7,7 @@ export interface Review {
 }
 
 /**
- * Customer reviews. Placeholder copy for now — swap for real verified reviews
+ * Customer reviews. Placeholder copy for now – swap for real verified reviews
  * (and a real average / count) before launch.
  */
 export const reviews: Review[] = [
@@ -37,10 +37,10 @@ export const reviews: Review[] = [
   },
   {
     quote:
-      "Quietude turned the bedroom into the room everyone drifts to at the end of the night.",
+      "Terrain turned the bedroom into the room everyone drifts to at the end of the night.",
     name: "Ananya Rao",
     city: "Pune",
-    product: "Quietude, 100 ml",
+    product: "Terrain, 50 ml",
     rating: 5,
   },
   {
@@ -56,7 +56,7 @@ export const reviews: Review[] = [
       "The oils last far longer than I expected, and the refill plan means I never run out.",
     name: "Meera Krishnan",
     city: "Chennai",
-    product: "Blanc Ritual, 100 ml",
+    product: "Blanc Ritual, 50 ml",
     rating: 5,
   },
 ];

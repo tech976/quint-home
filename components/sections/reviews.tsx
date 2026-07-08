@@ -30,7 +30,7 @@ export function Reviews() {
   return (
     <section className="bg-[color:var(--color-stardust-soft)] py-[var(--spacing-section)]">
       <div className="mx-auto max-w-[var(--container-full)] px-6 md:px-10">
-        {/* Header — title + a prominent rating block */}
+        {/* Header – title + a prominent rating block */}
         <FadeUp>
           <div className="flex flex-col gap-8 border-b border-[color:var(--color-rule)] pb-10 md:flex-row md:items-end md:justify-between">
             <div>
