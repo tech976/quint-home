@@ -9,7 +9,7 @@ export function JournalTeaser() {
     <section className="bg-[color:var(--color-ivory)] py-[var(--spacing-section-sm)]">
       <div className="mx-auto max-w-[var(--container-full)] px-6 md:px-10">
         <SectionHeader
-          chapter="§ Seven"
+          chapter="§"
           chapterTitle="The Journal"
           headline={
             <>

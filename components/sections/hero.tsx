@@ -28,6 +28,9 @@ type Slide =
   | { type: "video"; src: string; hideHeader?: boolean; desktopOnly?: boolean };
 
 const slides: Slide[] = [
+  // Diffuser product video leads, then images and videos alternate.
+  // (Videos are hidden on phones, so mobile leads with the First Rain poster.)
+  { type: "video", src: "/videos/hero-3.mp4" },
   {
     type: "image",
     src: "/images/hero-first-rain.webp",
@@ -35,6 +38,15 @@ const slides: Slide[] = [
     alt: "The Soul of the First Rain — a hand lowering the Quint First Rain oil into flower-strewn water",
     position: "center top",
   },
+  { type: "video", src: "/videos/hero-deep.mp4" },
+  {
+    type: "image",
+    src: "/images/hero-terrain.webp",
+    srcMobile: "/images/hero-terrain-mobile.webp",
+    alt: "Quint Terrain oil with its raw materials — driftwood, lavender, flint, peppercorn and resin — and its top, heart and base notes",
+    position: "center",
+  },
+  { type: "video", src: "/videos/hero-5.mp4" },
   {
     type: "image",
     src: "/images/hero-lounge.webp",
@@ -49,16 +61,6 @@ const slides: Slide[] = [
     alt: "The Quint clock diffuser glowing 08:00 on a wooden sideboard — truly wireless",
     position: "center 55%",
   },
-  {
-    type: "image",
-    src: "/images/hero-terrain.webp",
-    srcMobile: "/images/hero-terrain-mobile.webp",
-    alt: "Quint Terrain oil with its raw materials — driftwood, lavender, flint, peppercorn and resin — and its top, heart and base notes",
-    position: "center",
-  },
-  { type: "video", src: "/videos/hero-deep.mp4" },
-  { type: "video", src: "/videos/hero-5.mp4" },
-  { type: "video", src: "/videos/hero-3.mp4", desktopOnly: true },
   // Phone-only slides – appended after the shared slides above.
   {
     type: "image",
