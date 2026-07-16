@@ -46,7 +46,7 @@ const FACTS: Record<string, Fact> = {
     power: "USB-corded",
     control: "App + touch panel",
     clock: "—",
-    light: "—",
+    light: "Ambient base light",
     material: "Aluminium alloy",
   },
   A815: {

@@ -41,7 +41,7 @@ const groups = [
       },
       {
         q: "Can I use other oils in the diffuser?",
-        a: "Use only Quint Home oils. Ours are undiluted, high-concentration blends made specifically for waterless cold-air nebulisation. Diluted oils, water-based oils, or third-party blends can clog the nebuliser and won’t perform as intended – and may void your warranty.",
+        a: "Use only Quint Home oils. Ours are undiluted, high-concentration blends made specifically for waterless cold-air nebulisation. Diluted oils, water-based oils, or third-party blends can clog the nebuliser and won’t perform as intended – and will void your warranty.",
       },
     ],
   },
