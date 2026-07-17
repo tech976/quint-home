@@ -18,9 +18,9 @@ const steps: {
     n: "01",
     title: "Fill the reservoir",
     body: "Add your chosen Quint Home fragrance oil. No water, no dilution – just the oil.",
-    img: "/images/ritual/fill-reservoir-tower.webp",
+    img: "/images/ritual/fill-the-reservoir-v2.webp",
     // object-cover scales the 4:5 shot to fill the 8/9 tile (~11% larger than
-    // object-contain); the tower sits well inside the 5% top/bottom crop.
+    // object-contain); the product sits well inside the 5% top/bottom crop.
     photo: true,
   },
   {
@@ -39,14 +39,15 @@ const steps: {
     n: "04",
     title: "It runs itself",
     body: "The diffuser follows your schedule automatically. No daily interaction required.",
-    img: "/images/ritual/t302-panel-v2.webp",
+    img: "/images/ritual/it-runs-itself-v2.webp",
     photo: true,
   },
   {
     n: "05",
     title: "Refill & swap",
     body: "Top up the oil as needed; change scents by season or mood through the app.",
-    img: "/images/ritual/refill-swap.webp",
+    img: "/images/ritual/refill-swap-v2.webp",
+    photo: true,
   },
 ];
 
