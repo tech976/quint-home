@@ -19,6 +19,9 @@ const steps: {
     title: "Fill the reservoir",
     body: "Add your chosen Quint Home fragrance oil. No water, no dilution – just the oil.",
     img: "/images/ritual/fill-reservoir-tower.webp",
+    // object-cover scales the 4:5 shot to fill the 8/9 tile (~11% larger than
+    // object-contain); the tower sits well inside the 5% top/bottom crop.
+    photo: true,
   },
   {
     n: "02",
