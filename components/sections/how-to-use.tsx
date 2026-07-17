@@ -18,8 +18,7 @@ const steps: {
     n: "01",
     title: "Fill the reservoir",
     body: "Add your chosen Quint Home fragrance oil. No water, no dilution – just the oil.",
-    img: "/images/ritual/t302-tower-v2.webp",
-    photo: true,
+    img: "/images/ritual/fill-reservoir-tower.webp",
   },
   {
     n: "02",
