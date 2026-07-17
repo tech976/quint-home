@@ -59,17 +59,13 @@ export function Header() {
       }
       setPastHero(past);
 
-      // Below the hero the header is never pinned: it leaves on scroll-down and
-      // slides back on scroll-up. We accumulate small deltas (and reset on
-      // direction change) so smooth-scroll's tiny per-frame steps still trigger
-      // a reliable reveal.
+      // The header is never pinned: it leaves on scroll-down and slides back on
+      // scroll-up. We accumulate small deltas (and reset on direction change) so
+      // smooth-scroll's tiny per-frame steps still trigger a reliable reveal.
       const delta = y - lastY.current;
       lastY.current = y;
 
-      // Over the hero the header stays put (transparent, merged into the
-      // banner) — it must not slide away mid-slide. Hiding only kicks in once
-      // the hero has scrolled past.
-      if (y <= 8 || !past) {
+      if (y <= 8) {
         setHidden(false);
         accum.current = 0;
       } else if (delta !== 0) {
