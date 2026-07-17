@@ -65,7 +65,7 @@ const FACTS: Record<string, Fact> = {
 const COMPARE_IMAGES: Record<string, string> = {
   A815: "/images/diffusers/pebble-v3.webp",
   A326: "/images/diffusers/monolith-v3.webp",
-  A974: "/images/diffusers/loom-v3.webp",
+  A974: "/images/diffusers/loom-v4.webp",
   "A-T302": "/images/diffusers/pillar-v3.webp",
   "A-T370": "/images/diffusers/ember-v3.webp",
 };
