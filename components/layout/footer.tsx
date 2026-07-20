@@ -130,7 +130,7 @@ export function Footer() {
             © {new Date().getFullYear()} Quint Home · Create Your Sanctuary
           </span>
           <span className="whitespace-nowrap">
-            Rusera Lifestyle · GSTIN 27AIAPR7406F1ZB
+            Rusera Lifestyle
           </span>
         </div>
       </div>
