@@ -204,9 +204,23 @@ export default function ShippingPage() {
                   →
                 </span>
               </a>
-              <p className="mt-8 text-[0.72rem] uppercase tracking-[0.18em] text-[color:var(--color-stardust)]/55">
-                Rusera Lifestyle · Mumbai, India · +91 98193 45550
-              </p>
+              <address className="mt-8 not-italic text-[0.72rem] leading-[1.9] text-[color:var(--color-stardust)]/55">
+                <span className="uppercase tracking-[0.18em] text-[color:var(--color-stardust)]/80">
+                  Rusera Lifestyle
+                </span>
+                <br />
+                3102, 31st Floor, Ridhi Siddhi Apartment, R A Kidwai Road,
+                <br />
+                Matunga East, Mumbai &ndash; 400019, Maharashtra
+                <br />
+                <a
+                  href="mailto:hello@ruseralifestyle.com"
+                  className="underline-offset-4 hover:text-[color:var(--color-aerial-soft)] hover:underline"
+                >
+                  hello@ruseralifestyle.com
+                </a>{" "}
+                &middot; +91 98193 45550
+              </address>
               <p className="mt-6 text-[0.78rem] leading-[1.7] text-[color:var(--color-stardust)]/70">
                 See also our{" "}
                 <Link
