@@ -25,6 +25,14 @@ interface Props {
   baseName: string;
   /** Shopify variant of the product whose page we're on. */
   baseVariantId?: string;
+  /**
+   * Buyer choices to carry on the base product's line — e.g. the complimentary
+   * oil chosen higher up the page. The main buy box records these; without them
+   * here, adding through the bundle silently drops the customer's selection.
+   */
+  baseAttributes?: { key: string; value: string }[];
+  /** Buyer choices to carry on the partner line, for the same reason. */
+  partnerAttributes?: { key: string; value: string }[];
   /** Noun for the thing being added, lowercase singular: "diffuser" | "oil". */
   partnerNoun: string;
   /** Headline above the picker. */
@@ -47,6 +55,8 @@ export function PairBundle({
   basePriceINR,
   baseName,
   baseVariantId,
+  baseAttributes,
+  partnerAttributes,
   partnerNoun,
   heading,
   options,
@@ -172,8 +182,8 @@ export function PairBundle({
             disabled={pending || !baseVariantId || !partner?.variantId}
             onClick={() => {
               // Both items go in: the running total above quotes the pair.
-              if (baseVariantId) add(baseVariantId);
-              if (partner?.variantId) add(partner.variantId);
+              if (baseVariantId) add(baseVariantId, 1, baseAttributes);
+              if (partner?.variantId) add(partner.variantId, 1, partnerAttributes);
             }}
             className="group mt-4 flex h-12 w-[100%] items-center justify-center gap-2.5 border border-[color:var(--color-charcoal)] px-6 text-[0.68rem] uppercase tracking-[0.26em] text-[color:var(--color-charcoal)] transition-colors duration-500 hover:bg-[color:var(--color-charcoal)] hover:text-[color:var(--color-ivory)] disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-transparent disabled:hover:text-[color:var(--color-charcoal)]"
           >

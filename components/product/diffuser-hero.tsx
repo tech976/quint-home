@@ -11,6 +11,7 @@ import { oils, oilNoteSummary } from "@/lib/data/oils";
 import { cn } from "@/lib/utils";
 import type { Diffuser } from "@/lib/types";
 import { shopifyHandle, type ShopifyCommerce } from "@/lib/shopify/commerce";
+import { COMPLIMENTARY_OIL } from "@/lib/cart-gift";
 
 /**
  * Diffuser PDP – images on the left (sticky), and a single right column. The
@@ -51,21 +52,39 @@ export function DiffuserHero({
   const [oilSlug, setOilSlug] = useState(oils[0].slug);
   const selectedOil = oils.find((o) => o.slug === oilSlug) ?? oils[0];
 
+  // The complimentary bottle that ships with every diffuser. It is not a line
+  // item of its own, so this note is the only record of it — in the bag, on the
+  // Shopify order and on the packing slip. Every path that puts a diffuser in
+  // the bag has to carry it, or the scent the customer picked is lost (which is
+  // exactly what the bundle button used to do).
+  const complimentaryOil = [
+    {
+      key: COMPLIMENTARY_OIL,
+      value: `${selectedOil.name} · ${selectedOil.volumeML} ml`,
+    },
+  ];
+
   const descriptionParagraphs = (color?.description ?? product.description).split(
     "\n\n"
   );
 
   // Bundle – add an extra oil to the order at a discount. Carry the note
   // summary so the picker reads as a fragrance, not just a name.
-  const oilOptions: PairOption[] = oils.map((o) => ({
-    slug: o.slug,
-    name: o.name,
-    priceINR: o.priceINR,
-    image: o.image,
-    variantId: commerceMap?.[shopifyHandle(o.name)]?.variants[0]?.id,
-    meta: o.mood,
-    note: oilNoteSummary(o),
-  }));
+  const oilOptions: PairOption[] = oils.map((o) => {
+    // Shopify is the source of truth for price. Quoting the catalogue figure
+    // here while adding the Shopify variant to the bag is how the bundle came
+    // to promise one total and charge another.
+    const oilVariant = commerceMap?.[shopifyHandle(o.name)]?.variants[0];
+    return {
+      slug: o.slug,
+      name: o.name,
+      priceINR: oilVariant?.price ?? o.priceINR,
+      image: o.image,
+      variantId: oilVariant?.id,
+      meta: o.mood,
+      note: oilNoteSummary(o),
+    };
+  });
 
   // Technical specifications – the per-model spec sheet, taken verbatim from the
   // Aroma Diffuser Collection product catalogue.
@@ -277,11 +296,7 @@ export function DiffuserHero({
                 subscribeOffer={false}
                 variantId={variant?.id}
                 available={variant?.available ?? true}
-                // The included scent is chosen on this page, so it has to travel
-                // with the line — otherwise the order never records which one.
-                attributes={[
-                  { key: "Included oil", value: selectedOil.name },
-                ]}
+                attributes={complimentaryOil}
               />
             </div>
           </FadeUp>
@@ -293,9 +308,10 @@ export function DiffuserHero({
                 Build your set
               </p>
               <PairBundle
-                basePriceINR={product.priceINR}
+                basePriceINR={variant?.price ?? product.priceINR}
                 baseName={product.name}
                 baseVariantId={variant?.id}
+                baseAttributes={complimentaryOil}
                 partnerNoun="oil"
                 heading="Add another oil"
                 options={oilOptions}

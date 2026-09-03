@@ -10,6 +10,7 @@ import { PairBundle, type PairOption } from "@/components/product/pair-bundle";
 import { diffusers } from "@/lib/data/diffusers";
 import type { FragranceOil } from "@/lib/types";
 import { shopifyHandle, type ShopifyCommerce } from "@/lib/shopify/commerce";
+import { COMPLIMENTARY_OIL } from "@/lib/cart-gift";
 
 /**
  * Oil PDP – bottle study on the left (sticky), and a single right column that
@@ -28,14 +29,18 @@ export function OilHero({
 }) {
   const variant = commerce?.variants[0];
   // Pair-with-a-diffuser options for the bundle control.
-  const diffuserOptions: PairOption[] = diffusers.map((d) => ({
-    slug: d.slug,
-    name: d.name,
-    priceINR: d.priceINR,
-    image: d.image,
-    variantId: commerceMap?.[shopifyHandle(d.name)]?.variants[0]?.id,
-    meta: d.coverageLabel,
-  }));
+  const diffuserOptions: PairOption[] = diffusers.map((d) => {
+    // Priced from Shopify, for the same reason as the oils on the diffuser PDP.
+    const diffuserVariant = commerceMap?.[shopifyHandle(d.name)]?.variants[0];
+    return {
+      slug: d.slug,
+      name: d.name,
+      priceINR: diffuserVariant?.price ?? d.priceINR,
+      image: d.image,
+      variantId: diffuserVariant?.id,
+      meta: d.coverageLabel,
+    };
+  });
 
   const descriptionParagraphs = oil.description.split("\n\n");
 
@@ -188,9 +193,19 @@ export function OilHero({
                 Make it a set
               </p>
               <PairBundle
-                basePriceINR={oil.priceINR}
+                basePriceINR={variant?.price ?? oil.priceINR}
                 baseName={oil.name}
                 baseVariantId={variant?.id}
+                // A diffuser added here also ships with its complimentary
+                // bottle, but this page has no scent picker — so it defaults to
+                // the oil being bought. Change it on the order if the customer
+                // asks for a different one.
+                partnerAttributes={[
+                  {
+                    key: COMPLIMENTARY_OIL,
+                    value: `${oil.name} · ${oil.volumeML} ml`,
+                  },
+                ]}
                 partnerNoun="diffuser"
                 heading="Add a diffuser"
                 options={diffuserOptions}

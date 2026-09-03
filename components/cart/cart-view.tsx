@@ -6,6 +6,8 @@ import { formatINR } from "@/lib/utils";
 import { FadeUp } from "@/components/motion/fade-up";
 import { Monogram } from "@/components/brand/logo";
 import { FREE_SHIPPING_FROM, shippingFor } from "@/lib/checkout-config";
+import { giftOnLine, otherAttributes } from "@/lib/cart-gift";
+import { GiftLine, InTheBox } from "./gift-line";
 
 export function CartView() {
   // headlessCheckout comes from the provider (set in the root layout) so the
@@ -94,11 +96,10 @@ export function CartView() {
         {/* Line items */}
         <div className="md:col-span-7">
           <ul>
-            {lines.map((l) => (
-              <li
-                key={l.id}
-                className="flex gap-5 border-b border-[color:var(--color-rule)] py-7 first:pt-0"
-              >
+            {lines.map((l) => {
+              const gift = giftOnLine(l.attributes);
+              const row = (
+                <div className="flex gap-5">
                 <Link
                   href={`/range/${l.handle}`}
                   className="relative h-32 w-24 shrink-0 overflow-hidden bg-[color:var(--color-stardust-soft)] sm:h-40 sm:w-32"
@@ -140,7 +141,7 @@ export function CartView() {
                       {l.variantTitle}
                     </p>
                   )}
-                  {l.attributes?.map((a) => (
+                  {otherAttributes(l.attributes).map((a) => (
                     <p
                       key={a.key}
                       className="mt-1.5 text-[0.78rem] text-[color:var(--color-charcoal-soft)]"
@@ -189,8 +190,33 @@ export function CartView() {
                     </button>
                   </div>
                 </div>
-              </li>
-            ))}
+                </div>
+              );
+
+              return (
+                <li
+                  key={l.id}
+                  className={
+                    gift
+                      // No first:pt-0 here: the "In the box" legend sits on the
+                      // frame's top rule and needs padding above it to sit in.
+                      ? "py-7"
+                      : "border-b border-[color:var(--color-rule)] py-7 first:pt-0"
+                  }
+                >
+                  {gift ? (
+                    // The diffuser and its complimentary oil arrive as one
+                    // parcel, so the bag shows them inside one frame.
+                    <InTheBox>
+                      {row}
+                      <GiftLine gift={gift} quantity={l.quantity} />
+                    </InTheBox>
+                  ) : (
+                    row
+                  )}
+                </li>
+              );
+            })}
           </ul>
 
           <Link

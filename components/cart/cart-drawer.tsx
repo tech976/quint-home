@@ -3,6 +3,8 @@
 import Link from "next/link";
 import { useCart } from "./cart-provider";
 import { formatINR } from "@/lib/utils";
+import { giftOnLine, otherAttributes } from "@/lib/cart-gift";
+import { GiftLine, InTheBox } from "./gift-line";
 
 export function CartDrawer() {
   const { cart, open, setOpen, update, remove, pending, headlessCheckout } =
@@ -58,11 +60,10 @@ export function CartDrawer() {
         ) : (
           <>
             <div className="flex-1 overflow-y-auto px-6 py-2">
-              {lines.map((l) => (
-                <div
-                  key={l.id}
-                  className="flex gap-4 border-b border-[color:var(--color-rule)] py-5"
-                >
+              {lines.map((l) => {
+                const gift = giftOnLine(l.attributes);
+                const row = (
+                  <div className="flex gap-4">
                   <div className="relative h-20 w-16 shrink-0 overflow-hidden bg-[color:var(--color-stardust-soft)]">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     {l.image && <img src={l.image} alt={l.productTitle} className="h-[100%] w-[100%] object-cover" />}
@@ -74,7 +75,7 @@ export function CartDrawer() {
                         {l.variantTitle}
                       </p>
                     )}
-                    {l.attributes?.map((a) => (
+                    {otherAttributes(l.attributes).map((a) => (
                       <p
                         key={a.key}
                         className="mt-0.5 text-[0.72rem] text-[color:var(--color-charcoal-soft)]"
@@ -120,8 +121,31 @@ export function CartDrawer() {
                   >
                     Remove
                   </button>
-                </div>
-              ))}
+                  </div>
+                );
+
+                return (
+                  <div
+                    key={l.id}
+                    className={
+                      gift
+                        ? "py-5"
+                        : "border-b border-[color:var(--color-rule)] py-5"
+                    }
+                  >
+                    {gift ? (
+                      // The panel is white, so the legend has to punch through
+                      // the border against white rather than the page ground.
+                      <InTheBox ground="var(--color-white)" compact>
+                        {row}
+                        <GiftLine gift={gift} quantity={l.quantity} compact />
+                      </InTheBox>
+                    ) : (
+                      row
+                    )}
+                  </div>
+                );
+              })}
             </div>
 
             <div className="border-t border-[color:var(--color-rule)] px-6 py-5">
