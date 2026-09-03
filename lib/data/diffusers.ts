@@ -231,7 +231,6 @@ const diffusersByDefinition: Diffuser[] = [
       "Dual independent 60 ml mist outlets – run one or both simultaneously",
       "Ultra-quiet at ≤35 dB – barely a whisper in any room",
       "Spill-proof design for safe, worry-free placement",
-      "Premium aluminum alloy build with a refined finish",
       "USB-powered (5V DC) – works with any standard adapter",
       "Bluetooth compatible – independently control each mist outlet from your phone",
     ],

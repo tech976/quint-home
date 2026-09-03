@@ -23,15 +23,11 @@ interface Props {
   basePriceINR: number;
   /** What the base product is called in the running total, e.g. "Plug-In Diffuser". */
   baseName: string;
-  /** Shopify variant of the product whose page we're on. */
-  baseVariantId?: string;
   /**
-   * Buyer choices to carry on the base product's line — e.g. the complimentary
-   * oil chosen higher up the page. The main buy box records these; without them
-   * here, adding through the bundle silently drops the customer's selection.
+   * Buyer choices to carry on the partner line — e.g. the complimentary oil a
+   * diffuser added from an oil page ships with. Without these the order never
+   * records the customer's selection.
    */
-  baseAttributes?: { key: string; value: string }[];
-  /** Buyer choices to carry on the partner line, for the same reason. */
   partnerAttributes?: { key: string; value: string }[];
   /** Noun for the thing being added, lowercase singular: "diffuser" | "oil". */
   partnerNoun: string;
@@ -54,8 +50,6 @@ interface Props {
 export function PairBundle({
   basePriceINR,
   baseName,
-  baseVariantId,
-  baseAttributes,
   partnerAttributes,
   partnerNoun,
   heading,
@@ -151,9 +145,15 @@ export function PairBundle({
               )}
             </div>
             <span className="flex shrink-0 flex-col items-end leading-none">
-              <span className="text-[0.68rem] text-[color:var(--color-charcoal-soft)] line-through">
-                {formatINR(partnerFull)}
-              </span>
+              {/* Only strike a price out when something is actually taken off
+                  it. With discountRate at 0 both figures are the same, and
+                  ₹899 struck through to ₹899 advertises a saving that isn't
+                  real. */}
+              {saving > 0 && (
+                <span className="text-[0.68rem] text-[color:var(--color-charcoal-soft)] line-through">
+                  {formatINR(partnerFull)}
+                </span>
+              )}
               <span className="mt-1 text-[0.95rem] tabular-nums">
                 {formatINR(partnerBundled)}
               </span>
@@ -169,29 +169,33 @@ export function PairBundle({
         <div className="border-t border-[color:var(--color-rule)] bg-[color:var(--color-stardust-soft)] p-5">
           <div className="flex items-center justify-between">
             <span className="text-[0.6rem] uppercase tracking-[0.32em] text-[color:var(--color-charcoal-soft)]">
-              {baseName} + {partnerNoun}
+              Adding
             </span>
             <span className="text-[0.98rem] tabular-nums">
-              {formatINR(total)}
+              {formatINR(partnerBundled)}
             </span>
           </div>
           {/* Contained secondary button – not a full-bleed bar, so it reads as
               a button and never looks stretched. */}
           <button
             type="button"
-            disabled={pending || !baseVariantId || !partner?.variantId}
+            disabled={pending || !partner?.variantId}
             onClick={() => {
-              // Both items go in: the running total above quotes the pair.
-              if (baseVariantId) add(baseVariantId, 1, baseAttributes);
-              if (partner?.variantId) add(partner.variantId, 1, partnerAttributes);
+              // The partner only. Whatever this page is about is added by the
+              // buy box above, so adding it here as well would double it up.
+              if (partner?.variantId)
+                add(partner.variantId, 1, partnerAttributes);
             }}
             className="group mt-4 flex h-12 w-[100%] items-center justify-center gap-2.5 border border-[color:var(--color-charcoal)] px-6 text-[0.68rem] uppercase tracking-[0.26em] text-[color:var(--color-charcoal)] transition-colors duration-500 hover:bg-[color:var(--color-charcoal)] hover:text-[color:var(--color-ivory)] disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-transparent disabled:hover:text-[color:var(--color-charcoal)]"
           >
-            <span>{pending ? "Adding…" : "Add bundle to bag"}</span>
+            <span>{pending ? "Adding…" : `Add ${partnerNoun} to bag`}</span>
             <span className="transition-transform duration-500 group-hover:translate-x-1">
               →
             </span>
           </button>
+          <p className="mt-3 text-[0.72rem] leading-[1.5] text-[color:var(--color-charcoal-soft)]">
+            With {baseName}, your set comes to {formatINR(total)}.
+          </p>
         </div>
       )}
     </div>

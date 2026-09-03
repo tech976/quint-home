@@ -195,7 +195,6 @@ export function OilHero({
               <PairBundle
                 basePriceINR={variant?.price ?? oil.priceINR}
                 baseName={oil.name}
-                baseVariantId={variant?.id}
                 // A diffuser added here also ships with its complimentary
                 // bottle, but this page has no scent picker — so it defaults to
                 // the oil being bought. Change it on the order if the customer
