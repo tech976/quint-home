@@ -17,6 +17,10 @@ import { apiSecret, normalizeShop, shopDomain } from "@/lib/shopify/oauth";
  */
 export const ADMIN_COOKIE = "quint_admin_session";
 
+/** Marks a passphrase sign-in, so the header can show how someone got in. It is
+ *  deliberately not a valid shop domain, so it cannot collide with one. */
+export const PASSWORD_PRINCIPAL = "passphrase";
+
 /** Eight hours. Long enough for a working day, short enough that a forgotten
  *  laptop stops mattering by morning. */
 export const ADMIN_SESSION_MAX_AGE = 60 * 60 * 8;
@@ -27,9 +31,21 @@ function sign(payload: string, secret: string): string {
   return crypto.createHmac("sha256", secret).update(payload).digest("base64url");
 }
 
+/**
+ * Key the session cookie is signed with.
+ *
+ * ADMIN_SESSION_SECRET when set, otherwise the Shopify app secret, which every
+ * deployment that can talk to Shopify already has. Tying it solely to the
+ * Shopify secret would mean passphrase sign-in silently failing wherever that
+ * secret is absent — which is precisely how it first behaved.
+ */
+function sessionSecret(): string | undefined {
+  return process.env.ADMIN_SESSION_SECRET || apiSecret();
+}
+
 /** `<shop>.<expiry>.<signature>` — self-contained, so no session table. */
 export function issueSession(shop: string, expiresAtMs: number): string | null {
-  const secret = apiSecret();
+  const secret = sessionSecret();
   if (!secret) return null;
   const payload = `${b64(normalizeShop(shop))}.${expiresAtMs}`;
   return `${payload}.${sign(payload, secret)}`;
@@ -38,7 +54,7 @@ export function issueSession(shop: string, expiresAtMs: number): string | null {
 /** The shop this cookie is good for, or null if it is absent, malformed,
  *  expired, for another shop, or not signed by us. */
 export function verifySession(value: string | undefined, nowMs: number): string | null {
-  const secret = apiSecret();
+  const secret = sessionSecret();
   if (!secret || !value) return null;
 
   const parts = value.split(".");
@@ -60,7 +76,10 @@ export function verifySession(value: string | undefined, nowMs: number): string 
   } catch {
     return null;
   }
-  // A token minted for a different store must not open this one.
+  // A token minted for a different store must not open this one. The
+  // passphrase principal is not a shop, so it is allowed through explicitly
+  // rather than by loosening the comparison.
+  if (shop === PASSWORD_PRINCIPAL) return shop;
   return shop && shop === normalizeShop(shopDomain()) ? shop : null;
 }
 
@@ -69,3 +88,28 @@ export async function currentStaffShop(): Promise<string | null> {
   const jar = await cookies();
   return verifySession(jar.get(ADMIN_COOKIE)?.value, Date.now());
 }
+
+/**
+ * A shared passphrase, as a second way in beside the Shopify sign-in — for an
+ * accountant who needs the invoices but has no Shopify account.
+ *
+ * Optional: leave ADMIN_PASSWORD unset and this route is simply closed, rather
+ * than the section falling open to anyone who guesses an empty string.
+ */
+export const adminPasswordConfigured = (): boolean =>
+  Boolean(process.env.ADMIN_PASSWORD && process.env.ADMIN_PASSWORD.length >= 8);
+
+/**
+ * Compared in constant time and over digests rather than the raw strings, so
+ * neither the comparison's duration nor the inputs' differing lengths leak
+ * anything about the secret.
+ */
+export function passwordMatches(candidate: string): boolean {
+  const expected = process.env.ADMIN_PASSWORD;
+  if (!expected || expected.length < 8) return false;
+  const a = crypto.createHash("sha256").update(candidate, "utf8").digest();
+  const b = crypto.createHash("sha256").update(expected, "utf8").digest();
+  return crypto.timingSafeEqual(a, b);
+}
+
+

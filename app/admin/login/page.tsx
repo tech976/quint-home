@@ -1,5 +1,5 @@
 import { redirect } from "next/navigation";
-import { currentStaffShop } from "@/lib/admin/session";
+import { adminPasswordConfigured, currentStaffShop } from "@/lib/admin/session";
 import { oauthConfigured } from "@/lib/shopify/oauth";
 
 export const dynamic = "force-dynamic";
@@ -34,7 +34,13 @@ export default async function AdminLogin({
         <p className="mt-5 border-l-2 border-[color:var(--color-clay)] bg-[color:var(--color-stardust-soft)] p-3 text-[0.78rem] leading-[1.6]">
           {error === "denied"
             ? "Shopify did not confirm that account."
-            : "Sign-in could not be completed. Please try again."}
+            : error === "badpass"
+              ? "That passphrase was not correct."
+              : error === "throttled"
+                ? "Too many attempts. Please wait a few minutes and try again."
+                : error === "nopass"
+                  ? "Passphrase sign-in is not enabled on this deployment."
+                  : "Sign-in could not be completed. Please try again."}
         </p>
       )}
 
@@ -50,6 +56,42 @@ export default async function AdminLogin({
           Shopify OAuth is not configured. Set <code>SHOPIFY_API_KEY</code> and{" "}
           <code>SHOPIFY_API_SECRET</code> in Vercel, then redeploy.
         </p>
+      )}
+
+      {/* Passphrase, for somebody who needs the invoices but has no Shopify
+          account — an accountant, typically. Hidden entirely when unset, so an
+          unconfigured deployment shows no way in rather than a dead form. */}
+      {adminPasswordConfigured() && (
+        <>
+          <div className="mt-10 flex items-center gap-4">
+            <span className="h-px flex-1 bg-[color:var(--color-rule)]" />
+            <span className="text-[0.56rem] uppercase tracking-[0.28em] text-[color:var(--color-charcoal-soft)]">
+              or
+            </span>
+            <span className="h-px flex-1 bg-[color:var(--color-rule)]" />
+          </div>
+
+          <form action="/api/admin/password" method="post" className="mt-8">
+            <label className="block">
+              <span className="text-[0.56rem] uppercase tracking-[0.28em] text-[color:var(--color-charcoal-soft)]">
+                Passphrase
+              </span>
+              <input
+                type="password"
+                name="password"
+                required
+                autoComplete="current-password"
+                className="mt-2 w-[100%] border-b border-[color:var(--color-charcoal)] bg-transparent py-2.5 text-[0.95rem] outline-none transition-colors focus:border-[color:var(--color-clay)]"
+              />
+            </label>
+            <button
+              type="submit"
+              className="mt-6 w-[100%] border border-[color:var(--color-charcoal)] px-8 py-3.5 text-[0.68rem] uppercase tracking-[0.28em] transition-colors hover:bg-[color:var(--color-charcoal)] hover:text-[color:var(--color-ivory)]"
+            >
+              Sign in with passphrase
+            </button>
+          </form>
+        </>
       )}
     </div>
   );
