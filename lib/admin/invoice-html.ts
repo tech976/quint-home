@@ -1,5 +1,6 @@
 import type { Invoice, InvoiceCustomer } from "./orders";
 import { SUPPLIER, supplierAddressLines, supplierGaps } from "./supplier";
+import { amountInWords } from "./words";
 
 /**
  * Renders a tax invoice as self-contained HTML — no external CSS or fonts, so
@@ -45,8 +46,8 @@ export function invoiceHtml(inv: Invoice): string {
 
   // Only the columns that apply: CGST+SGST inside the state, IGST outside.
   const taxHeads = inter
-    ? `<th class="num">IGST 18%</th>`
-    : `<th class="num">CGST 9%</th><th class="num">SGST 9%</th>`;
+    ? `<th class="num">IGST</th>`
+    : `<th class="num">CGST</th><th class="num">SGST</th>`;
 
   const rows = inv.lines
     .map((l) => {
@@ -63,7 +64,9 @@ export function invoiceHtml(inv: Invoice): string {
         <td class="num">${l.quantity}</td>
         <td class="num">${money(l.unitPrice)}</td>
         <td class="num">${money(l.tax.taxable)}</td>
+        <td class="num">${l.tax.ratePercent}%</td>
         ${taxCells}
+        <td class="num">${money(0)}</td>
         <td class="num strong">${money(l.tax.gross)}</td>
       </tr>`;
     })
@@ -74,9 +77,11 @@ export function invoiceHtml(inv: Invoice): string {
         <td>Shipping</td><td class="hsn">—</td><td class="num">1</td>
         <td class="num">${money(inv.shipping.gross)}</td>
         <td class="num">${money(inv.shipping.taxable)}</td>
+        <td class="num">${inv.shipping.ratePercent}%</td>
         ${inter
           ? `<td class="num">${money(inv.shipping.igst)}</td>`
           : `<td class="num">${money(inv.shipping.cgst)}</td><td class="num">${money(inv.shipping.sgst)}</td>`}
+        <td class="num">${money(0)}</td>
         <td class="num strong">${money(inv.shipping.gross)}</td>
       </tr>`
     : "";
@@ -121,10 +126,22 @@ export function invoiceHtml(inv: Invoice): string {
   .sku{display:block;color:#a8a29e;font-size:10px;margin-top:2px}
   .flag{background:#fdf3e7;color:#c15a27;font-size:10px;padding:1px 5px;border-radius:3px}
   tfoot td{border-bottom:none;border-top:2px solid #1c1917;font-weight:600;padding-top:10px}
-  .summary{margin-top:20px;margin-left:auto;width:290px;font-size:12px}
-  .summary div{display:flex;justify-content:space-between;padding:5px 0}
-  .summary .grand{border-top:2px solid #1c1917;margin-top:6px;padding-top:9px;font-size:16px;font-weight:600}
-  .words{margin-top:14px;font-size:11px;color:#57534e}
+  .tablewrap{position:relative}
+  .paid{position:absolute;top:44%;left:50%;transform:translate(-50%,-50%) rotate(-16deg);
+        font-size:74px;font-weight:700;letter-spacing:.1em;color:rgba(28,25,23,.07);
+        pointer-events:none;z-index:0}
+  .tablewrap table{position:relative;z-index:1;background:transparent}
+  .summary{margin-top:20px;margin-left:auto;width:300px;font-size:12px}
+  .summary div{display:flex;justify-content:space-between;padding:5px 0;
+               border-bottom:1px solid #f5f5f4}
+  .summary .sub{color:#78716c}
+  .summary .grand{border-top:2px solid #1c1917;border-bottom:none;margin-top:6px;
+                  padding-top:9px;font-size:16px;font-weight:600}
+  .words{margin-top:18px;max-width:420px}
+  .words h4{font-size:10px;text-transform:uppercase;letter-spacing:.12em;
+            color:#78716c;margin:0 0 4px;font-weight:600}
+  .inwords{margin:0;font-size:12px;font-weight:600;line-height:1.5}
+  .fine{margin:8px 0 0;font-size:11px;color:#57534e}
   footer{margin-top:34px;border-top:1px solid #e7e5e4;padding-top:14px;
          display:flex;justify-content:space-between;gap:24px;font-size:11px;color:#57534e}
   .sign{text-align:right}
@@ -163,31 +180,47 @@ ${inv.needsAttention.length ? `<div class="warn noprint"><strong>Needs attention
   ${partyBlock("Ship to", inv.customer)}
 </div>
 
+<div class="tablewrap">
+<span class="paid" aria-hidden="true">PAID</span>
 <table>
   <thead><tr>
     <th>Item description</th><th>HSN</th><th class="num">Qty</th>
     <th class="num">Unit price</th><th class="num">Taxable value</th>
-    ${taxHeads}<th class="num">Total</th>
+    <th class="num">GST</th>${taxHeads}<th class="num">Discount</th><th class="num">Total</th>
   </tr></thead>
   <tbody>${rows}${shippingRow}</tbody>
   <tfoot><tr>
-    <td>Total</td><td></td><td class="num">${qty}</td><td></td>
+    <td>Total</td><td></td><td class="num">${qty}</td>
+    <td class="num">${money(inv.totals.gross)}</td>
     <td class="num">${money(inv.totals.taxable)}</td>
+    <td></td>
     ${totalTaxCells}
+    <td class="num">${money(0)}</td>
     <td class="num">${money(inv.totals.gross)}</td>
   </tr></tfoot>
 </table>
+</div>
 
 <div class="summary">
-  <div><span>Taxable value</span><span>${money(inv.totals.taxable)}</span></div>
+  <div><span>Discount</span><span>−${money(0)}</span></div>
+  <div><span>Total Before Tax</span><span>${money(inv.totals.taxable)}</span></div>
   ${inter
     ? `<div><span>IGST @ 18%</span><span>${money(inv.totals.igst)}</span></div>`
     : `<div><span>CGST @ 9%</span><span>${money(inv.totals.cgst)}</span></div>
        <div><span>SGST @ 9%</span><span>${money(inv.totals.sgst)}</span></div>`}
-  <div class="grand"><span>Total</span><span>${money(inv.totals.gross)}</span></div>
+  <div><span>Total Tax</span><span>${money(inv.totals.gst)}</span></div>
+  <div><span>Total After Tax</span><span>${money(inv.totals.gross)}</span></div>
+  <div class="sub"><span>Shipping Amount</span><span>${money(inv.shipping ? inv.shipping.taxable : 0)}</span></div>
+  <div class="sub"><span>Shipping Tax</span><span>${money(inv.shipping ? inv.shipping.gst : 0)}</span></div>
+  <div class="sub"><span>Shipping Total</span><span>${money(inv.shipping ? inv.shipping.gross : 0)}</span></div>
+  <div class="grand"><span>Grand Total</span><span>${money(inv.totals.gross)}</span></div>
 </div>
 
-<p class="words">Prices are inclusive of GST. Amounts in Indian Rupees.</p>
+<div class="words">
+  <h4>Total in words</h4>
+  <p class="inwords">${esc(amountInWords(inv.totals.gross).toUpperCase())}</p>
+  <p class="fine">Prices are inclusive of GST. Amounts in Indian Rupees.</p>
+</div>
 
 <footer>
   <div><strong>Thank you for your business.</strong><br />
