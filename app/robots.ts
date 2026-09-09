@@ -5,7 +5,7 @@ import { SITE } from "@/lib/seo";
  * Paths with nothing to index: a bag and a checkout are per-visitor, order
  * pages are private to the buyer, and /api is machinery.
  */
-const PRIVATE = ["/cart", "/checkout", "/order/", "/api/"];
+const PRIVATE = ["/cart", "/checkout", "/order/", "/api/", "/admin"];
 
 /**
  * Assistant crawlers, allowed deliberately rather than by omission.

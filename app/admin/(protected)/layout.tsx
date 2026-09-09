@@ -14,12 +14,6 @@ import { currentStaffShop } from "@/lib/admin/session";
  */
 export const dynamic = "force-dynamic";
 
-export const metadata = {
-  title: "Admin",
-  // Never index the back office, even if a URL leaks.
-  robots: { index: false, follow: false },
-};
-
 export default async function AdminLayout({
   children,
 }: {

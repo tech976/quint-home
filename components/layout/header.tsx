@@ -119,6 +119,7 @@ export function Header() {
   return (
     <>
       <header
+      data-site-chrome
         ref={headerRef}
         className={cn(
           "sticky top-0 z-40 will-change-transform",

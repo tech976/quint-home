@@ -19,25 +19,65 @@ export const dynamic = "force-dynamic";
  * wall — the real protection is a long passphrase. It is enough to stop casual
  * scripted guessing, and it costs nothing to run.
  */
-const WINDOW_MS = 15 * 60 * 1000;
-const MAX_ATTEMPTS = 8;
+const LOCKOUT_MS = 2 * 60 * 60 * 1000; // Two hours.
+const MAX_ATTEMPTS = 2;
 const attempts = new Map<string, { count: number; resetAt: number }>();
 
+/** Keeps the map from growing without bound on a long-lived instance. */
+function sweep(now: number): void {
+  for (const [key, entry] of attempts) {
+    if (now > entry.resetAt) attempts.delete(key);
+  }
+}
+
 function tooManyAttempts(ip: string, now: number): boolean {
+  sweep(now);
   const entry = attempts.get(ip);
-  if (!entry || now > entry.resetAt) {
-    attempts.set(ip, { count: 1, resetAt: now + WINDOW_MS });
+  if (!entry) {
+    attempts.set(ip, { count: 1, resetAt: now + LOCKOUT_MS });
+    return false;
+  }
+  if (now > entry.resetAt) {
+    attempts.set(ip, { count: 1, resetAt: now + LOCKOUT_MS });
     return false;
   }
   entry.count += 1;
+  // Each failure inside the window pushes the lockout out again, so an
+  // attacker cannot simply wait out the original expiry and continue.
+  entry.resetAt = now + LOCKOUT_MS;
   return entry.count > MAX_ATTEMPTS;
+}
+
+/**
+ * Obvious automation, refused before the passphrase is even examined.
+ *
+ * This is not a security boundary — a determined attacker sets a browser user
+ * agent — but it turns away the indiscriminate scanners that find a login form
+ * and start guessing, which is most of what a URL like this ever sees.
+ */
+const BOT_UA =
+  /bot|crawl|spider|scrap|curl|wget|python|java|go-http|libwww|httpclient|okhttp|axios|postman|insomnia|headless|phantom|selenium|puppeteer/i;
+
+function looksAutomated(request: NextRequest): boolean {
+  const ua = request.headers.get("user-agent") ?? "";
+  // No user agent at all is a script that did not bother to set one.
+  if (ua.trim().length < 8) return true;
+  if (BOT_UA.test(ua)) return true;
+  // A real submission comes from the form on our own login page.
+  const dest = request.headers.get("sec-fetch-dest");
+  const site = request.headers.get("sec-fetch-site");
+  if (dest && dest !== "document") return true;
+  if (site && site !== "same-origin") return true;
+  return false;
 }
 
 export async function POST(request: NextRequest) {
   const back = (reason: string) =>
     NextResponse.redirect(new URL(`/admin/login?error=${reason}`, request.url), 303);
 
-  if (!adminPasswordConfigured()) return back("nopass");
+  if (!adminPasswordConfigured()) return back("denied");
+
+  if (looksAutomated(request)) return back("denied");
 
   const now = Date.now();
   const ip =
@@ -46,9 +86,13 @@ export async function POST(request: NextRequest) {
     "unknown";
   if (tooManyAttempts(ip, now)) return back("throttled");
 
+  // A honeypot the real form leaves empty. Automation that fills every input
+  // it finds gives itself away here.
   const form = await request.formData();
+  if (String(form.get("company") ?? "").length > 0) return back("denied");
+
   const candidate = String(form.get("password") ?? "");
-  if (!candidate || !passwordMatches(candidate)) return back("badpass");
+  if (!candidate || !passwordMatches(candidate)) return back("denied");
 
   // Correct passphrase: clear the count so a valid user is not locked out by
   // their own earlier typos.

@@ -327,3 +327,13 @@ html.lenis body {
     scroll-behavior: auto !important;
   }
 }
+
+
+/* The back office borrows the root layout, which renders the storefront's
+   announcement bar, header, footer, bag drawer and WhatsApp button. Those name
+   the brand and link all over the site, so a sign-in page reached by someone
+   who was not told what it is would announce whose it is and offer a way in.
+   The markup cannot be removed from a parent layout, so it is hidden here. */
+body:has([data-admin-shell]) [data-site-chrome] {
+  display: none !important;
+}

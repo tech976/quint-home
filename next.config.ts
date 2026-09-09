@@ -27,6 +27,26 @@ const nextConfig: NextConfig = {
   // beforeFiles, because the host has to be inspected before the filesystem is
   // consulted — otherwise "/" on the subdomain would resolve to the storefront
   // home page before this rule was ever reached.
+  // The back office holds customer names, addresses and order totals, so it is
+  // locked down at the edge as well as in the app: never framed (no
+  // clickjacking a signed-in operator), never indexed, and no referrer leaking
+  // the URL to anything it links out to.
+  async headers() {
+    return [
+      {
+        source: "/:path(admin|admin/.*|api/admin/.*)",
+        headers: [
+          { key: "X-Robots-Tag", value: "noindex, nofollow, noarchive, nosnippet, noimageindex" },
+          { key: "X-Frame-Options", value: "DENY" },
+          { key: "Content-Security-Policy", value: "frame-ancestors 'none'" },
+          { key: "Referrer-Policy", value: "no-referrer" },
+          { key: "Cache-Control", value: "no-store, max-age=0, must-revalidate" },
+          { key: "X-Content-Type-Options", value: "nosniff" },
+        ],
+      },
+    ];
+  },
+
   async rewrites() {
     const onPdfHost = [{ type: "host" as const, value: "pdf.quinthome.in" }];
     return {

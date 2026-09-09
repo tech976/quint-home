@@ -3,7 +3,6 @@ import { adminPasswordConfigured, currentStaffShop } from "@/lib/admin/session";
 import { oauthConfigured } from "@/lib/shopify/oauth";
 
 export const dynamic = "force-dynamic";
-export const metadata = { title: "Sign in", robots: { index: false, follow: false } };
 
 /**
  * Sign-in is Shopify's own: completing the OAuth round trip proves the person
@@ -20,27 +19,21 @@ export default async function AdminLogin({
 
   return (
     <div className="mx-auto flex min-h-[70vh] max-w-[26rem] flex-col justify-center px-6">
-      <p className="text-[0.58rem] uppercase tracking-[0.32em] text-[color:var(--color-charcoal-soft)]">
-        Quint Home
-      </p>
-      <h1 className="mt-4" style={{ fontFamily: "var(--font-serif)", fontSize: "1.9rem", lineHeight: 1.1 }}>
-        GST &amp; Invoices
+      {/* Deliberately says nothing: no brand, no purpose, no hint about what
+          is behind it. Somebody who reaches this URL without being told what it
+          is should learn nothing from it. */}
+      <h1 style={{ fontFamily: "var(--font-serif)", fontSize: "1.6rem", lineHeight: 1.1 }}>
+        Sign in
       </h1>
-      <p className="mt-4 text-[0.85rem] leading-[1.7] text-[color:var(--color-charcoal-soft)]">
-        Sign in with the Shopify account that manages this store.
-      </p>
 
       {error && (
         <p className="mt-5 border-l-2 border-[color:var(--color-clay)] bg-[color:var(--color-stardust-soft)] p-3 text-[0.78rem] leading-[1.6]">
-          {error === "denied"
-            ? "Shopify did not confirm that account."
-            : error === "badpass"
-              ? "That passphrase was not correct."
-              : error === "throttled"
-                ? "Too many attempts. Please wait a few minutes and try again."
-                : error === "nopass"
-                  ? "Passphrase sign-in is not enabled on this deployment."
-                  : "Sign-in could not be completed. Please try again."}
+          {/* One message for every failure except the lockout. Naming the
+              reason would tell an attacker whether a passphrase was close, or
+              whether this deployment even has one. */}
+          {error === "throttled"
+            ? "Locked. Try again in 2 hours."
+            : "Sign-in failed."}
         </p>
       )}
 
@@ -49,20 +42,16 @@ export default async function AdminLogin({
           href="/api/admin/login"
           className="mt-8 inline-flex items-center justify-center gap-3 bg-[color:var(--color-charcoal)] px-8 py-4 text-[0.72rem] uppercase tracking-[0.3em] text-[color:var(--color-ivory)] transition-colors hover:bg-[color:var(--color-clay-deep)]"
         >
-          Continue with Shopify →
+          Continue with Shopify
         </a>
-      ) : (
-        <p className="mt-8 border-l-2 border-[color:var(--color-clay)] bg-[color:var(--color-stardust-soft)] p-4 text-[0.78rem] leading-[1.6]">
-          Shopify OAuth is not configured. Set <code>SHOPIFY_API_KEY</code> and{" "}
-          <code>SHOPIFY_API_SECRET</code> in Vercel, then redeploy.
-        </p>
-      )}
+      ) : null}
 
       {/* Passphrase, for somebody who needs the invoices but has no Shopify
           account — an accountant, typically. Hidden entirely when unset, so an
           unconfigured deployment shows no way in rather than a dead form. */}
       {adminPasswordConfigured() && (
         <>
+          {oauthConfigured() && (
           <div className="mt-10 flex items-center gap-4">
             <span className="h-px flex-1 bg-[color:var(--color-rule)]" />
             <span className="text-[0.56rem] uppercase tracking-[0.28em] text-[color:var(--color-charcoal-soft)]">
@@ -70,8 +59,20 @@ export default async function AdminLogin({
             </span>
             <span className="h-px flex-1 bg-[color:var(--color-rule)]" />
           </div>
+          )}
 
           <form action="/api/admin/password" method="post" className="mt-8">
+            {/* Honeypot. Hidden from people and from assistive technology, but
+                present in the markup, so automation that fills every field it
+                finds identifies itself. */}
+            <input
+              type="text"
+              name="company"
+              tabIndex={-1}
+              autoComplete="off"
+              aria-hidden="true"
+              className="absolute h-0 w-0 overflow-hidden opacity-0"
+            />
             <label className="block">
               <span className="text-[0.56rem] uppercase tracking-[0.28em] text-[color:var(--color-charcoal-soft)]">
                 Passphrase
