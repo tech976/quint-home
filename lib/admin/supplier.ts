@@ -1,0 +1,58 @@
+/**
+ * The supplier block that heads every tax invoice.
+ *
+ * A GST tax invoice must carry the supplier's registered name, full address and
+ * GSTIN, so these are compliance data rather than presentation copy — change
+ * them only against the GST registration certificate.
+ *
+ * The GSTIN below was checked before being written down: 15 characters, valid
+ * format, state code 27 (Maharashtra, which matches the place of supply used
+ * for the CGST/SGST split), PAN AIAPR7406F, and a checksum that verifies.
+ */
+export interface Supplier {
+  legalName: string;
+  addressLines: string[];
+  city: string;
+  state: string;
+  stateCode: string;
+  pin: string;
+  phone: string;
+  email: string;
+  gstin: string;
+}
+
+export const SUPPLIER: Supplier = {
+  legalName: "Rusera Lifestyle",
+  addressLines: ["54-57 Riddhi Siddhi CHS", "31st Floor, Flat 3102"],
+  // TODO(quint): confirm city and PIN against the GST registration certificate.
+  // The address supplied ended in "IN" with no city or PIN; a tax invoice needs
+  // the full registered address. Maharashtra is certain — it is encoded in the
+  // GSTIN's leading 27 — so only the city and PIN are outstanding.
+  city: "Mumbai",
+  state: "Maharashtra",
+  stateCode: "27",
+  pin: "",
+  phone: "+91 98196 16668",
+  email: "hello@quinthome.in",
+  gstin: "27AIAPR7406F1ZB",
+};
+
+/** Address as printed on the invoice, skipping anything not yet confirmed. */
+export function supplierAddressLines(s: Supplier = SUPPLIER): string[] {
+  const tail = [s.city, s.state, s.pin].filter(Boolean).join(", ");
+  return [...s.addressLines, tail].filter(Boolean);
+}
+
+/** True when nothing required by a tax invoice is still missing. */
+export function supplierIsComplete(s: Supplier = SUPPLIER): boolean {
+  return Boolean(s.legalName && s.gstin && s.city && s.state && s.pin);
+}
+
+/** Which required fields are still blank, for the dashboard to surface. */
+export function supplierGaps(s: Supplier = SUPPLIER): string[] {
+  const gaps: string[] = [];
+  if (!s.pin) gaps.push("PIN code");
+  if (!s.city) gaps.push("City");
+  if (!s.gstin) gaps.push("GSTIN");
+  return gaps;
+}
