@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { currentStaffShop } from "@/lib/admin/session";
 import { getInvoice } from "@/lib/admin/orders";
-import { invoiceHtml } from "@/lib/admin/invoice-html";
+import { invoiceHtml, invoiceFilename } from "@/lib/admin/invoice-html";
 
 export const dynamic = "force-dynamic";
 
@@ -43,7 +43,7 @@ export async function GET(
   };
   if (download) {
     headers["Content-Disposition"] =
-      `attachment; filename="Tax-Invoice-${invoice.invoiceNumber}.html"`;
+      `attachment; filename="${invoiceFilename(invoice)}.html"`;
   }
 
   return new NextResponse(invoiceHtml(invoice, { autoPrint }), { headers });
