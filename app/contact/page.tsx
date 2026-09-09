@@ -4,7 +4,9 @@ import { FadeUp } from "@/components/motion/fade-up";
 
 export const metadata: Metadata = {
   title: "Contact",
-  description: "Get in touch with Quint Home – WhatsApp or email.",
+  description:
+    "Questions about a diffuser, an oil or an order? Reach Quint Home on WhatsApp or at hello@quinthome.in. Based in Mumbai, shipping across India.",
+  alternates: { canonical: "/contact" },
 };
 
 export default function ContactPage() {

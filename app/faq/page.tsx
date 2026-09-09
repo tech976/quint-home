@@ -4,9 +4,13 @@ import type { Metadata } from "next";
 import { FadeUp } from "@/components/motion/fade-up";
 
 export const metadata: Metadata = {
-  title: "FAQ",
-  description: "Frequently asked questions about Quint Home diffusers and fragrance oils.",
+  title: "FAQ — Waterless Diffusers & Fragrance Oils",
+  description:
+    "How long an oil lasts, what coverage each diffuser gives, how waterless diffusion differs from ultrasonic, and how shipping and returns work.",
+  alternates: { canonical: "/faq" },
 };
+
+import { faqJsonLd, breadcrumbJsonLd, jsonLdScript } from "@/lib/structured-data";
 
 const groups = [
   {
@@ -62,7 +66,31 @@ const groups = [
 ];
 
 export default function FAQPage() {
+  const faqEntries = groups.flatMap((g) =>
+    g.items.map((it) => ({ q: it.q, a: it.a }))
+  );
+
   return (
+    <>
+      {/* Built from `groups` above rather than written out separately: Google
+          requires the marked-up question and answer to be visible on the page,
+          and a hand-kept copy would drift out of step with it. */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: jsonLdScript(faqJsonLd(faqEntries)) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: jsonLdScript(
+            breadcrumbJsonLd([
+              { name: "Home", path: "/" },
+              { name: "FAQ", path: "/faq" },
+            ])
+          ),
+        }}
+      />
+
     <article className="bg-[color:var(--color-white)]">
       {/* ====================================================
           § HERO
@@ -213,5 +241,6 @@ export default function FAQPage() {
         </div>
       </section>
     </article>
+    </>
   );
 }

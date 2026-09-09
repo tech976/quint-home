@@ -1,4 +1,6 @@
 import { notFound } from "next/navigation";
+import { productJsonLd, breadcrumbJsonLd, jsonLdScript } from "@/lib/structured-data";
+import { priceOf } from "@/lib/seo";
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
@@ -30,11 +32,31 @@ export async function generateMetadata({
   const { slug } = await params;
   const product = getDiffuser(slug) ?? getOil(slug);
   if (!product) return { title: "Not found" };
-  const kind = product.category === "oil" ? "Fragrance Oil" : "Diffuser";
-  const description = `${product.tagline} ${product.name} — a Quint Home ${kind.toLowerCase()}, hotel-grade home fragrance from Mumbai.`;
+  const isOil = product.category === "oil";
+  const kind = isOil ? "Fragrance Oil" : "Diffuser";
+
+  /**
+   * Titles led with the product name alone, which searchers never type — a
+   * name like "The Loom" or "Blanc Ritual" carries no category signal at all.
+   * The descriptor after the name is what makes the page findable for the
+   * phrases people actually use, and it is built from the catalogue so it
+   * cannot drift from what the page shows.
+   */
+  const descriptor = isOil
+    ? `IFRA Fragrance Oil, ${"volumeML" in product ? product.volumeML : 50} ml`
+    : "bluetooth" in product && product.bluetooth
+      ? `Waterless Diffuser, ${product.coverageLabel}`
+      : "Waterless Plug-In Diffuser";
+
+  const title = `${product.name} — ${descriptor}`;
+
+  const description = isOil
+    ? `${product.tagline} A ${"volumeML" in product ? product.volumeML : 50} ml IFRA-compliant fragrance oil at 70–90% concentration, for any Quint Home waterless diffuser.`
+    : `${product.tagline} A waterless electronic diffuser covering ${"coverageLabel" in product ? product.coverageLabel : "your space"}, with the fragrance oil of your choice included.`;
+
   const ogTitle = `${product.name} — Quint Home ${kind}`;
   return {
-    title: product.name,
+    title,
     description,
     alternates: { canonical: `/range/${slug}` },
     openGraph: {
@@ -76,8 +98,30 @@ export default async function ProductPage({
   const commerce = await getCommerceByName(product.name);
   const commerceMap = await getCommerceMap();
 
+  // Priced through the same lookup the buy box uses, so the markup can never
+  // advertise a figure the page does not show — which Google treats as spam.
+  const price = priceOf(product, commerceMap);
+
   return (
     <article id="top" className="bg-[color:var(--color-white)]">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: jsonLdScript(productJsonLd(product, commerce, price)),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: jsonLdScript(
+            breadcrumbJsonLd([
+              { name: "Home", path: "/" },
+              { name: "The Range", path: "/range" },
+              { name: product.name, path: `/range/${product.slug}` },
+            ])
+          ),
+        }}
+      />
       {/* §  PRODUCT  –  images left; overview, key features & technical specs on the right */}
       <DiffuserHero product={product} commerce={commerce} commerceMap={commerceMap} />
 
@@ -187,9 +231,29 @@ async function OilProductPage({ oil }: { oil: FragranceOil }) {
 
   const commerce = await getCommerceByName(oil.name);
   const commerceMap = await getCommerceMap();
+  const price = priceOf(oil, commerceMap);
 
   return (
     <article id="top" className="bg-[color:var(--color-white)]">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: jsonLdScript(productJsonLd(oil, commerce, price)),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: jsonLdScript(
+            breadcrumbJsonLd([
+              { name: "Home", path: "/" },
+              { name: "The Range", path: "/range" },
+              { name: oil.name, path: `/range/${oil.slug}` },
+            ])
+          ),
+        }}
+      />
+
       {/* §  PRODUCT – gallery + buy box + bundle */}
       <OilHero oil={oil} commerce={commerce} commerceMap={commerceMap} />
 

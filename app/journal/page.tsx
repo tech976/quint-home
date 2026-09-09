@@ -1,8 +1,17 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { Monogram } from "@/components/brand/logo";
 import Image from "next/image";
 import { journal } from "@/lib/data/journal";
 import { FadeUp } from "@/components/motion/fade-up";
+
+/** Without this the page inherited the layout's bare "Quint Home" title. */
+export const metadata: Metadata = {
+  title: "Journal — Writing on Scent, Diffusers and the Home",
+  description:
+    "How waterless diffusion works, how to read a scent profile, and why we build home fragrance the way we do. Written by the founders of Quint Home.",
+  alternates: { canonical: "/journal" },
+};
 
 export default function JournalPage() {
   return (

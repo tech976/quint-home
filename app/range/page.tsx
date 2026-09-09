@@ -11,9 +11,9 @@ import { DiffuserCompare } from "@/components/sections/diffuser-compare";
 import { getCommerceMap, shopifyHandle } from "@/lib/shopify/commerce";
 
 export const metadata: Metadata = {
-  title: "The Range",
+  title: "Diffusers & Fragrance Oils — The Full Range",
   description:
-    "Diffusers and fragrance oils – the full Quint Home range. IFRA-compliant.",
+    "Five waterless electronic diffusers and eight IFRA-compliant 50 ml fragrance oils. Coverage from 250 to 1,075 sq ft, app control over Bluetooth, shipped across India.",
   alternates: { canonical: "/range" },
 };
 

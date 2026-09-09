@@ -3,9 +3,10 @@ import Image from "next/image";
 import { FadeUp } from "@/components/motion/fade-up";
 
 export const metadata: Metadata = {
-  title: "For Businesses",
+  title: "Scenting for Hotels, Retail & Offices",
   description:
-    "Scent your space – commercial diffusers, bulk orders, and personalized scent development for hotels, restaurants, retail, and workspaces.",
+    "Commercial diffusers, bulk fragrance oil and bespoke scent development for hotels, restaurants, retail and workspaces across India.",
+  alternates: { canonical: "/businesses" },
 };
 
 const offerings = [

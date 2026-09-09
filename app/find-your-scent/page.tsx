@@ -2,14 +2,18 @@ import type { Metadata } from "next";
 import { ScentFinder } from "@/components/sections/scent-finder";
 
 export const metadata: Metadata = {
-  title: "Find Your Scent",
+  title: "Find Your Scent — Home Fragrance Oil Quiz",
   description:
-    "Answer two quick questions and we'll point you to one of the Quint Home fragrance oils.",
+    "Answer two quick questions and we'll match you to one of eight IFRA-compliant Quint Home fragrance oils. 50 ml, 70–90% concentration, made in Mumbai.",
+  alternates: { canonical: "/find-your-scent" },
 };
 
 export default function FindYourScentPage() {
   return (
     <article className="bg-[color:var(--color-white)] pt-6 md:pt-10">
+      {/* The quiz renders step headings only, so the page carried no h1.
+          Hidden rather than shown, since the first step is its own headline. */}
+      <h1 className="sr-only">Find your home fragrance oil</h1>
       <ScentFinder />
     </article>
   );
