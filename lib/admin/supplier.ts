@@ -24,14 +24,10 @@ export interface Supplier {
 export const SUPPLIER: Supplier = {
   legalName: "Rusera Lifestyle",
   addressLines: ["54-57 Riddhi Siddhi CHS", "31st Floor, Flat 3102"],
-  // TODO(quint): confirm city and PIN against the GST registration certificate.
-  // The address supplied ended in "IN" with no city or PIN; a tax invoice needs
-  // the full registered address. Maharashtra is certain — it is encoded in the
-  // GSTIN's leading 27 — so only the city and PIN are outstanding.
   city: "Mumbai",
   state: "Maharashtra",
   stateCode: "27",
-  pin: "",
+  pin: "400019",
   phone: "+91 98196 16668",
   email: "hello@quinthome.in",
   gstin: "27AIAPR7406F1ZB",
