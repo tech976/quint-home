@@ -20,6 +20,28 @@ const nextConfig: NextConfig = {
     // during editing; a short TTL re-optimises promptly.
     minimumCacheTTL: 60,
   },
+  // pdf.quinthome.in serves the invoice back office. A rewrite rather than a
+  // second deployment: one project, one set of environment variables, and no
+  // chance of the two drifting apart.
+  //
+  // beforeFiles, because the host has to be inspected before the filesystem is
+  // consulted — otherwise "/" on the subdomain would resolve to the storefront
+  // home page before this rule was ever reached.
+  async rewrites() {
+    const onPdfHost = [{ type: "host" as const, value: "pdf.quinthome.in" }];
+    return {
+      beforeFiles: [
+        // The subdomain root is the dashboard.
+        { source: "/", has: onPdfHost, destination: "/admin" },
+        // Everything else maps onto /admin/*, so pdf.quinthome.in/invoice/1012
+        // is the same page as quinthome.in/admin/invoice/1012.
+        { source: "/:path((?!api|_next|admin).*)", has: onPdfHost, destination: "/admin/:path" },
+      ],
+      afterFiles: [],
+      fallback: [],
+    };
+  },
+
   async redirects() {
     return [
       // Old model-code paths first, so they win over the catch-all below.
