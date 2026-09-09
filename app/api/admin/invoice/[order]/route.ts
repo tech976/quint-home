@@ -14,7 +14,7 @@ export const dynamic = "force-dynamic";
  * a layout, so without this check the URL would be public.
  */
 export async function GET(
-  _request: Request,
+  request: Request,
   { params }: { params: Promise<{ order: string }> }
 ) {
   if (!(await currentStaffShop())) {
@@ -30,11 +30,21 @@ export async function GET(
   const invoice = await getInvoice(orderNumber);
   if (!invoice) return new NextResponse("Order not found", { status: 404 });
 
-  return new NextResponse(invoiceHtml(invoice), {
-    headers: {
-      "Content-Type": "text/html; charset=utf-8",
-      "Cache-Control": "no-store",
-      "X-Robots-Tag": "noindex, nofollow",
-    },
-  });
+  const url = new URL(request.url);
+  // ?print=1 opens the browser's print dialog on load; ?download=1 saves the
+  // document as a file instead of rendering it in the tab.
+  const autoPrint = url.searchParams.get("print") === "1";
+  const download = url.searchParams.get("download") === "1";
+
+  const headers: Record<string, string> = {
+    "Content-Type": "text/html; charset=utf-8",
+    "Cache-Control": "no-store",
+    "X-Robots-Tag": "noindex, nofollow",
+  };
+  if (download) {
+    headers["Content-Disposition"] =
+      `attachment; filename="Tax-Invoice-${invoice.invoiceNumber}.html"`;
+  }
+
+  return new NextResponse(invoiceHtml(invoice, { autoPrint }), { headers });
 }

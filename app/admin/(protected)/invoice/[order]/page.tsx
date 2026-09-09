@@ -36,14 +36,26 @@ export default async function InvoicePage({
             Invoice {invoice.invoiceNumber}
           </h1>
         </div>
-        <a
-          href={`/api/admin/invoice/${orderNumber}`}
-          target="_blank"
-          rel="noreferrer"
-          className="bg-[color:var(--color-charcoal)] px-6 py-3 text-[0.68rem] uppercase tracking-[0.28em] text-[color:var(--color-ivory)] transition-colors hover:bg-[color:var(--color-clay-deep)]"
-        >
-          Open / print → PDF
-        </a>
+        <div className="flex flex-wrap items-center gap-3">
+          {/* Opens in a new tab and calls print() on load, so the PDF is two
+              clicks away rather than hidden in a browser menu. */}
+          <a
+            href={`/api/admin/invoice/${orderNumber}?print=1`}
+            target="_blank"
+            rel="noreferrer"
+            className="bg-[color:var(--color-charcoal)] px-6 py-3 text-[0.68rem] uppercase tracking-[0.28em] text-[color:var(--color-ivory)] transition-colors hover:bg-[color:var(--color-clay-deep)]"
+          >
+            Print / Save as PDF
+          </a>
+          {/* Saves the document itself, for anyone who wants the file rather
+              than a printout. */}
+          <a
+            href={`/api/admin/invoice/${orderNumber}?download=1`}
+            className="border border-[color:var(--color-charcoal)] px-6 py-3 text-[0.68rem] uppercase tracking-[0.28em] text-[color:var(--color-charcoal)] transition-colors hover:bg-[color:var(--color-charcoal)] hover:text-[color:var(--color-ivory)]"
+          >
+            Download
+          </a>
+        </div>
       </div>
 
       <iframe
