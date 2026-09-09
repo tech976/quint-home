@@ -69,8 +69,7 @@ export function invoiceHtml(inv: Invoice, opts: { autoPrint?: boolean } = {}): s
         ? `<td class="num">${money(l.tax.igst)}</td>`
         : `<td class="num">${money(l.tax.cgst)}</td><td class="num">${money(l.tax.sgst)}</td>`;
       return `<tr>
-        <td>${name}${l.unclassified ? ` <span class="flag">HSN unconfirmed</span>` : ""}
-            ${l.sku ? `<span class="sku">${esc(l.sku)}</span>` : ""}</td>
+        <td>${name}${l.unclassified ? ` <span class="flag">HSN unconfirmed</span>` : ""}</td>
         <td class="hsn">${esc(l.hsn)}</td>
         <td class="num">${l.quantity}</td>
         <td class="num">${money(l.unitPrice)}</td>
@@ -178,8 +177,6 @@ export function invoiceHtml(inv: Invoice, opts: { autoPrint?: boolean } = {}): s
   .strong{font-weight:600}
   .item{font-family:'Literata',Georgia,serif;font-size:13px;color:var(--charcoal)}
   .variant{color:var(--charcoal-soft);font-weight:400}
-  .sku{display:block;color:var(--aerial);font-size:9px;margin-top:3px;
-       letter-spacing:.1em;text-transform:uppercase}
   .flag{background:var(--clay);color:var(--ivory);font-size:8.5px;padding:2px 6px;
         letter-spacing:.08em;text-transform:uppercase}
   tfoot td{border-bottom:none;border-top:1.5px solid var(--charcoal);font-weight:600;
