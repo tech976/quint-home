@@ -10,7 +10,7 @@ import { PairBundle, type PairOption } from "@/components/product/pair-bundle";
 import { oils, oilNoteSummary } from "@/lib/data/oils";
 import { cn } from "@/lib/utils";
 import type { Diffuser } from "@/lib/types";
-import { shopifyHandle, type ShopifyCommerce } from "@/lib/shopify/commerce";
+import { shopifyHandle, sellableVariant, type ShopifyCommerce } from "@/lib/shopify/commerce";
 import { COMPLIMENTARY_OIL, giftVariantFor } from "@/lib/cart-gift";
 
 /**
@@ -38,7 +38,7 @@ export function DiffuserHero({
   const variant =
     colors && colors.length > 1
       ? commerce?.variants.find((v) => v.options.Finish === color?.name)
-      : commerce?.variants[0];
+      : sellableVariant(commerce);
 
   const gallery = color?.gallery ?? product.gallery;
 
@@ -78,7 +78,7 @@ export function DiffuserHero({
     // Shopify is the source of truth for price. Quoting the catalogue figure
     // here while adding the Shopify variant to the bag is how the bundle came
     // to promise one total and charge another.
-    const oilVariant = commerceMap?.[shopifyHandle(o.name)]?.variants[0];
+    const oilVariant = sellableVariant(commerceMap?.[shopifyHandle(o.name)]);
     return {
       slug: o.slug,
       name: o.name,

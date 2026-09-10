@@ -23,6 +23,22 @@ export interface ShopifyCommerce {
   variants: ShopifyVariant[];
 }
 
+/**
+ * The variant a shopper buys.
+ *
+ * Never `variants[0]`: Shopify returns variants in its own order, and each oil
+ * now carries a ₹0 gift variant alongside the paid bottle. Taking the first one
+ * would sooner or later hand out a free oil in the buy box, or price a bundle
+ * at zero. The first variant with a price above zero is the sellable one; if a
+ * product somehow has only free variants, none is returned rather than
+ * defaulting to the gift.
+ */
+export function sellableVariant(
+  commerce: ShopifyCommerce | undefined
+): ShopifyVariant | undefined {
+  return commerce?.variants.find((v) => v.price > 0);
+}
+
 /** Shopify auto-generates handles from the title – mirror that from a name. */
 export function shopifyHandle(name: string): string {
   return name

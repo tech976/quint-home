@@ -160,7 +160,10 @@ export async function createGiftVariants(
       }
 
       // Match the paid bottle's weight so the parcel is declared correctly.
-      const paid = product.variants[0];
+      // The paid bottle, explicitly — variants[0] could be a gift left by an
+      // earlier partial run, and copying its zero weight would under-declare
+      // the parcel.
+      const paid = product.variants.find((v) => Number(v.price) > 0);
       const sku = `${(paid?.sku || `OIL-${handleFor(oil.name).toUpperCase()}`)}-GIFT`;
 
       const created = await admin<{ variant: RawVariant }>(

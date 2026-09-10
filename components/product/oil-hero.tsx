@@ -9,7 +9,7 @@ import { MobileBuyBar } from "@/components/product/mobile-buy-bar";
 import { PairBundle, type PairOption } from "@/components/product/pair-bundle";
 import { diffusers } from "@/lib/data/diffusers";
 import type { FragranceOil } from "@/lib/types";
-import { shopifyHandle, type ShopifyCommerce } from "@/lib/shopify/commerce";
+import { shopifyHandle, sellableVariant, type ShopifyCommerce } from "@/lib/shopify/commerce";
 import { COMPLIMENTARY_OIL } from "@/lib/cart-gift";
 
 /**
@@ -27,11 +27,11 @@ export function OilHero({
   /** Whole catalogue, so bundle partners can resolve their Shopify variant. */
   commerceMap?: Record<string, ShopifyCommerce>;
 }) {
-  const variant = commerce?.variants[0];
+  const variant = sellableVariant(commerce);
   // Pair-with-a-diffuser options for the bundle control.
   const diffuserOptions: PairOption[] = diffusers.map((d) => {
     // Priced from Shopify, for the same reason as the oils on the diffuser PDP.
-    const diffuserVariant = commerceMap?.[shopifyHandle(d.name)]?.variants[0];
+    const diffuserVariant = sellableVariant(commerceMap?.[shopifyHandle(d.name)]);
     return {
       slug: d.slug,
       name: d.name,
