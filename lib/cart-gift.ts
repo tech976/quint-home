@@ -69,7 +69,7 @@ export function giftOnLine(
 export function giftVariantFor(
   oilName: string,
   commerce: Record<string, ShopifyCommerce> | undefined
-): { id: string; weightGrams: number } | null {
+): { id: string } | null {
   const entry = commerce?.[shopifyHandle(oilName)];
   // Availability matters as much as price. Gift variants are stocked with
   // inventory_policy "deny", so once they run out Shopify rejects the line —
@@ -78,7 +78,11 @@ export function giftVariantFor(
   // itself. Returning null instead adds the diffuser alone, still carrying the
   // note that records the bottle owed.
   const free = entry?.variants.find((v) => v.price === 0 && v.available);
-  return free ? { id: free.id, weightGrams: 0 } : null;
+  // Weight is deliberately not returned. The cart reads it from Shopify's own
+  // variant record (lib/shopify/cart.ts), which is what the courier is
+  // declared against — carrying a second copy here would be a number that
+  // could disagree with the parcel.
+  return free ? { id: free.id } : null;
 }
 
 /** True when this variant id is a ₹0 gift variant of some oil. */

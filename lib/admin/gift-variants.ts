@@ -179,6 +179,10 @@ export async function createGiftVariants(
               inventory_management: "shopify",
               // Never oversell a gift: running out must be visible, not silent.
               inventory_policy: "deny",
+              // Copied from the paid bottle so the parcel is declared
+              // correctly. A 50 ml glass bottle is nowhere near weightless, so
+              // an unset weight upstream is reported rather than silently
+              // becoming zero and under-declaring every shipment.
               grams: paid?.grams ?? 0,
               taxable: true,
               requires_shipping: true,
@@ -194,6 +198,13 @@ export async function createGiftVariants(
         variantId: created.variant.id,
         sku: created.variant.sku ?? sku,
         inventorySet: set,
+        ...(paid?.grams
+          ? {}
+          : {
+              detail:
+                "Paid bottle has no weight set in Shopify, so this gift " +
+                "variant is 0 g — set both, or the courier is under-declared.",
+            }),
       });
     } catch (e) {
       results.push({
