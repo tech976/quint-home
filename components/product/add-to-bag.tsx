@@ -13,6 +13,13 @@ interface Props {
   available?: boolean;
   /** Buyer choices to carry on the cart line, e.g. the included oil. */
   attributes?: { key: string; value: string }[];
+  /**
+   * The ₹0 variant of the complimentary oil, added as its own line so stock
+   * moves and the parcel has a provable contents list. Undefined on pages that
+   * do not include an oil; null when the chosen scent has no gift variant set
+   * up yet, which adds the diffuser alone rather than blocking the sale.
+   */
+  giftVariantId?: string | null;
 }
 
 export function AddToBag({
@@ -25,10 +32,11 @@ export function AddToBag({
   variantId,
   available = true,
   attributes,
+  giftVariantId,
 }: Props) {
   const [mode, setMode] = useState<"one-time" | "subscribe">("one-time");
   const subscribePrice = Math.round(priceINR * 0.85);
-  const { add, pending } = useCart();
+  const { add, addWithGift, pending } = useCart();
   const soldOut = !available;
 
   return (
@@ -133,7 +141,16 @@ export function AddToBag({
       <button
         type="button"
         disabled={soldOut || !variantId || pending}
-        onClick={() => variantId && add(variantId, 1, attributes)}
+        onClick={() => {
+          if (!variantId) return;
+          // One mutation for both lines: a diffuser must never reach the bag
+          // without the bottle it ships with.
+          if (giftVariantId !== undefined) {
+            addWithGift(variantId, giftVariantId, attributes);
+          } else {
+            add(variantId, 1, attributes);
+          }
+        }}
         className="group relative mt-2 inline-flex h-14 items-center justify-center gap-3 overflow-hidden bg-[color:var(--color-charcoal)] px-8 text-[0.74rem] uppercase tracking-[0.32em] text-[color:var(--color-ivory)] transition-colors duration-500 hover:bg-[color:var(--color-clay-deep)] disabled:cursor-not-allowed disabled:opacity-50"
       >
         <span className="relative z-10">

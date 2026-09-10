@@ -11,7 +11,7 @@ import { oils, oilNoteSummary } from "@/lib/data/oils";
 import { cn } from "@/lib/utils";
 import type { Diffuser } from "@/lib/types";
 import { shopifyHandle, type ShopifyCommerce } from "@/lib/shopify/commerce";
-import { COMPLIMENTARY_OIL } from "@/lib/cart-gift";
+import { COMPLIMENTARY_OIL, giftVariantFor } from "@/lib/cart-gift";
 
 /**
  * Diffuser PDP – images on the left (sticky), and a single right column. The
@@ -57,6 +57,10 @@ export function DiffuserHero({
   // Shopify order and on the packing slip. Every path that puts a diffuser in
   // the bag has to carry it, or the scent the customer picked is lost (which is
   // exactly what the bundle button used to do).
+  // The ₹0 variant of whichever scent is selected. Null when the store has no
+  // gift variant for it yet — the note still records what is owed.
+  const giftVariantId = giftVariantFor(selectedOil.name, commerceMap)?.id ?? null;
+
   const complimentaryOil = [
     {
       key: COMPLIMENTARY_OIL,
@@ -297,6 +301,7 @@ export function DiffuserHero({
                 variantId={variant?.id}
                 available={variant?.available ?? true}
                 attributes={complimentaryOil}
+                giftVariantId={giftVariantId}
               />
             </div>
           </FadeUp>

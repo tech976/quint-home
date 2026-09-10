@@ -11,6 +11,8 @@ import { CART_COOKIE, PENDING_ORDER_COOKIE } from "@/lib/shopify/cart-cookie";
 import { verifyPayuResponse, verifyPaymentWithPayu } from "@/lib/payu/client";
 import { createPaidOrder, shopifyAdminConfigured } from "@/lib/shopify/admin";
 import { shippingFor } from "@/lib/checkout-config";
+import { getCommerceMap } from "@/lib/shopify/commerce";
+import { auditCartGifts } from "@/lib/cart-gift-guard";
 
 export const dynamic = "force-dynamic";
 
@@ -89,6 +91,19 @@ export async function POST(request: NextRequest) {
     console.error("[payu] PAID BUT CART GONE — reconcile manually", {
       txnid,
       mihpayid: verified.mihpayid,
+    });
+    return redirect(request, `/order/confirmed?ref=${encodeURIComponent(txnid)}&pending=1`);
+  }
+
+  // Re-checked here as well as at initiate: the bag is a cookie the buyer
+  // controls, and it can change between the payment page and this callback.
+  const commerce = await getCommerceMap();
+  const gifts = auditCartGifts(cart, commerce);
+  if (!gifts.ok) {
+    console.error("[payu] PAID BUT GIFTS UNEARNED — reconcile manually", {
+      txnid,
+      giftQuantity: gifts.giftQuantity,
+      diffuserQuantity: gifts.diffuserQuantity,
     });
     return redirect(request, `/order/confirmed?ref=${encodeURIComponent(txnid)}&pending=1`);
   }

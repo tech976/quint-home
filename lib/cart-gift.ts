@@ -1,4 +1,6 @@
 import { oils } from "@/lib/data/oils";
+import { diffusers } from "@/lib/data/diffusers";
+import { shopifyHandle, type ShopifyCommerce } from "@/lib/shopify/commerce";
 
 /**
  * Property name the complimentary oil travels under — on the cart line, on the
@@ -16,6 +18,24 @@ export interface CartGift {
   href: string | null;
 }
 
+/**
+ * True when a cart line is itself the ₹0 gift bottle.
+ *
+ * Once the gift is a real line, the bag would otherwise show it twice: once as
+ * the actual ₹0 row and again as the synthetic row derived from the diffuser's
+ * property. The real line wins — it is what ships and what stock came off — and
+ * the diffuser's synthetic row is suppressed.
+ */
+export function lineIsGift(line: {
+  price: number;
+  attributes?: { key: string; value: string }[];
+}): boolean {
+  return (
+    line.price === 0 &&
+    (line.attributes ?? []).some((a) => a.key === COMPLIMENTARY_OIL)
+  );
+}
+
 /** The complimentary oil recorded on a line, or null if it carries none. */
 export function giftOnLine(
   attributes: { key: string; value: string }[] | undefined
@@ -31,6 +51,52 @@ export function giftOnLine(
     image: oil?.image ?? null,
     href: oil ? `/range/${oil.slug}` : null,
   };
+}
+
+/**
+ * The ₹0 variant that carries the complimentary oil.
+ *
+ * Every diffuser ships with an oil, and that bottle has to leave the warehouse
+ * as a real line: otherwise stock never moves, the packer has only a note to go
+ * on, and a courier claim has no proof the oil was in the parcel. So the gift
+ * is a genuine Shopify variant priced at zero rather than a property on the
+ * diffuser's line.
+ *
+ * Identified by price rather than by name, since the variant's title is
+ * whatever the store calls it. A zero-priced variant of an oil is a gift
+ * variant by definition — nothing else in the catalogue is free.
+ */
+export function giftVariantFor(
+  oilName: string,
+  commerce: Record<string, ShopifyCommerce> | undefined
+): { id: string; weightGrams: number } | null {
+  const entry = commerce?.[shopifyHandle(oilName)];
+  const free = entry?.variants.find((v) => v.price === 0);
+  return free ? { id: free.id, weightGrams: 0 } : null;
+}
+
+/** True when this variant id is a ₹0 gift variant of some oil. */
+export function isGiftVariant(
+  merchandiseId: string,
+  commerce: Record<string, ShopifyCommerce> | undefined
+): boolean {
+  if (!commerce) return false;
+  return oils.some((o) =>
+    commerce[shopifyHandle(o.name)]?.variants.some(
+      (v) => v.id === merchandiseId && v.price === 0
+    )
+  );
+}
+
+/** True when this variant id belongs to a diffuser — what earns a gift. */
+export function isDiffuserVariant(
+  merchandiseId: string,
+  commerce: Record<string, ShopifyCommerce> | undefined
+): boolean {
+  if (!commerce) return false;
+  return diffusers.some((d) =>
+    commerce[shopifyHandle(d.name)]?.variants.some((v) => v.id === merchandiseId)
+  );
 }
 
 /** Everything except the gift, which the bag renders as its own row instead. */

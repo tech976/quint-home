@@ -59,6 +59,31 @@ export async function addToCartAction(
   return cartLinesAdd(cartId, [{ merchandiseId, quantity, attributes }]);
 }
 
+/**
+ * Adds a diffuser together with its complimentary ₹0 oil, in one mutation.
+ *
+ * Two separate calls could half-succeed and leave a diffuser in the bag with no
+ * oil beside it — the customer would then be charged correctly but shipped
+ * short, and nothing in the order would show the bottle was owed. cartLinesAdd
+ * takes both lines at once, so either both land or neither does.
+ */
+export async function addDiffuserWithGiftAction(
+  diffuserVariantId: string,
+  giftVariantId: string | null,
+  attributes?: { key: string; value: string }[]
+): Promise<Cart> {
+  const cartId = await ensureCart();
+  const lines = [
+    { merchandiseId: diffuserVariantId, quantity: 1, attributes },
+    // No gift variant configured for this scent yet: add the diffuser rather
+    // than blocking the sale, and the attribute still records what is owed.
+    ...(giftVariantId
+      ? [{ merchandiseId: giftVariantId, quantity: 1, attributes }]
+      : []),
+  ];
+  return cartLinesAdd(cartId, lines);
+}
+
 export async function updateLineAction(
   lineId: string,
   quantity: number

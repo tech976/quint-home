@@ -88,11 +88,17 @@ export function invoiceHtml(inv: Invoice, opts: { autoPrint?: boolean } = {}): s
       const name = l.variantTitle && l.variantTitle !== "Default Title"
         ? `<span class="item">${esc(l.title)} <span class="variant">· ${esc(l.variantTitle)}</span></span>`
         : `<span class="item">${esc(l.title)}</span>`;
+      // A ₹0 line is the complimentary bottle. Labelling it says plainly why
+      // the row is free, which is what a courier claim or an assessing officer
+      // needs to see — a bare zero looks like an error.
+      const isGift = l.tax.gross === 0;
       const taxCells = inter
         ? `<td class="num">${money(l.tax.igst)}</td>`
         : `<td class="num">${money(l.tax.cgst)}</td><td class="num">${money(l.tax.sgst)}</td>`;
       return `<tr>
-        <td>${name}${l.unclassified ? ` <span class="flag">HSN unconfirmed</span>` : ""}</td>
+        <td>${name}${l.unclassified ? ` <span class="flag">HSN unconfirmed</span>` : ""}${
+          isGift ? ` <span class="gift">Complimentary</span>` : ""
+        }</td>
         <td class="hsn">${esc(l.hsn)}</td>
         <td class="num">${l.quantity}</td>
         <td class="num">${money(l.unitPrice)}</td>
@@ -100,7 +106,7 @@ export function invoiceHtml(inv: Invoice, opts: { autoPrint?: boolean } = {}): s
         <td class="num">${l.tax.ratePercent}%</td>
         ${taxCells}
         <td class="num">${money(0)}</td>
-        <td class="num strong">${money(l.tax.gross)}</td>
+        <td class="num strong">${isGift ? "Free" : money(l.tax.gross)}</td>
       </tr>`;
     })
     .join("");
@@ -202,6 +208,9 @@ export function invoiceHtml(inv: Invoice, opts: { autoPrint?: boolean } = {}): s
   .variant{color:var(--charcoal-soft);font-weight:400}
   .flag{background:var(--clay);color:var(--ivory);font-size:8.5px;padding:2px 6px;
         letter-spacing:.08em;text-transform:uppercase}
+  .gift{display:inline-block;margin-left:6px;color:var(--clay);font-size:8.5px;
+        letter-spacing:.14em;text-transform:uppercase;font-weight:600;
+        vertical-align:1px}
   tfoot td{border-bottom:none;border-top:1.5px solid var(--charcoal);font-weight:600;
            padding-top:11px;background:var(--white)}
 

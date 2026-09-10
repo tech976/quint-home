@@ -12,6 +12,7 @@ import type { Cart } from "@/lib/shopify/cart";
 import {
   getCartAction,
   addToCartAction,
+  addDiffuserWithGiftAction,
   updateLineAction,
   removeLineAction,
 } from "@/app/actions/cart";
@@ -28,6 +29,12 @@ interface CartContextValue {
   add: (
     merchandiseId: string,
     quantity?: number,
+    attributes?: { key: string; value: string }[]
+  ) => void;
+  /** Adds a diffuser and its complimentary ₹0 oil as one mutation. */
+  addWithGift: (
+    diffuserVariantId: string,
+    giftVariantId: string | null,
     attributes?: { key: string; value: string }[]
   ) => void;
   update: (lineId: string, quantity: number) => void;
@@ -70,6 +77,30 @@ export function CartProvider({
     []
   );
 
+  const addWithGift = useCallback(
+    (
+      diffuserVariantId: string,
+      giftVariantId: string | null,
+      attributes?: { key: string; value: string }[]
+    ) => {
+      setOpen(true);
+      startTransition(async () => {
+        try {
+          setCart(
+            await addDiffuserWithGiftAction(
+              diffuserVariantId,
+              giftVariantId,
+              attributes
+            )
+          );
+        } catch (e) {
+          console.error("add diffuser with gift failed", e);
+        }
+      });
+    },
+    []
+  );
+
   const update = useCallback((lineId: string, quantity: number) => {
     startTransition(async () => {
       try {
@@ -104,6 +135,7 @@ export function CartProvider({
         headlessCheckout,
         setOpen,
         add,
+        addWithGift,
         update,
         remove,
       }}

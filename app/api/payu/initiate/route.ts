@@ -17,6 +17,8 @@ import {
   payuConfigured,
 } from "@/lib/payu/client";
 import { shippingFor } from "@/lib/checkout-config";
+import { getCommerceMap } from "@/lib/shopify/commerce";
+import { auditCartGifts } from "@/lib/cart-gift-guard";
 
 /** Payment must never be served from a cache. */
 export const dynamic = "force-dynamic";
@@ -50,6 +52,19 @@ export async function POST(request: NextRequest) {
   const cart = cartId ? await cartGet(cartId) : null;
   if (!cart || cart.lines.length === 0) {
     return NextResponse.redirect(new URL("/cart?error=empty", request.url), 303);
+  }
+
+  // The complimentary oil is a real ₹0 variant, which means it is publicly
+  // addressable. Refuse a bag claiming more free oils than diffusers before a
+  // payment page is ever shown.
+  const commerce = await getCommerceMap();
+  const gifts = auditCartGifts(cart, commerce);
+  if (!gifts.ok) {
+    console.warn("[payu] refused: unearned complimentary oils", {
+      giftQuantity: gifts.giftQuantity,
+      diffuserQuantity: gifts.diffuserQuantity,
+    });
+    return NextResponse.redirect(new URL("/cart?error=gift", request.url), 303);
   }
 
   const subtotal = cart.subtotal;

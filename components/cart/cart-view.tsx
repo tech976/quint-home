@@ -6,7 +6,7 @@ import { formatINR } from "@/lib/utils";
 import { FadeUp } from "@/components/motion/fade-up";
 import { Monogram } from "@/components/brand/logo";
 import { FREE_SHIPPING_FROM, shippingFor } from "@/lib/checkout-config";
-import { giftOnLine, otherAttributes } from "@/lib/cart-gift";
+import { giftOnLine, lineIsGift, otherAttributes } from "@/lib/cart-gift";
 import { GiftLine, InTheBox } from "./gift-line";
 
 export function CartView() {
@@ -97,7 +97,10 @@ export function CartView() {
         <div className="md:col-span-7">
           <ul>
             {lines.map((l) => {
-              const gift = giftOnLine(l.attributes);
+              // The gift now arrives as its own ₹0 line, so the synthetic row is only
+              // drawn when this line is the diffuser rather than the bottle itself.
+              const isGift = lineIsGift(l);
+              const gift = isGift ? null : giftOnLine(l.attributes);
               const row = (
                 <div className="flex gap-5">
                 <Link
@@ -131,8 +134,15 @@ export function CartView() {
                     >
                       {l.productTitle}
                     </Link>
-                    <span className="shrink-0 text-[0.95rem] tabular-nums">
-                      {formatINR(l.price * l.quantity)}
+                    <span
+                      className={`shrink-0 text-[0.95rem] tabular-nums ${
+                        isGift ? "text-[color:var(--color-clay)]" : ""
+                      }`}
+                      style={isGift ? { fontFamily: "var(--font-serif)" } : undefined}
+                    >
+                      {/* "Free", never ₹0 — a zero in the price column reads as
+                          a bug rather than as a gift. */}
+                      {isGift ? "Free" : formatINR(l.price * l.quantity)}
                     </span>
                   </div>
 

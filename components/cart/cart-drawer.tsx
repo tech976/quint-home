@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useCart } from "./cart-provider";
 import { formatINR } from "@/lib/utils";
-import { giftOnLine, otherAttributes } from "@/lib/cart-gift";
+import { giftOnLine, lineIsGift, otherAttributes } from "@/lib/cart-gift";
 import { GiftLine, InTheBox } from "./gift-line";
 
 export function CartDrawer() {
@@ -61,7 +61,10 @@ export function CartDrawer() {
           <>
             <div className="flex-1 overflow-y-auto px-6 py-2">
               {lines.map((l) => {
-                const gift = giftOnLine(l.attributes);
+                // The gift now arrives as its own ₹0 line, so the synthetic row is only
+                // drawn when this line is the diffuser rather than the bottle itself.
+                const isGift = lineIsGift(l);
+                const gift = isGift ? null : giftOnLine(l.attributes);
                 const row = (
                   <div className="flex gap-4">
                   <div className="relative h-20 w-16 shrink-0 overflow-hidden bg-[color:var(--color-stardust-soft)]">
@@ -107,8 +110,13 @@ export function CartDrawer() {
                           +
                         </button>
                       </div>
-                      <span className="text-[0.9rem] tabular-nums">
-                        {formatINR(l.price * l.quantity)}
+                      <span
+                        className={`text-[0.9rem] tabular-nums ${
+                          isGift ? "text-[color:var(--color-clay)]" : ""
+                        }`}
+                        style={isGift ? { fontFamily: "var(--font-serif)" } : undefined}
+                      >
+                        {isGift ? "Free" : formatINR(l.price * l.quantity)}
                       </span>
                     </div>
                   </div>
