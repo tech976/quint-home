@@ -71,7 +71,13 @@ export function giftVariantFor(
   commerce: Record<string, ShopifyCommerce> | undefined
 ): { id: string; weightGrams: number } | null {
   const entry = commerce?.[shopifyHandle(oilName)];
-  const free = entry?.variants.find((v) => v.price === 0);
+  // Availability matters as much as price. Gift variants are stocked with
+  // inventory_policy "deny", so once they run out Shopify rejects the line —
+  // and because the diffuser and the gift are added in one mutation, that
+  // would fail the whole add-to-cart and block the sale of the diffuser
+  // itself. Returning null instead adds the diffuser alone, still carrying the
+  // note that records the bottle owed.
+  const free = entry?.variants.find((v) => v.price === 0 && v.available);
   return free ? { id: free.id, weightGrams: 0 } : null;
 }
 

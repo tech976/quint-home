@@ -17,6 +17,9 @@ export const REQUIRED_SCOPES = [
   "read_orders",
   "write_orders",
   "read_products",
+  // Needed to create the ₹0 gift variants and to hold their stock separately
+  // from the paid bottles.
+  "write_products",
 ].join(",");
 
 export const shopDomain = () => process.env.SHOPIFY_STORE_DOMAIN;

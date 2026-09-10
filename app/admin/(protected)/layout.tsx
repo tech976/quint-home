@@ -33,6 +33,12 @@ export default async function AdminLayout({
             GST &amp; Invoices
           </Link>
           <Link
+            href="/admin/gift-stock"
+            className="text-[0.62rem] uppercase tracking-[0.28em] text-[color:var(--color-charcoal-soft)] underline-offset-4 hover:underline"
+          >
+            Gift stock
+          </Link>
+          <Link
             href="/"
             className="text-[0.62rem] uppercase tracking-[0.28em] text-[color:var(--color-charcoal-soft)] underline-offset-4 hover:underline"
           >
