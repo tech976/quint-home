@@ -7,6 +7,7 @@ import { FadeUp } from "@/components/motion/fade-up";
 import { Monogram } from "@/components/brand/logo";
 import { FREE_SHIPPING_FROM, shippingFor } from "@/lib/checkout-config";
 import {
+  cartHasRealGiftLine,
   giftDisplayTitle,
   giftOnLine,
   lineIsGift,
@@ -19,6 +20,7 @@ export function CartView() {
   // bag and the drawer can never disagree about where checkout goes.
   const { cart, update, remove, pending, headlessCheckout } = useCart();
   const lines = cart?.lines ?? [];
+  const hasRealGift = cartHasRealGiftLine(lines);
   const subtotal = cart?.subtotal ?? 0;
   const shipping = shippingFor(subtotal);
   const freeShipping = shipping === 0;
@@ -105,7 +107,9 @@ export function CartView() {
               // The gift now arrives as its own ₹0 line, so the synthetic row is only
               // drawn when this line is the diffuser rather than the bottle itself.
               const isGift = lineIsGift(l);
-              const gift = isGift ? null : giftOnLine(l.attributes);
+              // The synthetic row is a fallback for bags with no real gift line —
+              // drawing both would list the same bottle twice.
+              const gift = isGift || hasRealGift ? null : giftOnLine(l.attributes);
               const row = (
                 <div className="flex gap-5">
                 <Link
@@ -137,7 +141,7 @@ export function CartView() {
                         fontWeight: 400,
                       }}
                     >
-                      {l.productTitle}
+                      {isGift ? giftDisplayTitle(l.productTitle) : l.productTitle}
                     </Link>
                     <span
                       className={`shrink-0 text-[0.95rem] tabular-nums ${
@@ -172,6 +176,13 @@ export function CartView() {
                   )}
 
                   <div className="mt-auto flex flex-wrap items-center justify-between gap-4 pt-5">
+                    {/* Same reasoning as the drawer: the gift is tied to its
+                        diffuser and is not separately adjustable. */}
+                    {isGift ? (
+                      <span className="text-[0.6rem] uppercase tracking-[0.26em] text-[color:var(--color-clay)]">
+                        Complimentary with your order
+                      </span>
+                    ) : (
                     <div className="flex items-center border border-[color:var(--color-rule)]">
                       <button
                         type="button"
@@ -195,6 +206,8 @@ export function CartView() {
                         +
                       </button>
                     </div>
+                    )}
+                    {!isGift && (
                     <button
                       type="button"
                       disabled={pending}
@@ -203,6 +216,7 @@ export function CartView() {
                     >
                       Remove
                     </button>
+                    )}
                   </div>
                 </div>
                 </div>

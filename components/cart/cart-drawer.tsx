@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useCart } from "./cart-provider";
 import { formatINR } from "@/lib/utils";
 import {
+  cartHasRealGiftLine,
   giftDisplayTitle,
   giftOnLine,
   lineIsGift,
@@ -15,6 +16,7 @@ export function CartDrawer() {
   const { cart, open, setOpen, update, remove, pending, headlessCheckout } =
     useCart();
   const lines = cart?.lines ?? [];
+  const hasRealGift = cartHasRealGiftLine(lines);
 
   return (
     <div
@@ -69,7 +71,9 @@ export function CartDrawer() {
                 // The gift now arrives as its own ₹0 line, so the synthetic row is only
                 // drawn when this line is the diffuser rather than the bottle itself.
                 const isGift = lineIsGift(l);
-                const gift = isGift ? null : giftOnLine(l.attributes);
+                // The synthetic row is a fallback for bags with no real gift line —
+                // drawing both would list the same bottle twice.
+                const gift = isGift || hasRealGift ? null : giftOnLine(l.attributes);
                 const row = (
                   <div className="flex gap-4">
                   <div className="relative h-20 w-16 shrink-0 overflow-hidden bg-[color:var(--color-stardust-soft)]">
@@ -77,7 +81,9 @@ export function CartDrawer() {
                     {l.image && <img src={l.image} alt={isGift ? giftDisplayTitle(l.productTitle) : l.productTitle} className="h-[100%] w-[100%] object-cover" />}
                   </div>
                   <div className="flex min-w-0 flex-1 flex-col">
-                    <p className="text-[0.95rem] leading-tight">{l.productTitle}</p>
+                    <p className="text-[0.95rem] leading-tight">
+                      {isGift ? giftDisplayTitle(l.productTitle) : l.productTitle}
+                    </p>
                     {l.variantTitle && l.variantTitle !== "Default Title" && (
                       <p className="mt-0.5 text-[0.72rem] text-[color:var(--color-charcoal-soft)]">
                         {l.variantTitle}
@@ -92,6 +98,15 @@ export function CartDrawer() {
                       </p>
                     ))}
                     <div className="mt-auto flex items-center justify-between pt-2">
+                      {/* The gift belongs to the diffuser it came with: it is
+                          not independently adjustable, and removing it would
+                          leave the customer short of what they were promised.
+                          The guard refuses extra gifts server-side anyway. */}
+                      {isGift ? (
+                        <span className="text-[0.6rem] uppercase tracking-[0.24em] text-[color:var(--color-clay)]">
+                          Complimentary
+                        </span>
+                      ) : (
                       <div className="flex items-center border border-[color:var(--color-rule)]">
                         <button
                           type="button"
@@ -115,6 +130,7 @@ export function CartDrawer() {
                           +
                         </button>
                       </div>
+                      )}
                       <span
                         className={`text-[0.9rem] tabular-nums ${
                           isGift ? "text-[color:var(--color-clay)]" : ""
@@ -125,6 +141,7 @@ export function CartDrawer() {
                       </span>
                     </div>
                   </div>
+                  {!isGift && (
                   <button
                     type="button"
                     aria-label="Remove item"
@@ -134,6 +151,7 @@ export function CartDrawer() {
                   >
                     Remove
                   </button>
+                  )}
                   </div>
                 );
 

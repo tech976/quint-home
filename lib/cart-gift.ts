@@ -41,6 +41,21 @@ export function giftDisplayTitle(title: string): string {
   return title.replace(/\s*[-–—]?\s*(free|complimentary|gift)\s*$/i, "").trim() || title;
 }
 
+/**
+ * True once the bag holds a real ₹0 gift line.
+ *
+ * Before gift products existed the bottle could only be shown as a row derived
+ * from the diffuser's property. Now that it arrives as its own line, drawing
+ * both would list the same oil twice — once priced Free and once as "In the
+ * box". The real line wins: it is what ships and what stock came off.
+ */
+export function cartHasRealGiftLine(lines: {
+  price: number;
+  attributes?: { key: string; value: string }[];
+}[]): boolean {
+  return lines.some((l) => lineIsGift(l));
+}
+
 export function lineIsGift(line: {
   price: number;
   attributes?: { key: string; value: string }[];
