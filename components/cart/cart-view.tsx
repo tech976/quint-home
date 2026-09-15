@@ -6,7 +6,12 @@ import { formatINR } from "@/lib/utils";
 import { FadeUp } from "@/components/motion/fade-up";
 import { Monogram } from "@/components/brand/logo";
 import { FREE_SHIPPING_FROM, shippingFor } from "@/lib/checkout-config";
-import { giftOnLine, lineIsGift, otherAttributes } from "@/lib/cart-gift";
+import {
+  giftDisplayTitle,
+  giftOnLine,
+  lineIsGift,
+  otherAttributes,
+} from "@/lib/cart-gift";
 import { GiftLine, InTheBox } from "./gift-line";
 
 export function CartView() {
@@ -113,7 +118,7 @@ export function CartView() {
                     // eslint-disable-next-line @next/next/no-img-element
                     <img
                       src={l.image}
-                      alt={l.productTitle}
+                      alt={isGift ? giftDisplayTitle(l.productTitle) : l.productTitle}
                       className="h-[100%] w-[100%] object-cover"
                     />
                   )}

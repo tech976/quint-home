@@ -130,6 +130,12 @@ const HANDLE_ALIASES: Record<string, string[]> = {
   terrain: ["quietude"],
 };
 
+/** Every handle a product may be filed under: its own, plus any previous name
+ *  the store still uses. Terrain, for instance, is "quietude" in Shopify. */
+export function handleCandidates(handle: string): string[] {
+  return [handle, ...(HANDLE_ALIASES[handle] ?? [])];
+}
+
 export async function getCommerceByName(
   name: string
 ): Promise<ShopifyCommerce | undefined> {

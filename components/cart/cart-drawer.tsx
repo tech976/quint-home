@@ -3,7 +3,12 @@
 import Link from "next/link";
 import { useCart } from "./cart-provider";
 import { formatINR } from "@/lib/utils";
-import { giftOnLine, lineIsGift, otherAttributes } from "@/lib/cart-gift";
+import {
+  giftDisplayTitle,
+  giftOnLine,
+  lineIsGift,
+  otherAttributes,
+} from "@/lib/cart-gift";
 import { GiftLine, InTheBox } from "./gift-line";
 
 export function CartDrawer() {
@@ -69,7 +74,7 @@ export function CartDrawer() {
                   <div className="flex gap-4">
                   <div className="relative h-20 w-16 shrink-0 overflow-hidden bg-[color:var(--color-stardust-soft)]">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
-                    {l.image && <img src={l.image} alt={l.productTitle} className="h-[100%] w-[100%] object-cover" />}
+                    {l.image && <img src={l.image} alt={isGift ? giftDisplayTitle(l.productTitle) : l.productTitle} className="h-[100%] w-[100%] object-cover" />}
                   </div>
                   <div className="flex min-w-0 flex-1 flex-col">
                     <p className="text-[0.95rem] leading-tight">{l.productTitle}</p>
