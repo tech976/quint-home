@@ -1,6 +1,7 @@
 import type { Invoice, InvoiceCustomer } from "./orders";
 import { SUPPLIER, supplierAddressLines, supplierGaps } from "./supplier";
 import { amountInWords } from "./words";
+import { giftDisplayTitle } from "@/lib/cart-gift";
 
 /**
  * Renders a tax invoice as self-contained HTML — no external CSS or fonts, so
@@ -85,13 +86,17 @@ export function invoiceHtml(inv: Invoice, opts: { autoPrint?: boolean } = {}): s
 
   const rows = inv.lines
     .map((l) => {
-      const name = l.variantTitle && l.variantTitle !== "Default Title"
-        ? `<span class="item">${esc(l.title)} <span class="variant">· ${esc(l.variantTitle)}</span></span>`
-        : `<span class="item">${esc(l.title)}</span>`;
       // A ₹0 line is the complimentary bottle. Labelling it says plainly why
       // the row is free, which is what a courier claim or an assessing officer
       // needs to see — a bare zero looks like an error.
       const isGift = l.tax.gross === 0;
+      // The gift ships from a duplicate product called "Terrain Free"; the
+      // customer chose Terrain, and the Complimentary badge beside it already
+      // says the rest.
+      const shown = isGift ? giftDisplayTitle(l.title) : l.title;
+      const name = l.variantTitle && l.variantTitle !== "Default Title"
+        ? `<span class="item">${esc(shown)} <span class="variant">· ${esc(l.variantTitle)}</span></span>`
+        : `<span class="item">${esc(shown)}</span>`;
       const taxCells = inter
         ? `<td class="num">${money(l.tax.igst)}</td>`
         : `<td class="num">${money(l.tax.cgst)}</td><td class="num">${money(l.tax.sgst)}</td>`;
