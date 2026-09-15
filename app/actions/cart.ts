@@ -11,6 +11,7 @@ import {
 } from "@/lib/shopify/cart";
 
 import { CART_COOKIE as COOKIE } from "@/lib/shopify/cart-cookie";
+import { COMPLIMENTARY_OIL } from "@/lib/cart-gift";
 
 const MAX_AGE = 60 * 60 * 24 * 14; // 14 days
 
@@ -84,18 +85,68 @@ export async function addDiffuserWithGiftAction(
   return cartLinesAdd(cartId, lines);
 }
 
+/** Carries the complimentary-oil note — both the diffuser and its bottle do. */
+const notesGift = (l: { attributes?: { key: string; value: string }[] }) =>
+  (l.attributes ?? []).some((a) => a.key === COMPLIMENTARY_OIL);
+
+/**
+ * Keeps the bag from holding more free bottles than it has earned.
+ *
+ * The gift is its own cart line, so removing the diffuser used to leave the
+ * bottle behind on its own — a bag of nothing but a free oil, which then had
+ * ₹99 shipping applied to a ₹0 subtotal. Checkout would have refused it, but
+ * only after the customer had been left staring at a broken bag.
+ *
+ * The rule is the one the product pages promise and the checkout guard
+ * enforces: one bottle per diffuser. Anything above that is trimmed here, as
+ * soon as the bag changes, rather than at the till.
+ */
+async function reconcileGifts(cartId: string, cart: Cart): Promise<Cart> {
+  const gifts = cart.lines.filter((l) => l.price === 0 && notesGift(l));
+  const giftQty = gifts.reduce((n, l) => n + l.quantity, 0);
+  const earned = cart.lines
+    .filter((l) => l.price > 0 && notesGift(l))
+    .reduce((n, l) => n + l.quantity, 0);
+
+  // Fewer gifts than diffusers is the customer's loss to take, not an error.
+  let excess = giftQty - earned;
+  if (excess <= 0) return cart;
+
+  const drop: string[] = [];
+  const trim: { id: string; quantity: number }[] = [];
+  for (const g of gifts) {
+    if (excess <= 0) break;
+    const take = Math.min(excess, g.quantity);
+    excess -= take;
+    const left = g.quantity - take;
+    if (left === 0) drop.push(g.id);
+    else trim.push({ id: g.id, quantity: left });
+  }
+
+  let next = cart;
+  if (trim.length) next = await cartLinesUpdate(cartId, trim);
+  if (drop.length) next = await cartLinesRemove(cartId, drop);
+  return next;
+}
+
 export async function updateLineAction(
   lineId: string,
   quantity: number
 ): Promise<Cart | null> {
   const id = await readCartId();
   if (!id) return null;
-  if (quantity <= 0) return cartLinesRemove(id, [lineId]);
-  return cartLinesUpdate(id, [{ id: lineId, quantity }]);
+  const next =
+    quantity <= 0
+      ? await cartLinesRemove(id, [lineId])
+      : await cartLinesUpdate(id, [{ id: lineId, quantity }]);
+  // Lowering a diffuser's quantity must take its spare bottles with it.
+  return reconcileGifts(id, next);
 }
 
 export async function removeLineAction(lineId: string): Promise<Cart | null> {
   const id = await readCartId();
   if (!id) return null;
-  return cartLinesRemove(id, [lineId]);
+  const next = await cartLinesRemove(id, [lineId]);
+  // Removing the diffuser removes the bottle that came with it.
+  return reconcileGifts(id, next);
 }
