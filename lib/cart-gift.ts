@@ -108,27 +108,39 @@ export function giftVariantFor(
 ): { id: string } | null {
   if (!commerce) return null;
 
-  // The gift is its own Shopify product, published only to the headless
-  // channel — that is what keeps it off the public store, where it could
-  // otherwise be bought outright with no diffuser. Publishing is per product,
-  // never per variant, so a ₹0 variant of the paid oil would have inherited
-  // the oil's visibility and been purchasable by anyone.
-  for (const base of handleCandidates(shopifyHandle(oilName))) {
+  // A free, in-stock variant. Availability matters as much as price: the
+  // diffuser and its gift go in as one mutation, so an out-of-stock gift would
+  // fail the whole add-to-cart and block the diffuser's own sale.
+  const freeVariant = (handle: string) =>
+    commerce[handle]?.variants.find((v) => v.price === 0 && v.available);
+
+  const bases = handleCandidates(shopifyHandle(oilName));
+
+  // The tidy naming first, so a well-named product always wins.
+  for (const base of bases) {
     for (const suffix of GIFT_SUFFIXES) {
-      const free = commerce[base + suffix]?.variants.find(
-        (v) => v.price === 0 && v.available
-      );
-      // Availability matters as much as price: gift stock is tracked, and the
-      // diffuser and its gift go in as one mutation, so an out-of-stock gift
-      // would fail the whole add-to-cart and block the diffuser's sale.
-      if (free) return { id: free.id };
+      const v = freeVariant(base + suffix);
+      if (v) return { id: v.id };
+    }
+  }
+
+  // Shopify keeps "-copy" in a duplicate's handle even after the title is
+  // renamed, so "Blanc Ritual Free" is filed as blanc-ritual-copy-free. Match
+  // any product whose handle begins with the oil's and offers a free, in-stock
+  // variant — the oil's own product cannot match, since its variants are
+  // priced. Sorted so the choice is deterministic if a store has several.
+  for (const base of bases) {
+    for (const handle of Object.keys(commerce).sort()) {
+      if (handle === base || !handle.startsWith(base)) continue;
+      const v = freeVariant(handle);
+      if (v) return { id: v.id };
     }
   }
 
   // Older setups put the gift as a ₹0 variant on the oil's own product.
-  for (const base of handleCandidates(shopifyHandle(oilName))) {
-    const own = commerce[base]?.variants.find((v) => v.price === 0 && v.available);
-    if (own) return { id: own.id };
+  for (const base of bases) {
+    const v = freeVariant(base);
+    if (v) return { id: v.id };
   }
 
   return null;
