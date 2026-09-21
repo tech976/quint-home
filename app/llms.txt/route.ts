@@ -4,6 +4,7 @@ import { journal } from "@/lib/data/journal";
 import { getCommerceMap } from "@/lib/shopify/commerce";
 import { FREE_SHIPPING_FROM, SHIPPING_FLAT } from "@/lib/checkout-config";
 import { BRAND, SUMMARY, abs, inr, priceOf } from "@/lib/seo";
+import { giftingMarkdown } from "@/lib/gifting";
 
 /**
  * /llms.txt — the llmstxt.org convention: a single markdown file an assistant
@@ -42,6 +43,7 @@ roughly 1–3% fragrance in humidified air.
 - Prices are in Indian rupees (INR, ₹).
 - Shipping is free on orders of ${inr(FREE_SHIPPING_FROM)} and above; a flat ${inr(SHIPPING_FLAT)} applies below that.
 - Every diffuser includes one complimentary 50 ml fragrance oil, chosen by the buyer on the product page.
+- Suited to gifting: Diwali, corporate and housewarming (griha pravesh). See the Gifting section below for ideas by budget.
 - Fragrance oils are 50 ml, IFRA-compliant, at 70–90% fragrance concentration.
 - Catalogue size: ${diffusers.length} diffuser models and ${oils.length} fragrance oils.
 - ${appControlled} of the ${diffusers.length} diffusers are controlled from a companion app over Bluetooth.
@@ -82,6 +84,8 @@ ${oils
     )
   )
   .join("\n")}
+
+${giftingMarkdown(commerce)}
 
 ## Journal
 

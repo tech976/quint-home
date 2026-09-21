@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { journal } from "@/lib/data/journal";
+import { journalNewestFirst } from "@/lib/data/journal";
 import { FadeUp } from "@/components/motion/fade-up";
 import { SectionHeader } from "@/components/ui/section-header";
 
@@ -30,7 +30,9 @@ export function JournalTeaser() {
         />
 
         <div className="mt-10 grid gap-10 md:grid-cols-3 md:gap-8">
-          {journal.map((p, i) => (
+          {/* Three columns, so three posts — a fourth would wrap onto a row of
+              its own — and the newest ones, so a seasonal piece leads. */}
+          {journalNewestFirst().slice(0, 3).map((p, i) => (
             <FadeUp key={p.slug} delay={i * 0.08}>
               <Link href={`/journal/${p.slug}`} className="group block">
                 <div className="relative aspect-[4/3] overflow-hidden bg-[color:var(--color-aerial-soft)]">

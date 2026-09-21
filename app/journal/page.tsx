@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Monogram } from "@/components/brand/logo";
 import Image from "next/image";
-import { journal } from "@/lib/data/journal";
+import { journalNewestFirst } from "@/lib/data/journal";
 import { FadeUp } from "@/components/motion/fade-up";
 
 /** Without this the page inherited the layout's bare "Quint Home" title. */
@@ -34,7 +34,7 @@ export default function JournalPage() {
       </FadeUp>
 
       <div className="mt-16 grid gap-14 md:grid-cols-2 lg:grid-cols-3 lg:gap-12">
-        {journal.map((p, i) => (
+        {journalNewestFirst().map((p, i) => (
           <FadeUp key={p.slug} delay={i * 0.06}>
             <Link href={`/journal/${p.slug}`} className="group block">
               <div className="relative aspect-[5/6] overflow-hidden bg-[color:var(--color-aerial-soft)]">

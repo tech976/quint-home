@@ -82,8 +82,20 @@ export interface JournalPost {
   title: string;
   eyebrow: string;
   excerpt: string;
+  /**
+   * One string per block. Plain strings are paragraphs, and may carry
+   * [label](/path) links to pages on this site. A string beginning "## " is a
+   * section heading, and "![alt](/images/…)" on its own is a full-width image.
+   */
   body: string[];
   cover: string;
   publishedAt: string;
   readMinutes: number;
+  /** Shorter title for the browser tab and search results, where the
+   *  editorial headline would be truncated. Falls back to `title`. */
+  seoTitle?: string;
+  /** Set when the piece is revised, so search engines see it as fresh. */
+  updatedAt?: string;
+  /** Topics the piece covers, emitted in its Article markup. */
+  keywords?: string[];
 }

@@ -130,6 +130,48 @@ export function faqJsonLd(
   };
 }
 
+/**
+ * BlogPosting for a journal entry.
+ *
+ * The byline on the page reads "Quint Editorial", so the author is the brand
+ * rather than an invented person — Google accepts an Organization here, and a
+ * made-up name would be exactly the kind of claim this file refuses to make.
+ */
+export function articleJsonLd(post: {
+  slug: string;
+  title: string;
+  excerpt: string;
+  cover: string;
+  publishedAt: string;
+  updatedAt?: string;
+  keywords?: string[];
+  body: string[];
+}): Record<string, unknown> {
+  const url = abs(`/journal/${post.slug}`);
+  const words = post.body
+    .filter((b) => !b.startsWith("!["))
+    .join(" ")
+    .replace(/\[([^\]]+)\]\([^)]+\)/g, "$1")
+    .split(/\s+/)
+    .filter(Boolean).length;
+  return {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "@id": `${url}#article`,
+    headline: post.title,
+    description: post.excerpt,
+    image: [abs(post.cover)],
+    datePublished: post.publishedAt,
+    dateModified: post.updatedAt ?? post.publishedAt,
+    author: { "@type": "Organization", name: BRAND, url: SITE },
+    publisher: { "@id": ORG_ID },
+    mainEntityOfPage: url,
+    inLanguage: "en-IN",
+    wordCount: words,
+    ...(post.keywords?.length ? { keywords: post.keywords.join(", ") } : {}),
+  };
+}
+
 /** Renders a JSON-LD block. */
 export function jsonLdScript(data: Record<string, unknown>): string {
   return JSON.stringify(data);

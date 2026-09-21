@@ -3,8 +3,14 @@ import { Monogram } from "@/components/brand/logo";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import { journal, getJournalPost } from "@/lib/data/journal";
+import type { ReactNode } from "react";
+import { journal, getJournalPost, journalNewestFirst } from "@/lib/data/journal";
 import { FadeUp } from "@/components/motion/fade-up";
+import {
+  articleJsonLd,
+  breadcrumbJsonLd,
+  jsonLdScript,
+} from "@/lib/structured-data";
 
 type Params = { slug: string };
 
@@ -20,7 +26,85 @@ export async function generateMetadata({
   const { slug } = await params;
   const post = getJournalPost(slug);
   if (!post) return { title: "Not found" };
-  return { title: post.title, description: post.excerpt };
+  const url = `/journal/${post.slug}`;
+  return {
+    // The editorial headline runs long; search results would cut it off.
+    title: post.seoTitle ?? post.title,
+    description: post.excerpt,
+    alternates: { canonical: url },
+    openGraph: {
+      type: "article",
+      title: post.title,
+      description: post.excerpt,
+      url,
+      publishedTime: post.publishedAt,
+      ...(post.updatedAt ? { modifiedTime: post.updatedAt } : {}),
+      images: [{ url: post.cover, alt: post.title }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: post.title,
+      description: post.excerpt,
+      images: [post.cover],
+    },
+    ...(post.keywords?.length ? { keywords: post.keywords } : {}),
+  };
+}
+
+/**
+ * Body blocks are plain strings with three light conventions, kept deliberately
+ * small so the copy stays readable in lib/data/journal.ts and passes straight
+ * through to /llms-full.txt as ordinary markdown.
+ */
+type Block =
+  | { kind: "h2"; text: string; id: string }
+  | { kind: "img"; alt: string; src: string }
+  | { kind: "p"; text: string };
+
+function toBlock(raw: string): Block {
+  if (raw.startsWith("## ")) {
+    const text = raw.slice(3).trim();
+    return { kind: "h2", text, id: anchorFor(text) };
+  }
+  const img = /^!\[([^\]]*)\]\((\/[^)\s]+)\)$/.exec(raw.trim());
+  if (img) return { kind: "img", alt: img[1], src: img[2] };
+  return { kind: "p", text: raw };
+}
+
+/** "Corporate Diwali gifts for clients and teams" → "corporate-diwali-gifts…",
+ *  so a section can be linked to directly and answer engines can cite it. */
+function anchorFor(text: string): string {
+  return text
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
+/**
+ * Inline [label](/path) links. Only paths on this site are honoured: anything
+ * not beginning with "/" is left as text, so a stray URL pasted into the copy
+ * can never send a reader off-site.
+ */
+function withLinks(text: string): ReactNode[] {
+  const out: ReactNode[] = [];
+  const re = /\[([^\]]+)\]\((\/[^)\s]*)\)/g;
+  let last = 0;
+  let m: RegExpExecArray | null;
+  while ((m = re.exec(text))) {
+    if (m.index > last) out.push(text.slice(last, m.index));
+    out.push(
+      <Link
+        key={m.index}
+        href={m[2]}
+        className="underline decoration-[color:var(--color-rule)] decoration-1 underline-offset-[5px] transition-colors duration-300 hover:text-[color:var(--color-clay)] hover:decoration-[color:var(--color-clay)]"
+      >
+        {m[1]}
+      </Link>
+    );
+    last = m.index + m[0].length;
+  }
+  if (last < text.length) out.push(text.slice(last));
+  return out;
 }
 
 export default async function JournalPostPage({
@@ -32,11 +116,31 @@ export default async function JournalPostPage({
   const post = getJournalPost(slug);
   if (!post) notFound();
 
-  const others = journal.filter((p) => p.slug !== slug).slice(0, 2);
+  // Newest others first, so every older entry links forward to fresh writing.
+  const others = journalNewestFirst().filter((p) => p.slug !== slug).slice(0, 2);
   const index = journal.findIndex((p) => p.slug === slug) + 1;
+
+  const blocks = post.body.map(toBlock);
+  const firstParagraph = blocks.findIndex((b) => b.kind === "p");
 
   return (
     <article className="bg-[color:var(--color-white)]">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: jsonLdScript(articleJsonLd(post)) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: jsonLdScript(
+            breadcrumbJsonLd([
+              { name: "Home", path: "/" },
+              { name: "Journal", path: "/journal" },
+              { name: post.title, path: `/journal/${post.slug}` },
+            ])
+          ),
+        }}
+      />
       {/* ====================================================
           § HERO – Editorial Masthead
           ==================================================== */}
@@ -154,19 +258,63 @@ export default async function JournalPostPage({
               </FadeUp>
 
               <div className="mt-12 space-y-7 text-[var(--text-base)] leading-[1.95] text-[color:var(--color-charcoal)]">
-                {post.body.map((paragraph, i) => (
-                  <FadeUp key={i} delay={0.04 + i * 0.02}>
-                    <p
-                      className={
-                        i === 0
-                          ? "max-w-[64ch] [&::first-letter]:float-left [&::first-letter]:mr-2 [&::first-letter]:font-[family-name:var(--font-serif)] [&::first-letter]:text-[3.6rem] [&::first-letter]:font-normal [&::first-letter]:leading-[0.9] [&::first-letter]:text-[color:var(--color-charcoal)]"
-                          : "max-w-[64ch]"
-                      }
-                    >
-                      {paragraph}
-                    </p>
-                  </FadeUp>
-                ))}
+                {blocks.map((block, i) => {
+                  const delay = 0.04 + Math.min(i, 12) * 0.02;
+                  if (block.kind === "h2") {
+                    return (
+                      <FadeUp key={i} delay={delay}>
+                        <h2
+                          id={block.id}
+                          className="max-w-[30ch] scroll-mt-32 pt-8 text-balance"
+                          style={{
+                            fontFamily: "var(--font-serif)",
+                            fontSize: "var(--text-2xl)",
+                            lineHeight: 1.18,
+                            letterSpacing: "-0.012em",
+                            fontWeight: 400,
+                          }}
+                        >
+                          {block.text}
+                        </h2>
+                      </FadeUp>
+                    );
+                  }
+                  if (block.kind === "img") {
+                    return (
+                      <FadeUp key={i} delay={delay}>
+                        <figure className="py-4">
+                          <div className="relative aspect-[3/2] overflow-hidden bg-[color:var(--color-aerial-soft)]">
+                            <Image
+                              src={block.src}
+                              alt={block.alt}
+                              fill
+                              sizes="(min-width: 768px) 60vw, 100vw"
+                              className="object-cover"
+                            />
+                          </div>
+                          {block.alt && (
+                            <figcaption className="mt-3 text-[0.6rem] uppercase tracking-[0.32em] text-[color:var(--color-charcoal-soft)]">
+                              {block.alt}
+                            </figcaption>
+                          )}
+                        </figure>
+                      </FadeUp>
+                    );
+                  }
+                  return (
+                    <FadeUp key={i} delay={delay}>
+                      <p
+                        className={
+                          i === firstParagraph
+                            ? "max-w-[64ch] [&::first-letter]:float-left [&::first-letter]:mr-2 [&::first-letter]:font-[family-name:var(--font-serif)] [&::first-letter]:text-[3.6rem] [&::first-letter]:font-normal [&::first-letter]:leading-[0.9] [&::first-letter]:text-[color:var(--color-charcoal)]"
+                            : "max-w-[64ch]"
+                        }
+                      >
+                        {withLinks(block.text)}
+                      </p>
+                    </FadeUp>
+                  );
+                })}
               </div>
 
               <FadeUp delay={0.2}>

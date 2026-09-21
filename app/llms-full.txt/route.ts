@@ -4,6 +4,7 @@ import { journal } from "@/lib/data/journal";
 import { getCommerceMap } from "@/lib/shopify/commerce";
 import { FREE_SHIPPING_FROM, SHIPPING_FLAT } from "@/lib/checkout-config";
 import { BRAND, SUMMARY, abs, inr, priceOf } from "@/lib/seo";
+import { giftingMarkdown } from "@/lib/gifting";
 
 /**
  * /llms-full.txt — the expanded companion to /llms.txt. Where that file is an
@@ -99,6 +100,8 @@ air. Every ${BRAND} diffuser is waterless.
 - Every diffuser includes one complimentary 50 ml oil, chosen by the buyer on the diffuser's page.
 - Oils are IFRA-compliant.
 - Contact: hello@quinthome.in · +91 98196 16668 · Instagram @shopquinthome
+
+${giftingMarkdown(commerce)}
 
 ## Diffusers (${diffusers.length})
 
