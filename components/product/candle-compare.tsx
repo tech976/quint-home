@@ -28,7 +28,7 @@ export function CandleCompare({ current }: { current?: string }) {
             <FadeUp key={c.slug} delay={i * 0.06}>
               <Link
                 href={`/range/${c.slug}`}
-                className="group grid grid-cols-[12rem_1fr] items-start gap-5 border-t border-[color:var(--color-rule)] pt-2 md:grid-cols-[minmax(0,24rem)_1fr] md:gap-7"
+                className="group grid grid-cols-[12rem_1fr] items-center gap-5 border-t border-[color:var(--color-rule)] pt-6 md:grid-cols-[minmax(0,24rem)_1fr] md:gap-7 md:pt-8"
               >
                 <div className="relative aspect-[4/5] overflow-hidden bg-[color:var(--color-stardust-soft)]">
                   <Image
@@ -40,7 +40,7 @@ export function CandleCompare({ current }: { current?: string }) {
                   />
                 </div>
 
-                <div className="md:pt-2">
+                <div>
                   <p className="text-[0.52rem] uppercase tracking-[0.28em] text-[color:var(--color-charcoal-soft)]">
                     {c.notesLine}
                   </p>
