@@ -47,7 +47,7 @@ roughly 1–3% fragrance in humidified air.
 - Suited to gifting: Diwali, corporate and housewarming (griha pravesh). See the Gifting section below for ideas by budget.
 - Fragrance oils are 50 ml, IFRA-compliant, at 70–90% fragrance concentration.
 - Catalogue size: ${diffusers.length} diffuser models, ${oils.length} fragrance oils and ${candles.length} soy candles.
-- Candles are 315 g, 100% soy wax, hand-poured in India, burning up to 45 hours.
+- Candles are 300 ml, 100% soy wax, hand-poured in India, burning up to 45 hours.
 - ${appControlled} of the ${diffusers.length} diffusers are controlled from a companion app over Bluetooth.
 - Contact: hello@quinthome.in · +91 98196 16668 · Instagram @shopquinthome
 
@@ -96,7 +96,7 @@ ${candles
       c.name,
       [
         inr(priceOf(c, commerce)),
-        `${c.weightG} g`,
+        `${c.volumeML} ml`,
         "100% soy wax",
         c.notesLine,
         `up to ${c.burnHours} hours`,

@@ -69,7 +69,7 @@ export function productJsonLd(
     ...(candle
       ? [
           { "@type": "PropertyValue", name: "Fragrance", value: candle.notesLine },
-          { "@type": "PropertyValue", name: "Net weight", value: `${candle.weightG} g` },
+          { "@type": "PropertyValue", name: "Volume", value: `${candle.volumeML} ml` },
           { "@type": "PropertyValue", name: "Wax", value: "100% soy wax" },
           { "@type": "PropertyValue", name: "Burn time", value: `Up to ${candle.burnHours} hours` },
         ]

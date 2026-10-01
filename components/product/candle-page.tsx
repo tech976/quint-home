@@ -97,7 +97,7 @@ export async function CandleProductPage({ candle }: { candle: Candle }) {
               <dl className="mt-8 border-t border-[color:var(--color-rule)]">
                 {[
                   ["Fragrance", candle.notesLine],
-                  ["Net weight", `${candle.weightG} g`],
+                  ["Volume", `${candle.volumeML} ml`],
                   ["Wax", "100% soy wax"],
                   ["Burn time", `Up to ${candle.burnHours} hours`],
                   ["Made", "Hand-poured in India"],

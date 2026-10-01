@@ -93,8 +93,11 @@ export interface Candle {
   priceINR: number;
   /** Where the scent suits, drawn from its own description. */
   placement: string;
-  /** Net weight in grams, as printed. */
-  weightG: number;
+  /**
+   * Jar volume in millilitres, as the page and the jar label state it. The
+   * shipping weight stays with Shopify, which prices parcels by grams.
+   */
+  volumeML: number;
   /** Burn time in hours, as printed ("up to"). */
   burnHours: number;
   image: string;

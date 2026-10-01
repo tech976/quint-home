@@ -35,8 +35,8 @@ export async function generateMetadata({
   const { slug } = await params;
   const candle = getCandle(slug);
   if (candle) {
-    const title = `${candle.name} — ${candle.notesLine} Soy Candle, ${candle.weightG} g`;
-    const description = `${candle.tagline} A ${candle.weightG} g hand-poured 100% soy wax candle scented with ${candle.notesLine.toLowerCase()}, burning up to ${candle.burnHours} hours.`;
+    const title = `${candle.name} — ${candle.notesLine} Soy Candle, ${candle.volumeML} ml`;
+    const description = `${candle.tagline} A ${candle.volumeML} ml hand-poured 100% soy wax candle scented with ${candle.notesLine.toLowerCase()}, burning up to ${candle.burnHours} hours.`;
     return {
       title,
       description,

@@ -351,7 +351,7 @@ export default async function ShopPage() {
                 </h2>
               </div>
               <p className="max-w-[28ch] text-[0.86rem] leading-[1.65] text-[color:var(--color-charcoal-soft)] md:text-right">
-                315 g, 100% soy wax.
+                300 ml, 100% soy wax.
                 <br />
                 <span className="text-[0.6rem] uppercase tracking-[0.32em]">
                   Up to 45 hours →
@@ -392,7 +392,7 @@ export default async function ShopPage() {
                       {c.tagline}
                     </p>
                     <span className="mt-4 inline-flex items-center gap-2 text-[0.54rem] uppercase tracking-[0.28em] text-[color:var(--color-charcoal-soft)] transition-transform duration-500 group-hover:translate-x-1">
-                      {c.weightG} g · View →
+                      {c.volumeML} ml · View →
                     </span>
                   </div>
                 </Link>
