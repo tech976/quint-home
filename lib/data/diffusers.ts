@@ -43,6 +43,48 @@ const descFor = (operation: string) =>
 
 const diffusersByDefinition: Diffuser[] = [
   {
+    slug: "drift",
+    model: "M22",
+    name: "The Drift",
+    category: "diffuser",
+    tier: "entry",
+    tagline: "Scent that travels with you.",
+    description:
+      "The Drift is the smallest diffuser in the range, turned from a single piece of aluminium alloy and sized to stand in a car cup holder, on a bathroom shelf or beside a basin. It works the same way the larger models do – fragrance oil atomised by air pressure, with no water, no heat and no cartridge to replace.\n\nTwo controls do everything. Mode sets how much scent the room gets, at a light, medium or strong setting. Timer sets how long it runs: one, two or four hours, releasing a measured burst every 15, 60 or 120 seconds. In a car it starts and stops with the engine, so it is scenting the cabin by the time you have pulled away.",
+    priceINR: 3999,
+    bluetooth: false,
+    // The spec sheet publishes no coverage figure, so none is printed. The
+    // label says where it belongs instead of inventing a square-foot range.
+    coverageLabel: "Cars and compact spaces",
+    bestFor: ["Cars", "Bathrooms", "Desks", "Travel"],
+    keyFeatures: [
+      "Waterless nebulising – fragrance oil only, no water and no heat",
+      "Machined aluminium alloy body in matte black, 50 g and 137 mm tall",
+      "Three intensity settings – light, medium and strong",
+      "Timer for 1, 2 or 4 hours, with a burst every 15, 60 or 120 seconds",
+      "Starts and stops with the car, so it runs only when you are driving",
+      "Cordless placement – no cable trailing across the cabin",
+    ],
+    image: "/images/diffusers/drift-m22/01.webp",
+    gallery: [
+      "/images/diffusers/drift-m22/01.webp",
+      "/images/diffusers/drift-m22/02.webp",
+      "/images/diffusers/drift-m22/03.webp",
+      "/images/diffusers/drift-m22/04.webp",
+    ],
+    finish: "Machined aluminium alloy, matte black",
+    height: "Ø70 × 137 mm",
+    specs: [
+      { label: "Voltage / Power", value: "DC 12V" },
+      { label: "Material", value: "Aluminium Alloy" },
+      { label: "Dimensions", value: "Ø70 × 137 mm" },
+      { label: "Net Weight", value: "50 g" },
+      { label: "Intensity", value: "Light · Medium · Strong" },
+      { label: "Timer", value: "1 / 2 / 4 hours" },
+      { label: "Interval", value: "Every 15 / 60 / 120 seconds" },
+    ],
+  },
+  {
     slug: "pebble",
     model: "A815",
     name: "The Pebble",
@@ -298,13 +340,14 @@ const diffusersByDefinition: Diffuser[] = [
   },
 ];
 
-// Display order across the site: Monolith · Loom · Ember · Pillar · Pebble.
+// Display order across the site: largest room first, down to the car.
 const DIFFUSER_ORDER = [
   "monolith",
   "loom",
   "ember",
   "pillar",
   "pebble",
+  "drift",
 ];
 export const diffusers: Diffuser[] = DIFFUSER_ORDER.map(
   (slug) => diffusersByDefinition.find((d) => d.slug === slug)!,

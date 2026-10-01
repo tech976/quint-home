@@ -1,4 +1,4 @@
-export type ProductCategory = "diffuser" | "oil";
+export type ProductCategory = "diffuser" | "oil" | "candle";
 
 export interface ScentNotes {
   top: string[];
@@ -54,10 +54,12 @@ export interface Diffuser {
   tagline: string;
   description: string;
   priceINR: number;
-  /** Companion-app control. 5 of 6 catalogue models support it (A815 does not). */
+  /** Companion-app control. The plug-in and the car model have none. */
   bluetooth: boolean;
-  coverageSqFt: [number, number];
-  /** Display string for coverage, in sq ft only (e.g. "Up to 1,075 sq ft"). */
+  /** Absent when the manufacturer publishes no coverage figure. */
+  coverageSqFt?: [number, number];
+  /** Display string for coverage (e.g. "Up to 1,075 sq ft"), or where it suits
+   *  when the manufacturer publishes no figure. */
   coverageLabel: string;
   /** Catalogue "BEST FOR" placement tags. */
   bestFor: string[];
@@ -75,7 +77,42 @@ export interface Diffuser {
   specs: { label: string; value: string }[];
 }
 
-export type Product = Diffuser | FragranceOil;
+/**
+ * A hand-poured soy candle. Unlike the oils, the sleeves carry a two-note
+ * fragrance line ("Bergamot & Vetiver") rather than a top/heart/base pyramid,
+ * so `notesLine` is the printed one and stays the source of truth on the page.
+ */
+export interface Candle {
+  slug: string;
+  name: string;
+  category: "candle";
+  /** The fragrance line exactly as printed on the label. */
+  notesLine: string;
+  tagline: string;
+  description: string;
+  priceINR: number;
+  /** Where the scent suits, drawn from its own description. */
+  placement: string;
+  /** Net weight in grams, as printed. */
+  weightG: number;
+  /** Burn time in hours, as printed ("up to"). */
+  burnHours: number;
+  image: string;
+  gallery: string[];
+  /**
+   * Four atmosphere photographs for the scent's own section on its page —
+   * places and moments the fragrance belongs to. No candle appears in them.
+   * Captions name the feeling rather than describing the photograph.
+   */
+  mood: { src: string; caption: string; alt: string }[];
+  /** The heading and lede that open that section. */
+  scenes: { heading: string; headingItalic: string; lede: string };
+  /** The jar's glass colour. */
+  swatch: string;
+  textColor: string;
+}
+
+export type Product = Diffuser | FragranceOil | Candle;
 
 export interface JournalPost {
   slug: string;

@@ -6,6 +6,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { diffusers, getDiffuser } from "@/lib/data/diffusers";
 import { oils, getOil } from "@/lib/data/oils";
+import { candles, getCandle } from "@/lib/data/candles";
+import { CandleProductPage } from "@/components/product/candle-page";
 import { formatINR } from "@/lib/utils";
 import { FadeUp } from "@/components/motion/fade-up";
 import { DiffuserHero } from "@/components/product/diffuser-hero";
@@ -21,6 +23,7 @@ export function generateStaticParams(): Params[] {
   return [
     ...diffusers.map((d) => ({ slug: d.slug })),
     ...oils.map((o) => ({ slug: o.slug })),
+    ...candles.map((c) => ({ slug: c.slug })),
   ];
 }
 
@@ -30,6 +33,30 @@ export async function generateMetadata({
   params: Promise<Params>;
 }): Promise<Metadata> {
   const { slug } = await params;
+  const candle = getCandle(slug);
+  if (candle) {
+    const title = `${candle.name} — ${candle.notesLine} Soy Candle, ${candle.weightG} g`;
+    const description = `${candle.tagline} A ${candle.weightG} g hand-poured 100% soy wax candle scented with ${candle.notesLine.toLowerCase()}, burning up to ${candle.burnHours} hours.`;
+    return {
+      title,
+      description,
+      alternates: { canonical: `/range/${slug}` },
+      openGraph: {
+        title: `${candle.name} — Quint Home Candle`,
+        description,
+        url: `/range/${slug}`,
+        type: "website",
+        images: [{ url: candle.image, alt: candle.name }],
+      },
+      twitter: {
+        card: "summary_large_image",
+        title: `${candle.name} — Quint Home Candle`,
+        description,
+        images: [candle.image],
+      },
+    };
+  }
+
   const product = getDiffuser(slug) ?? getOil(slug);
   if (!product) return { title: "Not found" };
   const isOil = product.category === "oil";
@@ -46,7 +73,11 @@ export async function generateMetadata({
     ? `IFRA Fragrance Oil, ${"volumeML" in product ? product.volumeML : 50} ml`
     : "bluetooth" in product && product.bluetooth
       ? `Waterless Diffuser, ${product.coverageLabel}`
-      : "Waterless Plug-In Diffuser";
+      : // The cordless models don't plug into a wall, so they can't inherit the
+        // plug-in wording the Pebble uses.
+        product.slug === "drift"
+        ? "Waterless Car & Bathroom Diffuser"
+        : "Waterless Plug-In Diffuser";
 
   const title = `${product.name} — ${descriptor}`;
 
@@ -84,6 +115,8 @@ export default async function ProductPage({
   const product = getDiffuser(slug);
 
   if (!product) {
+    const candle = getCandle(slug);
+    if (candle) return <CandleProductPage candle={candle} />;
     const oil = getOil(slug);
     if (!oil) notFound();
     return <OilProductPage oil={oil} />;

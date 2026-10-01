@@ -4,6 +4,7 @@ import Image from "next/image";
 import type { Metadata } from "next";
 import { diffusers } from "@/lib/data/diffusers";
 import { oils } from "@/lib/data/oils";
+import { candles } from "@/lib/data/candles";
 import { formatINR } from "@/lib/utils";
 import { FadeUp } from "@/components/motion/fade-up";
 import { ShopBrowser } from "@/components/shop/shop-browser";
@@ -13,7 +14,7 @@ import { getCommerceMap, shopifyHandle } from "@/lib/shopify/commerce";
 export const metadata: Metadata = {
   title: "Diffusers & Fragrance Oils — The Full Range",
   description:
-    "Five waterless electronic diffusers and eight IFRA-compliant 50 ml fragrance oils. Coverage from 250 to 1,075 sq ft, app control over Bluetooth, shipped across India.",
+    "Waterless electronic diffusers, IFRA-compliant 50 ml fragrance oils and hand-poured soy candles. Coverage up to 1,075 sq ft, app control over Bluetooth, shipped across India.",
   alternates: { canonical: "/range" },
 };
 
@@ -85,7 +86,7 @@ export default async function ShopPage() {
                     fontWeight: 400,
                   }}
                 >
-                  Five diffusers.{" "}
+                  {diffusers.length} diffusers.{" "}
                   <em className="text-[color:var(--color-aerial-deep)]">
                     Sized for the room you put them in.
                   </em>
@@ -318,6 +319,85 @@ export default async function ShopPage() {
                 </FadeUp>
               );
             })}
+          </div>
+        </div>
+      </section>
+
+      {/* ====================================================
+          § THREE – The Candles
+          ==================================================== */}
+      <section id="candles" className="scroll-mt-24 py-[var(--spacing-section)]">
+        <div className="mx-auto max-w-[var(--container-full)] px-6 md:px-10">
+          <FadeUp>
+            <div className="mb-12 flex flex-col gap-6 border-b border-[color:var(--color-rule)] pb-6 md:mb-16 md:flex-row md:items-end md:justify-between">
+              <div>
+                <p className="text-[0.72rem] md:text-[0.95rem] uppercase tracking-[0.16em] md:tracking-[0.22em] text-[color:var(--color-charcoal-soft)]">
+                  <Monogram className="mr-1.5 inline-block h-[0.9em] w-[0.9em] align-[-0.12em]" />Three · The Candles
+                </p>
+                <h2
+                  className="mt-5 max-w-[22ch] text-balance"
+                  style={{
+                    fontFamily: "var(--font-serif)",
+                    fontSize: "var(--text-3xl)",
+                    lineHeight: 1.08,
+                    letterSpacing: "-0.016em",
+                    fontWeight: 400,
+                  }}
+                >
+                  The candles.{" "}
+                  <em className="text-[color:var(--color-aerial-deep)]">
+                    Hand-poured, in soy wax.
+                  </em>
+                </h2>
+              </div>
+              <p className="max-w-[28ch] text-[0.86rem] leading-[1.65] text-[color:var(--color-charcoal-soft)] md:text-right">
+                315 g, 100% soy wax.
+                <br />
+                <span className="text-[0.6rem] uppercase tracking-[0.32em]">
+                  Up to 45 hours →
+                </span>
+              </p>
+            </div>
+          </FadeUp>
+
+          <div className="grid grid-cols-1 gap-x-8 gap-y-14 sm:grid-cols-2 lg:grid-cols-3 md:gap-x-10 md:gap-y-16">
+            {candles.map((c, i) => (
+              <FadeUp key={c.slug} delay={(i % 3) * 0.06}>
+                <Link href={`/range/${c.slug}`} className="group block">
+                  <div className="relative aspect-[4/5] overflow-hidden bg-[color:var(--color-stardust-soft)]">
+                    <Image
+                      src={c.image}
+                      alt={c.name}
+                      fill
+                      sizes="(min-width:1024px) 33vw, (min-width:640px) 50vw, 100vw"
+                      className="object-cover transition-transform duration-700 ease-[var(--ease-quint)] group-hover:scale-[1.03]"
+                    />
+                  </div>
+                  <div className="mt-5 border-t border-[color:var(--color-rule)] pt-4">
+                    <p className="text-[0.52rem] uppercase tracking-[0.28em] text-[color:var(--color-charcoal-soft)]">
+                      {c.notesLine}
+                    </p>
+                    <h3
+                      className="mt-2 transition-colors group-hover:text-[color:var(--color-clay)]"
+                      style={{
+                        fontFamily: "var(--font-serif)",
+                        fontSize: "var(--text-xl)",
+                        letterSpacing: "-0.012em",
+                        fontWeight: 400,
+                      }}
+                    >
+                      {c.name}
+                    </h3>
+                    <p className="mt-1.5 max-w-[34ch] text-[0.84rem] leading-[1.6] text-[color:var(--color-charcoal-soft)]">
+                      {c.tagline}
+                    </p>
+                    <span className="mt-4 inline-flex items-center gap-2 text-[0.54rem] uppercase tracking-[0.28em] text-[color:var(--color-charcoal-soft)] transition-transform duration-500 group-hover:translate-x-1">
+                      {c.weightG} g · View →
+                    </span>
+                  </div>
+                </Link>
+              </FadeUp>
+            ))}
           </div>
         </div>
       </section>

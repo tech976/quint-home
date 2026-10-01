@@ -27,8 +27,8 @@ export async function GET(): Promise<Response> {
 URL: ${abs(`/range/${d.slug}`)}
 Model: ${d.model}
 Price: ${inr(priceOf(d, commerce))}
-Coverage: ${d.coverageLabel} (${d.coverageSqFt[0]}–${d.coverageSqFt[1]} sq ft)
-Control: ${d.bluetooth ? "Companion app over Bluetooth, plus on-device controls" : "On-device controls only, 24-hour cyclic timer"}
+Coverage: ${d.coverageLabel}${d.coverageSqFt ? ` (${d.coverageSqFt[0]}–${d.coverageSqFt[1]} sq ft)` : ""}
+Control: ${d.bluetooth ? "Companion app over Bluetooth, plus on-device controls" : `On-device controls only${d.specs.find((sp) => sp.label === "Timer") ? `, ${d.specs.find((sp) => sp.label === "Timer")!.value.toLowerCase()} timer` : ""}`}
 Finish: ${d.finish}
 Height: ${d.height}
 Best for: ${d.bestFor.join(", ")}${finishes}

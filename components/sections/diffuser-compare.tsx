@@ -56,6 +56,13 @@ const FACTS: Record<string, Fact> = {
     light: "—",
     material: "PP + Glass bottle",
   },
+  M22: {
+    power: "12V — car socket",
+    control: "No app — mode + timer buttons",
+    clock: "—",
+    light: "—",
+    material: "Aluminium alloy",
+  },
 };
 
 /**
@@ -63,6 +70,7 @@ const FACTS: Record<string, Fact> = {
  * code). The shop grid, homepage and PDPs keep their own lifestyle imagery.
  */
 const COMPARE_IMAGES: Record<string, string> = {
+  M22: "/images/diffusers/drift-v1.webp",
   A815: "/images/diffusers/pebble-v3.webp",
   A326: "/images/diffusers/monolith-v3.webp",
   A974: "/images/diffusers/loom-v4.webp",
@@ -112,21 +120,32 @@ export function DiffuserCompare({
               </h2>
             </div>
             <p className="max-w-[32ch] text-[0.86rem] leading-[1.6] text-[color:var(--color-charcoal-soft)] md:text-right">
-              Five devices, one scent system — compare coverage, power and
-              features at a glance.
+              {diffusers.length} devices, one scent system — compare coverage,
+              power and features at a glance.
             </p>
           </div>
         </FadeUp>
 
-        {/* Phones can't fit five columns — swipe horizontally, labels pinned. */}
+        {/* Phones can't fit every column — swipe horizontally, labels pinned. */}
         <p className="mb-4 text-[0.58rem] uppercase tracking-[0.3em] text-[color:var(--color-charcoal-soft)]/70 md:hidden">
           Swipe to compare →
         </p>
 
         <FadeUp delay={0.1}>
           <div className="-mx-6 overflow-x-auto px-6 pb-2 md:mx-0 md:px-0">
-            <div className="grid min-w-[44rem] grid-cols-[5.5rem_repeat(5,minmax(0,1fr))] md:min-w-0 md:grid-cols-[8rem_repeat(5,minmax(0,1fr))]">
-              {/* ── Header row: empty corner + five device cards ── */}
+            {/* One column per device, counted from the data: a hardcoded count
+                silently wrapped the last device onto its own row when the
+                range grew. The label column is pinned; the rest share the
+                width, and the min-width grows with the device count so phones
+                keep scrolling horizontally instead of crushing the columns. */}
+            <div
+              className="grid [--cmp-label:5.5rem] md:min-w-0 md:[--cmp-label:8rem]"
+              style={{
+                minWidth: `${5.5 + diffusers.length * 7.7}rem`,
+                gridTemplateColumns: `var(--cmp-label) repeat(${diffusers.length}, minmax(0, 1fr))`,
+              }}
+            >
+              {/* ── Header row: empty corner + one card per device ── */}
               {/* The box-shadow paints the same white leftward across the scroll
                   container's 24px padding gap, so swiped-under content can't peek
                   out beside the pinned label column. */}

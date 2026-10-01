@@ -10,15 +10,15 @@ export interface ShopCategory {
 }
 
 /**
- * Shop categories. Diffusers and Fragrance Oils are live; Reed Diffusers,
- * Candles and Room Sprays are planned and intentionally hidden for now.
+ * Shop categories. Diffusers, Fragrance Oils and Candles are live; Reed
+ * Diffusers and Room Sprays are planned and intentionally hidden for now.
  */
 export const shopCategories: ShopCategory[] = [
   { slug: "browse", label: "Search the range", href: "/range#browse", active: true },
   { slug: "diffusers", label: "Diffusers", href: "/range#diffusers", active: true },
   { slug: "oils", label: "Fragrance Oils", href: "/range#oils", active: true },
   { slug: "reed-diffusers", label: "Reed Diffusers", href: "/range#reed-diffusers", active: false },
-  { slug: "candles", label: "Candles", href: "/range#candles", active: false },
+  { slug: "candles", label: "Candles", href: "/range#candles", active: true },
   { slug: "room-sprays", label: "Room Sprays", href: "/range#room-sprays", active: false },
 ];
 

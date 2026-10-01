@@ -1,5 +1,6 @@
 import { diffusers } from "@/lib/data/diffusers";
 import { oils, oilNoteSummary } from "@/lib/data/oils";
+import { candles } from "@/lib/data/candles";
 import { journal } from "@/lib/data/journal";
 import { getCommerceMap } from "@/lib/shopify/commerce";
 import { FREE_SHIPPING_FROM, SHIPPING_FLAT } from "@/lib/checkout-config";
@@ -45,7 +46,8 @@ roughly 1–3% fragrance in humidified air.
 - Every diffuser includes one complimentary 50 ml fragrance oil, chosen by the buyer on the product page.
 - Suited to gifting: Diwali, corporate and housewarming (griha pravesh). See the Gifting section below for ideas by budget.
 - Fragrance oils are 50 ml, IFRA-compliant, at 70–90% fragrance concentration.
-- Catalogue size: ${diffusers.length} diffuser models and ${oils.length} fragrance oils.
+- Catalogue size: ${diffusers.length} diffuser models, ${oils.length} fragrance oils and ${candles.length} soy candles.
+- Candles are 315 g, 100% soy wax, hand-poured in India, burning up to 45 hours.
 - ${appControlled} of the ${diffusers.length} diffusers are controlled from a companion app over Bluetooth.
 - Contact: hello@quinthome.in · +91 98196 16668 · Instagram @shopquinthome
 
@@ -80,6 +82,25 @@ ${oils
         oilNoteSummary(o),
         o.tier === "hotel-credential" ? "Hotel Credential line" : o.mood,
         o.tagline,
+      ].join(" · ")
+    )
+  )
+  .join("\n")}
+
+## Candles
+
+${candles
+  .map((c) =>
+    line(
+      `/range/${c.slug}`,
+      c.name,
+      [
+        inr(priceOf(c, commerce)),
+        `${c.weightG} g`,
+        "100% soy wax",
+        c.notesLine,
+        `up to ${c.burnHours} hours`,
+        c.tagline,
       ].join(" · ")
     )
   )

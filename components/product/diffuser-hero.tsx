@@ -299,7 +299,11 @@ export function DiffuserHero({
                 priceINR={variant?.price ?? product.priceINR}
                 subscribeOffer={false}
                 variantId={variant?.id}
-                available={variant?.available ?? true}
+                // No Shopify variant means the product is not sellable yet (a new
+                // listing not imported, or one unpublished from this channel).
+                // Defaulting to "available" let a customer bag something that
+                // cannot be bought.
+                available={variant ? variant.available : false}
                 attributes={complimentaryOil}
                 giftVariantId={giftVariantId}
               />

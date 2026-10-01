@@ -1,4 +1,4 @@
-import type { Diffuser, FragranceOil, Product } from "@/lib/types";
+import type { Candle, Diffuser, FragranceOil, Product } from "@/lib/types";
 import type { ShopifyCommerce } from "@/lib/shopify/commerce";
 import { SITE, BRAND, abs } from "@/lib/seo";
 
@@ -27,9 +27,11 @@ export function productJsonLd(
   price: number
 ): Record<string, unknown> {
   const isOil = product.category === "oil";
+  const isCandle = product.category === "candle";
   const url = abs(`/range/${product.slug}`);
   const oil = isOil ? (product as FragranceOil) : null;
-  const diffuser = isOil ? null : (product as Diffuser);
+  const candle = isCandle ? (product as Candle) : null;
+  const diffuser = isOil || isCandle ? null : (product as Diffuser);
 
   // Every finish is a real, separately purchasable variant, so they belong in
   // the markup as such rather than being flattened into one offer.
@@ -64,6 +66,14 @@ export function productJsonLd(
           { "@type": "PropertyValue", name: "Base notes", value: oil.notes.base.join(", ") },
         ]
       : []),
+    ...(candle
+      ? [
+          { "@type": "PropertyValue", name: "Fragrance", value: candle.notesLine },
+          { "@type": "PropertyValue", name: "Net weight", value: `${candle.weightG} g` },
+          { "@type": "PropertyValue", name: "Wax", value: "100% soy wax" },
+          { "@type": "PropertyValue", name: "Burn time", value: `Up to ${candle.burnHours} hours` },
+        ]
+      : []),
     ...(diffuser
       ? [
           { "@type": "PropertyValue", name: "Coverage", value: diffuser.coverageLabel },
@@ -85,7 +95,11 @@ export function productJsonLd(
     description: product.description.split("\n\n")[0],
     image: [abs(product.image)],
     url,
-    category: isOil ? "Home Fragrance Oil" : "Electric Aroma Diffuser",
+    category: isOil
+      ? "Home Fragrance Oil"
+      : isCandle
+        ? "Scented Candle"
+        : "Electric Aroma Diffuser",
     brand: { "@type": "Brand", name: BRAND },
     // Model codes are real manufacturer identifiers; oils have none, and
     // inventing one would be worse than omitting the field.

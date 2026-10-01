@@ -16,10 +16,12 @@ const navLinks = [
   { href: "/businesses", label: "For Businesses" },
 ];
 
-// Shop dropdown – diffusers first, then oils. No "everything" entry.
+// Shop dropdown – the range in the order the range page lists it. No
+// "everything" entry. Kept in step with lib/data/categories.ts.
 const shopMenu = [
   { href: "/range#diffusers", label: "Diffusers" },
   { href: "/range#oils", label: "Oils" },
+  { href: "/range#candles", label: "Candles" },
 ];
 
 export function Header() {

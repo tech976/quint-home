@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { diffusers } from "@/lib/data/diffusers";
 import { oils } from "@/lib/data/oils";
+import { candles } from "@/lib/data/candles";
 import { journal } from "@/lib/data/journal";
 import { SITE } from "@/lib/seo";
 
@@ -39,7 +40,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   // Product rows carry their photography, which puts the catalogue in front of
   // Google Images — a real channel for objects people shop by appearance.
-  const products: MetadataRoute.Sitemap = [...diffusers, ...oils].map((p) => {
+  const products: MetadataRoute.Sitemap = [...diffusers, ...oils, ...candles].map((p) => {
     const shots = [p.image, ...("gallery" in p ? p.gallery : [])];
     return {
       url: `${SITE}/range/${p.slug}`,
