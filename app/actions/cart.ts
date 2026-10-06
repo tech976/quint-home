@@ -7,6 +7,7 @@ import {
   cartLinesAdd,
   cartLinesUpdate,
   cartLinesRemove,
+  cartDiscountCodesUpdate,
   type Cart,
 } from "@/lib/shopify/cart";
 
@@ -149,4 +150,45 @@ export async function removeLineAction(lineId: string): Promise<Cart | null> {
   const next = await cartLinesRemove(id, [lineId]);
   // Removing the diffuser removes the bottle that came with it.
   return reconcileGifts(id, next);
+}
+
+/** What the cart page shows after someone tries a code. */
+export interface DiscountResult {
+  cart: Cart | null;
+  /** Null on success; a sentence to show the customer otherwise. */
+  error: string | null;
+}
+
+/**
+ * Apply or clear a discount code.
+ *
+ * Shopify decides. A code it will not honour on this cart comes back
+ * `applicable: false` — which covers an unknown code, an expired one, one that
+ * has hit its usage limit and one whose products are not in the bag. Shopify
+ * does not say which, so neither do we: a single honest sentence is better
+ * than guessing at the reason.
+ */
+export async function applyDiscountAction(
+  rawCode: string
+): Promise<DiscountResult> {
+  const code = rawCode.trim();
+  try {
+    const id = await readCartId();
+    if (!id) return { cart: null, error: "Your bag is empty." };
+
+    // An empty code clears whatever is on the cart.
+    const cart = await cartDiscountCodesUpdate(id, code ? [code] : []);
+    if (!code) return { cart, error: null };
+
+    if (!cart.discountCode) {
+      return {
+        cart,
+        error: `“${code}” cannot be used on this order.`,
+      };
+    }
+    return { cart, error: null };
+  } catch (e) {
+    console.error("discount code failed", e);
+    return { cart: null, error: "We could not check that code. Try again." };
+  }
 }

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useCart } from "@/components/cart/cart-provider";
 import { formatINR } from "@/lib/utils";
+import { DiscountField } from "@/components/cart/discount-field";
 import { FadeUp } from "@/components/motion/fade-up";
 import { Monogram } from "@/components/brand/logo";
 import { FREE_SHIPPING_FROM } from "@/lib/checkout-config";
@@ -94,8 +95,10 @@ export function CheckoutForm({ shippingFlat }: { shippingFlat: number }) {
     };
   }, [pin, shipWeight]);
   const subtotal = cart?.subtotal ?? 0;
-  const shipping = subtotal >= FREE_SHIPPING_FROM ? 0 : shippingFlat;
-  const total = subtotal + shipping;
+  const discount = cart?.discount ?? 0;
+  const goods = cart?.total ?? subtotal;
+  const shipping = goods >= FREE_SHIPPING_FROM ? 0 : shippingFlat;
+  const total = goods + shipping;
 
   if (lines.length === 0) {
     return (
@@ -287,6 +290,21 @@ export function CheckoutForm({ shippingFlat }: { shippingFlat: number }) {
                 <dt className="text-[color:var(--color-charcoal-soft)]">Subtotal</dt>
                 <dd className="tabular-nums">{formatINR(subtotal)}</dd>
               </div>
+              {discount > 0 && (
+                <div className="flex items-baseline justify-between">
+                  <dt className="text-[color:var(--color-charcoal-soft)]">
+                    Discount
+                    {cart?.discountCode ? (
+                      <span className="ml-2 text-[0.62rem] uppercase tracking-[0.2em]">
+                        {cart.discountCode}
+                      </span>
+                    ) : null}
+                  </dt>
+                  <dd className="tabular-nums text-[color:var(--color-clay)]">
+                    − {formatINR(discount)}
+                  </dd>
+                </div>
+              )}
               <div className="flex items-baseline justify-between">
                 <dt className="text-[color:var(--color-charcoal-soft)]">Shipping</dt>
                 <dd
@@ -315,6 +333,10 @@ export function CheckoutForm({ shippingFlat }: { shippingFlat: number }) {
                 </div>
               )}
             </dl>
+
+            <div className="mt-5 border-t border-[color:var(--color-rule)] pt-5">
+              <DiscountField compact />
+            </div>
 
             <div className="mt-5 flex items-baseline justify-between border-t border-[color:var(--color-rule)] pt-5">
               <span className="text-[0.62rem] uppercase tracking-[0.32em] text-[color:var(--color-charcoal-soft)]">

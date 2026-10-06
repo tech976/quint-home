@@ -108,9 +108,11 @@ export async function POST(request: NextRequest) {
     return redirect(request, `/order/confirmed?ref=${encodeURIComponent(txnid)}&pending=1`);
   }
 
-  const subtotal = cart.subtotal;
-  const shipping = shippingFor(subtotal);
-  const expected = subtotal + shipping;
+  // Same figure the initiate route signed: goods after the discount, plus
+  // shipping judged on that.
+  const goods = cart.total;
+  const shipping = shippingFor(goods);
+  const expected = goods + shipping;
   const paid = Number(verified.amount || p.amount || 0);
 
   if (Math.abs(paid - expected) > 1) {

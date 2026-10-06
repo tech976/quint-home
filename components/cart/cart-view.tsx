@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useCart } from "./cart-provider";
 import { formatINR } from "@/lib/utils";
+import { DiscountField } from "@/components/cart/discount-field";
 import { FadeUp } from "@/components/motion/fade-up";
 import { Monogram } from "@/components/brand/logo";
 import { FREE_SHIPPING_FROM, shippingFor } from "@/lib/checkout-config";
@@ -22,9 +23,13 @@ export function CartView() {
   const lines = cart?.lines ?? [];
   const hasRealGift = cartHasRealGiftLine(lines);
   const subtotal = cart?.subtotal ?? 0;
-  const shipping = shippingFor(subtotal);
+  const discount = cart?.discount ?? 0;
+  // Goods after any code. Shipping is judged on what is actually being paid
+  // for the goods, which is how Shopify applies its own thresholds.
+  const goods = cart?.total ?? subtotal;
+  const shipping = shippingFor(goods);
   const freeShipping = shipping === 0;
-  const total = subtotal + shipping;
+  const total = goods + shipping;
 
   /* ── Empty bag ─────────────────────────────────────────────── */
   if (lines.length === 0) {
@@ -268,6 +273,21 @@ export function CartView() {
                 </dt>
                 <dd className="tabular-nums">{formatINR(subtotal)}</dd>
               </div>
+              {discount > 0 && (
+                <div className="flex items-baseline justify-between">
+                  <dt className="text-[color:var(--color-charcoal-soft)]">
+                    Discount
+                    {cart?.discountCode ? (
+                      <span className="ml-2 text-[0.62rem] uppercase tracking-[0.2em]">
+                        {cart.discountCode}
+                      </span>
+                    ) : null}
+                  </dt>
+                  <dd className="tabular-nums text-[color:var(--color-clay)]">
+                    − {formatINR(discount)}
+                  </dd>
+                </div>
+              )}
               <div className="flex items-baseline justify-between">
                 <dt className="text-[color:var(--color-charcoal-soft)]">
                   Shipping
@@ -283,6 +303,10 @@ export function CartView() {
                 </dd>
               </div>
             </dl>
+
+            <div className="mt-5">
+              <DiscountField />
+            </div>
 
             <div className="mt-5 flex items-baseline justify-between border-t border-[color:var(--color-rule)] pt-5">
               <span className="text-[0.62rem] uppercase tracking-[0.32em] text-[color:var(--color-charcoal-soft)]">
@@ -302,7 +326,7 @@ export function CartView() {
 
             {!freeShipping && (
               <p className="mt-4 text-[0.78rem] leading-[1.6] text-[color:var(--color-charcoal-soft)]">
-                Add {formatINR(FREE_SHIPPING_FROM - subtotal)} more for
+                Add {formatINR(FREE_SHIPPING_FROM - goods)} more for
                 complimentary shipping.
               </p>
             )}

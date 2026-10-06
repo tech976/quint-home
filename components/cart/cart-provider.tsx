@@ -30,6 +30,8 @@ interface CartContextValue {
    *  on our own /checkout instead of the Shopify-hosted one. */
   headlessCheckout: boolean;
   setOpen: (v: boolean) => void;
+  /** Replace the cart after a server action that returns a fresh one. */
+  setCart: (c: Cart | null) => void;
   add: (
     merchandiseId: string,
     quantity?: number,
@@ -165,6 +167,7 @@ export function CartProvider({
         headlessCheckout,
         setOpen,
         add,
+        setCart,
         addWithGift,
         update,
         remove,

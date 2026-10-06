@@ -79,7 +79,18 @@ export interface Cart {
   id: string;
   checkoutUrl: string;
   totalQuantity: number;
+  /** Before any discount — what the lines add up to. */
   subtotal: number;
+  /**
+   * After Shopify has applied whatever codes are on the cart. Equal to the
+   * subtotal when there is no discount; this is the figure the customer pays
+   * for goods, and the one PayU must be asked for.
+   */
+  total: number;
+  /** What the applied codes took off, in rupees. */
+  discount: number;
+  /** The code in force, if Shopify accepted one. */
+  discountCode: string | null;
   currency: string;
   lines: CartLine[];
 }
@@ -88,7 +99,11 @@ const CART_FIELDS = `
   id
   checkoutUrl
   totalQuantity
-  cost { subtotalAmount { amount currencyCode } }
+  discountCodes { code applicable }
+  cost {
+    subtotalAmount { amount currencyCode }
+    totalAmount { amount currencyCode }
+  }
   lines(first: 100) {
     edges { node {
       id
@@ -113,7 +128,11 @@ interface RawCart {
   id: string;
   checkoutUrl: string;
   totalQuantity: number;
-  cost: { subtotalAmount: { amount: string; currencyCode: string } };
+  discountCodes: { code: string; applicable: boolean }[];
+  cost: {
+    subtotalAmount: { amount: string; currencyCode: string };
+    totalAmount: { amount: string; currencyCode: string };
+  };
   lines: {
     edges: {
       node: {
@@ -141,6 +160,14 @@ function normalise(c: RawCart | null | undefined): Cart | null {
     checkoutUrl: c.checkoutUrl,
     totalQuantity: c.totalQuantity,
     subtotal: Math.round(Number(c.cost.subtotalAmount.amount)),
+    total: Math.round(Number(c.cost.totalAmount.amount)),
+    discount: Math.max(
+      0,
+      Math.round(Number(c.cost.subtotalAmount.amount)) -
+        Math.round(Number(c.cost.totalAmount.amount))
+    ),
+    discountCode:
+      (c.discountCodes ?? []).find((d) => d.applicable)?.code ?? null,
     currency: c.cost.subtotalAmount.currencyCode,
     lines: c.lines.edges.map(({ node }) => ({
       id: node.id,
@@ -223,6 +250,28 @@ export async function cartLinesUpdate(
     noCache
   );
   return normalise(data.cartLinesUpdate.cart)!;
+}
+
+/**
+ * Hand a discount code to Shopify and take back whatever it decides. Shopify
+ * owns every rule — eligibility, minimums, dates, usage limits — so a code the
+ * store will not honour comes back `applicable: false` and the cart is
+ * unchanged. Passing an empty list clears the code.
+ */
+export async function cartDiscountCodesUpdate(
+  cartId: string,
+  codes: string[]
+): Promise<Cart> {
+  const data = await storefront<{ cartDiscountCodesUpdate: { cart: RawCart } }>(
+    `mutation updateDiscounts($cartId: ID!, $codes: [String!]!) {
+      cartDiscountCodesUpdate(cartId: $cartId, discountCodes: $codes) {
+        cart { ${CART_FIELDS} }
+      }
+    }`,
+    { cartId, codes },
+    0
+  );
+  return normalise(data.cartDiscountCodesUpdate.cart)!;
 }
 
 export async function cartLinesRemove(cartId: string, lineIds: string[]): Promise<Cart> {

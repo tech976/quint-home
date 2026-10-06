@@ -67,9 +67,12 @@ export async function POST(request: NextRequest) {
     return NextResponse.redirect(new URL("/cart?error=gift", request.url), 303);
   }
 
-  const subtotal = cart.subtotal;
-  const shipping = shippingFor(subtotal);
-  const total = subtotal + shipping;
+  // cart.total is what Shopify says the goods cost after any discount code on
+  // the cart. Charging the subtotal would ignore the code the customer was
+  // shown, and charging anything the browser sent would be worse.
+  const goods = cart.total;
+  const shipping = shippingFor(goods);
+  const total = goods + shipping;
   const txnid = newTxnId();
 
   const origin = process.env.NEXT_PUBLIC_SITE_URL || request.nextUrl.origin;
