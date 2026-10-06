@@ -151,9 +151,16 @@ export async function POST(request: NextRequest) {
     jar.delete(PENDING_ORDER_COOKIE);
     jar.delete(CART_COOKIE);
 
+    // The confirmation page fires the Purchase pixel, so it needs the amount
+    // and the lines. Ids and quantities only — never anything about the buyer,
+    // which would then sit in browser history and server logs.
+    const items = cart.lines
+      .map((l) => `${l.merchandiseId.split("/").pop()}:${l.quantity}:${l.price}`)
+      .join(",");
     return redirect(
       request,
-      `/order/confirmed?ref=${encodeURIComponent(order.name || txnid)}`
+      `/order/confirmed?ref=${encodeURIComponent(order.name || txnid)}` +
+        `&value=${paid}&items=${encodeURIComponent(items)}`
     );
   } catch (e) {
     console.error("[payu] PAID BUT SHOPIFY ORDER FAILED — reconcile manually", {

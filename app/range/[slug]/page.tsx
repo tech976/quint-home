@@ -1,5 +1,7 @@
 import { notFound } from "next/navigation";
 import { productJsonLd, breadcrumbJsonLd, jsonLdScript } from "@/lib/structured-data";
+import { TrackView } from "@/components/analytics/track-view";
+import { pixelId } from "@/lib/analytics/pixel";
 import { priceOf } from "@/lib/seo";
 import type { Metadata } from "next";
 import Image from "next/image";
@@ -13,7 +15,11 @@ import { FadeUp } from "@/components/motion/fade-up";
 import { DiffuserHero } from "@/components/product/diffuser-hero";
 import { DiffuserCompare } from "@/components/sections/diffuser-compare";
 import { OilHero } from "@/components/product/oil-hero";
-import { getCommerceByName, getCommerceMap } from "@/lib/shopify/commerce";
+import {
+  getCommerceByName,
+  getCommerceMap,
+  sellableVariant,
+} from "@/lib/shopify/commerce";
 import { ScentFinder } from "@/components/sections/scent-finder";
 import type { FragranceOil } from "@/lib/types";
 
@@ -156,6 +162,12 @@ export default async function ProductPage({
         }}
       />
       {/* §  PRODUCT  –  images left; overview, key features & technical specs on the right */}
+      <TrackView
+        id={pixelId(sellableVariant(commerce)?.id ?? product.slug)}
+        name={product.name}
+        value={price}
+        category="Diffuser"
+      />
       <DiffuserHero product={product} commerce={commerce} commerceMap={commerceMap} />
 
       {/* §  COMPARE  –  this device against the rest of the range */}
@@ -288,6 +300,12 @@ async function OilProductPage({ oil }: { oil: FragranceOil }) {
       />
 
       {/* §  PRODUCT – gallery + buy box + bundle */}
+      <TrackView
+        id={pixelId(sellableVariant(commerce)?.id ?? oil.slug)}
+        name={oil.name}
+        value={price}
+        category="Fragrance Oil"
+      />
       <OilHero oil={oil} commerce={commerce} commerceMap={commerceMap} />
 
       {/* §  FIND YOUR SCENT */}

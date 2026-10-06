@@ -8,6 +8,7 @@ import { Footer } from "@/components/layout/footer";
 import { Grain } from "@/components/atmosphere/grain";
 import { ImageGuard } from "@/components/atmosphere/image-guard";
 import { Clarity } from "@/components/analytics/clarity";
+import { MetaPixel } from "@/components/analytics/meta-pixel";
 import { WhatsAppButton } from "@/components/layout/whatsapp-button";
 import { CartProvider } from "@/components/cart/cart-provider";
 import { CartDrawer } from "@/components/cart/cart-drawer";
@@ -92,6 +93,7 @@ export default function RootLayout({
           <CartDrawer />
           <WhatsAppButton />
           <Clarity />
+          <MetaPixel />
         </CartProvider>
       </body>
     </html>

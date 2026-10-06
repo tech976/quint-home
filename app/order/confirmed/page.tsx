@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { FadeUp } from "@/components/motion/fade-up";
 import { Monogram } from "@/components/brand/logo";
+import { TrackPurchase } from "@/components/analytics/track-purchase";
 
 export const metadata: Metadata = {
   title: "Order confirmed",
@@ -12,13 +13,25 @@ export const metadata: Metadata = {
 export default async function OrderConfirmedPage({
   searchParams,
 }: {
-  searchParams: Promise<{ ref?: string; pending?: string }>;
+  searchParams: Promise<{
+    ref?: string;
+    pending?: string;
+    value?: string;
+    items?: string;
+  }>;
 }) {
-  const { ref, pending } = await searchParams;
+  const { ref, pending, value, items } = await searchParams;
   const stillSettling = pending === "1";
 
   return (
     <div className="mx-auto flex max-w-[var(--container-content)] flex-col items-center px-6 py-[var(--spacing-section)] text-center md:px-10">
+      {ref && value && (
+        <TrackPurchase
+          orderId={ref}
+          value={Number(value) || 0}
+          items={items ?? ""}
+        />
+      )}
       <FadeUp>
         <p className="font-eyebrow">
           <Monogram className="mr-1.5 inline-block h-[0.9em] w-[0.9em] align-[-0.12em]" />

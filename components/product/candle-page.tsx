@@ -3,6 +3,8 @@ import { AddToBag } from "@/components/product/add-to-bag";
 import { ProductGallery } from "@/components/product/product-gallery";
 import { CandleCompare } from "@/components/product/candle-compare";
 import { CandleScenes } from "@/components/product/candle-scenes";
+import { TrackView } from "@/components/analytics/track-view";
+import { pixelId } from "@/lib/analytics/pixel";
 import { FadeUp } from "@/components/motion/fade-up";
 import { CANDLE_CARE, CANDLE_MAKE } from "@/lib/data/candles";
 import { getCommerceByName } from "@/lib/shopify/commerce";
@@ -27,6 +29,12 @@ export async function CandleProductPage({ candle }: { candle: Candle }) {
 
   return (
     <div className="pb-[var(--spacing-section)]">
+      <TrackView
+        id={pixelId(variant?.id ?? candle.slug)}
+        name={candle.name}
+        value={price}
+        category="Candle"
+      />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{

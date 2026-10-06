@@ -8,6 +8,10 @@ import {
   useCallback,
   useTransition,
 } from "react";
+import {
+  addToCart as pixelAddToCart,
+  pixelId,
+} from "@/lib/analytics/pixel";
 import type { Cart } from "@/lib/shopify/cart";
 import {
   getCartAction,
@@ -59,6 +63,27 @@ export function CartProvider({
     getCartAction().then((c) => c && setCart(c)).catch(() => {});
   }, []);
 
+  /**
+   * Report an add from the cart Shopify returned rather than from the click:
+   * the price, the quantity and the free oil are then whatever was really
+   * added, not what the page hoped would be.
+   */
+  const reportAdd = (next: Cart | null, merchandiseIds: string[]) => {
+    const lines = (next?.lines ?? []).filter((l) =>
+      merchandiseIds.includes(l.merchandiseId)
+    );
+    if (!lines.length) return;
+    pixelAddToCart({
+      contents: lines.map((l) => ({
+        id: pixelId(l.merchandiseId),
+        quantity: l.quantity,
+        item_price: l.price,
+      })),
+      value: lines.reduce((t, l) => t + l.price * l.quantity, 0),
+      name: lines[0].productTitle,
+    });
+  };
+
   const add = useCallback(
     (
       merchandiseId: string,
@@ -68,7 +93,9 @@ export function CartProvider({
     setOpen(true);
     startTransition(async () => {
       try {
-        setCart(await addToCartAction(merchandiseId, quantity, attributes));
+        const next = await addToCartAction(merchandiseId, quantity, attributes);
+        setCart(next);
+        reportAdd(next, [merchandiseId]);
       } catch (e) {
         console.error("add to cart failed", e);
       }
@@ -86,12 +113,15 @@ export function CartProvider({
       setOpen(true);
       startTransition(async () => {
         try {
-          setCart(
-            await addDiffuserWithGiftAction(
-              diffuserVariantId,
-              giftVariantId,
-              attributes
-            )
+          const next = await addDiffuserWithGiftAction(
+            diffuserVariantId,
+            giftVariantId,
+            attributes
+          );
+          setCart(next);
+          reportAdd(
+            next,
+            [diffuserVariantId, giftVariantId].filter((v): v is string => !!v)
           );
         } catch (e) {
           console.error("add diffuser with gift failed", e);
