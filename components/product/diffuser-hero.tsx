@@ -236,8 +236,29 @@ export function DiffuserHero({
             </FadeUp>
           )}
 
-          {/* --- Choose your included oil – asked before the CTA, for the
-               models that ship with one. The car diffuser is sold alone. --- */}
+          {/* Price + Add to bag – directly under the finish, so the price and
+               the button are in view with the product rather than below a long
+               scent picker. The chosen oil follows and still rides along. */}
+          <FadeUp delay={0.18}>
+            <div id="buy" className="mt-10 scroll-mt-24">
+              {/* No subscribe & save on diffusers – that offer is for the oils only */}
+              <AddToBag
+                priceINR={variant?.price ?? product.priceINR}
+                subscribeOffer={false}
+                variantId={variant?.id}
+                // No Shopify variant means the product is not sellable yet (a new
+                // listing not imported, or one unpublished from this channel).
+                // Defaulting to "available" let a customer bag something that
+                // cannot be bought.
+                available={variant ? variant.available : false}
+                attributes={complimentaryOil}
+                giftVariantId={giftVariantId}
+              />
+            </div>
+          </FadeUp>
+
+          {/* --- Choose your included oil – it ships with the diffuser either
+               way, so the choice can follow the decision to buy. --- */}
           {product.includesOil && (
           <FadeUp delay={0.2}>
             <div className="mt-8 border-t border-[color:var(--color-rule)] pt-8">
@@ -333,26 +354,6 @@ export function DiffuserHero({
             </div>
           </FadeUp>
           )}
-
-          {/* Price + Add to bag – sits under the scent picker so the choice
-               is made first */}
-          <FadeUp delay={0.22}>
-            <div id="buy" className="mt-10 scroll-mt-24">
-              {/* No subscribe & save on diffusers – that offer is for the oils only */}
-              <AddToBag
-                priceINR={variant?.price ?? product.priceINR}
-                subscribeOffer={false}
-                variantId={variant?.id}
-                // No Shopify variant means the product is not sellable yet (a new
-                // listing not imported, or one unpublished from this channel).
-                // Defaulting to "available" let a customer bag something that
-                // cannot be bought.
-                available={variant ? variant.available : false}
-                attributes={complimentaryOil}
-                giftVariantId={giftVariantId}
-              />
-            </div>
-          </FadeUp>
 
           {/* Bundle – add another oil to the set */}
           <FadeUp delay={0.24}>
