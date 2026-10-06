@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useState } from "react";
 import { FadeUp } from "@/components/motion/fade-up";
 import { Monogram } from "@/components/brand/logo";
@@ -229,35 +230,66 @@ export function DiffuserHero({
                diffuser ships with one --- */}
           <FadeUp delay={0.2}>
             <div className="mt-8 border-t border-[color:var(--color-rule)] pt-8">
-              <label
-                htmlFor="starting-oil"
-                className="text-[0.58rem] uppercase tracking-[0.32em] text-[color:var(--color-charcoal-soft)]"
-              >
-                Choose your included oil
-              </label>
-              <div className="relative mt-3 min-w-0 overflow-hidden">
-                <select
-                  id="starting-oil"
-                  value={oilSlug}
-                  onChange={(e) => setOilSlug(e.target.value)}
-                  className="w-[100%] min-w-0 cursor-pointer appearance-none truncate border-b border-[color:var(--color-charcoal)] bg-transparent py-2.5 pr-8 font-[family-name:var(--font-serif)] text-[1.05rem] text-[color:var(--color-charcoal)] outline-none transition-colors duration-300 focus:border-[color:var(--color-clay)]"
-                >
-                  {oils.map((o) => (
-                    <option key={o.slug} value={o.slug}>
-                      {o.name} – {oilNoteSummary(o)}
-                      {o.tier === "hotel-credential"
-                        ? " · Hotel Credential (+₹200)"
-                        : ""}
-                    </option>
-                  ))}
-                </select>
-                <span
-                  aria-hidden="true"
-                  className="pointer-events-none absolute right-1 top-1/2 -translate-y-1/2 text-[0.72rem] text-[color:var(--color-charcoal-soft)]"
-                >
-                  ↓
-                </span>
-              </div>
+              {/* Tiles rather than a dropdown: the oils are photographed, and a
+                  scent name means little without seeing the bottle. Native radios
+                  underneath, so arrow keys and screen readers behave. */}
+              <fieldset className="min-w-0">
+                <legend className="text-[0.58rem] uppercase tracking-[0.32em] text-[color:var(--color-charcoal-soft)]">
+                  Choose your included oil
+                </legend>
+                <div className="mt-4 grid grid-cols-4 gap-2 sm:gap-2.5">
+                  {oils.map((o) => {
+                    const active = o.slug === oilSlug;
+                    return (
+                      <label
+                        key={o.slug}
+                        className="group cursor-pointer"
+                        title={`${o.name} – ${oilNoteSummary(o)}`}
+                      >
+                        <input
+                          type="radio"
+                          name="starting-oil"
+                          value={o.slug}
+                          checked={active}
+                          onChange={() => setOilSlug(o.slug)}
+                          className="peer sr-only"
+                        />
+                        <span
+                          className={cn(
+                            "relative block aspect-square overflow-hidden bg-[color:var(--color-stardust-soft)] outline-offset-2 transition-all duration-300 peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-[color:var(--color-clay)]",
+                            active
+                              ? "ring-1 ring-[color:var(--color-clay)] ring-offset-2 ring-offset-[color:var(--color-white)]"
+                              : "opacity-[0.72] group-hover:opacity-100"
+                          )}
+                        >
+                          <Image
+                            src={o.image}
+                            alt=""
+                            fill
+                            sizes="(min-width: 640px) 7rem, 23vw"
+                            className="object-cover transition-transform duration-700 ease-[var(--ease-quint)] group-hover:scale-[1.05]"
+                          />
+                          {o.tier === "hotel-credential" && (
+                            <span className="absolute right-0 top-0 bg-[color:var(--color-clay)] px-1.5 py-0.5 text-[0.5rem] uppercase tracking-[0.14em] text-[color:var(--color-ivory)]">
+                              +₹200
+                            </span>
+                          )}
+                        </span>
+                        <span
+                          className={cn(
+                            "mt-1.5 block font-[family-name:var(--font-serif)] text-[0.72rem] leading-tight transition-colors",
+                            active
+                              ? "text-[color:var(--color-clay)]"
+                              : "text-[color:var(--color-charcoal)]"
+                          )}
+                        >
+                          {o.name}
+                        </span>
+                      </label>
+                    );
+                  })}
+                </div>
+              </fieldset>
 
               {/* Live scent profile for the chosen oil – so the name in the
                   dropdown is never a mystery. Updates as the selection changes. */}
