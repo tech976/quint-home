@@ -94,7 +94,7 @@ export default function PrivacyPage() {
           § HERO MASTHEAD
           ==================================================== */}
       <section className="border-b border-[color:var(--color-rule)] pt-10 md:pt-14">
-        <div className="mx-auto max-w-[var(--container-full)] px-6 md:px-10">
+        <div className="mx-auto max-w-[var(--container-page)] px-6 md:px-10">
           <div className="grid items-end gap-10 pb-12 md:grid-cols-12 md:gap-16">
             <FadeUp delay={0.05} className="md:col-span-7">
               <p className="text-[0.62rem] uppercase tracking-[0.42em] text-[color:var(--color-charcoal-soft)]">
@@ -137,7 +137,7 @@ export default function PrivacyPage() {
           § DISCLAIMER STRIP
           ==================================================== */}
       <section className="border-b border-[color:var(--color-rule)] bg-[color:var(--color-stardust-soft)]">
-        <div className="mx-auto max-w-[var(--container-full)] px-6 py-7 md:px-10">
+        <div className="mx-auto max-w-[var(--container-page)] px-6 py-7 md:px-10">
           <p className="max-w-[80ch] text-[0.86rem] leading-[1.7] text-[color:var(--color-charcoal-soft)]">
             <span className="uppercase tracking-[0.18em] text-[0.62rem] text-[color:var(--color-charcoal)]">
               Disclaimer –{" "}
@@ -160,7 +160,7 @@ export default function PrivacyPage() {
           § POLICY SECTIONS
           ==================================================== */}
       <section className="py-[var(--spacing-section)]">
-        <div className="mx-auto max-w-[var(--container-full)] px-6 md:px-10">
+        <div className="mx-auto max-w-[var(--container-page)] px-6 md:px-10">
           <div className="grid gap-y-14 md:gap-y-20">
             {sections.map((group) => (
               <div
@@ -205,7 +205,7 @@ export default function PrivacyPage() {
           § RIGHTS & CONTACT (DPDP)
           ==================================================== */}
       <section className="bg-[color:var(--color-verdant)] py-[var(--spacing-section)] text-[color:var(--color-stardust)]">
-        <div className="mx-auto max-w-[var(--container-full)] px-6 md:px-10">
+        <div className="mx-auto max-w-[var(--container-page)] px-6 md:px-10">
           <FadeUp>
             <div className="mb-12 flex items-center gap-4 text-[0.6rem] uppercase tracking-[0.42em] text-[color:var(--color-stardust)]/65">
               <span className="h-px w-12 bg-[color:var(--color-stardust)]/25" />

@@ -16,7 +16,7 @@ export function CandleCompare({ current }: { current?: string }) {
 
   return (
     <section className="border-t border-[color:var(--color-rule)] py-[var(--spacing-section-sm)]">
-      <div className="mx-auto max-w-[var(--container-full)] px-6 md:px-10">
+      <div className="mx-auto max-w-[var(--container-page)] px-6 md:px-10">
         <FadeUp>
           <p className="text-[0.6rem] uppercase tracking-[0.32em] text-[color:var(--color-charcoal-soft)]">
             The other candles

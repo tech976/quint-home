@@ -145,7 +145,7 @@ export function Header() {
           } var(--ease-quint), background-color 500ms var(--ease-quint), backdrop-filter 500ms var(--ease-quint), color 500ms var(--ease-quint)`,
         }}
       >
-        <div className="mx-auto grid max-w-[var(--container-full)] grid-cols-[1fr_auto_1fr] items-center gap-6 px-6 py-5 md:px-10">
+        <div className="mx-auto grid max-w-[var(--container-page)] grid-cols-[1fr_auto_1fr] items-center gap-6 px-6 py-5 md:px-10">
           {/* Left nav */}
           <nav className="hidden items-center gap-8 md:flex">
             {/* Shop – with category dropdown */}

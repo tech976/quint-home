@@ -57,7 +57,7 @@ const usps: Usp[] = [
 export function USPs() {
   return (
     <section className="border-y border-[color:var(--color-rule)] bg-[color:var(--color-stardust-soft)] py-[var(--spacing-section-sm)]">
-      <div className="mx-auto max-w-[var(--container-full)] px-6 md:px-10">
+      <div className="mx-auto max-w-[var(--container-page)] px-6 md:px-10">
         {/* Header */}
         <FadeUp>
           <div className="mb-8 flex flex-col gap-3 md:mb-10 md:flex-row md:items-end md:justify-between">

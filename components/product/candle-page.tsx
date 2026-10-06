@@ -53,7 +53,7 @@ export async function CandleProductPage({ candle }: { candle: Candle }) {
           ),
         }}
       />
-      <section className="mx-auto max-w-[var(--container-full)] px-6 pt-6 md:px-10 md:pt-10">
+      <section className="mx-auto max-w-[var(--container-page)] px-6 pt-6 md:px-10 md:pt-10">
         <nav className="text-[0.58rem] uppercase tracking-[0.28em] text-[color:var(--color-charcoal-soft)]">
           <Link href="/range" className="hover:text-[color:var(--color-clay)]">
             The Range

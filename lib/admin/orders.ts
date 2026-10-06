@@ -1,5 +1,8 @@
 import { splitInclusive, isInterState, totalSplits, type TaxSplit } from "./gst";
 import { classifyBySku, DIFFUSER_HSN, OIL_HSN, type HsnClass } from "./hsn";
+import { getCommerceMap, shopifyHandle } from "@/lib/shopify/commerce";
+import { giftDisplayTitle } from "@/lib/cart-gift";
+import { oils } from "@/lib/data/oils";
 
 const DOMAIN = process.env.SHOPIFY_STORE_DOMAIN;
 const ADMIN_TOKEN = process.env.SHOPIFY_ADMIN_TOKEN;
@@ -23,8 +26,17 @@ export interface InvoiceLine {
   sku: string | null;
   hsn: string;
   quantity: number;
-  /** GST-inclusive unit price. */
+  /** GST-inclusive unit price actually charged. */
   unitPrice: number;
+  /**
+   * What the item sells for when it is not being given away. Shown so a
+   * complimentary bottle reads as a ₹899 product the customer was given,
+   * rather than an oddity priced at nothing.
+   */
+  listPrice: number;
+  /** Reduction from listPrice, inclusive of tax. Equals the whole list price
+   *  on a gift line. */
+  discount: number;
   tax: TaxSplit;
   /** Set when the line could not be classified and needs a human. */
   unclassified: boolean;
@@ -61,6 +73,8 @@ export interface Invoice {
   interState: boolean;
   /** Lines we could not classify — the invoice must not be issued as-is. */
   needsAttention: string[];
+  /** Total given away, inclusive of tax. */
+  discountTotal: number;
 }
 
 interface RawAddress {
@@ -171,7 +185,10 @@ function classifyLine(title: string, sku: string | null): { hsn: HsnClass; uncla
 }
 
 /** Build the invoice view of one Shopify order. */
-export function toInvoice(order: RawOrder): Invoice {
+export function toInvoice(
+  order: RawOrder,
+  listPriceFor?: (title: string) => number | undefined
+): Invoice {
   const ship = order.shipping_address ?? order.billing_address ?? null;
   const customer = toCustomer(ship, order);
   const billTo = toCustomer(order.billing_address ?? ship, order);
@@ -185,6 +202,18 @@ export function toInvoice(order: RawOrder): Invoice {
     const { hsn, unclassified } = classifyLine(li.title, li.sku ?? null);
     if (unclassified) needsAttention.push(`"${li.title}" has no HSN classification`);
     const unit = Number(li.price);
+    const isGift = unit === 0;
+
+    // A gift is priced at what it normally sells for, then discounted away in
+    // full. Prices here are GST-inclusive, so a discount of the whole ₹899
+    // removes the ₹137.14 of tax inside it as well — which is why the taxable
+    // value and the tax on the line are nil rather than charged and refunded.
+    // Section 15(3)(a) treats a discount shown on the invoice at the time of
+    // supply as reducing the transaction value, so this is also the figure
+    // that belongs in the return.
+    const listPrice = isGift ? listPriceFor?.(li.title) ?? 0 : unit;
+    const discount = isGift ? listPrice * li.quantity : 0;
+
     return {
       title: li.title,
       variantTitle: li.variant_title ?? null,
@@ -192,6 +221,8 @@ export function toInvoice(order: RawOrder): Invoice {
       hsn: hsn.hsn,
       quantity: li.quantity,
       unitPrice: unit,
+      listPrice,
+      discount,
       tax: splitInclusive(unit * li.quantity, hsn.ratePercent, interState),
       unclassified,
     };
@@ -224,6 +255,35 @@ export function toInvoice(order: RawOrder): Invoice {
     placeOfSupplyCode: customer.provinceCode,
     interState,
     needsAttention,
+    discountTotal:
+      Math.round(lines.reduce((t, l) => t + l.discount, 0) * 100) / 100,
+  };
+}
+
+/**
+ * What a gift bottle sells for when it is not being given away.
+ *
+ * Read from Shopify rather than the catalogue file, since the two have drifted
+ * before — an oil was ₹1,499 in Shopify while the code still said ₹899, and
+ * quoting the stale figure cost ₹600 on a real order. The catalogue is the
+ * fallback for when Shopify cannot be reached.
+ */
+async function listPriceResolver(): Promise<(title: string) => number | undefined> {
+  let commerce: Awaited<ReturnType<typeof getCommerceMap>> = {};
+  try {
+    commerce = await getCommerceMap();
+  } catch {
+    /* fall back to the catalogue */
+  }
+  return (title: string) => {
+    // "Terrain Free" is the gift product; the oil it stands for is "Terrain".
+    const name = giftDisplayTitle(title);
+    const live = commerce[shopifyHandle(name)]?.variants.find((v) => v.price > 0);
+    if (live) return live.price;
+    const known = oils.find(
+      (o) => o.name.toLowerCase() === name.trim().toLowerCase()
+    );
+    return known?.priceINR;
   };
 }
 
@@ -232,7 +292,8 @@ export async function listInvoices(limit = 50): Promise<Invoice[]> {
   const data = await adminGet<{ orders: RawOrder[] }>(
     `orders.json?status=any&financial_status=paid&limit=${limit}`
   );
-  return data.orders.map(toInvoice);
+  const listPriceFor = await listPriceResolver();
+  return data.orders.map((o) => toInvoice(o, listPriceFor));
 }
 
 /** One order by its Shopify order number, e.g. 1012. */
@@ -241,5 +302,6 @@ export async function getInvoice(orderNumber: number): Promise<Invoice | null> {
     `orders.json?status=any&name=%23${orderNumber}&limit=1`
   );
   const order = data.orders?.[0];
-  return order ? toInvoice(order) : null;
+  if (!order) return null;
+  return toInvoice(order, await listPriceResolver());
 }

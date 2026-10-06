@@ -96,7 +96,7 @@ export default function FAQPage() {
           § HERO
           ==================================================== */}
       <section className="border-b border-[color:var(--color-rule)] pt-10 md:pt-14">
-        <div className="mx-auto max-w-[var(--container-full)] px-6 md:px-10">
+        <div className="mx-auto max-w-[var(--container-page)] px-6 md:px-10">
           <div className="grid items-end gap-10 pb-12 md:grid-cols-12 md:gap-16">
             <FadeUp delay={0.05} className="md:col-span-7">
               <p className="text-[0.62rem] uppercase tracking-[0.42em] text-[color:var(--color-charcoal-soft)]">
@@ -133,7 +133,7 @@ export default function FAQPage() {
           § GROUPS
           ==================================================== */}
       <section className="py-[var(--spacing-section)]">
-        <div className="mx-auto max-w-[var(--container-full)] px-6 md:px-10">
+        <div className="mx-auto max-w-[var(--container-page)] px-6 md:px-10">
           <div className="grid gap-y-16 md:gap-y-24">
             {groups.map((group) => (
               <div key={group.chapter} className="grid gap-10 md:grid-cols-12 md:gap-16">

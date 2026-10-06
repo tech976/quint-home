@@ -55,7 +55,7 @@ export default function AboutPage() {
           § ONE – QUINTESSENCE (the word)
           ==================================================== */}
       <section className="border-b border-[color:var(--color-rule)] bg-[color:var(--color-stardust-soft)] pt-14 pb-[var(--spacing-section)] md:pt-24">
-        <div className="mx-auto max-w-[var(--container-full)] px-6 md:px-10">
+        <div className="mx-auto max-w-[var(--container-page)] px-6 md:px-10">
           <FadeUp>
             <div className="flex items-center gap-4 text-[0.72rem] md:text-[0.95rem] uppercase tracking-[0.16em] md:tracking-[0.22em] text-[color:var(--color-charcoal-soft)]">
               <span><Monogram className="mr-1.5 inline-block h-[0.9em] w-[0.9em] align-[-0.12em]" />One · The Word</span>
@@ -306,7 +306,7 @@ export default function AboutPage() {
           § THREE – THE VISION (verbatim, inverted)
           ==================================================== */}
       <section className="bg-[color:var(--color-verdant)] py-[var(--spacing-section)] text-[color:var(--color-stardust)]">
-        <div className="mx-auto max-w-[var(--container-full)] px-6 md:px-10">
+        <div className="mx-auto max-w-[var(--container-page)] px-6 md:px-10">
           <FadeUp>
             <div className="mb-12 flex items-center gap-4 text-[0.72rem] md:text-[0.95rem] uppercase tracking-[0.16em] md:tracking-[0.22em] text-[color:var(--color-stardust)]/65">
               <span className="h-px w-12 bg-[color:var(--color-stardust)]/25" />
@@ -354,7 +354,7 @@ export default function AboutPage() {
                 className="object-cover"
               />
             </div>
-            <figcaption className="mx-auto mt-4 max-w-[var(--container-full)] px-6 text-[0.6rem] uppercase tracking-[0.32em] text-[color:var(--color-stardust)]/55 md:px-10">
+            <figcaption className="mx-auto mt-4 max-w-[var(--container-page)] px-6 text-[0.6rem] uppercase tracking-[0.32em] text-[color:var(--color-stardust)]/55 md:px-10">
               Late light moving over water
             </figcaption>
           </figure>

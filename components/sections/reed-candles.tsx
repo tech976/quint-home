@@ -11,7 +11,7 @@ const items = ["Reed Diffuser", "Reed Diffuser", "Candle", "Candle"];
 export function ReedCandles() {
   return (
     <section className="bg-[color:var(--color-white)] py-[var(--spacing-section)]">
-      <div className="mx-auto max-w-[var(--container-full)] px-6 md:px-10">
+      <div className="mx-auto max-w-[var(--container-page)] px-6 md:px-10">
         <FadeUp>
           <div className="mb-14 flex flex-col gap-6 border-b border-[color:var(--color-rule)] pb-6 md:mb-20 md:flex-row md:items-end md:justify-between">
             <div>

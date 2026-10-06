@@ -294,7 +294,7 @@ export function Hero() {
       )}
 
       {/* === Bottom hairline metadata strip === */}
-      <div className="relative z-20 mx-auto w-[100%] max-w-[var(--container-full)] border-t border-[color:var(--color-white)]/20 px-6 md:px-10">
+      <div className="relative z-20 mx-auto w-[100%] max-w-[var(--container-page)] border-t border-[color:var(--color-white)]/20 px-6 md:px-10">
         <div className="flex flex-col items-center gap-2 py-4 text-center text-[0.6rem] uppercase tracking-[0.28em] text-[color:var(--color-white)]/75 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between sm:gap-x-8 sm:py-5 sm:text-left sm:tracking-[0.36em]">
           <span>Electronic Waterless Diffusers</span>
           <span>Premium Fragrance Oil Blends</span>

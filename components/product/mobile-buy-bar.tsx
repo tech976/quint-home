@@ -14,7 +14,7 @@ export function MobileBuyBar({
 }) {
   return (
     <div className="fixed inset-x-0 bottom-0 z-40 border-t border-[color:var(--color-rule)] bg-[color:var(--color-white)]/95 backdrop-blur lg:hidden">
-      <div className="mx-auto flex max-w-[var(--container-full)] items-center justify-between gap-4 px-5 py-3">
+      <div className="mx-auto flex max-w-[var(--container-page)] items-center justify-between gap-4 px-5 py-3">
         <div className="min-w-0">
           <p className="truncate text-[0.6rem] uppercase tracking-[0.2em] text-[color:var(--color-charcoal-soft)]">
             {name}

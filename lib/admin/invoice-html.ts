@@ -106,11 +106,11 @@ export function invoiceHtml(inv: Invoice, opts: { autoPrint?: boolean } = {}): s
         }</td>
         <td class="hsn">${esc(l.hsn)}</td>
         <td class="num">${l.quantity}</td>
-        <td class="num">${money(l.unitPrice)}</td>
+        <td class="num">${money(isGift ? l.listPrice : l.unitPrice)}</td>
         <td class="num">${money(l.tax.taxable)}</td>
-        <td class="num">${l.tax.ratePercent}%</td>
+        <td class="num">${isGift ? "—" : `${l.tax.ratePercent}%`}</td>
         ${taxCells}
-        <td class="num">${money(0)}</td>
+        <td class="num">${l.discount > 0 ? "−" + money(l.discount) : money(0)}</td>
         <td class="num strong">${isGift ? "Free" : money(l.tax.gross)}</td>
       </tr>`;
     })
@@ -324,11 +324,11 @@ ${inv.needsAttention.length ? `<div class="warn noprint"><strong>Needs attention
   <tbody>${rows}${shippingRow}</tbody>
   <tfoot><tr>
     <td>Total</td><td></td><td class="num">${qty}</td>
-    <td class="num">${money(inv.totals.gross)}</td>
+    <td class="num">${money(inv.totals.gross + inv.discountTotal)}</td>
     <td class="num">${money(inv.totals.taxable)}</td>
     <td></td>
     ${totalTaxCells}
-    <td class="num">${money(0)}</td>
+    <td class="num">${inv.discountTotal > 0 ? "−" + money(inv.discountTotal) : money(0)}</td>
     <td class="num">${money(inv.totals.gross)}</td>
   </tr></tfoot>
 </table>
@@ -342,7 +342,8 @@ ${inv.needsAttention.length ? `<div class="warn noprint"><strong>Needs attention
 </div>
 
 <div class="summary">
-  <div><span>Discount</span><span>−${money(0)}</span></div>
+  <div><span>Value of items</span><span>${money(inv.totals.gross + inv.discountTotal)}</span></div>
+  <div class="band"><span>Complimentary${inv.discountTotal > 0 ? "" : " discount"}</span><span>−${money(inv.discountTotal)}</span></div>
   <div><span>Total Before Tax</span><span>${money(inv.totals.taxable)}</span></div>
   ${inter
     ? `<div><span>IGST @ 18%</span><span>${money(inv.totals.igst)}</span></div>`

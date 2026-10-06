@@ -35,7 +35,7 @@ export default async function ShopPage() {
           § HERO MASTHEAD
           ==================================================== */}
       <section className="border-b border-[color:var(--color-rule)] pt-6 md:pt-8">
-        <div className="mx-auto max-w-[var(--container-full)] px-6 md:px-10">
+        <div className="mx-auto max-w-[var(--container-page)] px-6 md:px-10">
           <div className="grid items-end gap-8 pb-9 md:grid-cols-12 md:gap-16">
             <FadeUp delay={0.05} className="md:col-span-7">
               <h1
@@ -75,7 +75,7 @@ export default async function ShopPage() {
           § ONE · DIFFUSERS
           ==================================================== */}
       <section id="diffusers" className="scroll-mt-24 pt-[var(--spacing-section-sm)] pb-[var(--spacing-section)]">
-        <div className="mx-auto max-w-[var(--container-full)] px-6 md:px-10">
+        <div className="mx-auto max-w-[var(--container-page)] px-6 md:px-10">
           <FadeUp>
             <div className="mb-8 flex flex-col gap-5 border-b border-[color:var(--color-rule)] pb-6 md:mb-10 md:flex-row md:items-end md:justify-between">
               <div>
@@ -194,7 +194,7 @@ export default async function ShopPage() {
           § TWO · OILS – the editorial scent grid
           ==================================================== */}
       <section id="oils" className="scroll-mt-24 bg-[color:var(--color-stardust-soft)] py-[var(--spacing-section)]">
-        <div className="mx-auto max-w-[var(--container-full)] px-6 md:px-10">
+        <div className="mx-auto max-w-[var(--container-page)] px-6 md:px-10">
           <FadeUp>
             <div className="mb-12 flex flex-col gap-6 border-b border-[color:var(--color-rule)] pb-6 md:mb-16 md:flex-row md:items-end md:justify-between">
               <div>
@@ -333,7 +333,7 @@ export default async function ShopPage() {
           § THREE – The Candles
           ==================================================== */}
       <section id="candles" className="scroll-mt-24 py-[var(--spacing-section)]">
-        <div className="mx-auto max-w-[var(--container-full)] px-6 md:px-10">
+        <div className="mx-auto max-w-[var(--container-page)] px-6 md:px-10">
           <FadeUp>
             <div className="mb-12 flex flex-col gap-6 border-b border-[color:var(--color-rule)] pb-6 md:mb-16 md:flex-row md:items-end md:justify-between">
               <div>

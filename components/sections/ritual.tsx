@@ -87,7 +87,7 @@ const partners = ["Companion app", "iOS & Android", "On-device schedule"];
 export function Ritual() {
   return (
     <section className="bg-[color:var(--color-white)] py-[var(--spacing-section)]">
-      <div className="mx-auto max-w-[var(--container-full)] px-6 md:px-10">
+      <div className="mx-auto max-w-[var(--container-page)] px-6 md:px-10">
         {/* Section header */}
         <FadeUp>
           <header className="grid gap-10 border-b border-[color:var(--color-rule)] pb-10 md:grid-cols-12 md:gap-12">

@@ -7,7 +7,7 @@ import { SectionHeader } from "@/components/ui/section-header";
 export function JournalTeaser() {
   return (
     <section className="bg-[color:var(--color-ivory)] py-[var(--spacing-section-sm)]">
-      <div className="mx-auto max-w-[var(--container-full)] px-6 md:px-10">
+      <div className="mx-auto max-w-[var(--container-page)] px-6 md:px-10">
         <SectionHeader
           chapter="§"
           chapterTitle="The Journal"

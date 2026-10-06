@@ -57,7 +57,7 @@ export default function BusinessesPage() {
     <article className="bg-[color:var(--color-white)]">
       {/* ===== HERO – text on brand green ===== */}
       <section className="border-b border-[color:var(--color-stardust)]/10 bg-[color:var(--color-verdant)] pb-[var(--spacing-section)] pt-16 text-[color:var(--color-stardust)] md:pt-24">
-        <div className="mx-auto w-[100%] max-w-[var(--container-full)] px-6 md:px-10">
+        <div className="mx-auto w-[100%] max-w-[var(--container-page)] px-6 md:px-10">
           <FadeUp>
             <p className="text-[0.62rem] uppercase tracking-[0.42em] text-[color:var(--color-stardust)]/70">
               For Businesses
@@ -91,7 +91,7 @@ export default function BusinessesPage() {
 
       {/* ===== OFFERINGS – three tight columns ===== */}
       <section className="py-[var(--spacing-section)]">
-        <div className="mx-auto max-w-[var(--container-full)] px-6 md:px-10">
+        <div className="mx-auto max-w-[var(--container-page)] px-6 md:px-10">
           <div className="grid gap-x-12 gap-y-10 border-t border-[color:var(--color-rule)] pt-10 md:grid-cols-3">
             {offerings.map((o, i) => (
               <FadeUp key={o.no} delay={i * 0.06}>
@@ -146,7 +146,7 @@ export default function BusinessesPage() {
               "linear-gradient(90deg, rgba(28,35,28,0.92) 0%, rgba(28,35,28,0.62) 50%, rgba(28,35,28,0.22) 100%)",
           }}
         />
-        <div className="relative z-10 mx-auto w-[100%] max-w-[var(--container-full)] px-6 md:px-10">
+        <div className="relative z-10 mx-auto w-[100%] max-w-[var(--container-page)] px-6 md:px-10">
           <FadeUp>
             <h2
               className="max-w-[18ch] text-balance text-[color:var(--color-white)]"
@@ -169,7 +169,7 @@ export default function BusinessesPage() {
 
       {/* ===== TESTIMONIALS ===== */}
       <section className="py-[var(--spacing-section)]">
-        <div className="mx-auto max-w-[var(--container-full)] px-6 md:px-10">
+        <div className="mx-auto max-w-[var(--container-page)] px-6 md:px-10">
           <FadeUp>
             <p className="mb-12 text-[0.62rem] uppercase tracking-[0.42em] text-[color:var(--color-charcoal-soft)]">
               From our clients

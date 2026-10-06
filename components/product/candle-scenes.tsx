@@ -48,7 +48,7 @@ export function CandleScenes({ candle }: { candle: Candle }) {
       />
 
       {/* ── Masthead – keeps the page gutter; the plates deliberately do not ── */}
-      <div className="mx-auto max-w-[var(--container-full)] px-6 md:px-10">
+      <div className="mx-auto max-w-[var(--container-page)] px-6 md:px-10">
         <FadeUp>
           <div className="flex items-center gap-4 text-[0.72rem] uppercase tracking-[0.16em] text-[color:var(--color-stardust)]/75 md:text-[0.95rem] md:tracking-[0.22em]">
             <span>
@@ -93,7 +93,7 @@ export function CandleScenes({ candle }: { candle: Candle }) {
       {/* ── The plates – edge to edge, hung from one rail ── */}
       <ul
         role="list"
-        className="mx-auto mt-14 grid max-w-[var(--container-full)] grid-cols-2 gap-x-2 gap-y-12 px-6 md:mt-20 md:gap-x-4 md:gap-y-16 md:px-10 lg:grid-cols-4 lg:gap-x-6"
+        className="mx-auto mt-14 grid max-w-[var(--container-page)] grid-cols-2 gap-x-2 gap-y-12 px-6 md:mt-20 md:gap-x-4 md:gap-y-16 md:px-10 lg:grid-cols-4 lg:gap-x-6"
       >
         {candle.mood.map((scene, i) => (
           <FadeUp key={scene.src} as="li" delay={0.18 + i * 0.07} className="flex flex-col justify-end">

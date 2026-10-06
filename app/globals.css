@@ -64,7 +64,10 @@
   --container-narrow: 56rem;
   --container-content: 72rem;
   --container-wide: 88rem;
-  --container-full: 100rem;
+  /* NOT "--container-full": Tailwind v4 reads --container-* as the width
+     scale, so a key named "full" redefines w-full/max-w-full as 100rem
+     instead of 100%. That silently stretched anything using w-full. */
+  --container-page: 100rem;
 
   /* – Header height (refined at runtime by the Header via JS) - */
   --header-h: 80px;

@@ -79,7 +79,7 @@ export function CartView() {
 
   /* ── Bag with items ────────────────────────────────────────── */
   return (
-    <div className="mx-auto max-w-[var(--container-full)] px-6 py-[var(--spacing-section-sm)] md:px-10">
+    <div className="mx-auto max-w-[var(--container-page)] px-6 py-[var(--spacing-section-sm)] md:px-10">
       <FadeUp>
         <div className="border-b border-[color:var(--color-rule)] pb-8">
           <p className="font-eyebrow">

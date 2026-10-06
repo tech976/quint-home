@@ -37,7 +37,7 @@ export function Footer() {
       data-site-chrome
       className="border-t border-[color:var(--color-rule)] bg-[color:var(--color-white)] text-[color:var(--color-charcoal)]"
     >
-      <div className="mx-auto max-w-[var(--container-full)] px-6 pt-20 pb-10 md:px-10">
+      <div className="mx-auto max-w-[var(--container-page)] px-6 pt-20 pb-10 md:px-10">
         {/* Newsletter / Wordmark row */}
         <div className="grid gap-12 border-b border-[color:var(--color-rule)] pb-16 md:grid-cols-[1.2fr_1fr] md:gap-20">
           <div>

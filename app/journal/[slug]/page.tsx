@@ -145,7 +145,7 @@ export default async function JournalPostPage({
           § HERO – Editorial Masthead
           ==================================================== */}
       <section className="border-b border-[color:var(--color-rule)] pt-10 md:pt-14">
-        <div className="mx-auto max-w-[var(--container-full)] px-6 md:px-10">
+        <div className="mx-auto max-w-[var(--container-page)] px-6 md:px-10">
           <FadeUp>
             <div className="mb-10 flex items-center gap-5 text-[0.62rem] uppercase tracking-[0.36em] text-[color:var(--color-charcoal-soft)]">
               <Link href="/journal" className="hover:text-[color:var(--color-clay)]">
@@ -232,7 +232,7 @@ export default async function JournalPostPage({
           § BODY
           ==================================================== */}
       <section className="py-[var(--spacing-section)]">
-        <div className="mx-auto max-w-[var(--container-full)] px-6 md:px-10">
+        <div className="mx-auto max-w-[var(--container-page)] px-6 md:px-10">
           <div className="grid gap-12 md:grid-cols-12 md:gap-16">
             <FadeUp className="md:col-span-4">
               <div className="md:sticky md:top-32 text-[0.62rem] uppercase tracking-[0.42em] text-[color:var(--color-charcoal-soft)]">
@@ -393,7 +393,7 @@ export default async function JournalPostPage({
           § CONTINUE READING
           ==================================================== */}
       <section className="border-t border-[color:var(--color-rule)] py-[var(--spacing-section)]">
-        <div className="mx-auto max-w-[var(--container-full)] px-6 md:px-10">
+        <div className="mx-auto max-w-[var(--container-page)] px-6 md:px-10">
           <FadeUp>
             <div className="mb-14 flex items-center gap-4 text-[0.6rem] uppercase tracking-[0.42em] text-[color:var(--color-charcoal-soft)]">
               <span className="h-px w-12 bg-[color:var(--color-rule)]" />

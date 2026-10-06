@@ -77,7 +77,7 @@ export function ScentFinder() {
 
   return (
     <section className="bg-[color:var(--color-ivory)] py-[var(--spacing-section)]">
-      <div className="mx-auto max-w-[var(--container-full)] px-6 md:px-10">
+      <div className="mx-auto max-w-[var(--container-page)] px-6 md:px-10">
         <SectionHeader
           chapter="Scent Finder"
           chapterTitle="Choose your scent"

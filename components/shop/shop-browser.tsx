@@ -88,7 +88,7 @@ export function ShopBrowser() {
       id="browse"
       className="scroll-mt-24 border-b border-[color:var(--color-rule)] bg-[color:var(--color-white)]"
     >
-      <div className="mx-auto max-w-[var(--container-full)] px-6 md:px-10">
+      <div className="mx-auto max-w-[var(--container-page)] px-6 md:px-10">
         <div className="flex flex-wrap items-center gap-x-7 gap-y-2 py-4">
           <span className="flex items-center gap-2 text-[0.58rem] uppercase tracking-[0.32em] text-[color:var(--color-charcoal-soft)]">
             <Monogram className="h-3.5 w-3.5 shrink-0 text-[color:var(--color-aerial)]" />

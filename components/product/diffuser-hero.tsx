@@ -157,7 +157,7 @@ export function DiffuserHero({
   return (
     <>
     <section className="border-b border-[color:var(--color-rule)] pt-10 md:pt-14">
-      <div className="mx-auto grid max-w-[var(--container-full)] gap-12 px-6 pb-[var(--spacing-section)] md:px-10 lg:grid-cols-[minmax(0,38rem)_minmax(0,40rem)] lg:justify-center lg:gap-16">
+      <div className="mx-auto grid max-w-[var(--container-page)] gap-12 px-6 pb-[var(--spacing-section)] md:px-10 lg:grid-cols-[minmax(0,38rem)_minmax(0,40rem)] lg:justify-center lg:gap-16">
         {/* ===== Gallery – sticky on the left ===== */}
         <div className="min-w-0 lg:sticky lg:top-28 lg:self-start">
           <FadeUp>

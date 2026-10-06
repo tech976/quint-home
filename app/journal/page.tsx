@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 
 export default function JournalPage() {
   return (
-    <div className="mx-auto max-w-[var(--container-full)] px-6 py-[var(--spacing-section)] md:px-10">
+    <div className="mx-auto max-w-[var(--container-page)] px-6 py-[var(--spacing-section)] md:px-10">
       <FadeUp>
         <div className="border-b border-[color:var(--color-rule)] pb-10">
           <p className="font-eyebrow"><Monogram className="mr-1.5 inline-block h-[0.9em] w-[0.9em] align-[-0.12em]" />The Journal</p>

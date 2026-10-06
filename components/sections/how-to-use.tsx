@@ -61,7 +61,7 @@ const steps: {
 export function HowToUse() {
   return (
     <section className="bg-[color:var(--color-white)] py-[var(--spacing-section)]">
-      <div className="mx-auto max-w-[var(--container-full)] px-6 md:px-10">
+      <div className="mx-auto max-w-[var(--container-page)] px-6 md:px-10">
         <SectionHeader
           chapter="The Ritual"
           chapterTitle="How it works"

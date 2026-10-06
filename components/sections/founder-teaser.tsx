@@ -5,7 +5,7 @@ import { FadeUp } from "@/components/motion/fade-up";
 export function FounderTeaser() {
   return (
     <section className="bg-[color:var(--color-white)] py-[var(--spacing-section)]">
-      <div className="mx-auto max-w-[var(--container-full)] px-6 md:px-10">
+      <div className="mx-auto max-w-[var(--container-page)] px-6 md:px-10">
         <div className="grid items-start gap-12 md:grid-cols-12 md:gap-16">
           {/* Image collage – two stacked images that together match text column height */}
           <FadeUp className="md:col-span-6">

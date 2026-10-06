@@ -16,7 +16,7 @@ export default function ContactPage() {
           § HERO
           ==================================================== */}
       <section className="border-b border-[color:var(--color-rule)] pt-10 md:pt-14">
-        <div className="mx-auto max-w-[var(--container-full)] px-6 md:px-10">
+        <div className="mx-auto max-w-[var(--container-page)] px-6 md:px-10">
           <div className="grid items-end gap-10 pb-12 md:grid-cols-12 md:gap-16">
             <FadeUp delay={0.05} className="md:col-span-7">
               <p className="text-[0.62rem] uppercase tracking-[0.42em] text-[color:var(--color-charcoal-soft)]">
@@ -52,7 +52,7 @@ export default function ContactPage() {
           § THREE CHANNELS
           ==================================================== */}
       <section className="py-[var(--spacing-section)]">
-        <div className="mx-auto max-w-[var(--container-full)] px-6 md:px-10">
+        <div className="mx-auto max-w-[var(--container-page)] px-6 md:px-10">
           <div className="grid gap-px overflow-hidden bg-[color:var(--color-rule)] md:grid-cols-3">
             <FadeUp className="contents">
               <a
