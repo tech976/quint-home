@@ -61,6 +61,11 @@ export interface Diffuser {
   /** Display string for coverage (e.g. "Up to 1,075 sq ft"), or where it suits
    *  when the manufacturer publishes no figure. */
   coverageLabel: string;
+  /**
+   * Whether a complimentary 50 ml oil ships with it. True for the room
+   * diffusers; the car model is sold on its own.
+   */
+  includesOil: boolean;
   /** Catalogue "BEST FOR" placement tags. */
   bestFor: string[];
   /** Catalogue "KEY FEATURES" bullet list, verbatim. */

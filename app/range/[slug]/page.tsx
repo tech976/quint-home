@@ -89,7 +89,11 @@ export async function generateMetadata({
 
   const description = isOil
     ? `${product.tagline} A ${"volumeML" in product ? product.volumeML : 50} ml IFRA-compliant fragrance oil at 70–90% concentration, for any Quint Home waterless diffuser.`
-    : `${product.tagline} A waterless electronic diffuser covering ${"coverageLabel" in product ? product.coverageLabel : "your space"}, with the fragrance oil of your choice included.`;
+    : `${product.tagline} A waterless electronic diffuser covering ${"coverageLabel" in product ? product.coverageLabel : "your space"}${
+        "includesOil" in product && product.includesOil
+          ? ", with the fragrance oil of your choice included."
+          : "."
+      }`;
 
   const ogTitle = `${product.name} — Quint Home ${kind}`;
   return {

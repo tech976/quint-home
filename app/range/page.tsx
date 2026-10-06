@@ -23,6 +23,12 @@ export default async function ShopPage() {
   const commerce = await getCommerceMap();
   const priceOf = (name: string, fallback: number) =>
     commerce[shopifyHandle(name)]?.minPrice ?? fallback;
+  // Shopify is the stock record. A product the store cannot sell is marked
+  // here too, rather than looking buyable until the product page says no.
+  const soldOut = (name: string) => {
+    const c = commerce[shopifyHandle(name)];
+    return c ? !c.available : false;
+  };
   return (
     <article className="bg-[color:var(--color-white)]">
       {/* ====================================================
@@ -140,7 +146,7 @@ export default async function ShopPage() {
                         {d.name}
                       </h3>
                       <span className="tabular-nums text-[0.9rem]">
-                        {formatINR(priceOf(d.name, d.priceINR))}
+                        {soldOut(d.name) ? "Sold out" : formatINR(priceOf(d.name, d.priceINR))}
                       </span>
                     </div>
                     <p className="max-w-[38ch] text-[0.92rem] leading-[1.65] text-[color:var(--color-charcoal-soft)]">
@@ -284,7 +290,7 @@ export default async function ShopPage() {
                           {o.name}
                         </h3>
                         <span className="tabular-nums text-[0.9rem] text-[color:var(--color-charcoal)]">
-                          {formatINR(priceOf(o.name, o.priceINR))}
+                          {soldOut(o.name) ? "Sold out" : formatINR(priceOf(o.name, o.priceINR))}
                         </span>
                       </div>
 
@@ -392,7 +398,7 @@ export default async function ShopPage() {
                       {c.tagline}
                     </p>
                     <span className="mt-4 inline-flex items-center gap-2 text-[0.54rem] uppercase tracking-[0.28em] text-[color:var(--color-charcoal-soft)] transition-transform duration-500 group-hover:translate-x-1">
-                      {c.volumeML} ml · View →
+                      {soldOut(c.name) ? "Sold out" : `${c.volumeML} ml`} · View →
                     </span>
                   </div>
                 </Link>

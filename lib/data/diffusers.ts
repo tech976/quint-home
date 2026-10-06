@@ -56,6 +56,7 @@ const diffusersByDefinition: Diffuser[] = [
     // The spec sheet publishes no coverage figure, so none is printed. The
     // label says where it belongs instead of inventing a square-foot range.
     coverageLabel: "Cars and compact spaces",
+    includesOil: false,
     bestFor: ["Cars", "Bathrooms", "Desks", "Travel"],
     keyFeatures: [
       "Waterless nebulising – fragrance oil only, no water and no heat",
@@ -97,6 +98,7 @@ const diffusersByDefinition: Diffuser[] = [
     bluetooth: false,
     coverageSqFt: [161, 250],
     coverageLabel: "161–250 sq ft",
+    includesOil: true,
     bestFor: ["Bathrooms", "Kitchens", "Compact Spaces"],
     keyFeatures: [
       "Plug & Play – no installation or assembly required",
@@ -138,6 +140,7 @@ const diffusersByDefinition: Diffuser[] = [
     bluetooth: true,
     coverageSqFt: [108, 1075],
     coverageLabel: "Up to 1,075 sq ft",
+    includesOil: true,
     bestFor: ["Living Rooms", "Larger Rooms", "Open-Plan Spaces", "Brand Stores", "Cafes", "Offices"],
     keyFeatures: [
       "Premium aluminum column construction in warm gold finish",
@@ -227,6 +230,7 @@ const diffusersByDefinition: Diffuser[] = [
     bluetooth: true,
     coverageSqFt: [108, 590],
     coverageLabel: "Up to 590 sq ft",
+    includesOil: true,
     bestFor: ["Living Rooms", "Bedrooms", "Salons", "Brand Stores"],
     keyFeatures: [
       "Soft fabric exterior – warm, organic tactile finish",
@@ -268,6 +272,7 @@ const diffusersByDefinition: Diffuser[] = [
     bluetooth: true,
     coverageSqFt: [108, 538],
     coverageLabel: "Up to 540 sq ft",
+    includesOil: true,
     bestFor: ["Living Rooms", "Bedrooms", "Study Rooms", "Offices"],
     keyFeatures: [
       "Dual independent 60 ml mist outlets – run one or both simultaneously",
@@ -309,6 +314,7 @@ const diffusersByDefinition: Diffuser[] = [
     bluetooth: true,
     coverageSqFt: [108, 538],
     coverageLabel: "Up to 540 sq ft",
+    includesOil: true,
     bestFor: ["Bedrooms", "Living Rooms", "Offices", "Bars"],
     keyFeatures: [
       "Integrated LED clock with automatic network time sync",

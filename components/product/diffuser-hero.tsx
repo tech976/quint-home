@@ -49,9 +49,15 @@ export function DiffuserHero({
   const tagline = color?.tagline ?? product.tagline;
   const keyFeatures = color?.keyFeatures ?? product.keyFeatures;
 
-  // Included starting oil – chosen here rather than at checkout.
-  const [oilSlug, setOilSlug] = useState(oils[0].slug);
-  const selectedOil = oils.find((o) => o.slug === oilSlug) ?? oils[0];
+  // Included starting oil – chosen here rather than at checkout. A scent can
+  // only be offered when the store actually holds a free bottle of it:
+  // otherwise the diffuser goes in the bag alone and the customer is quietly
+  // short a ₹899 oil the page promised them.
+  const giftableOils = oils.filter((o) => giftVariantFor(o.name, commerceMap));
+  const offeredOils = giftableOils.length ? giftableOils : oils;
+  const [oilSlug, setOilSlug] = useState(offeredOils[0].slug);
+  const selectedOil =
+    offeredOils.find((o) => o.slug === oilSlug) ?? offeredOils[0];
 
   // The complimentary bottle that ships with every diffuser. It is not a line
   // item of its own, so this note is the only record of it — in the bag, on the
@@ -60,14 +66,18 @@ export function DiffuserHero({
   // exactly what the bundle button used to do).
   // The ₹0 variant of whichever scent is selected. Null when the store has no
   // gift variant for it yet — the note still records what is owed.
-  const giftVariantId = giftVariantFor(selectedOil.name, commerceMap)?.id ?? null;
+  const giftVariantId = product.includesOil
+    ? (giftVariantFor(selectedOil.name, commerceMap)?.id ?? null)
+    : null;
 
-  const complimentaryOil = [
-    {
-      key: COMPLIMENTARY_OIL,
-      value: `${selectedOil.name} · ${selectedOil.volumeML} ml`,
-    },
-  ];
+  const complimentaryOil = product.includesOil
+    ? [
+        {
+          key: COMPLIMENTARY_OIL,
+          value: `${selectedOil.name} · ${selectedOil.volumeML} ml`,
+        },
+      ]
+    : undefined;
 
   const descriptionParagraphs = (color?.description ?? product.description).split(
     "\n\n"
@@ -226,8 +236,9 @@ export function DiffuserHero({
             </FadeUp>
           )}
 
-          {/* --- Choose your included oil – asked before the CTA, since every
-               diffuser ships with one --- */}
+          {/* --- Choose your included oil – asked before the CTA, for the
+               models that ship with one. The car diffuser is sold alone. --- */}
+          {product.includesOil && (
           <FadeUp delay={0.2}>
             <div className="mt-8 border-t border-[color:var(--color-rule)] pt-8">
               {/* Tiles rather than a dropdown: the oils are photographed, and a
@@ -238,7 +249,7 @@ export function DiffuserHero({
                   Choose your included oil
                 </legend>
                 <div className="mt-4 grid grid-cols-4 gap-2 sm:gap-2.5">
-                  {oils.map((o) => {
+                  {offeredOils.map((o) => {
                     const active = o.slug === oilSlug;
                     return (
                       <label
@@ -321,6 +332,7 @@ export function DiffuserHero({
               </p>
             </div>
           </FadeUp>
+          )}
 
           {/* Price + Add to bag – sits under the scent picker so the choice
                is made first */}
