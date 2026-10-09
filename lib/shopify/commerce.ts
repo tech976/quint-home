@@ -10,6 +10,13 @@ export interface ShopifyVariant {
   id: string;
   title: string;
   price: number;
+  /**
+   * Shopify's compareAtPrice — the "was" price, struck through beside the
+   * selling price. Undefined when the variant isn't marked down, or when the
+   * compare-at is at or below the price (Shopify allows that; showing it
+   * would claim a saving that doesn't exist).
+   */
+  compareAt?: number;
   currency: string;
   available: boolean;
   /** selectedOptions flattened, e.g. { Finish: "Gold" } */
@@ -19,6 +26,8 @@ export interface ShopifyCommerce {
   handle: string;
   available: boolean;
   minPrice: number;
+  /** compareAtPrice of the cheapest variant, when it is genuinely higher. */
+  minCompareAt?: number;
   currency: string;
   variants: ShopifyVariant[];
 }
@@ -39,6 +48,53 @@ export function sellableVariant(
   return commerce?.variants.find((v) => v.price > 0);
 }
 
+/**
+ * A compare-at amount, but only when it is above what the item actually sells
+ * for. Shopify returns "0.0" for an unset compare-at and happily stores one
+ * below the price; either would render as a strikethrough advertising a saving
+ * the shopper is not getting.
+ */
+function higherOf(compareAt: string | undefined, price: number): number | undefined {
+  const n = Math.round(Number(compareAt ?? 0));
+  return Number.isFinite(n) && n > price ? n : undefined;
+}
+
+/**
+ * A selling price and its struck-through list price, always taken from the
+ * same source.
+ *
+ * Shopify is the live price and lib/data is only the fallback for when the
+ * store can't be reached, so the two must never be mixed: read Shopify's price
+ * against a code-level list price and you advertise a saving nobody set. While
+ * the store still held the pre-markdown prices, a ₹17,999 Monolith measured
+ * against a ₹23,750 list price in code claimed "−24%" on the page — a discount
+ * that did not exist and that we would have had to honour.
+ *
+ * So when Shopify answers, only its compareAtPrice may strike anything
+ * through; the code-level list price is used solely alongside the code-level
+ * price. A product with no compare-at set simply shows one plain price.
+ */
+export function pricePair(
+  commerce: ShopifyCommerce | undefined,
+  fallbackPrice: number,
+  fallbackList?: number
+): { price: number; listPrice?: number } {
+  return commerce
+    ? { price: commerce.minPrice, listPrice: commerce.minCompareAt }
+    : { price: fallbackPrice, listPrice: fallbackList };
+}
+
+/** The same pairing for one variant, for pages that price a chosen finish. */
+export function variantPricePair(
+  variant: ShopifyVariant | undefined,
+  fallbackPrice: number,
+  fallbackList?: number
+): { price: number; listPrice?: number } {
+  return variant
+    ? { price: variant.price, listPrice: variant.compareAt }
+    : { price: fallbackPrice, listPrice: fallbackList };
+}
+
 /** Shopify auto-generates handles from the title – mirror that from a name. */
 export function shopifyHandle(name: string): string {
   return name
@@ -55,6 +111,7 @@ interface GQLProducts {
         handle: string;
         availableForSale: boolean;
         priceRange: { minVariantPrice: { amount: string; currencyCode: string } };
+        compareAtPriceRange: { minVariantPrice: { amount: string } };
         variants: {
           edges: {
             node: {
@@ -62,6 +119,7 @@ interface GQLProducts {
               title: string;
               availableForSale: boolean;
               price: { amount: string; currencyCode: string };
+              compareAtPrice: { amount: string } | null;
               selectedOptions: { name: string; value: string }[];
             };
           }[];
@@ -77,9 +135,11 @@ const QUERY = `{
       handle
       availableForSale
       priceRange { minVariantPrice { amount currencyCode } }
+      compareAtPriceRange { minVariantPrice { amount } }
       variants(first: 20) { edges { node {
         id title availableForSale
         price { amount currencyCode }
+        compareAtPrice { amount }
         selectedOptions { name value }
       } } }
     } }
@@ -101,11 +161,16 @@ export const getCommerceMap = cache(
           handle: node.handle,
           available: node.availableForSale,
           minPrice: Math.round(Number(node.priceRange.minVariantPrice.amount)),
+          minCompareAt: higherOf(
+            node.compareAtPriceRange?.minVariantPrice?.amount,
+            Math.round(Number(node.priceRange.minVariantPrice.amount))
+          ),
           currency: node.priceRange.minVariantPrice.currencyCode,
           variants: node.variants.edges.map(({ node: v }) => ({
             id: v.id,
             title: v.title,
             price: Math.round(Number(v.price.amount)),
+            compareAt: higherOf(v.compareAtPrice?.amount, Math.round(Number(v.price.amount))),
             currency: v.price.currencyCode,
             available: v.availableForSale,
             options: Object.fromEntries(v.selectedOptions.map((o) => [o.name, o.value])),

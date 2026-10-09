@@ -5,11 +5,11 @@ import type { Metadata } from "next";
 import { diffusers } from "@/lib/data/diffusers";
 import { oils } from "@/lib/data/oils";
 import { candles } from "@/lib/data/candles";
-import { formatINR } from "@/lib/utils";
+import { PriceTag } from "@/components/product/price-tag";
 import { FadeUp } from "@/components/motion/fade-up";
 import { ShopBrowser } from "@/components/shop/shop-browser";
 import { DiffuserCompare } from "@/components/sections/diffuser-compare";
-import { getCommerceMap, shopifyHandle } from "@/lib/shopify/commerce";
+import { getCommerceMap, shopifyHandle, pricePair } from "@/lib/shopify/commerce";
 
 export const metadata: Metadata = {
   title: "Diffusers & Fragrance Oils — The Full Range",
@@ -21,8 +21,9 @@ export const metadata: Metadata = {
 export default async function ShopPage() {
   // Live prices from Shopify (falls back to the code price if unavailable).
   const commerce = await getCommerceMap();
-  const priceOf = (name: string, fallback: number) =>
-    commerce[shopifyHandle(name)]?.minPrice ?? fallback;
+  // Price and list price together, never mixed across sources — see pricePair.
+  const pricing = (name: string, price: number, list?: number) =>
+    pricePair(commerce[shopifyHandle(name)], price, list);
   // Shopify is the stock record. A product the store cannot sell is marked
   // here too, rather than looking buyable until the product page says no.
   const soldOut = (name: string) => {
@@ -146,7 +147,14 @@ export default async function ShopPage() {
                         {d.name}
                       </h3>
                       <span className="tabular-nums text-[0.9rem]">
-                        {soldOut(d.name) ? "Sold out" : formatINR(priceOf(d.name, d.priceINR))}
+                        {soldOut(d.name) ? (
+                          "Sold out"
+                        ) : (
+                          <PriceTag
+                            {...pricing(d.name, d.priceINR, d.listPriceINR)}
+                            listClassName="text-[0.78rem]"
+                          />
+                        )}
                       </span>
                     </div>
                     <p className="max-w-[38ch] text-[0.92rem] leading-[1.65] text-[color:var(--color-charcoal-soft)]">
@@ -290,7 +298,14 @@ export default async function ShopPage() {
                           {o.name}
                         </h3>
                         <span className="tabular-nums text-[0.9rem] text-[color:var(--color-charcoal)]">
-                          {soldOut(o.name) ? "Sold out" : formatINR(priceOf(o.name, o.priceINR))}
+                          {soldOut(o.name) ? (
+                            "Sold out"
+                          ) : (
+                            <PriceTag
+                              {...pricing(o.name, o.priceINR)}
+                              listClassName="text-[0.78rem]"
+                            />
+                          )}
                         </span>
                       </div>
 
@@ -397,7 +412,14 @@ export default async function ShopPage() {
                     <p className="mt-1.5 max-w-[34ch] text-[0.84rem] leading-[1.6] text-[color:var(--color-charcoal-soft)]">
                       {c.tagline}
                     </p>
-                    <span className="mt-4 inline-flex items-center gap-2 text-[0.54rem] uppercase tracking-[0.28em] text-[color:var(--color-charcoal-soft)] transition-transform duration-500 group-hover:translate-x-1">
+                    {!soldOut(c.name) && (
+                      <PriceTag
+                        {...pricing(c.name, c.priceINR, c.listPriceINR)}
+                        className="mt-3 text-[0.9rem]"
+                        listClassName="text-[0.78rem]"
+                      />
+                    )}
+                    <span className="mt-3 flex items-center gap-2 text-[0.54rem] uppercase tracking-[0.28em] text-[color:var(--color-charcoal-soft)] transition-transform duration-500 group-hover:translate-x-1">
                       {soldOut(c.name) ? "Sold out" : `${c.volumeML} ml`} · View →
                     </span>
                   </div>

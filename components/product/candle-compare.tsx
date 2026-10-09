@@ -2,7 +2,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { FadeUp } from "@/components/motion/fade-up";
 import { candles } from "@/lib/data/candles";
-import { formatINR } from "@/lib/utils";
+import { PriceTag } from "@/components/product/price-tag";
+import { getCommerceMap, shopifyHandle, pricePair } from "@/lib/shopify/commerce";
 
 /**
  * The two scents you are not looking at, side by side: a small portrait and a
@@ -10,9 +11,12 @@ import { formatINR } from "@/lib/utils";
  * the same thing six times over — the useful difference is the room each one
  * suits, which fits in a sentence.
  */
-export function CandleCompare({ current }: { current?: string }) {
+export async function CandleCompare({ current }: { current?: string }) {
   const others = candles.filter((c) => c.slug !== current);
   if (!others.length) return null;
+
+  // Same live prices the candle pages themselves show.
+  const commerce = await getCommerceMap();
 
   return (
     <section className="border-t border-[color:var(--color-rule)] py-[var(--spacing-section-sm)]">
@@ -59,9 +63,15 @@ export function CandleCompare({ current }: { current?: string }) {
                     {c.tagline} For {c.placement.toLowerCase().replace(" · ", " and ")}.
                   </p>
                   <p className="mt-2.5 flex items-center gap-3 text-[0.54rem] uppercase tracking-[0.28em] text-[color:var(--color-charcoal-soft)]">
-                    <span className="tabular-nums tracking-normal text-[0.78rem] text-[color:var(--color-charcoal)]">
-                      {formatINR(c.priceINR)}
-                    </span>
+                    <PriceTag
+                      {...pricePair(
+                        commerce[shopifyHandle(c.name)],
+                        c.priceINR,
+                        c.listPriceINR
+                      )}
+                      className="tracking-normal text-[0.78rem] text-[color:var(--color-charcoal)]"
+                      listClassName="text-[0.7rem]"
+                    />
                     <span className="transition-transform duration-500 group-hover:translate-x-1">
                       View →
                     </span>

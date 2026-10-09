@@ -11,7 +11,12 @@ import { PairBundle, type PairOption } from "@/components/product/pair-bundle";
 import { oils, oilNoteSummary } from "@/lib/data/oils";
 import { cn } from "@/lib/utils";
 import type { Diffuser } from "@/lib/types";
-import { shopifyHandle, sellableVariant, type ShopifyCommerce } from "@/lib/shopify/commerce";
+import {
+  shopifyHandle,
+  sellableVariant,
+  variantPricePair,
+  type ShopifyCommerce,
+} from "@/lib/shopify/commerce";
 import { COMPLIMENTARY_OIL, giftVariantFor } from "@/lib/cart-gift";
 
 /**
@@ -40,6 +45,10 @@ export function DiffuserHero({
     colors && colors.length > 1
       ? commerce?.variants.find((v) => v.options.Finish === color?.name)
       : sellableVariant(commerce);
+
+  // Price and list price for the selected finish, resolved together so the
+  // strikethrough can never be measured against a price from the other source.
+  const buy = variantPricePair(variant, product.priceINR, product.listPriceINR);
 
   const gallery = color?.gallery ?? product.gallery;
 
@@ -243,7 +252,8 @@ export function DiffuserHero({
             <div id="buy" className="mt-10 scroll-mt-24">
               {/* No subscribe & save on diffusers – that offer is for the oils only */}
               <AddToBag
-                priceINR={variant?.price ?? product.priceINR}
+                priceINR={buy.price}
+                listPriceINR={buy.listPrice}
                 subscribeOffer={false}
                 variantId={variant?.id}
                 // No Shopify variant means the product is not sellable yet (a new
@@ -454,7 +464,8 @@ export function DiffuserHero({
     </section>
     <MobileBuyBar
       name={product.name}
-      priceINR={variant?.price ?? product.priceINR}
+      priceINR={buy.price}
+      listPriceINR={buy.listPrice}
     />
     </>
   );

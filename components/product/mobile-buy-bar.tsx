@@ -1,4 +1,4 @@
-import { formatINR } from "@/lib/utils";
+import { PriceTag } from "@/components/product/price-tag";
 
 /**
  * Sticky price + CTA bar for mobile PDPs. On small screens the gallery stacks
@@ -8,9 +8,11 @@ import { formatINR } from "@/lib/utils";
 export function MobileBuyBar({
   name,
   priceINR,
+  listPriceINR,
 }: {
   name: string;
   priceINR: number;
+  listPriceINR?: number;
 }) {
   return (
     <div className="fixed inset-x-0 bottom-0 z-40 border-t border-[color:var(--color-rule)] bg-[color:var(--color-white)]/95 backdrop-blur lg:hidden">
@@ -19,12 +21,14 @@ export function MobileBuyBar({
           <p className="truncate text-[0.6rem] uppercase tracking-[0.2em] text-[color:var(--color-charcoal-soft)]">
             {name}
           </p>
-          <p
-            className="tabular-nums leading-none text-[color:var(--color-charcoal)]"
-            style={{ fontFamily: "var(--font-serif)", fontSize: "1.15rem" }}
-          >
-            {formatINR(priceINR)}
-          </p>
+          <PriceTag
+            price={priceINR}
+            listPrice={listPriceINR}
+            className="leading-none"
+            priceClassName="tabular-nums text-[color:var(--color-charcoal)]"
+            priceStyle={{ fontFamily: "var(--font-serif)", fontSize: "1.15rem" }}
+            listClassName="text-[0.72rem]"
+          />
         </div>
         <a
           href="#buy"

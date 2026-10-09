@@ -180,6 +180,7 @@ export function OilHero({
             <div id="buy" className="mt-8 scroll-mt-24">
               <AddToBag
                 priceINR={variant?.price ?? oil.priceINR}
+                listPriceINR={variant?.compareAt}
                 variantId={variant?.id}
                 // No Shopify variant means the product is not sellable yet (a new
                 // listing not imported, or one unpublished from this channel).
@@ -290,7 +291,11 @@ export function OilHero({
         </aside>
       </div>
     </section>
-    <MobileBuyBar name={oil.name} priceINR={variant?.price ?? oil.priceINR} />
+    <MobileBuyBar
+      name={oil.name}
+      priceINR={variant?.price ?? oil.priceINR}
+      listPriceINR={variant?.compareAt}
+    />
     </>
   );
 }

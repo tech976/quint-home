@@ -30,7 +30,8 @@ export const candles: Candle[] = [
     description:
       "Bergamot over vetiver – bright at the top, cool and rooted underneath. The quiet of standing among trees, brought indoors for a living room or a study.",
     placement: "Living rooms · Studies",
-    priceINR: 1499,
+    priceINR: 1699,
+    listPriceINR: 2125,
     volumeML: 300,
     burnHours: 45,
     image: "/images/candles/the-forest-01.webp",
@@ -78,7 +79,8 @@ export const candles: Candle[] = [
     description:
       "Violet over amber – powdery and floral at first, warm and resinous as it settles. The register of a room built to receive people, for an entrance or a bedroom.",
     placement: "Entrances · Bedrooms",
-    priceINR: 1499,
+    priceINR: 1699,
+    listPriceINR: 2125,
     volumeML: 300,
     burnHours: 45,
     image: "/images/candles/the-palace-01.webp",
@@ -127,7 +129,8 @@ export const candles: Candle[] = [
     description:
       "Oud over dry wood – smoky, deep and unhurried. The register of a room lined with books, for an evening in with the door closed.",
     placement: "Studies · Evenings in",
-    priceINR: 1499,
+    priceINR: 1699,
+    listPriceINR: 2125,
     volumeML: 300,
     burnHours: 45,
     image: "/images/candles/the-study-01.webp",

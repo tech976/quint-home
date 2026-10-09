@@ -1,11 +1,11 @@
 import Link from "next/link";
 import Image from "next/image";
 import { diffusers } from "@/lib/data/diffusers";
-import { formatINR } from "@/lib/utils";
 import { FadeUp } from "@/components/motion/fade-up";
 import { HCarousel } from "@/components/ui/h-carousel";
 import { Monogram } from "@/components/brand/logo";
-import { getCommerceMap, shopifyHandle } from "@/lib/shopify/commerce";
+import { getCommerceMap, shopifyHandle, pricePair } from "@/lib/shopify/commerce";
+import { PriceTag } from "@/components/product/price-tag";
 
 /**
  * Diffuser Showcase – features the full diffuser range in editorial cards.
@@ -92,9 +92,15 @@ export async function DiffuserShowcase() {
                     >
                       {d.name}
                     </h3>
-                    <span className="tabular-nums text-[0.9rem]">
-                      {formatINR(commerce[shopifyHandle(d.name)]?.minPrice ?? d.priceINR)}
-                    </span>
+                    <PriceTag
+                      {...pricePair(
+                        commerce[shopifyHandle(d.name)],
+                        d.priceINR,
+                        d.listPriceINR
+                      )}
+                      className="text-[0.9rem]"
+                      listClassName="text-[0.78rem]"
+                    />
                   </div>
                   <p className="max-w-[36ch] text-[0.92rem] leading-[1.65] text-[color:var(--color-charcoal-soft)]">
                     {d.tagline}

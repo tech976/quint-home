@@ -10,7 +10,7 @@ import { diffusers, getDiffuser } from "@/lib/data/diffusers";
 import { oils, getOil } from "@/lib/data/oils";
 import { candles, getCandle } from "@/lib/data/candles";
 import { CandleProductPage } from "@/components/product/candle-page";
-import { formatINR } from "@/lib/utils";
+import { PriceTag } from "@/components/product/price-tag";
 import { FadeUp } from "@/components/motion/fade-up";
 import { DiffuserHero } from "@/components/product/diffuser-hero";
 import { DiffuserCompare } from "@/components/sections/diffuser-compare";
@@ -19,6 +19,8 @@ import {
   getCommerceByName,
   getCommerceMap,
   sellableVariant,
+  shopifyHandle,
+  pricePair,
 } from "@/lib/shopify/commerce";
 import { ScentFinder } from "@/components/sections/scent-finder";
 import type { FragranceOil } from "@/lib/types";
@@ -255,7 +257,11 @@ export default async function ProductPage({
                       <span className="uppercase tracking-[0.18em] text-[0.56rem]">
                         {o.notes.heart[0]}
                       </span>
-                      <span className="tabular-nums">{formatINR(o.priceINR)}</span>
+                      <PriceTag
+                        {...pricePair(commerceMap[shopifyHandle(o.name)], o.priceINR)}
+                        priceClassName="tabular-nums"
+                        listClassName="text-[0.9em]"
+                      />
                     </div>
                   </div>
                 </Link>
@@ -371,9 +377,15 @@ async function OilProductPage({ oil }: { oil: FragranceOil }) {
                     >
                       {d.name}
                     </h3>
-                    <span className="shrink-0 tabular-nums text-[0.8rem]">
-                      {formatINR(d.priceINR)}
-                    </span>
+                    <PriceTag
+                      {...pricePair(
+                        commerceMap[shopifyHandle(d.name)],
+                        d.priceINR,
+                        d.listPriceINR
+                      )}
+                      className="shrink-0 text-[0.8rem]"
+                      listClassName="text-[0.72rem]"
+                    />
                   </div>
                   <p className="mt-2 text-[0.74rem] leading-[1.4] text-[color:var(--color-charcoal-soft)]">
                     {d.coverageLabel}

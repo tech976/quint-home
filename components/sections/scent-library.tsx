@@ -5,8 +5,8 @@ import { FadeUp } from "@/components/motion/fade-up";
 import { SectionHeader } from "@/components/ui/section-header";
 import { HCarousel } from "@/components/ui/h-carousel";
 import { Monogram } from "@/components/brand/logo";
-import { formatINR } from "@/lib/utils";
-import { getCommerceMap, shopifyHandle } from "@/lib/shopify/commerce";
+import { getCommerceMap, shopifyHandle, pricePair } from "@/lib/shopify/commerce";
+import { PriceTag } from "@/components/product/price-tag";
 
 export async function ScentLibrary() {
   const commerce = await getCommerceMap();
@@ -104,9 +104,11 @@ export async function ScentLibrary() {
                     >
                       {o.name}
                     </h3>
-                    <span className="shrink-0 text-[0.8rem] tabular-nums opacity-90">
-                      {formatINR(commerce[shopifyHandle(o.name)]?.minPrice ?? o.priceINR)}
-                    </span>
+                    <PriceTag
+                      {...pricePair(commerce[shopifyHandle(o.name)], o.priceINR)}
+                      className="shrink-0 text-[0.8rem] opacity-90"
+                      listClassName="text-[0.72rem]"
+                    />
                   </div>
                   </Link>
                 );

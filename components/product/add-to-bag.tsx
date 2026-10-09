@@ -2,10 +2,13 @@
 
 import { useState } from "react";
 import { cn } from "@/lib/utils";
+import { PriceTag } from "@/components/product/price-tag";
 import { useCart } from "@/components/cart/cart-provider";
 
 interface Props {
   priceINR: number;
+  /** Shopify compareAtPrice, or the code-level fallback. Struck through. */
+  listPriceINR?: number;
   subscribeOffer?: boolean;
   /** Shopify variant id for the current selection – required to add to bag. */
   variantId?: string;
@@ -24,6 +27,7 @@ interface Props {
 
 export function AddToBag({
   priceINR,
+  listPriceINR,
   // Off until subscriptions are actually built. The chooser below is complete,
   // but `mode` never reaches add() — so picking "Subscribe & save" quoted 15%
   // off and then charged full price at the bag. Turn this back on in the same
@@ -48,17 +52,20 @@ export function AddToBag({
           <span className="text-[0.62rem] uppercase tracking-[0.32em] text-[color:var(--color-charcoal-soft)]">
             Price
           </span>
-          <span
-            className="tabular-nums text-[color:var(--color-charcoal)]"
-            style={{
+          <PriceTag
+            price={priceINR}
+            listPrice={listPriceINR}
+            badge
+            className="justify-end gap-x-3"
+            priceClassName="tabular-nums text-[color:var(--color-charcoal)]"
+            priceStyle={{
               fontFamily: "var(--font-serif)",
               fontSize: "1.75rem",
               lineHeight: 1,
               letterSpacing: "-0.01em",
             }}
-          >
-            {formatINR(priceINR)}
-          </span>
+            listClassName="text-[0.95rem]"
+          />
         </div>
       )}
 

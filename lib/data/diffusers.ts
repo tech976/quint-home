@@ -7,10 +7,12 @@ import type { Diffuser } from "../types";
 //  "best for" tags are transcribed VERBATIM from the catalogue,
 //  per-model – do not move values between models.
 //
-//  NOTE ON PRICING: the catalogue carries no prices. priceINR
-//  values below are PLACEHOLDERS positioned inside the brief's
-//  MRP bands (entry ₹12,999–15,999 · premium ₹18,999–24,999) and
-//  must be confirmed before launch.
+//  NOTE ON PRICING: the catalogue carries no prices. The figures
+//  below are the owner's, and listPriceINR is the pre-discount list
+//  price shown struck through. Both are only the FALLBACK for when
+//  Shopify can't be reached — the store's price and compareAtPrice
+//  are what shoppers actually see, so a repricing happens there
+//  first and these are brought into line with it.
 //
 //  IMAGERY: per-product lifestyle photography (5 images each) lives
 //  under /images/diffusers/<slug>/. The A326 ships in two finishes,
@@ -136,7 +138,8 @@ const diffusersByDefinition: Diffuser[] = [
     tagline: "Elevate Every Room. Effortlessly.",
     description:
       "The Monolith in brushed gold is where function meets design. Standing tall in premium aluminum, this column diffuser brings a refined, hotel-like quality to any space. Its large 120 ml bottle keeps fragrance flowing for hours, and the built-in 2200 mAh rechargeable battery means it goes wherever you do – no outlet required.\n\nConnect via Bluetooth to control diffusion intensity and scheduling directly from your phone. Set a schedule and let the Monolith run your ambience on autopilot. A leak-proof design ensures spill-free placement, always.",
-    priceINR: 17999,
+    priceINR: 18999,
+    listPriceINR: 23750,
     bluetooth: true,
     coverageSqFt: [108, 1075],
     coverageLabel: "Up to 1,075 sq ft",
@@ -226,7 +229,8 @@ const diffusersByDefinition: Diffuser[] = [
     tagline: "Soft to the Touch. Warm in Every Sense.",
     description:
       "The Loom reimagines the aroma diffuser with a soft fabric exterior that feels as good as it looks. Where most diffusers are cold and clinical, this one is warm and tactile – designed to sit naturally on a bedside table, salon counter, or living room shelf. The candle-like ambient glow adds a gentle flicker of warmth to evening routines.\n\nPair via Bluetooth for app-based control when you want it, or simply reach for the satisfying knob to dial in intensity the old-fashioned way. Intuitive by design, it fits any space and any lifestyle.",
-    priceINR: 12999,
+    priceINR: 11999,
+    listPriceINR: 14999,
     bluetooth: true,
     coverageSqFt: [108, 590],
     coverageLabel: "Up to 590 sq ft",
@@ -268,7 +272,8 @@ const diffusersByDefinition: Diffuser[] = [
     tagline: "Two Scents. One Space. Infinite Combinations.",
     description:
       "The Pillar does something no ordinary diffuser can: run two completely independent essential oil blends at once. Each of its dual 60 ml bottles operates separately, so you can diffuse two scents individually or layer them for a custom blend. Near-silent operation at ≤35 dB makes it whisper-quiet enough for a study, bedroom, or yoga session.\n\nBluetooth connectivity gives you full control from your phone – adjust each mist outlet independently without leaving your seat. Built from premium aluminum alloy and powered via USB.",
-    priceINR: 12999,
+    priceINR: 11999,
+    listPriceINR: 14999,
     bluetooth: true,
     coverageSqFt: [108, 538],
     coverageLabel: "Up to 540 sq ft",
@@ -310,7 +315,8 @@ const diffusersByDefinition: Diffuser[] = [
     tagline: "Always Know the Time. Always Set the Mood.",
     description:
       "The Ember is more than a diffuser – it is a desktop companion. An integrated LED clock with automatic network time synchronisation keeps you grounded in your day, while a soft natural breathing light and steady fragrance mist keep your space feeling calm. The glass-like acrylic finish gives it a premium, almost sculptural quality.\n\nBluetooth connectivity means you can adjust fragrance intensity from your phone without disturbing the calm the Ember creates. Right at home on a work desk, bar cart, or bedside table.",
-    priceINR: 7999,
+    priceINR: 8799,
+    listPriceINR: 10999,
     bluetooth: true,
     coverageSqFt: [108, 538],
     coverageLabel: "Up to 540 sq ft",

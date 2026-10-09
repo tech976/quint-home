@@ -54,6 +54,12 @@ export interface Diffuser {
   tagline: string;
   description: string;
   priceINR: number;
+  /**
+   * Undiscounted list price, shown struck through beside priceINR. Only set
+   * while a model is actually marked down — Shopify's compareAtPrice is the
+   * live source and overrides this, the same way it does for priceINR.
+   */
+  listPriceINR?: number;
   /** Companion-app control. The plug-in and the car model have none. */
   bluetooth: boolean;
   /** Absent when the manufacturer publishes no coverage figure. */
@@ -96,6 +102,8 @@ export interface Candle {
   tagline: string;
   description: string;
   priceINR: number;
+  /** Undiscounted list price — see the note on Diffuser.listPriceINR. */
+  listPriceINR?: number;
   /** Where the scent suits, drawn from its own description. */
   placement: string;
   /**

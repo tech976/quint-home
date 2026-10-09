@@ -2,9 +2,10 @@ import { Fragment } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { diffusers } from "@/lib/data/diffusers";
-import { formatINR } from "@/lib/utils";
 import { FadeUp } from "@/components/motion/fade-up";
 import type { Diffuser } from "@/lib/types";
+import { PriceTag } from "@/components/product/price-tag";
+import { getCommerceMap, shopifyHandle, pricePair } from "@/lib/shopify/commerce";
 
 /**
  * Device comparison – coverage, power/connectivity, headline features, material
@@ -88,12 +89,16 @@ const ROWS: { label: string; get: (d: Diffuser) => string }[] = [
   { label: "Best for", get: (d) => d.bestFor.join(", ") },
 ];
 
-export function DiffuserCompare({
+export async function DiffuserCompare({
   highlightModel,
 }: {
   /** When set (e.g. on a PDP), that device's column is emphasised. */
   highlightModel?: string;
 } = {}) {
+  // Live prices, so this table can't quote a figure the product page contradicts.
+  // getCommerceMap is React-cached, so sharing a page with the PDP costs nothing.
+  const commerce = await getCommerceMap();
+
   return (
     <section
       id="compare"
@@ -183,9 +188,15 @@ export function DiffuserCompare({
                     <p className="font-[family-name:var(--font-serif)] text-[0.95rem] leading-tight transition-colors group-hover:text-[color:var(--color-clay)]">
                       {d.name}
                     </p>
-                    <p className="mt-1 text-[0.8rem] tabular-nums text-[color:var(--color-charcoal-soft)]">
-                      {formatINR(d.priceINR)}
-                    </p>
+                    <PriceTag
+                      {...pricePair(
+                        commerce[shopifyHandle(d.name)],
+                        d.priceINR,
+                        d.listPriceINR
+                      )}
+                      className="mt-1 justify-center text-[0.8rem] text-[color:var(--color-charcoal-soft)]"
+                      listClassName="text-[0.72rem]"
+                    />
                   </div>
                 </Link>
               ))}

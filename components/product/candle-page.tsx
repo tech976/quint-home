@@ -8,7 +8,7 @@ import { pixelId } from "@/lib/analytics/pixel";
 import { FadeUp } from "@/components/motion/fade-up";
 import { CANDLE_CARE, CANDLE_MAKE } from "@/lib/data/candles";
 import { getCommerceByName } from "@/lib/shopify/commerce";
-import { sellableVariant } from "@/lib/shopify/commerce";
+import { sellableVariant, variantPricePair } from "@/lib/shopify/commerce";
 import {
   breadcrumbJsonLd,
   jsonLdScript,
@@ -25,7 +25,11 @@ import type { Candle } from "@/lib/types";
 export async function CandleProductPage({ candle }: { candle: Candle }) {
   const commerce = await getCommerceByName(candle.name);
   const variant = sellableVariant(commerce);
-  const price = variant?.price ?? candle.priceINR;
+  const { price, listPrice } = variantPricePair(
+    variant,
+    candle.priceINR,
+    candle.listPriceINR
+  );
 
   return (
     <div className="pb-[var(--spacing-section)]">
@@ -125,6 +129,7 @@ export async function CandleProductPage({ candle }: { candle: Candle }) {
               <div className="mt-8">
                 <AddToBag
                   priceINR={price}
+                  listPriceINR={listPrice}
                   variantId={variant?.id}
                   available={variant ? variant.available : false}
                 />
