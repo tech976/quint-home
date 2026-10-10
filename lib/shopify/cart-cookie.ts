@@ -2,5 +2,9 @@
  *  checkout routes so the two can never drift apart. */
 export const CART_COOKIE = "quint_cart_id";
 
-/** Short-lived cookie holding the order awaiting payment confirmation. */
+/**
+ * Cookie that used to hold the order awaiting payment. The record now lives on
+ * the cart (lib/payu/pending.ts); this is only read, and cleared, for payments
+ * that were already in progress when it moved.
+ */
 export const PENDING_ORDER_COOKIE = "quint_pending_order";

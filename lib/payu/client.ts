@@ -41,6 +41,69 @@ export function newTxnId(): string {
     .toString("hex")}`.toUpperCase();
 }
 
+/** Shape of the ids minted above: "QH", the time in base 36, ten hex digits. */
+const TXNID = /^QH([0-9A-Z]{7,10})([0-9A-F]{10})$/;
+
+/** True for a transaction id this site issued — anything else is not ours. */
+export function isOurTxnId(value: string): boolean {
+  return TXNID.test(value);
+}
+
+/**
+ * When a transaction was started, read back out of its id. Lets the order
+ * lookup ask Shopify only for orders placed since, instead of everything.
+ */
+export function txnStartedAt(txnid: string): Date | null {
+  const m = TXNID.exec(txnid);
+  if (!m) return null;
+  const ms = parseInt(m[1], 36);
+  // Reject anything that does not decode to a plausible moment.
+  return ms > 1_600_000_000_000 && ms < Date.now() + 86_400_000 ? new Date(ms) : null;
+}
+
+/**
+ * The bag a payment is for, carried inside the payment itself.
+ *
+ * udf1–udf5 are fields PayU stores with the transaction and hands back with
+ * every result, and they are part of the signature in both directions. Putting
+ * the Shopify cart id there means the order can be rebuilt from PayU's answer
+ * alone — in a browser that lost its cookies, or with no browser at all when
+ * the result arrives server-to-server.
+ *
+ * Hex, because PayU is particular about punctuation and a cart id is full of
+ * it ("gid://shopify/Cart/…?key=…"). udf1 is already the transaction id, so
+ * the reference uses udf2 onwards, spilling into udf3 and udf4 if it is long.
+ */
+const UDF_MAX = 240;
+const CART_GID = "gid://shopify/Cart/";
+
+export function encodeCartRef(cartId: string): {
+  udf2: string;
+  udf3: string;
+  udf4: string;
+} {
+  const hex = Buffer.from(cartId, "utf8").toString("hex");
+  if (hex.length > UDF_MAX * 3) {
+    throw new Error("Cart id is too long to carry through PayU.");
+  }
+  return {
+    udf2: hex.slice(0, UDF_MAX),
+    udf3: hex.slice(UDF_MAX, UDF_MAX * 2),
+    udf4: hex.slice(UDF_MAX * 2),
+  };
+}
+
+/** The cart id back out of PayU's fields, or null if they do not hold one. */
+export function decodeCartRef(
+  fields: { udf2?: string; udf3?: string; udf4?: string } | null | undefined
+): string | null {
+  if (!fields) return null;
+  const hex = `${fields.udf2 ?? ""}${fields.udf3 ?? ""}${fields.udf4 ?? ""}`.trim();
+  if (!hex || hex.length % 2 !== 0 || !/^[0-9a-f]+$/i.test(hex)) return null;
+  const id = Buffer.from(hex, "hex").toString("utf8");
+  return id.startsWith(CART_GID) ? id : null;
+}
+
 export interface PayuOrderInput {
   txnid: string;
   amount: string; // already formatted, e.g. "7999.00"
@@ -187,13 +250,27 @@ export function verifyPayuResponse(p: Record<string, string>): boolean {
 export interface PayuVerification {
   status: string; // "success" / "failure" / "pending"
   amount: string;
+  /**
+   * Every figure PayU reports for the sale, in rupees. Normally one number
+   * twice over; they part company only when PayU adds a charge of its own, and
+   * the order is checked against whichever is the price of the goods.
+   */
+  amounts: number[];
   mihpayid: string;
+  /** How it was paid — "UPI", "CC", "NB"… */
+  mode: string;
+  firstname: string;
+  /** The fields we sent with the payment; udf2–udf4 hold the cart reference. */
+  udf: { udf1: string; udf2: string; udf3: string; udf4: string; udf5: string };
 }
+
+const VERIFY_TIMEOUT_MS = 6000;
 
 /**
  * Second, independent confirmation straight from PayU's servers. The browser
  * postback alone is never trusted — PayU explicitly requires this check.
- * Returns null when the call fails or the transaction is unknown.
+ * Returns null when the call fails; an id PayU does not know comes back with
+ * a status that is simply not "success".
  */
 export async function verifyPaymentWithPayu(
   txnid: string
@@ -214,26 +291,69 @@ export async function verifyPaymentWithPayu(
         hash,
       }),
       cache: "no-store",
+      // A hung call would otherwise hold the customer on a blank page.
+      signal: AbortSignal.timeout(VERIFY_TIMEOUT_MS),
     });
     if (!res.ok) return null;
 
     const json = (await res.json()) as {
       status?: number;
-      transaction_details?: Record<
-        string,
-        { status?: string; amt?: string; amount?: string; mihpayid?: string }
-      >;
+      transaction_details?: Record<string, Record<string, unknown> | undefined>;
     };
 
     const tx = json.transaction_details?.[txnid];
     if (!tx?.status) return null;
 
+    const text = (k: string): string => {
+      const v = tx[k];
+      return v === null || v === undefined ? "" : String(v);
+    };
+    const amounts = [text("transaction_amount"), text("amt"), text("amount")]
+      .map(Number)
+      .filter((n) => Number.isFinite(n) && n > 0);
+
     return {
-      status: String(tx.status).toLowerCase(),
-      amount: String(tx.amt ?? tx.amount ?? ""),
-      mihpayid: String(tx.mihpayid ?? ""),
+      status: text("status").toLowerCase(),
+      amount: text("amt") || text("amount") || text("transaction_amount"),
+      amounts: [...new Set(amounts)],
+      mihpayid: text("mihpayid"),
+      mode: text("mode"),
+      firstname: text("firstname"),
+      udf: {
+        udf1: text("udf1"),
+        udf2: text("udf2"),
+        udf3: text("udf3"),
+        udf4: text("udf4"),
+        udf5: text("udf5"),
+      },
     };
   } catch {
     return null;
   }
+}
+
+const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
+/**
+ * Asks PayU until it gives a final answer, or the attempts run out.
+ *
+ * One failed call must not decide the fate of a paid order: PayU's API has
+ * its off moments, and a payment can read "pending" for a beat after the
+ * customer has already been sent back. "success" and "failure" are final;
+ * anything else — including no answer — is worth asking again.
+ */
+export async function confirmPaymentWithPayu(
+  txnid: string,
+  attempts = 3
+): Promise<PayuVerification | null> {
+  let last: PayuVerification | null = null;
+  for (let i = 0; i < attempts; i++) {
+    if (i > 0) await sleep(700 * i);
+    const answer = await verifyPaymentWithPayu(txnid);
+    if (answer) {
+      last = answer;
+      if (answer.status === "success" || answer.status === "failure") break;
+    }
+  }
+  return last;
 }

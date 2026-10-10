@@ -33,8 +33,11 @@ async function probeAdminApi() {
     }
   };
 
-  const [rest, graphql] = await Promise.all([
+  const [rest, ordersList, graphql] = await Promise.all([
     call("shop.json"),
+    // The order lookup that stops one payment becoming two orders reads this
+    // list. Anything but 200 here means that check is running blind.
+    call("orders.json?status=any&limit=1&fields=id"),
     (async () => {
       try {
         const r = await fetch(
@@ -59,6 +62,7 @@ async function probeAdminApi() {
   return {
     checked: true,
     restShopJson: rest, // 200 = REST usable, 401 = bad token, 403/404 = REST blocked
+    ordersList, // 200 = existing orders can be read (needs read access to orders)
     graphql,
     // Admin API access tokens are prefixed `shpat_`. A Client Secret or Client
     // ID pasted here by mistake fails this check and explains a flat 401.
@@ -131,6 +135,9 @@ export async function GET() {
       },
       missing,
       payuMode: process.env.PAYU_MODE === "production" ? "production" : "test",
+      // Enter this in the PayU dashboard (Settings → Webhooks) so payments are
+      // settled even when the customer's browser never comes back.
+      payuWebhookUrl: `${process.env.NEXT_PUBLIC_SITE_URL || "https://www.quinthome.in"}/api/payu/webhook`,
       hint: headlessCheckout
         ? "Checkout is running on our own page."
         : "Add the missing variables in Vercel, then redeploy — env changes only take effect on a new deployment.",

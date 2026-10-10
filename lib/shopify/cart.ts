@@ -72,6 +72,8 @@ export interface CartLine {
   image: string | null;
   /** Shipping weight in kilograms, used only for the delivery estimate. */
   weightKg: number;
+  /** False once the variant has sold out — it can sit in a bag after that. */
+  available: boolean;
 }
 
 /** Normalised cart used across the app. */
@@ -114,6 +116,7 @@ const CART_FIELDS = `
           id
           title
           price { amount currencyCode }
+          availableForSale
           weight
           weightUnit
           image { url }
@@ -143,6 +146,7 @@ interface RawCart {
           id: string;
           title: string;
           price: { amount: string; currencyCode: string };
+          availableForSale: boolean;
           weight: number | null;
           weightUnit: string | null;
           image: { url: string } | null;
@@ -169,7 +173,11 @@ function normalise(c: RawCart | null | undefined): Cart | null {
     discountCode:
       (c.discountCodes ?? []).find((d) => d.applicable)?.code ?? null,
     currency: c.cost.subtotalAmount.currencyCode,
-    lines: c.lines.edges.map(({ node }) => ({
+    // Adding a sold-out variant does not fail: Shopify keeps the line at
+    // quantity zero. It costs nothing and ships nothing, but sent on to the
+    // Admin API it gets the whole order refused — after the payment. Such
+    // lines are not part of the bag.
+    lines: c.lines.edges.filter(({ node }) => node.quantity > 0).map(({ node }) => ({
       id: node.id,
       quantity: node.quantity,
       attributes: node.attributes ?? [],
@@ -195,6 +203,7 @@ function normalise(c: RawCart | null | undefined): Cart | null {
         node.merchandise.image?.url ??
         null,
       weightKg: toKilograms(node.merchandise.weight, node.merchandise.weightUnit),
+      available: node.merchandise.availableForSale !== false,
     })),
   };
 }
@@ -283,4 +292,128 @@ export async function cartLinesRemove(cartId: string, lineIds: string[]): Promis
     noCache
   );
   return normalise(data.cartLinesRemove.cart)!;
+}
+
+/**
+ * The cart together with its note and attributes.
+ *
+ * Kept apart from `Cart` on purpose. `Cart` is handed to client components,
+ * and the attributes hold the delivery details of an order awaiting payment —
+ * the customer's own, but with no business in a browser bundle's state.
+ */
+export interface CartRecord {
+  cart: Cart;
+  note: string;
+  attributes: Record<string, string>;
+}
+
+type RawCartRecord = RawCart & {
+  note: string | null;
+  attributes: { key: string; value: string | null }[] | null;
+};
+
+const RECORD_FIELDS = `${CART_FIELDS} note attributes { key value }`;
+
+/** Null when Shopify no longer has the cart (they expire after ten idle days). */
+export async function cartGetRecord(id: string): Promise<CartRecord | null> {
+  const data = await storefront<{ cart: RawCartRecord | null }>(
+    `query getCartRecord($id: ID!) { cart(id: $id) { ${RECORD_FIELDS} } }`,
+    { id },
+    noCache
+  );
+  const cart = normalise(data.cart);
+  if (!cart || !data.cart) return null;
+  return {
+    cart,
+    note: data.cart.note ?? "",
+    attributes: Object.fromEntries(
+      (data.cart.attributes ?? []).map((a) => [a.key, a.value ?? ""])
+    ),
+  };
+}
+
+/**
+ * Sets the cart's attributes. Shopify replaces the whole list rather than
+ * merging into it, so whatever is passed here is all the cart will hold.
+ */
+export async function cartAttributesSet(
+  cartId: string,
+  attributes: Record<string, string>
+): Promise<void> {
+  const data = await storefront<{
+    cartAttributesUpdate: { userErrors: { message: string }[] };
+  }>(
+    `mutation setAttributes($cartId: ID!, $attributes: [AttributeInput!]!) {
+      cartAttributesUpdate(cartId: $cartId, attributes: $attributes) {
+        userErrors { message }
+      }
+    }`,
+    {
+      cartId,
+      attributes: Object.entries(attributes).map(([key, value]) => ({ key, value })),
+    },
+    noCache
+  );
+  const errors = data.cartAttributesUpdate.userErrors;
+  if (errors.length) throw new Error(`cartAttributesUpdate: ${errors[0].message}`);
+}
+
+/** Sets the cart's note — a single value, separate from the attributes. */
+export async function cartNoteSet(cartId: string, note: string): Promise<void> {
+  const data = await storefront<{
+    cartNoteUpdate: { userErrors: { message: string }[] };
+  }>(
+    `mutation setNote($cartId: ID!, $note: String!) {
+      cartNoteUpdate(cartId: $cartId, note: $note) { userErrors { message } }
+    }`,
+    { cartId, note },
+    noCache
+  );
+  const errors = data.cartNoteUpdate.userErrors;
+  if (errors.length) throw new Error(`cartNoteUpdate: ${errors[0].message}`);
+}
+
+/** A line the store can no longer fill as it stands in the bag. */
+export interface StockShortfall {
+  title: string;
+  wanted: number;
+  /** What is left. Zero means sold out. */
+  available: number;
+}
+
+/**
+ * Checks the bag against live stock, immediately before payment.
+ *
+ * A bag is not a reservation: an oil added on Monday can sell out by Tuesday
+ * and still be sitting there. Shopify re-applies its stock limits whenever a
+ * line is written, so writing every line back at its current quantity makes it
+ * say what it can actually fill — a short line comes back smaller, a sold-out
+ * one unavailable. Nothing is charged for an order the store would refuse.
+ *
+ * The bag is left as Shopify corrected it, so the customer returns to one that
+ * reflects what is really there.
+ */
+export async function cartRecheckStock(
+  cart: Cart
+): Promise<{ cart: Cart; shortfalls: StockShortfall[] }> {
+  if (cart.lines.length === 0) return { cart, shortfalls: [] };
+
+  const fresh = await cartLinesUpdate(
+    cart.id,
+    cart.lines.map((l) => ({ id: l.id, quantity: l.quantity }))
+  );
+
+  const shortfalls: StockShortfall[] = [];
+  for (const wanted of cart.lines) {
+    const now = fresh.lines.find((l) => l.id === wanted.id);
+    const left = now && now.available ? now.quantity : 0;
+    if (left < wanted.quantity) {
+      shortfalls.push({
+        title: wanted.productTitle,
+        wanted: wanted.quantity,
+        available: left,
+      });
+    }
+  }
+  return { cart: fresh, shortfalls };
 }

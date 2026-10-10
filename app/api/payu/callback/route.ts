@@ -3,38 +3,39 @@
 // Nothing here trusts the browser: the posted hash is re-computed with the
 // merchant salt, then confirmed a second time straight from PayU's servers
 // (their Verify API) before the order is written into Shopify.
+//
+// The writing itself is settlePayment's job, shared with the server-to-server
+// webhook. This route only decides what the customer sees next.
 
-import { NextResponse, type NextRequest } from "next/server";
+import { after, NextResponse, type NextRequest } from "next/server";
 import { cookies } from "next/headers";
-import { cartGet } from "@/lib/shopify/cart";
 import { CART_COOKIE, PENDING_ORDER_COOKIE } from "@/lib/shopify/cart-cookie";
-import { verifyPayuResponse, verifyPaymentWithPayu } from "@/lib/payu/client";
-import { createPaidOrder, shopifyAdminConfigured } from "@/lib/shopify/admin";
-import { shippingFor } from "@/lib/checkout-config";
-import { getCommerceMap } from "@/lib/shopify/commerce";
-import { auditCartGifts } from "@/lib/cart-gift-guard";
+import { verifyPayuResponse } from "@/lib/payu/client";
+import { settlePayment } from "@/lib/payu/settle";
+import { flagDuplicateOrders, type OrderCustomer } from "@/lib/shopify/admin";
 
 export const dynamic = "force-dynamic";
-
-interface PendingOrder {
-  txnid: string;
-  cartId: string;
-  customer: {
-    email: string;
-    phone?: string;
-    firstName: string;
-    lastName?: string;
-    address1?: string;
-    address2?: string;
-    city?: string;
-    province?: string;
-    zip?: string;
-    country?: string;
-  };
-}
+/** Room for PayU, Shopify and a retry or two — the default can be ten seconds. */
+export const maxDuration = 60;
 
 function redirect(request: NextRequest, path: string) {
   return NextResponse.redirect(new URL(path, request.url), 303);
+}
+
+/**
+ * The pending-order cookie this route used to depend on. Still read, for a
+ * customer who was already on PayU's page when the record moved to the cart.
+ */
+function readLegacyCookie(
+  raw: string | undefined
+): { cartId: string; customer: OrderCustomer } | null {
+  if (!raw) return null;
+  try {
+    const v = JSON.parse(raw) as { cartId?: string; customer?: OrderCustomer };
+    return v.cartId && v.customer ? { cartId: v.cartId, customer: v.customer } : null;
+  } catch {
+    return null;
+  }
 }
 
 export async function POST(request: NextRequest) {
@@ -50,127 +51,88 @@ export async function POST(request: NextRequest) {
     return redirect(request, "/order/failed?reason=verification");
   }
 
-  if ((p.status ?? "").toLowerCase() !== "success") {
+  const status = (p.status ?? "").toLowerCase();
+  if (status !== "success") {
+    // Not an error, but worth a line: a payment the bank is still deciding on
+    // can succeed later, and this is the only trace that the customer was
+    // told otherwise.
+    console.warn("[payu] returned without a completed payment", {
+      txnid,
+      status,
+      unmappedstatus: p.unmappedstatus,
+      error: p.error_Message,
+    });
     return redirect(
       request,
-      `/order/failed?reason=declined${p.error_Message ? "" : ""}`
+      `/order/failed?reason=${status === "pending" ? "pending" : "declined"}`
     );
   }
 
-  // 2. Independent confirmation from PayU (the browser could be replaying).
-  const verified = await verifyPaymentWithPayu(txnid);
-  if (!verified || verified.status !== "success") {
-    console.error("[payu] verify API did not confirm", { txnid, verified });
-    return redirect(request, "/order/failed?reason=unconfirmed");
-  }
-
+  // 2. Confirm with PayU and write the order — once, whoever gets there first.
   const jar = await cookies();
-  const raw = jar.get(PENDING_ORDER_COOKIE)?.value;
-  if (!raw) {
-    // Payment succeeded but we cannot tie it to a bag (expired/blocked cookie).
-    // Never silently drop it — this needs manual reconciliation.
-    console.error("[payu] PAID BUT NO PENDING ORDER — reconcile manually", {
-      txnid,
-      mihpayid: verified.mihpayid,
-      amount: verified.amount,
-    });
-    return redirect(request, `/order/confirmed?ref=${encodeURIComponent(txnid)}&pending=1`);
-  }
+  const result = await settlePayment({
+    source: "browser",
+    txnid,
+    signed: p,
+    legacy: readLegacyCookie(jar.get(PENDING_ORDER_COOKIE)?.value),
+  });
 
-  let pending: PendingOrder;
-  try {
-    pending = JSON.parse(raw) as PendingOrder;
-  } catch {
-    console.error("[payu] unreadable pending order cookie", { txnid });
-    return redirect(request, `/order/confirmed?ref=${encodeURIComponent(txnid)}&pending=1`);
-  }
+  const ref = encodeURIComponent(txnid);
 
-  // 3. Rebuild the order from Shopify and re-check the amount actually paid.
-  const cart = await cartGet(pending.cartId);
-  if (!cart || cart.lines.length === 0) {
-    console.error("[payu] PAID BUT CART GONE — reconcile manually", {
-      txnid,
-      mihpayid: verified.mihpayid,
-    });
-    return redirect(request, `/order/confirmed?ref=${encodeURIComponent(txnid)}&pending=1`);
-  }
+  switch (result.state) {
+    case "ordered": {
+      // Order placed — retire the bag and the pending record.
+      jar.delete(PENDING_ORDER_COOKIE);
+      jar.delete(CART_COOKIE);
 
-  // Re-checked here as well as at initiate: the bag is a cookie the buyer
-  // controls, and it can change between the payment page and this callback.
-  const commerce = await getCommerceMap();
-  const gifts = auditCartGifts(cart, commerce);
-  if (!gifts.ok) {
-    console.error("[payu] PAID BUT GIFTS UNEARNED — reconcile manually", {
-      txnid,
-      giftQuantity: gifts.giftQuantity,
-      diffuserQuantity: gifts.diffuserQuantity,
-    });
-    return redirect(request, `/order/confirmed?ref=${encodeURIComponent(txnid)}&pending=1`);
-  }
+      if (!result.existing) {
+        // After the customer has their page: make sure this payment has not
+        // ended up with two orders, and flag the extra if it has.
+        after(() =>
+          flagDuplicateOrders(txnid).catch((e) =>
+            console.error("[payu] duplicate check failed", { txnid, error: String(e) })
+          )
+        );
+      }
 
-  // Same figure the initiate route signed: goods after the discount, plus
-  // shipping judged on that.
-  const goods = cart.total;
-  const shipping = shippingFor(goods);
-  const expected = goods + shipping;
-  const paid = Number(verified.amount || p.amount || 0);
+      // A placeholder is not an order the customer can be quoted a number
+      // for; they are told it is being finalised by hand, which it is.
+      if (result.placeholder) {
+        return redirect(request, `/order/confirmed?ref=${ref}&pending=1`);
+      }
 
-  if (Math.abs(paid - expected) > 1) {
-    console.error("[payu] amount mismatch — not creating order", {
-      txnid,
-      paid,
-      expected,
-    });
-    return redirect(request, "/order/failed?reason=amount");
-  }
+      // The confirmation page fires the Purchase pixel, so it needs the amount
+      // and the lines. Ids and quantities only — never anything about the
+      // buyer, which would then sit in browser history and server logs.
+      return redirect(
+        request,
+        `/order/confirmed?ref=${encodeURIComponent(result.order || txnid)}` +
+          `&value=${result.value}&items=${encodeURIComponent(result.items)}`
+      );
+    }
 
-  // 4. Write the paid order into Shopify.
-  if (!shopifyAdminConfigured) {
-    console.error("[payu] PAID BUT ADMIN API NOT CONFIGURED — reconcile manually", {
-      txnid,
-      mihpayid: verified.mihpayid,
-    });
-    return redirect(request, `/order/confirmed?ref=${encodeURIComponent(txnid)}&pending=1`);
-  }
+    case "not-paid":
+      // PayU's servers disagree with the message the browser carried.
+      console.error("[payu] verify API did not confirm", { txnid, status: result.status });
+      return redirect(
+        request,
+        `/order/failed?reason=${result.status === "pending" ? "pending" : "unconfirmed"}`
+      );
 
-  try {
-    const order = await createPaidOrder({
-      lines: cart.lines.map((l) => ({
-        merchandiseId: l.merchandiseId,
-        quantity: l.quantity,
-        attributes: l.attributes,
-        weightGrams: Math.round((l.weightKg ?? 0) * 1000),
-      })),
-      customer: pending.customer,
-      amountPaid: paid,
-      shipping,
-      txnid,
-      mihpayid: verified.mihpayid,
-      paymentMode: p.mode,
-    });
+    case "unconfirmed":
+      return redirect(request, "/order/failed?reason=unconfirmed");
 
-    // Order placed — retire the bag and the pending record.
-    jar.delete(PENDING_ORDER_COOKIE);
-    jar.delete(CART_COOKIE);
+    case "busy":
+      // Another process (the webhook, or a second tab) is writing this very
+      // order. The payment is good; the order is seconds away.
+      jar.delete(PENDING_ORDER_COOKIE);
+      jar.delete(CART_COOKIE);
+      return redirect(request, `/order/confirmed?ref=${ref}&pending=1`);
 
-    // The confirmation page fires the Purchase pixel, so it needs the amount
-    // and the lines. Ids and quantities only — never anything about the buyer,
-    // which would then sit in browser history and server logs.
-    const items = cart.lines
-      .map((l) => `${l.merchandiseId.split("/").pop()}:${l.quantity}:${l.price}`)
-      .join(",");
-    return redirect(
-      request,
-      `/order/confirmed?ref=${encodeURIComponent(order.name || txnid)}` +
-        `&value=${paid}&items=${encodeURIComponent(items)}`
-    );
-  } catch (e) {
-    console.error("[payu] PAID BUT SHOPIFY ORDER FAILED — reconcile manually", {
-      txnid,
-      mihpayid: verified.mihpayid,
-      error: e instanceof Error ? e.message : String(e),
-    });
-    return redirect(request, `/order/confirmed?ref=${encodeURIComponent(txnid)}&pending=1`);
+    case "failed":
+      // Paid, and Shopify could not be written to. settlePayment has logged
+      // it; PayU's webhook will try again, and staff can from /admin/payments.
+      return redirect(request, `/order/confirmed?ref=${ref}&pending=1`);
   }
 }
 

@@ -49,7 +49,14 @@ function Field({
   );
 }
 
-export function CheckoutForm({ shippingFlat }: { shippingFlat: number }) {
+export function CheckoutForm({
+  shippingFlat,
+  notice = null,
+}: {
+  shippingFlat: number;
+  /** Why the payment could not be started, when the customer was sent back. */
+  notice?: string | null;
+}) {
   const { cart } = useCart();
   // Worked out on the customer's own clock after mount, so the date always
   // agrees with their device and the server never renders a stale one.
@@ -157,6 +164,15 @@ export function CheckoutForm({ shippingFlat }: { shippingFlat: number }) {
         </div>
       </FadeUp>
 
+      {notice && (
+        <p
+          role="alert"
+          className="mt-8 border-l-2 border-[color:var(--color-clay)] bg-[color:var(--color-stardust-soft)] p-4 text-[0.85rem] leading-[1.65] text-[color:var(--color-charcoal)]"
+        >
+          {notice}
+        </p>
+      )}
+
       {/* A plain form post: the route builds the signed PayU payload server-side
           so the merchant salt never reaches the browser. */}
       <form
@@ -194,7 +210,11 @@ export function CheckoutForm({ shippingFlat }: { shippingFlat: number }) {
                 required
                 autoComplete="tel"
                 placeholder="10-digit mobile"
-                pattern="[0-9+\s-]{10,15}"
+                // The hyphen is escaped on purpose: browsers compile patterns
+                // in a mode where a bare "-" in a class is an error, and an
+                // invalid pattern is ignored rather than enforced.
+                pattern="[0-9+\s\-]{10,16}"
+                title="A 10-digit mobile number"
               />
             </div>
 

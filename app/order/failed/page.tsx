@@ -10,8 +10,13 @@ export const metadata: Metadata = {
 
 /** Plain-language explanations; the raw reason is never shown to the customer. */
 const REASONS: Record<string, string> = {
+  // "Nothing has been charged" is not ours to promise: a bank can decline a
+  // payment on screen and still take the money. What can be promised is what
+  // happens next if it did.
   declined:
-    "Your bank did not complete the payment. Nothing has been charged — your bag is still saved.",
+    "Your bank did not complete the payment, and your bag is still saved. If money has left your account, your bank normally returns it within 5–7 working days — or, if the payment completes after all, we will confirm your order by email without you doing anything.",
+  pending:
+    "Your bank has not confirmed the payment yet. Please do not pay again straight away: if it goes through, we will confirm your order by email automatically. If it does not, any money taken is returned by your bank within 5–7 working days.",
   verification:
     "We could not verify the payment response. If money has left your account, contact us and we will resolve it straight away.",
   unconfirmed:
@@ -27,8 +32,8 @@ export default async function OrderFailedPage({
 }) {
   const { reason } = await searchParams;
   const message =
-    (reason && REASONS[reason]) ??
-    "The payment was not completed. Nothing has been charged — your bag is still saved.";
+    (reason && REASONS[reason]) ||
+    "The payment was not completed, and your bag is still saved.";
 
   return (
     <div className="mx-auto flex max-w-[var(--container-content)] flex-col items-center px-6 py-[var(--spacing-section)] text-center md:px-10">

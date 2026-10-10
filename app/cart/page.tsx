@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { CartView } from "@/components/cart/cart-view";
+import { bagNotice } from "@/lib/checkout-notices";
 
 export const metadata: Metadata = {
   title: "Your Bag",
@@ -7,6 +8,12 @@ export const metadata: Metadata = {
     "Review the diffusers and fragrance oils in your Quint Home bag, then proceed to checkout.",
 };
 
-export default function CartPage() {
-  return <CartView />;
+export default async function CartPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ error?: string; item?: string }>;
+}) {
+  // Set when the checkout turned the bag away, so the customer is told why.
+  const { error, item } = await searchParams;
+  return <CartView notice={bagNotice(error, item)} />;
 }

@@ -16,7 +16,7 @@ import {
 } from "@/lib/cart-gift";
 import { GiftLine, InTheBox } from "./gift-line";
 
-export function CartView() {
+export function CartView({ notice = null }: { notice?: string | null }) {
   // headlessCheckout comes from the provider (set in the root layout) so the
   // bag and the drawer can never disagree about where checkout goes.
   const { cart, update, remove, pending, headlessCheckout } = useCart();
@@ -36,6 +36,14 @@ export function CartView() {
     return (
       <div className="mx-auto flex max-w-[var(--container-content)] flex-col items-center px-6 py-[var(--spacing-section)] text-center md:px-10">
         <FadeUp>
+          {notice && (
+            <p
+              role="alert"
+              className="mb-10 max-w-[52ch] border-l-2 border-[color:var(--color-clay)] bg-[color:var(--color-stardust-soft)] p-4 text-left text-[0.85rem] leading-[1.65] text-[color:var(--color-charcoal)]"
+            >
+              {notice}
+            </p>
+          )}
           <p className="font-eyebrow">
             <Monogram className="mr-1.5 inline-block h-[0.9em] w-[0.9em] align-[-0.12em]" />
             Bag
@@ -104,6 +112,16 @@ export function CartView() {
         </div>
       </FadeUp>
 
+      {/* Why the checkout sent them back here, when it did. */}
+      {notice && (
+        <p
+          role="alert"
+          className="mt-8 border-l-2 border-[color:var(--color-clay)] bg-[color:var(--color-stardust-soft)] p-4 text-[0.85rem] leading-[1.65] text-[color:var(--color-charcoal)]"
+        >
+          {notice}
+        </p>
+      )}
+
       <div className="grid gap-12 pt-10 md:grid-cols-12 md:gap-16">
         {/* Line items */}
         <div className="md:col-span-7">
@@ -163,6 +181,13 @@ export function CartView() {
                   {l.variantTitle && l.variantTitle !== "Default Title" && (
                     <p className="mt-1.5 text-[0.72rem] uppercase tracking-[0.2em] text-[color:var(--color-charcoal-soft)]">
                       {l.variantTitle}
+                    </p>
+                  )}
+                  {/* A bag is not a reservation: this can sell out while it
+                      sits here, and the checkout will not take payment for it. */}
+                  {!l.available && (
+                    <p className="mt-1.5 text-[0.72rem] uppercase tracking-[0.2em] text-[color:var(--color-clay)]">
+                      Sold out — remove to continue
                     </p>
                   )}
                   {otherAttributes(l.attributes).map((a) => (
